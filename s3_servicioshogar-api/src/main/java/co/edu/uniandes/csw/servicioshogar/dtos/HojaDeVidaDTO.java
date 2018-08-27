@@ -7,7 +7,7 @@ package co.edu.uniandes.csw.servicioshogar.dtos;
 
 /**
  *
- * @author estudiante
+ * @author Daniela Rocha Torres
  */
 public class HojaDeVidaDTO {
     

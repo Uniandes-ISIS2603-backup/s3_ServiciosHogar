@@ -7,8 +7,8 @@ package co.edu.uniandes.csw.servicioshogar.dtos;
 
 /**
  *
- * @author Daniela Rocha Torres
+ * @author Adriana Trujillo
  */
-public class HabilidadDTO {
+public class MetodoDePagoDTO {
     
 }
