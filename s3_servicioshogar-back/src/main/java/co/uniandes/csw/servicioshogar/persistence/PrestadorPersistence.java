@@ -88,24 +88,24 @@ public class PrestadorPersistence {
          LOGGER.log(Level.INFO, "Saliendo de borrar el prestador con id={0}", prestadoresId);
     }
     
-    public PrestadorEntity findByName(String name)
+    public PrestadorEntity findByCedula(Integer cedula)
     {
-        LOGGER.log(Level.INFO, "Consultando prestador por nombre", name);
+        LOGGER.log(Level.INFO, "Consultando prestador por nombre", cedula);
         
-        TypedQuery query = em.createQuery("Select e From PrestadorEntity e where e.name = :name", PrestadorEntity.class);
+        TypedQuery query = em.createQuery("Select e From PrestadorEntity e where e.cedula = :cedula", PrestadorEntity.class);
         
-        query = query.setParameter("name", name);
+        query = query.setParameter("cedula", cedula);
         
-        List<PrestadorEntity> sameName = query.getResultList();
+        List<PrestadorEntity> sameCedula = query.getResultList();
         PrestadorEntity result;
-        if (sameName == null) {
+        if (sameCedula == null) {
             result = null;
-        } else if (sameName.isEmpty()) {
+        } else if (sameCedula.isEmpty()) {
             result = null;
         } else {
-            result = sameName.get(0);
+            result = sameCedula.get(0);
         }
-        LOGGER.log(Level.INFO, "Saliendo de consultar prestador por nombre ", name);
+        LOGGER.log(Level.INFO, "Saliendo de consultar prestador por cédula ", cedula);
         return result;
     }
 }
