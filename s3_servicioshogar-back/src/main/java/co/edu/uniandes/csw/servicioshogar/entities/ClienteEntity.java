@@ -6,11 +6,13 @@
 package co.edu.uniandes.csw.servicioshogar.entities;
 
 import java.io.Serializable;
+import javax.persistence.Entity;
 
 /**
  *
- * @author estudiante
+ * @author Carlos Eduardo Robles
  */
+@Entity
 public class ClienteEntity extends BaseEntity implements Serializable 
 {
     //------------------------------------------
