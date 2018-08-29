@@ -11,14 +11,30 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
- *
+ * Al serializarse como JSON esta clase implementa el siguiente modelo.
+ * <br>
+ * <pre>
+ * {
+ *	"nombre":"string",
+ *	"direccion":"string",
+ *	"correo":"string"
+ * }
+ * </pre>
+ * Por ejemplo un cliente se representa asi:<br>
+ * <pre>
+ * {
+ *      "nombre": "Carlos Eduardo Robles",
+ *      "direccion": "AK72 #23 24",
+ *      "correo": "ce.robles@uniandes.edu.co
+ * }
+ * </pre>
  * @author Carlos Eduardo Robles
  */
 public class ClienteDTO implements Serializable 
 {
     //------------------------------------------
     //-----------------Atributos----------------
-    //------------------------------------------
+    //------------------------------------------ 
     private Long 
             id /*Id del Cliente*/;
     private String 
@@ -27,10 +43,9 @@ public class ClienteDTO implements Serializable
             correo /*Correo del Cliente*/ ;
     
     //------------------------------------------
-    //----------------Constructor---------------
+    //---------------Constructor----------------
     //------------------------------------------
-    public ClienteDTO()
-    {}
+    public ClienteDTO(){}
     
     public ClienteDTO(ClienteEntity clienteEntity)
     {
