@@ -3,19 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package co.edu.uniandes.csw.servicioshogar.dtos;
-
-import co.edu.uniandes.csw.servicioshogar.entities.HojaDeVidaEntity;
+package co.edu.uniandes.csw.servicioshogar.entities;
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Entity;
 
 /**
  *
  * @author Daniela Rocha Torres
  */
-public class HojaDeVidaDTO implements Serializable{
-
-    /**
+@Entity
+public class HojaDeVidaEntity extends BaseEntity implements Serializable{
+    
+        /**
      * Atributo que representa la trayectoria (experiencia) del prestador.
      */
     private String trayectoria; 
@@ -39,36 +39,8 @@ public class HojaDeVidaDTO implements Serializable{
      * Atributo que representa el nivel educativo del prestador.
      */
     private String formacion;
-    
-    public HojaDeVidaDTO(){      
-    }
-    
-    public HojaDeVidaDTO(HojaDeVidaEntity hojaDeVidaEntity){
-        if(hojaDeVidaEntity!=null)
-        {
-            this.trayectoria = hojaDeVidaEntity.getTrayectoria();
-            this.fechaNacimiento = hojaDeVidaEntity.getFechaNacimiento();
-            this.email = hojaDeVidaEntity.getEmail();
-            this.telefono = hojaDeVidaEntity.getTelefono();
-            this.direccion = hojaDeVidaEntity.getDireccion();
-            this.formacion = hojaDeVidaEntity.getFormacion();
-        }
-    }
-    
-    public HojaDeVidaEntity toEntity(){
-        HojaDeVidaEntity hojaDeVida = new HojaDeVidaEntity();
-        
-            hojaDeVida.setTrayectoria(this.trayectoria);
-            hojaDeVida.setFechaNacimiento(this.fechaNacimiento);
-            hojaDeVida.setEmail(this.email);
-            hojaDeVida.setTelefono(this.telefono);
-            hojaDeVida.setDireccion(this.direccion);
-            hojaDeVida.setFormacion(formacion);
-            
-            return hojaDeVida;
-    }
-    
-     public String getTrayectoria() {
+
+    public String getTrayectoria() {
         return trayectoria;
     }
 
@@ -116,4 +88,5 @@ public class HojaDeVidaDTO implements Serializable{
         this.formacion = formacion;
     }
     
+  
 }
