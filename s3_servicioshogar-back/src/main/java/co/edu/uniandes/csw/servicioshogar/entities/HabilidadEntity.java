@@ -10,7 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import uk.co.jemos.podam.common.PodamExclude;
 
 /**
@@ -18,19 +18,20 @@ import uk.co.jemos.podam.common.PodamExclude;
  * @author estudiante
  */
 @Entity
-public class HabilidadEntity implements Serializable {
+public class HabilidadEntity extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    @PodamExclude
-    @OneToMany(mappedBy = "habilidad")
-    
     private String tipo;
+    
     private String descripcion;
-
+    
+    @PodamExclude
+    @ManyToOne
+    private PrestadorEntity prestador;
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
@@ -40,12 +41,20 @@ public class HabilidadEntity implements Serializable {
         this.descripcion = descripcion;
     }
 
+    public void setPrestador(PrestadorEntity prestador) {
+        this.prestador = prestador;
+    }
+
     public String getTipo() {
         return tipo;
     }
 
     public String getDescripcion() {
         return descripcion;
+    }
+
+    public PrestadorEntity getPrestador() {
+        return prestador;
     }
 
     public Long getId() {
