@@ -3,18 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package co.edu.uniandes.csw.servicioshogar.dtos;
+package co.edu.uniandes.csw.servicioshogar.entities;
 
-import co.edu.uniandes.csw.servicioshogar.entities.ReferenciaEntity;
 import java.io.Serializable;
+import java.util.Date;
+import javax.persistence.Entity;
 
 /**
  *
  * @author Daniela Rocha Torres
  */
-public class ReferenciaDTO implements Serializable {
-
-       
+@Entity
+public class ReferenciaEntity extends BaseEntity implements Serializable{
+          
     private String empresa;
     private String nombreRemitente;
     private int idRemitente;
@@ -23,36 +24,6 @@ public class ReferenciaDTO implements Serializable {
     private String email;
     private String parentesco;
     
-    public ReferenciaDTO(){
-        
-    }
-    
-    public ReferenciaDTO(ReferenciaEntity referenciaEntity) {
-        if(referenciaEntity!=null){
-            this.empresa = referenciaEntity.getEmpresa();
-            this.nombreRemitente = referenciaEntity.getNombreRemitente();
-            this.idRemitente = referenciaEntity.getIdRemitente();
-            this.telRemitente = referenciaEntity.getTelRemitente();
-            this.cargo = referenciaEntity.getCargo();
-            this.email = referenciaEntity.getEmail();
-            this.parentesco = referenciaEntity.getParentesco();
-                   
-        }
-    }
-    
-    public ReferenciaEntity toEntity(ReferenciaEntity referenciaEntity ){
-        ReferenciaEntity referencia = new ReferenciaEntity();
-        
-        referencia.setEmpresa(this.empresa);
-        referencia.setNombreRemitente(this.nombreRemitente);
-        referencia.setIdRemitente(this.idRemitente);
-        referencia.setTelRemitente(this.telRemitente);
-        referencia.setCargo(this.cargo);
-        referencia.setEmail(this.email);
-        referencia.setParentesco(this.parentesco);
-      
-        return referencia;
-    } 
     
     public String getEmpresa() {
         return empresa;
@@ -69,8 +40,8 @@ public class ReferenciaDTO implements Serializable {
     public void setNombreRemitente(String nombreRemitente) {
         this.nombreRemitente = nombreRemitente;
     }
-    
-    public int getIdRemitente(){
+
+        public int getIdRemitente(){
         return idRemitente;
     }
 
@@ -109,6 +80,4 @@ public class ReferenciaDTO implements Serializable {
     public void setParentesco(String parentesco) {
         this.parentesco = parentesco;
     }
-    
- 
 }
