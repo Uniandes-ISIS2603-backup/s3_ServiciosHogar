@@ -8,11 +8,14 @@ package co.edu.uniandes.csw.servicioshogar.entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import uk.co.jemos.podam.common.PodamExclude;
 
 /**
@@ -27,86 +30,45 @@ public class PrestadorEntity extends BaseEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    private String name;
-    
     private Integer cedula;
-
+    
+    private String nombre;
+    
     @PodamExclude
     @OneToMany(mappedBy = "prestador")
-    /**
-     * Lista de habilidades del prestador
-     */
-    private List<String>habilities = new ArrayList<String>();
-    
-    /**
-     * Hoja de vida del prestador
-     */
-    private String curriculumVitae = new String();
-    
-    /**
-     * Modifica el nombre del prestador
-     * @param name El nombre a cambiar
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
+    private List<HabilidadEntity> habilidades = new ArrayList<HabilidadEntity>();
 
-    /**
-     * Devuelve el nombre de la editorial
-     * @return El nombre
-     */
-    public String getName() {
-        return name;
-    }
-   
-    /**
-     * Modifica las habilidades del prestador
-     * @param habilities Nuevas habilidades
-     */
-    public void setHabilities(List<String> habilities) {
-        this.habilities = habilities;
-    }
-
-    /**
-     * Modifica la hoja de vida del prestador
-     * @param curriculumVitae Nueva hoja de vida
-     */
-    public void setCurriculumVitae(String curriculumVitae) {
-        this.curriculumVitae = curriculumVitae;
-    }
-
-    /**
-     * Devuelbe las habilidades del prestador
-     * @return Habilidades
-     */
-    public List<String> getHabilities() {
-        return habilities;
-    }
-
-    /**
-     * Devuelve la hoja de vida del prestador
-     * @return Hoja de vida
-     */
-    public String getCurriculumVitae() {
-        return curriculumVitae;
-    }
-    
-    /**
-     * Modifica la cédula.
-     * @param cedula Cédula nueva
-     */
     public void setCedula(Integer cedula) {
         this.cedula = cedula;
     }
 
-    /**
-     * Devuelve la cédula del prestador.
-     * @return La cédula
-     */
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setHabilidades(List<HabilidadEntity> habilidades) {
+        this.habilidades = habilidades;
+    }
+
     public Integer getCedula() {
         return cedula;
     }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public List<HabilidadEntity> getHabilidades() {
+        return habilidades;
+    }
     
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     @Override
     public int hashCode() {
@@ -130,7 +92,7 @@ public class PrestadorEntity extends BaseEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "co.edu.uniandes.csw.servicioshogar.entities.PrestadorEntity[ id=" + id + " ]";
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
     
 }

@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.servicioshogar.dtos;
 
+import co.edu.uniandes.csw.servicioshogar.entities.HabilidadEntity;
 import co.edu.uniandes.csw.servicioshogar.entities.PrestadorEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -18,11 +19,10 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  */
 public class PrestadorDetailDTO extends PrestadorDTO implements Serializable{
     
-    /**
+     /**
      * Lista de habilidades asociadas a un prestador.
      */
-    //TODO Cambiar por HabilidadDTO
-    private List<String> habilities;
+    private List<HabilidadDTO> habilities;
     
     /**
      * Constructor por defecto.
@@ -39,13 +39,12 @@ public class PrestadorDetailDTO extends PrestadorDTO implements Serializable{
         super(prestadorEntity);
         if(prestadorEntity != null)
         {
-            if(prestadorEntity.getHabilities()!= null)
+            if(prestadorEntity.getHabilidades()!= null)
                 {
                     habilities = new ArrayList<>();
-                    for(String entityHability : prestadorEntity.getHabilities())
+                    for(HabilidadEntity entityHability : prestadorEntity.getHabilidades())
                     {
-                        //TODO 
-                        habilities.add(entityHability);
+                      habilities.add(new HabilidadDTO(entityHability));
                     }
                 }
         }
@@ -55,13 +54,13 @@ public class PrestadorDetailDTO extends PrestadorDTO implements Serializable{
         PrestadorEntity prestadorEntity = super.toEntity();
         if(habilities != null)
         {
-            List<String> habilitiesEntity = new ArrayList<>();
-            for(String hability : habilities)
+            List<HabilidadEntity> habilitiesEntity = new ArrayList<>();
+            for(HabilidadDTO hability : habilities)
             {
-                habilitiesEntity.add(hability);
+                habilitiesEntity.add(hability.toEntity());
             }
             
-            prestadorEntity.setHabilities(habilitiesEntity);
+            prestadorEntity.setHabilidades(habilitiesEntity);
         }
         
         return prestadorEntity;
@@ -71,7 +70,7 @@ public class PrestadorDetailDTO extends PrestadorDTO implements Serializable{
      * Devuelbe las habilidades del prestador
      * @return Habilidades
      */
-    public List<String> getHabilities() {
+    public List<HabilidadDTO> getHabilities() {
         return habilities;
     }
     
@@ -79,7 +78,7 @@ public class PrestadorDetailDTO extends PrestadorDTO implements Serializable{
      * Modifica las habilidades del prestador
      * @param habilities Nuevas habilidades
      */
-    public void setHabilities(List<String> habilities) {
+    public void setHabilities(List<HabilidadDTO> habilities) {
         this.habilities = habilities;
     }
     

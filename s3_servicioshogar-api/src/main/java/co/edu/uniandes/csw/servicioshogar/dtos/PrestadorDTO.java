@@ -1,4 +1,3 @@
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -8,24 +7,24 @@ package co.edu.uniandes.csw.servicioshogar.dtos;
 
 import co.edu.uniandes.csw.servicioshogar.entities.PrestadorEntity;
 import java.io.Serializable;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  *
- * @author María José Ocampo Vargas
+ * @author estudiante
  */
-@Entity
 public class PrestadorDTO implements Serializable {
-
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    private String name;
+    private String nombre;
     
     private Integer cedula;
     
@@ -37,17 +36,17 @@ public class PrestadorDTO implements Serializable {
         if(prestadorEntity != null)
         {
             this.id = prestadorEntity.getId();
-            this.name = prestadorEntity.getName();
+            this.nombre = prestadorEntity.getNombre();
             this.cedula = prestadorEntity.getCedula();
         }
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public String getName() {
-        return name;
+    public String getNombre() {
+        return nombre;
     }
 
     public Long getId() {
@@ -66,7 +65,7 @@ public class PrestadorDTO implements Serializable {
     public PrestadorEntity toEntity() {
         PrestadorEntity prestadorEntity = new PrestadorEntity();
         prestadorEntity.setId(this.id);
-        prestadorEntity.setName(this.name);
+        prestadorEntity.setNombre(this.nombre);
         return prestadorEntity;
     }
 
@@ -92,7 +91,6 @@ public class PrestadorDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "co.edu.uniandes.csw.servicioshogar.dtos.PrestadorDTO[ id=" + id + " ]";
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
-    
 }
