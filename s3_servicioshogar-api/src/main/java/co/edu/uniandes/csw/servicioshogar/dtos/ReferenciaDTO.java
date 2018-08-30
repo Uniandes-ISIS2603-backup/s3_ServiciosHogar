@@ -17,6 +17,7 @@ public class ReferenciaDTO implements Serializable {
        
     private String empresa;
     private String nombreRemitente;
+    private int idRemitente;
     private int telRemitente;
     private String cargo;
     private String email;
@@ -30,6 +31,7 @@ public class ReferenciaDTO implements Serializable {
         if(referenciaEntity!=null){
             this.empresa = referenciaEntity.getEmpresa();
             this.nombreRemitente = referenciaEntity.getNombreRemitente();
+            this.idRemitente = referenciaEntity.getIdRemitente();
             this.telRemitente = referenciaEntity.getTelRemitente();
             this.cargo = referenciaEntity.getCargo();
             this.email = referenciaEntity.getEmail();
@@ -43,6 +45,7 @@ public class ReferenciaDTO implements Serializable {
         
         referencia.setEmpresa(this.empresa);
         referencia.setNombreRemitente(this.nombreRemitente);
+        referencia.setIdRemitente(this.idRemitente);
         referencia.setTelRemitente(this.telRemitente);
         referencia.setCargo(this.cargo);
         referencia.setEmail(this.email);
@@ -66,7 +69,15 @@ public class ReferenciaDTO implements Serializable {
     public void setNombreRemitente(String nombreRemitente) {
         this.nombreRemitente = nombreRemitente;
     }
+    
+    public int getIdRemitente(){
+        return idRemitente;
+    }
 
+    public void setIdRemitente(int idRemitente){
+        this.idRemitente = idRemitente;
+    }
+    
     public int getTelRemitente() {
         return telRemitente;
     }

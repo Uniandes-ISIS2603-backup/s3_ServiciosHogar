@@ -18,6 +18,7 @@ public class ReferenciaEntity extends BaseEntity implements Serializable{
           
     private String empresa;
     private String nombreRemitente;
+    private int idRemitente;
     private int telRemitente;
     private String cargo;
     private String email;
@@ -40,6 +41,14 @@ public class ReferenciaEntity extends BaseEntity implements Serializable{
         this.nombreRemitente = nombreRemitente;
     }
 
+        public int getIdRemitente(){
+        return idRemitente;
+    }
+
+    public void setIdRemitente(int idRemitente){
+        this.idRemitente = idRemitente;
+    }
+    
     public int getTelRemitente() {
         return telRemitente;
     }
