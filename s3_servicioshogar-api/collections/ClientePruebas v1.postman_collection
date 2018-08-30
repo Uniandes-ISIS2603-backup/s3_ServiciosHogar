@@ -1,0 +1,374 @@
+{
+	"id": "00f6840f-d6e5-4940-bf66-8fc4a4ca26d7",
+	"name": "ClientePruebas v1.",
+	"description": "Pruebas del cliente v1. No se probara ningun tipo de relacion ya que no se han realizado. Se realizaran pruebas basica como obtener todos los objetos, obtener un objeto especifico, modifica un objeto especifico y eliminar un objeto especifico para finalmente verificar que todo haya sido realizado correctamente.",
+	"auth": null,
+	"events": null,
+	"variables": [],
+	"order": [
+		"d1487b08-e33e-4bef-82c4-bbcc2b0abea8",
+		"5ce1bce2-a995-4a7b-84e2-9ccbeb0e8af3",
+		"01de3c2e-d826-4ffc-9233-ed7527e931a4",
+		"086db085-52b1-4c4f-bfcd-5dba435f9292",
+		"c2bc1847-c0ad-4971-993e-52294419ddaa",
+		"540737b9-216e-4fcc-bffb-f413ab75e3d8",
+		"fb2ac4d8-4b99-422b-8b17-f678571eb3bc",
+		"79422d11-e0e7-4bb8-901d-fd973179b46a",
+		"98e3fee2-c270-4b3f-98dc-7b905b63a56a",
+		"875f4453-da1b-4937-8743-7a8f656247e4",
+		"9739342b-1f2b-483a-9e40-1feb166eb293",
+		"8292abd5-d4b2-4f3e-acc2-12645938a746",
+		"a869a133-24ab-4cd7-9109-ffe60155b415",
+		"479b6602-7cb4-4827-b41b-34a9f1ff1a3e",
+		"07cf8e4e-8d6c-4321-8854-14f30eab0e92"
+	],
+	"folders_order": [],
+	"folders": [],
+	"requests": [
+		{
+			"id": "01de3c2e-d826-4ffc-9233-ed7527e931a4",
+			"name": "Crear un cliente #2",
+			"url": "http://localhost:8080/s3_servicioshogar-api/api/clientes",
+			"description": "Se crea un cliente enviando un json con la informacion del cliente.",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "{\n\t\"nombre\":\"Ejemplo #1\",\n\t\"direccion\":\"Direccion Ej #1\",\n\t\"correo\":\"ejemplo1@hotmail.com\"\n}",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "07cf8e4e-8d6c-4321-8854-14f30eab0e92",
+			"name": "Obtener los clientes #2",
+			"url": "http://localhost:8080/s3_servicioshogar-api/api/clientes",
+			"description": "Se realiza un request en el cual si no existen objetos devolvera un array vacio. En caso contrario mandara un json con los objetos presentes en el BD. En este caso deberia mostrarnos los mismos clientes demostrando que no se creo un objeto con informacion igual.",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "{\n\t\"nombre\":\"Carlos\",\n\t\"direccion\":\"AK\",\n\t\"correo\":\"carlos\"\n}",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "086db085-52b1-4c4f-bfcd-5dba435f9292",
+			"name": "Crear un cliente #3",
+			"url": "http://localhost:8080/s3_servicioshogar-api/api/clientes",
+			"description": "Se crea un cliente enviando un json con la informacion del cliente.",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "{\n\t\"nombre\":\"Ejemplo #2\",\n\t\"direccion\":\"Direccion Ej #2\",\n\t\"correo\":\"ejemplo2@hotmail.com\"\n}",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "479b6602-7cb4-4827-b41b-34a9f1ff1a3e",
+			"name": "Crear un cliente con mismo nombre que otro",
+			"url": "http://localhost:8080/s3_servicioshogar-api/api/clientes",
+			"description": "La app deberia retornar un mensaje diciendo que ya se creo un cliente con el mismo nombre y no lo ingresa en la base de datos",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "{\n\t\"nombre\":\"Carlos Eduardo Robles\",\n\t\"direccion\":\"AK72 #23 24\",\n\t\"correo\":\"carlos2705r2@hotmail.com\"\n}",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "540737b9-216e-4fcc-bffb-f413ab75e3d8",
+			"name": "Obtener cliente #2",
+			"url": "http://localhost:8080/s3_servicioshogar-api/api/clientes/2",
+			"description": "Verificacion de que el cliente haya sido guardado exitosamente y su id haya sido asignado automaticamente por la BD.",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "{\n\t\"nombre\":\"Ejemplo #2\",\n\t\"direccion\":\"Direccion Ej #2\",\n\t\"correo\":\"ejemplo2@hotmail.com\"\n}",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "5ce1bce2-a995-4a7b-84e2-9ccbeb0e8af3",
+			"name": "Crear un cliente #1",
+			"url": "http://localhost:8080/s3_servicioshogar-api/api/clientes",
+			"description": "Se crea un cliente enviando un json con la informacion del cliente. ",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "{\n\t\"nombre\":\"Carlos Eduardo Robles\",\n\t\"direccion\":\"AK72 #23 24\",\n\t\"correo\":\"carlos2705r2@hotmail.com\"\n}",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "79422d11-e0e7-4bb8-901d-fd973179b46a",
+			"name": "Obtener cliente #4",
+			"url": "http://localhost:8080/s3_servicioshogar-api/api/clientes/4",
+			"description": "Debido a que no se creo cliente #4, la app deberia devolver un mensaje informando que ese cliente no se creo.",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "{\n\t\"nombre\":\"Ejemplo #2\",\n\t\"direccion\":\"Direccion Ej #2\",\n\t\"correo\":\"ejemplo2@hotmail.com\"\n}",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "8292abd5-d4b2-4f3e-acc2-12645938a746",
+			"name": "Eliminar cliente #3",
+			"url": "http://localhost:8080/s3_servicioshogar-api/api/clientes/3",
+			"description": "Se elimina el cliente #3 de la base de datos",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"method": "DELETE",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "{\n\t\"nombre\":\"Ejemplo #2\",\n\t\"direccion\":\"Direccion Ej #2\",\n\t\"correo\":\"ejemplo2@hotmail.com\"\n}",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "875f4453-da1b-4937-8743-7a8f656247e4",
+			"name": "Modificar cliente #3",
+			"url": "http://localhost:8080/s3_servicioshogar-api/api/clientes/3",
+			"description": "Se modifica el cliente #3 de tal forma que podamos confirmar que el cambio se puede realizar",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"method": "PUT",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "{\n\t\"nombre\":\"Ejemplo #3\",\n\t\"direccion\":\"Direccion Ej #2\",\n\t\"correo\":\"ejemplo2@hotmail.com\"\n}",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "9739342b-1f2b-483a-9e40-1feb166eb293",
+			"name": "Verificacion cliente #3 fue modificado",
+			"url": "http://localhost:8080/s3_servicioshogar-api/api/clientes/3",
+			"description": "Llamamos al objeto en la BD para verificar doblemente que el cliente haya sido modificado",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "{\n\t\"nombre\":\"Ejemplo #2\",\n\t\"direccion\":\"Direccion Ej #2\",\n\t\"correo\":\"ejemplo2@hotmail.com\"\n}",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "98e3fee2-c270-4b3f-98dc-7b905b63a56a",
+			"name": "Verificacion todos los clientes fueron creados",
+			"url": "http://localhost:8080/s3_servicioshogar-api/api/clientes",
+			"description": "Se obtiene un json con todos los clientes creados anteriormente para verificar que todo se haya realizado correctamente.",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "{\n\t\"nombre\":\"Ejemplo #2\",\n\t\"direccion\":\"Direccion Ej #2\",\n\t\"correo\":\"ejemplo2@hotmail.com\"\n}",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "a869a133-24ab-4cd7-9109-ffe60155b415",
+			"name": "Verificacion cliente #3 fue eliminado exitosamente",
+			"url": "http://localhost:8080/s3_servicioshogar-api/api/clientes",
+			"description": "Deberia devolver todos los objetos de la BD demostrando que el cliente #3 ya no existe o fue eliminado.",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "{\n\t\"nombre\":\"Ejemplo #2\",\n\t\"direccion\":\"Direccion Ej #2\",\n\t\"correo\":\"ejemplo2@hotmail.com\"\n}",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "c2bc1847-c0ad-4971-993e-52294419ddaa",
+			"name": "Obtener cliente #1",
+			"url": "http://localhost:8080/s3_servicioshogar-api/api/clientes/1",
+			"description": "Verificacion de que el cliente haya sido guardado exitosamente y su id haya sido asignado automaticamente por la BD.",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "{\n\t\"nombre\":\"Ejemplo #2\",\n\t\"direccion\":\"Direccion Ej #2\",\n\t\"correo\":\"ejemplo2@hotmail.com\"\n}",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "d1487b08-e33e-4bef-82c4-bbcc2b0abea8",
+			"name": "Obtener los clientes",
+			"url": "http://localhost:8080/s3_servicioshogar-api/api/clientes",
+			"description": "Se realiza un request en el cual si no existen objetos devolvera un array vacio. En caso contrario mandara un json con los objetos presentes en el BD.",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "{\n\t\"nombre\":\"Carlos\",\n\t\"direccion\":\"AK\",\n\t\"correo\":\"carlos\"\n}",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "fb2ac4d8-4b99-422b-8b17-f678571eb3bc",
+			"name": "Obtener cliente #3",
+			"url": "http://localhost:8080/s3_servicioshogar-api/api/clientes/3",
+			"description": "Verificacion de que el cliente haya sido guardado exitosamente y su id haya sido asignado automaticamente por la BD.",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [],
+			"folder": null,
+			"rawModeData": "{\n\t\"nombre\":\"Ejemplo #2\",\n\t\"direccion\":\"Direccion Ej #2\",\n\t\"correo\":\"ejemplo2@hotmail.com\"\n}",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		}
+	]
+}
