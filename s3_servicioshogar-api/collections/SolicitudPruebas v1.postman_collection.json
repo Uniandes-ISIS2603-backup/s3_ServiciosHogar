@@ -1,0 +1,442 @@
+{
+	"info": {
+		"_postman_id": "fade52e9-e095-4b20-bec7-a6e4c66ac2f0",
+		"name": "SolicitudPruebas v1",
+		"description": "Pruebas de solicitudes v1. No se probara ningun tipo de relacion ya que no se han realizado. Se realizaran pruebas basica como obtener todos los objetos, obtener un objeto especifico, modifica un objeto especifico y eliminar un objeto especifico para finalmente verificar que todo haya sido realizado correctamente.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Obtener las solicitudes",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\":\"Carlos\",\n\t\"direccion\":\"AK\",\n\t\"correo\":\"carlos\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/s3_servicioshogar-api/api/solicitudes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"solicitudes"
+					]
+				},
+				"description": "Se realiza un request en el cual si no existen objetos devolvera un array vacio. En caso contrario mandara un json con los objetos presentes en el BD."
+			},
+			"response": []
+		},
+		{
+			"name": "Crear una solicitud #1",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"fecha\": \"25/12/2018\",\n\t\"direccion\": \"Cale 11 No. 11-11\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/s3_servicioshogar-api/api/solicitudes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"solicitudes"
+					]
+				},
+				"description": "Se crea una solicitud enviando un json con la informacion de la solicitud. "
+			},
+			"response": []
+		},
+		{
+			"name": "Crear una solicitud #2",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"fecha\": \"17/4/2018\",\n\t\"direccion\": \"Cale 22 No. 22-22\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/s3_servicioshogar-api/api/solicitudes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"solicitudes"
+					]
+				},
+				"description": "Se crea una solicitud enviando un json con la informacion de la solicitud."
+			},
+			"response": []
+		},
+		{
+			"name": "Crear una solicitud #3",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"fecha\": \"7/8/2018\",\n\t\"direccion\": \"Cale 33 No. 33-33\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/s3_servicioshogar-api/api/solicitudes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"solicitudes"
+					]
+				},
+				"description": "Se crea una solicitud enviando un json con la informacion de la solicitud."
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener solicitud #1",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\":\"Ejemplo #2\",\n\t\"direccion\":\"Direccion Ej #2\",\n\t\"correo\":\"ejemplo2@hotmail.com\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/s3_servicioshogar-api/api/solicitudes/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"solicitudes",
+						"1"
+					]
+				},
+				"description": "Verificacion de que la solicitud haya sido guardado exitosamente y su id haya sido asignado automaticamente por la BD."
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener solicitud #2",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\":\"Ejemplo #2\",\n\t\"direccion\":\"Direccion Ej #2\",\n\t\"correo\":\"ejemplo2@hotmail.com\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/s3_servicioshogar-api/api/solicitud/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"solicitud",
+						"2"
+					]
+				},
+				"description": "Verificacion de que la solicitud haya sido guardado exitosamente y su id haya sido asignado automaticamente por la BD."
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener solicitud #3",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\":\"Ejemplo #2\",\n\t\"direccion\":\"Direccion Ej #2\",\n\t\"correo\":\"ejemplo2@hotmail.com\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/s3_servicioshogar-api/api/solicitudes/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"solicitudes",
+						"3"
+					]
+				},
+				"description": "Verificacion de que la solicitud haya sido guardado exitosamente y su id haya sido asignado automaticamente por la BD."
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener solicitud #4",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\":\"Ejemplo #2\",\n\t\"direccion\":\"Direccion Ej #2\",\n\t\"correo\":\"ejemplo2@hotmail.com\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/s3_servicioshogar-api/api/solicitudes/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"solicitudes",
+						"4"
+					]
+				},
+				"description": "Debido a que no se creo solicitud #4, la app deberia devolver un mensaje informando que esa soliciyud no se creo."
+			},
+			"response": []
+		},
+		{
+			"name": "Verificacion todas las solicitud fueron creadas",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\":\"Ejemplo #2\",\n\t\"direccion\":\"Direccion Ej #2\",\n\t\"correo\":\"ejemplo2@hotmail.com\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/s3_servicioshogar-api/api/solicitudes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"solicitudes"
+					]
+				},
+				"description": "Se obtiene un json con todas las solicitudes creadas anteriormente para verificar que todo se haya realizado correctamente."
+			},
+			"response": []
+		},
+		{
+			"name": "Modificar solicitud #3",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"fecha\": \"24/10/2018\",\n\t\"direccion\": \"Cale 44 No. 44-44\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/s3_servicioshogar-api/api/solicitudes/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"solicitudes",
+						"3"
+					]
+				},
+				"description": "Se modifica la solicitud #3 de tal forma que podamos confirmar que el cambio se puede realizar"
+			},
+			"response": []
+		},
+		{
+			"name": "Verificacion solicitud #3 fue modificado",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\":\"Ejemplo #2\",\n\t\"direccion\":\"Direccion Ej #2\",\n\t\"correo\":\"ejemplo2@hotmail.com\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/s3_servicioshogar-api/api/solicitudes/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"solicitudes",
+						"3"
+					]
+				},
+				"description": "Llamamos al objeto en la BD para verificar doblemente que la solicitud haya sido modificado"
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar solicitud #3",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/s3_servicioshogar-api/api/solicitudes/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"solicitudes",
+						"3"
+					]
+				},
+				"description": "Se elimina la solicitud #3 de la base de datos"
+			},
+			"response": []
+		},
+		{
+			"name": "Verificacion solicitud #3 fue eliminada exitosamente",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\":\"Ejemplo #2\",\n\t\"direccion\":\"Direccion Ej #2\",\n\t\"correo\":\"ejemplo2@hotmail.com\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/s3_servicioshogar-api/api/solicitudes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"solicitudes"
+					]
+				},
+				"description": "Deberia devolver todos los objetos de la BD demostrando que la solicitud #3 ya no existe o fue eliminado."
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "aa22370a-d444-45cd-97f1-3973a4129996",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "210e8fc9-7e28-4fc5-947d-0a30efbb91dd",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

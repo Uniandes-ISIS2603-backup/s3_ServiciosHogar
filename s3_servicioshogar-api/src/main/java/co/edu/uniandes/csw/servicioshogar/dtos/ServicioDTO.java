@@ -10,6 +10,22 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
+ * Al serializarse como JSON esta clase implementa el siguiente modelo: <br>
+ * <pre>
+ *   {
+ *      "descripcion": string,
+ *      "requerimientos": string,
+ *      "calificacion": number
+ *   }
+ * </pre> Por ejemplo una editorial se representa asi:<br>
+ *
+ * <pre>
+ *   {
+ *      "descripción": "Cambiar las cerraduras de tres puertas",
+        "requerimientos": "CERRAJERIA",
+        "calificación": "4"
+ *   }
+ * </pre>
  *
  * @author Steven Tarazona <ys.tarazona@uniandes.edu.co>
  */
@@ -19,9 +35,18 @@ public class ServicioDTO {
     private String descripcion, requerimientos;
     private Double calificacion;
     
+    /**
+     * Constructor por defecto.
+     */
     public ServicioDTO() {
     }
     
+    /**
+     * Conviertir Entity a DTO (Crea un nuevo DTO con los valores que recibe en
+     * la entidad que viene de argumento.
+     *
+     * @param servicioEntity: Es la entidad que se va a convertir a DTO
+     */
     public ServicioDTO(ServicioEntity servicioEntity){
         if(servicioEntity!=null){
             this.id=servicioEntity.getId();
@@ -31,39 +56,76 @@ public class ServicioDTO {
         }
     }
 
+    /**
+     * Devuelve el ID del servicio.
+     * @return ID del servicio.
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * Modifica el ID del servicio.
+     * @param id. Nuevo ID.
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     * Devuelve la descripcion del servicio.
+     * @return descripcion del servicio.
+     */
     public String getDescripcion() {
         return descripcion;
     }
 
+    /**
+     * Modificar la descripcion del servicio.
+     * @param descripcion. Nueva descripcion.
+     */
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
 
+    /**
+     * Devuelve los requerimientos del servicio.
+     * @return requerimientos del servicio.
+     */
     public String getRequerimientos() {
         return requerimientos;
     }
 
+    /**
+     * Modifica los requerimientos del servicio.
+     * @param requerimientos. Nuevos requerimientos.
+     */
     public void setRequerimientos(String requerimientos) {
         this.requerimientos = requerimientos;
     }
 
+    /**
+     * Devuelve la calificion del servicio.
+     * @return calificion del servicio.
+     */
     public Double getCalificacion() {
         return calificacion;
     }
 
+    /**
+     * Modifica la calificacion del servicio
+     * @param calificacion. Nueva calificacion.
+     */
     public void setCalificacion(Double calificacion) {
         this.calificacion = calificacion;
     }
     
-    public ServicioEntity toenEntity(){
+        /**
+     * Convertir DTO a Entity
+     *
+     * @return Un Entity con los valores del DTO
+     */
+    public ServicioEntity toEntity(){
         ServicioEntity servicioEntity = new ServicioEntity();
         servicioEntity.setId(this.id);
         servicioEntity.setDescripcion(this.descripcion);

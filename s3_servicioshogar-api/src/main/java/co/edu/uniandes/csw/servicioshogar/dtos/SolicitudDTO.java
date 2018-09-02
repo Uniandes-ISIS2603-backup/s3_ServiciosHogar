@@ -11,63 +11,104 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
+ * Al serializarse como JSON esta clase implementa el siguiente modelo: <br>
+ * <pre>
+ *   {
+ *      "fecha": string,
+ *      "direccion": string
+ *   }
+ * </pre> Por ejemplo una editorial se representa asi:<br>
+ *
+ * <pre>
+ *   {
+ *      "fecha": "25/12/2018",
+ *      "dirección": "Cale 22 No. 22-22",
+ *   }
+ * </pre>
  *
  * @author Steven Tarazona <ys.tarazona@uniandes.edu.co>
  */
 public class SolicitudDTO implements Serializable{
     
     private Long id;
-    private Integer noSolicitud;
     private String fecha, direccion;
 
+    /**
+     * Constructor por defecto.
+     */
     public SolicitudDTO() {
     }
     
+    /**
+     * Conviertir Entity a DTO (Crea un nuevo DTO con los valores que recibe en
+     * la entidad que viene de argumento.
+     *
+     * @param solicitudEntity: Es la entidad que se va a convertir a DTO
+     */
     public SolicitudDTO(SolicitudEntity solicitudEntity){
         if(solicitudEntity!=null){
             this.id=solicitudEntity.getId();
-            this.noSolicitud=solicitudEntity.getNoSolicitud();
             this.fecha=solicitudEntity.getFecha();
             this.direccion=solicitudEntity.getDireccion();
         }
     }
 
+    /**
+     * Devuelve el ID de la solicitud.
+     * @return ID de la solicitud.
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * Modifica el ID de la solicitud.
+     * @param id. nuevo ID.
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
-    public Integer getNoSolicitud() {
-        return noSolicitud;
-    }
-
-    public void setNoSolicitud(Integer noSolicitud) {
-        this.noSolicitud = noSolicitud;
-    }
-
+    /**
+     * Devuelve la fecha de la solicitud.
+     * @return fecha de la solicitud.
+     */
     public String getFecha() {
         return fecha;
     }
 
+    /**
+     * Modifica la fecha de la solicitud.
+     * @param fecha. nueva fecha.
+     */
     public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 
+    /**
+     * Devuelve la dirrecion de la solicitud.
+     * @return direccion de la solicitud
+     */
     public String getDireccion() {
         return direccion;
     }
 
+    /**
+     * Modifica la direccion de la solicitud
+     * @param direccion. nueva direccion.
+     */
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
     
-    public SolicitudEntity toenEntity(){
+    /**
+     * Convertir DTO a Entity
+     *
+     * @return Un Entity con los valores del DTO
+     */
+    public SolicitudEntity toEntity(){
         SolicitudEntity solicitudEntity = new SolicitudEntity();
         solicitudEntity.setId(this.id);
-        solicitudEntity.setNoSolicitud(this.noSolicitud);
         solicitudEntity.setDireccion(this.direccion);
         solicitudEntity.setFecha(this.fecha);
         return solicitudEntity;
