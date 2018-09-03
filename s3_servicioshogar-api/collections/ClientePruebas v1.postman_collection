@@ -6,21 +6,21 @@
 	"events": null,
 	"variables": [],
 	"order": [
-		"d1487b08-e33e-4bef-82c4-bbcc2b0abea8",
-		"5ce1bce2-a995-4a7b-84e2-9ccbeb0e8af3",
 		"01de3c2e-d826-4ffc-9233-ed7527e931a4",
+		"07cf8e4e-8d6c-4321-8854-14f30eab0e92",
 		"086db085-52b1-4c4f-bfcd-5dba435f9292",
-		"c2bc1847-c0ad-4971-993e-52294419ddaa",
+		"479b6602-7cb4-4827-b41b-34a9f1ff1a3e",
 		"540737b9-216e-4fcc-bffb-f413ab75e3d8",
-		"fb2ac4d8-4b99-422b-8b17-f678571eb3bc",
+		"5ce1bce2-a995-4a7b-84e2-9ccbeb0e8af3",
 		"79422d11-e0e7-4bb8-901d-fd973179b46a",
-		"98e3fee2-c270-4b3f-98dc-7b905b63a56a",
+		"8292abd5-d4b2-4f3e-acc2-12645938a746",
 		"875f4453-da1b-4937-8743-7a8f656247e4",
 		"9739342b-1f2b-483a-9e40-1feb166eb293",
-		"8292abd5-d4b2-4f3e-acc2-12645938a746",
+		"98e3fee2-c270-4b3f-98dc-7b905b63a56a",
 		"a869a133-24ab-4cd7-9109-ffe60155b415",
-		"479b6602-7cb4-4827-b41b-34a9f1ff1a3e",
-		"07cf8e4e-8d6c-4321-8854-14f30eab0e92"
+		"c2bc1847-c0ad-4971-993e-52294419ddaa",
+		"d1487b08-e33e-4bef-82c4-bbcc2b0abea8",
+		"fb2ac4d8-4b99-422b-8b17-f678571eb3bc"
 	],
 	"folders_order": [],
 	"folders": [],
@@ -42,7 +42,18 @@
 			"pathVariableData": [],
 			"queryParams": [],
 			"auth": null,
-			"events": [],
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "546e2288-8306-44fa-8e0d-400c53704ceb",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"status code is 204\"]= responseCode.code === 200"
+						]
+					}
+				}
+			],
 			"folder": null,
 			"rawModeData": "{\n\t\"nombre\":\"Ejemplo #1\",\n\t\"direccion\":\"Direccion Ej #1\",\n\t\"correo\":\"ejemplo1@hotmail.com\"\n}",
 			"headers": "Content-Type: application/json\n",
@@ -65,7 +76,18 @@
 			"pathVariableData": [],
 			"queryParams": [],
 			"auth": null,
-			"events": [],
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6d88ed2b-8583-419a-b556-2eb96dd86cf2",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"status code is 204\"]= responseCode.code === 200"
+						]
+					}
+				}
+			],
 			"folder": null,
 			"rawModeData": "{\n\t\"nombre\":\"Carlos\",\n\t\"direccion\":\"AK\",\n\t\"correo\":\"carlos\"\n}",
 			"headers": "Content-Type: application/json\n",
@@ -88,7 +110,18 @@
 			"pathVariableData": [],
 			"queryParams": [],
 			"auth": null,
-			"events": [],
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c4348151-774c-4430-9e4e-a9c9e8b1fadb",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"status code is 204\"]= responseCode.code === 200"
+						]
+					}
+				}
+			],
 			"folder": null,
 			"rawModeData": "{\n\t\"nombre\":\"Ejemplo #2\",\n\t\"direccion\":\"Direccion Ej #2\",\n\t\"correo\":\"ejemplo2@hotmail.com\"\n}",
 			"headers": "Content-Type: application/json\n",
@@ -111,7 +144,18 @@
 			"pathVariableData": [],
 			"queryParams": [],
 			"auth": null,
-			"events": [],
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0de47e7e-e61e-43ae-9a5e-d6e87b397dd0",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"status code is 204\"]= responseCode.code === 200"
+						]
+					}
+				}
+			],
 			"folder": null,
 			"rawModeData": "{\n\t\"nombre\":\"Carlos Eduardo Robles\",\n\t\"direccion\":\"AK72 #23 24\",\n\t\"correo\":\"carlos2705r2@hotmail.com\"\n}",
 			"headers": "Content-Type: application/json\n",
@@ -134,7 +178,18 @@
 			"pathVariableData": [],
 			"queryParams": [],
 			"auth": null,
-			"events": [],
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "89aa41f9-085b-4e48-a952-b29dd42ccd10",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"status code is 204\"]= responseCode.code === 200"
+						]
+					}
+				}
+			],
 			"folder": null,
 			"rawModeData": "{\n\t\"nombre\":\"Ejemplo #2\",\n\t\"direccion\":\"Direccion Ej #2\",\n\t\"correo\":\"ejemplo2@hotmail.com\"\n}",
 			"headers": "Content-Type: application/json\n",
@@ -157,7 +212,18 @@
 			"pathVariableData": [],
 			"queryParams": [],
 			"auth": null,
-			"events": [],
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "071d93d7-2d6f-4401-bb62-75dd7fd3aa1c",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"status code is 204\"]= responseCode.code === 200"
+						]
+					}
+				}
+			],
 			"folder": null,
 			"rawModeData": "{\n\t\"nombre\":\"Carlos Eduardo Robles\",\n\t\"direccion\":\"AK72 #23 24\",\n\t\"correo\":\"carlos2705r2@hotmail.com\"\n}",
 			"headers": "Content-Type: application/json\n",
@@ -180,7 +246,18 @@
 			"pathVariableData": [],
 			"queryParams": [],
 			"auth": null,
-			"events": [],
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bb314daf-735a-49c7-9688-14d5da01fb2d",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"status code is 204\"]= responseCode.code === 200"
+						]
+					}
+				}
+			],
 			"folder": null,
 			"rawModeData": "{\n\t\"nombre\":\"Ejemplo #2\",\n\t\"direccion\":\"Direccion Ej #2\",\n\t\"correo\":\"ejemplo2@hotmail.com\"\n}",
 			"headers": "Content-Type: application/json\n",
@@ -189,7 +266,7 @@
 		{
 			"id": "8292abd5-d4b2-4f3e-acc2-12645938a746",
 			"name": "Eliminar cliente #3",
-			"url": "http://localhost:8080/s3_servicioshogar-api/api/clientes/3",
+			"url": "http://localhost:8080/s3_servicioshogar-api/api/clientes/4",
 			"description": "Se elimina el cliente #3 de la base de datos",
 			"data": [],
 			"dataMode": "raw",
@@ -203,9 +280,20 @@
 			"pathVariableData": [],
 			"queryParams": [],
 			"auth": null,
-			"events": [],
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "282a30af-deb0-4175-9802-934b77287c4a",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"status code is 204\"]= responseCode.code === 204"
+						]
+					}
+				}
+			],
 			"folder": null,
-			"rawModeData": "{\n\t\"nombre\":\"Ejemplo #2\",\n\t\"direccion\":\"Direccion Ej #2\",\n\t\"correo\":\"ejemplo2@hotmail.com\"\n}",
+			"rawModeData": "",
 			"headers": "Content-Type: application/json\n",
 			"pathVariables": {}
 		},
@@ -226,7 +314,18 @@
 			"pathVariableData": [],
 			"queryParams": [],
 			"auth": null,
-			"events": [],
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f94f1c45-5958-4906-8bec-aa1a3ccd65fa",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"status code is 204\"]= responseCode.code === 200"
+						]
+					}
+				}
+			],
 			"folder": null,
 			"rawModeData": "{\n\t\"nombre\":\"Ejemplo #3\",\n\t\"direccion\":\"Direccion Ej #2\",\n\t\"correo\":\"ejemplo2@hotmail.com\"\n}",
 			"headers": "Content-Type: application/json\n",
@@ -249,7 +348,18 @@
 			"pathVariableData": [],
 			"queryParams": [],
 			"auth": null,
-			"events": [],
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c8459511-b494-4493-bd29-95691cc188c9",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"status code is 204\"]= responseCode.code === 200"
+						]
+					}
+				}
+			],
 			"folder": null,
 			"rawModeData": "{\n\t\"nombre\":\"Ejemplo #2\",\n\t\"direccion\":\"Direccion Ej #2\",\n\t\"correo\":\"ejemplo2@hotmail.com\"\n}",
 			"headers": "Content-Type: application/json\n",
@@ -272,7 +382,18 @@
 			"pathVariableData": [],
 			"queryParams": [],
 			"auth": null,
-			"events": [],
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "67e94f47-2a0a-4fed-9853-a37c53d3cc73",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"status code is 204\"]= responseCode.code === 200"
+						]
+					}
+				}
+			],
 			"folder": null,
 			"rawModeData": "{\n\t\"nombre\":\"Ejemplo #2\",\n\t\"direccion\":\"Direccion Ej #2\",\n\t\"correo\":\"ejemplo2@hotmail.com\"\n}",
 			"headers": "Content-Type: application/json\n",
@@ -295,7 +416,18 @@
 			"pathVariableData": [],
 			"queryParams": [],
 			"auth": null,
-			"events": [],
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "98bd2cca-4c63-421c-a4a4-bc5afc56d269",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"status code is 204\"]= responseCode.code === 200"
+						]
+					}
+				}
+			],
 			"folder": null,
 			"rawModeData": "{\n\t\"nombre\":\"Ejemplo #2\",\n\t\"direccion\":\"Direccion Ej #2\",\n\t\"correo\":\"ejemplo2@hotmail.com\"\n}",
 			"headers": "Content-Type: application/json\n",
@@ -318,7 +450,18 @@
 			"pathVariableData": [],
 			"queryParams": [],
 			"auth": null,
-			"events": [],
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bf17ce3a-f483-4c91-9920-c0be936525fb",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"status code is 204\"]= responseCode.code === 200"
+						]
+					}
+				}
+			],
 			"folder": null,
 			"rawModeData": "{\n\t\"nombre\":\"Ejemplo #2\",\n\t\"direccion\":\"Direccion Ej #2\",\n\t\"correo\":\"ejemplo2@hotmail.com\"\n}",
 			"headers": "Content-Type: application/json\n",
@@ -341,7 +484,18 @@
 			"pathVariableData": [],
 			"queryParams": [],
 			"auth": null,
-			"events": [],
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "de6b8bb4-a4de-46d9-b1bc-25161d931365",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"status code is 204\"]= responseCode.code === 200"
+						]
+					}
+				}
+			],
 			"folder": null,
 			"rawModeData": "{\n\t\"nombre\":\"Carlos\",\n\t\"direccion\":\"AK\",\n\t\"correo\":\"carlos\"\n}",
 			"headers": "Content-Type: application/json\n",
@@ -364,7 +518,18 @@
 			"pathVariableData": [],
 			"queryParams": [],
 			"auth": null,
-			"events": [],
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "053b40b8-7144-4086-9880-b43337ebe179",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"status code is 204\"]= responseCode.code === 200"
+						]
+					}
+				}
+			],
 			"folder": null,
 			"rawModeData": "{\n\t\"nombre\":\"Ejemplo #2\",\n\t\"direccion\":\"Direccion Ej #2\",\n\t\"correo\":\"ejemplo2@hotmail.com\"\n}",
 			"headers": "Content-Type: application/json\n",
