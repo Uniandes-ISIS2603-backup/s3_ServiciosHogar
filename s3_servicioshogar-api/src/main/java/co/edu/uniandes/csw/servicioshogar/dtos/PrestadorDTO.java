@@ -41,6 +41,14 @@ public class PrestadorDTO implements Serializable {
         }
     }
 
+    public void setCedula(Integer cedula) {
+        this.cedula = cedula;
+    }
+
+    public Integer getCedula() {
+        return cedula;
+    }
+
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
