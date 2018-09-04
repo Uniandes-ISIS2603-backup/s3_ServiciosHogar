@@ -12,7 +12,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  *
- * @author estudiante
+ * @author Adriana Trujillo
  */
 public class TarjetaCreditoDTO implements Serializable{
     //-------------------Atributos------------------------//
@@ -74,6 +74,7 @@ public class TarjetaCreditoDTO implements Serializable{
         return tarjetaEntity;
     }
     
+    @Override
     public String toString()
     {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);

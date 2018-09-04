@@ -6,11 +6,13 @@
 package co.edu.uniandes.csw.servicioshogar.entities;
 
 import java.io.Serializable;
+import javax.persistence.Entity;
 
 /**
  *
  * @author Adriana Trujillo
  */
+@Entity
 public class TarjetaCreditoEntity extends BaseEntity implements Serializable {
     
     //--------------------Atributos-------------------//

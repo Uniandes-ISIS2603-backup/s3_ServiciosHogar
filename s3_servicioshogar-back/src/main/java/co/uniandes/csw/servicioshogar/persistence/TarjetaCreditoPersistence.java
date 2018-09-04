@@ -9,6 +9,7 @@ import co.edu.uniandes.csw.servicioshogar.entities.TarjetaCreditoEntity;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -17,6 +18,7 @@ import javax.persistence.TypedQuery;
  *
  * @author Adriana Trujillo
  */
+@Stateless
 public class TarjetaCreditoPersistence {
     //---------------Atributos-------------------//
     private static final Logger LOGGER = Logger.getLogger(TarjetaCreditoPersistence.class.getName());
@@ -41,8 +43,8 @@ public class TarjetaCreditoPersistence {
     }
     
     /**
-     * Devuelve una lista con todos los clientes en la BD.
-     * @return una lista con todos los clientes que se encuentren en la BD.
+     * Devuelve una lista con todas las tarjetas de credito en la BD.
+     * @return una lista con todas las tarjetas de credito que se encuentren en la BD.
      */
     public List<TarjetaCreditoEntity> findAll()
     {
@@ -77,7 +79,7 @@ public class TarjetaCreditoPersistence {
     
     /**
      * Borra un cliente identificado con el 'id' ingresado por parametro de la BD.
-     * @param clientesId. Id del cliente a borrar.
+     * @param titular. Titular de tarjeta de credito a borrar.
      */
     public void delete(String titular)
     {
@@ -88,17 +90,16 @@ public class TarjetaCreditoPersistence {
     }
     
     /**
-     * Busca si existe un cliente con el nombre enviado por parametro.
-     * @param nombre. Nombre del cliente a buscar.
+     * Busca si existe una tarjeta de credito con el numero enviado por parametro.
+     * @param numero. Numero de la tarjeta de credito a buscar.
      * @return cliente con el nombre correspondiente. Null en caso de no encontrarlo
      */
     public TarjetaCreditoEntity findByName(Integer numero) 
     {
         LOGGER.log(Level.INFO, "Consultando cliente por nombre ", numero);
-        /*Se crea un query para buscar editoriales con el nombre que recibe el método como argumento.
-        ":name" es un placeholder que debe ser remplazado*/
+        /*Se crea un query para buscar editoriales con el nombre que recibe el método como argumento.*/
         TypedQuery query = em.createQuery("Select e From ClienteEntity e where e.nombre = :nombre", TarjetaCreditoEntity.class);
-        /*Se remplaza el placeholder ":name" con el valor del argumento */
+        
         query = query.setParameter("nombre", numero);
         /*Se invoca el query se obtiene la lista resultado*/
         List<TarjetaCreditoEntity> sameName = query.getResultList();
