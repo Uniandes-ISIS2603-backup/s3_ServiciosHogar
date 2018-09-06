@@ -56,13 +56,13 @@ public class TarjetaCreditoPersistence {
     
     /**
      * Devuelve una tarjeta de crédito identificada por el parametro ingresado.
-     * @param titular. Titular de la tarjeta de credito.
+     * @param tarjetaId. Titular de la tarjeta de credito.
      * @return TarjetaCreditoEntity.
      */
-    public TarjetaCreditoEntity find(String titular)
+    public TarjetaCreditoEntity find(Long tarjetaId)
     {
-        LOGGER.log(Level.INFO, "Consultando cliente con id={0}", titular);
-        return em.find(TarjetaCreditoEntity.class, titular);
+        LOGGER.log(Level.INFO, "", tarjetaId);
+        return em.find(TarjetaCreditoEntity.class, tarjetaId);
     }
     
     /**
@@ -79,14 +79,14 @@ public class TarjetaCreditoPersistence {
     
     /**
      * Borra un cliente identificado con el 'id' ingresado por parametro de la BD.
-     * @param titular. Titular de tarjeta de credito a borrar.
+     * @param tarjetaId. Titular de tarjeta de credito a borrar.
      */
-    public void delete(String titular)
+    public void delete(String tarjetaId)
     {
-        LOGGER.log(Level.INFO, "Borrando cliente con id = {0}", titular);
-        TarjetaCreditoEntity entity = em.find(TarjetaCreditoEntity.class, titular);
+        LOGGER.log(Level.INFO, "Borrando cliente con id = {0}", tarjetaId);
+        TarjetaCreditoEntity entity = em.find(TarjetaCreditoEntity.class, tarjetaId);
         em.remove(entity);
-        LOGGER.log(Level.INFO, "Saliendo de borrar el cliente con id = {0}", titular);
+        LOGGER.log(Level.INFO, "Saliendo de borrar el cliente con id = {0}", tarjetaId);
     }
     
     /**
@@ -94,13 +94,13 @@ public class TarjetaCreditoPersistence {
      * @param numero. Numero de la tarjeta de credito a buscar.
      * @return cliente con el nombre correspondiente. Null en caso de no encontrarlo
      */
-    public TarjetaCreditoEntity findByName(Integer numero) 
+    public TarjetaCreditoEntity findByNumber(Integer numero) 
     {
-        LOGGER.log(Level.INFO, "Consultando cliente por nombre ", numero);
+        LOGGER.log(Level.INFO, "Consultando tarjeta credito por numero ", numero);
         /*Se crea un query para buscar editoriales con el nombre que recibe el método como argumento.*/
-        TypedQuery query = em.createQuery("Select e From ClienteEntity e where e.nombre = :nombre", TarjetaCreditoEntity.class);
+        TypedQuery query = em.createQuery("Select e From TarjetaCreditoEntity e where e.numero = :numero", TarjetaCreditoEntity.class);
         
-        query = query.setParameter("nombre", numero);
+        query = query.setParameter("numero", numero);
         /*Se invoca el query se obtiene la lista resultado*/
         List<TarjetaCreditoEntity> sameName = query.getResultList();
         TarjetaCreditoEntity result;
@@ -112,7 +112,7 @@ public class TarjetaCreditoPersistence {
         else
             result = sameName.get(0);
         
-        LOGGER.log(Level.INFO, "Saliendo de consultar cliente por nombre ", numero);
+        LOGGER.log(Level.INFO, "Saliendo de consultar tarjeta de credito por numero ", numero);
         return result;
     }
 }

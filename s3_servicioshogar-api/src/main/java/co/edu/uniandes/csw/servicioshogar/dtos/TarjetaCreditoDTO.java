@@ -16,6 +16,9 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  */
 public class TarjetaCreditoDTO implements Serializable{
     //-------------------Atributos------------------------//
+    long
+            id;
+    
     private String
             titular,
             fechaVencimiento;
@@ -31,6 +34,7 @@ public class TarjetaCreditoDTO implements Serializable{
     {
         if(tarjetaEntity !=null)
         {
+            this.id = tarjetaEntity.getId();
             this.titular = tarjetaEntity.getTitular();
             this.fechaVencimiento = tarjetaEntity.getFechaVencimiento();
             this.codeSeguridad = tarjetaEntity.getCodeSeguridad();
@@ -39,6 +43,12 @@ public class TarjetaCreditoDTO implements Serializable{
     }
     
     //------------------Metodos----------------------//
+    public Long getId()
+    {return id;}
+    
+    public void setId( Long pId)
+    { this.id = pId;}
+    
     public String getTitular()
     {return titular;}
     
@@ -66,6 +76,7 @@ public class TarjetaCreditoDTO implements Serializable{
     public TarjetaCreditoEntity toEntity()
     {
         TarjetaCreditoEntity tarjetaEntity = new TarjetaCreditoEntity();
+        tarjetaEntity.setId(this.id);
         tarjetaEntity.setTitular(this.titular);
         tarjetaEntity.setFechaVencimiento(this.fechaVencimiento);
         tarjetaEntity.setCodeSeguridad(this.codeSeguridad);
