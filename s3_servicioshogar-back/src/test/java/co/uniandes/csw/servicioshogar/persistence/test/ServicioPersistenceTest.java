@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package co.edu.uniandes.csw.servicioshogar.dtos;
+package co.uniandes.csw.servicioshogar.persistence.test;
 
 /**
  *
- * @author Adriana Trujillo
+ * @author Steven Tarazona <ys.tarazona@uniandes.edu.co>
  */
-public class MetodoDePagoDTO {
+public class ServicioPersistenceTest {
     
 }
