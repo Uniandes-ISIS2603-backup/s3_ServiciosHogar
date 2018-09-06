@@ -5,36 +5,45 @@
  */
 package co.edu.uniandes.csw.servicioshogar.entities;
 
+import java.io.Serializable;
+import javax.persistence.Entity;
+
 /**
  *
- * @author Steven Tarazona <ys.tarazona@uniandes.edu.co>
+ * @author Adriana Trujillo
  */
-public class FacturaEntity extends BaseEntity{
+@Entity
+public class FacturaEntity extends BaseEntity implements Serializable{
+   private Integer
+           noFactura,
+           valor;
+   
+   private String
+           fecha,
+           metodoPago;
+   
+   public Integer getNoFactura()
+   { return noFactura;}
+   
+   public void setNoFactura( Integer pNumero)
+   { this.noFactura = pNumero;}
+   
+   public Integer getValor()
+   {return valor;}
+   
+   public void setValor(Integer pValor)
+   { this.valor = pValor;}
+   
+   public String getFecha()
+   { return fecha;}
+   
+   public void setFecha( String pFecha)
+   { this.fecha = pFecha;}
+   
+   public String getMetodoPago()
+   { return metodoPago;}
+   
+   public void setMetodoPago( String pMetodo)
+   { this.metodoPago = pMetodo;}
     
-    private Integer noFactura, valor;
-    private String fecha;
-
-    public Integer getNoFactura() {
-        return noFactura;
-    }
-
-    public void setNoFactura(Integer noFactura) {
-        this.noFactura = noFactura;
-    }
-
-    public Integer getValor() {
-        return valor;
-    }
-
-    public void setValor(Integer valor) {
-        this.valor = valor;
-    }
-
-    public String getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
-    }
 }
