@@ -78,6 +78,7 @@ public class PrestadorPersistence {
         
         List<PrestadorEntity> sameCedula = query.getResultList();
         PrestadorEntity buscado;
+        
         if(sameCedula == null || sameCedula.isEmpty())
             buscado = null;
         else
