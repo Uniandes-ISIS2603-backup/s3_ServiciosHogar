@@ -2,6 +2,7 @@ package co.edu.uniandes.csw.servicioshogar.test.persistence;
 
 
 import co.edu.uniandes.csw.servicioshogar.entities.HabilidadEntity;
+import co.edu.uniandes.csw.servicioshogar.entities.PrestadorEntity;
 import co.edu.uniandes.csw.servicioshogar.persistence.HabilidadPersistence;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +44,9 @@ public class HabilidadPersistenceTest extends TestCase{
     @Inject
     UserTransaction utx;
     
-     private List<HabilidadEntity> data = new ArrayList<HabilidadEntity>();
+     private List<HabilidadEntity> data = new ArrayList<>();
+     
+     private List<PrestadorEntity> dataPrestadores = new ArrayList<>();
     
       /**
      * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
@@ -84,7 +87,8 @@ public class HabilidadPersistenceTest extends TestCase{
      * Limpia las tablas que están implicadas en la prueba.
      */
     private void clearData() {
-        em.createQuery("delete from EditorialEntity").executeUpdate();
+        em.createQuery("delete from HabilidadEntity").executeUpdate();
+         em.createQuery("delete from PrestadorEntity").executeUpdate();
     }
 
     /**
@@ -95,8 +99,19 @@ public class HabilidadPersistenceTest extends TestCase{
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
 
-            HabilidadEntity entity = factory.manufacturePojo(HabilidadEntity.class);
+           PrestadorEntity entity = factory.manufacturePojo(PrestadorEntity.class);
 
+            em.persist(entity);
+
+            dataPrestadores.add(entity);
+        }
+        for (int i = 0; i < 3; i++) {
+
+            HabilidadEntity entity = factory.manufacturePojo(HabilidadEntity.class);
+            if(i== 0)
+            {
+                entity.setPrestador(dataPrestadores.get(0));
+            }
             em.persist(entity);
 
             data.add(entity);
@@ -111,7 +126,48 @@ public class HabilidadPersistenceTest extends TestCase{
         
         assertNotNull(result);    
         
+        assertEquals(newHabilidad.getDescripcion(), result.getDescripcion());
+        assertEquals(newHabilidad.getPrestador(), result.getPrestador());
+        assertEquals(newHabilidad.getTipo(), result.getTipo());
         
-        
+    }
+    
+    @Test
+     public void getHabilidadTest() {
+        HabilidadEntity entity = data.get(0);
+        HabilidadEntity newEntity = habilidadPersistence.find(dataPrestadores.get(0).getId(), entity.getId());
+        assertNotNull(newEntity);
+        assertEquals(entity.getDescripcion(), newEntity.getDescripcion());
+        assertEquals(entity.getId(), newEntity.getId());
+        assertEquals(entity.getPrestador(), newEntity.getPrestador());
+    }
+     
+      @Test
+    public void deleteHabilidadTest() {
+        HabilidadEntity entity = data.get(0);
+        habilidadPersistence.delete(entity.getId());
+        HabilidadEntity deleted = em.find(HabilidadEntity.class, entity.getId());
+        assertNull(deleted);
+    }
+
+    /**
+     * Prueba para actualizar un Review.
+     */
+    @Test
+    public void updateReviewTest() {
+        HabilidadEntity entity = data.get(0);
+        PodamFactory factory = new PodamFactoryImpl();
+       HabilidadEntity newEntity = factory.manufacturePojo(HabilidadEntity.class);
+
+        newEntity.setId(entity.getId());
+
+       habilidadPersistence.update(newEntity);
+
+        HabilidadEntity resp = em.find(HabilidadEntity.class, entity.getId());
+
+        assertEquals(newEntity.getId(), resp.getId());
+        assertEquals(newEntity.getPrestador(), resp.getPrestador());
+        assertEquals(newEntity.getDescripcion(), resp.getDescripcion());
+        assertEquals(newEntity.getTipo(), resp.getTipo());
     }
 }
