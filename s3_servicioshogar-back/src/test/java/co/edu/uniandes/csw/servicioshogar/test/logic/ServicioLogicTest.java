@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package co.edu.uniandes.csw.servicioshogar.test.persistence;
+package co.edu.uniandes.csw.servicioshogar.test.logic;
 
 import co.edu.uniandes.csw.servicioshogar.entities.ServicioEntity;
+import co.edu.uniandes.csw.servicioshogar.ejb.ServicioLogic;
 import co.edu.uniandes.csw.servicioshogar.persistence.ServicioPersistence;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,44 +30,30 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  * @author Steven Tarazona <ys.tarazona@uniandes.edu.co>
  */
 @RunWith(Arquillian.class)
-public class ServicioPersistenceTest {
+public class ServicioLogicTest {
+    private PodamFactory factory = new PodamFactoryImpl();
 
-    /**
-     * Inyección de la dependencia a la clase ServicioPersistence cuyos métodos
-     * se van a probar.
-     */
     @Inject
-    private ServicioPersistence servicioPersistence;
+    private ServicioLogic servicioLogic;
 
-    /**
-     * Contexto de Persistencia que se va a utilizar para acceder a la Base de
-     * datos por fuera de los métodos que se están probando.
-     */
     @PersistenceContext
     private EntityManager em;
 
-    /**
-     * Variable para martcar las transacciones del em anterior cuando se
-     * crean/borran datos para las pruebas.
-     */
     @Inject
-    UserTransaction utx;
+    private UserTransaction utx;
 
-    /**
-     * lista que tiene los datos de prueba.
-     */
     private List<ServicioEntity> data = new ArrayList<ServicioEntity>();
 
     /**
-     * @return Devuelve el jar que Arquillian va a desplegar en el Glassfish
-     * embebido. El jar contiene las clases de Servicio, el descriptor de la
-     * base de datos y el archivo beans.xml para resolver la inyección de
-     * dependencias.
+     * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
+     * El jar contiene las clases, el descriptor de la base de datos y el
+     * archivo beans.xml para resolver la inyección de dependencias.
      */
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(ServicioEntity.class.getPackage())
+                .addPackage(ServicioLogic.class.getPackage())
                 .addPackage(ServicioPersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
@@ -74,12 +61,12 @@ public class ServicioPersistenceTest {
 
     /**
      * Configuración inicial de la prueba.
+     *
      */
     @Before
     public void configTest() {
         try {
             utx.begin();
-            em.joinTransaction();
             clearData();
             insertData();
             utx.commit();
@@ -95,6 +82,7 @@ public class ServicioPersistenceTest {
 
     /**
      * Limpia las tablas que están implicadas en la prueba.
+     *
      */
     private void clearData() {
         em.createQuery("delete from ServicioEntity").executeUpdate();
@@ -103,33 +91,26 @@ public class ServicioPersistenceTest {
     /**
      * Inserta los datos iniciales para el correcto funcionamiento de las
      * pruebas.
+     *
      */
     private void insertData() {
-        PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
-
             ServicioEntity entity = factory.manufacturePojo(ServicioEntity.class);
 
             em.persist(entity);
-
             data.add(entity);
         }
     }
 
     /**
-     * Prueba para crear un Servicio.
+     * Prueba para crear un Servicio
      */
     @Test
-    public void createServicioTest() {
-        PodamFactory factory = new PodamFactoryImpl();
+    public void createServicioTest(){
         ServicioEntity newEntity = factory.manufacturePojo(ServicioEntity.class);
-        ServicioEntity result = servicioPersistence.create(newEntity);
-
+        ServicioEntity result = servicioLogic.createServicio(newEntity);
         Assert.assertNotNull(result);
-
-        ServicioEntity entity = em.find(ServicioEntity.class, result.getId());
-
-        Assert.assertEquals(entity.getDescripcion(), newEntity.getDescripcion());
+        ServicioEntity entity = em.find(ServicioEntity.class, result.getId());Assert.assertEquals(entity.getDescripcion(), newEntity.getDescripcion());
         Assert.assertEquals(entity.getRequerimientos(), newEntity.getRequerimientos());
     }
 
@@ -138,12 +119,12 @@ public class ServicioPersistenceTest {
      */
     @Test
     public void getServiciosTest() {
-        List<ServicioEntity> list = servicioPersistence.findAll();
+        List<ServicioEntity> list = servicioLogic.getServicios();
         Assert.assertEquals(data.size(), list.size());
-        for (ServicioEntity ent : list) {
+        for (ServicioEntity entity : list) {
             boolean found = false;
-            for (ServicioEntity entity : data) {
-                if (ent.getId().equals(entity.getId())) {
+            for (ServicioEntity storedEntity : data) {
+                if (entity.getId().equals(storedEntity.getId())) {
                     found = true;
                 }
             }
@@ -157,21 +138,11 @@ public class ServicioPersistenceTest {
     @Test
     public void getServicioTest() {
         ServicioEntity entity = data.get(0);
-        ServicioEntity newEntity = servicioPersistence.find(entity.getId());
-        Assert.assertNotNull(newEntity);
-        Assert.assertEquals(entity.getDescripcion(), newEntity.getDescripcion());
-        Assert.assertEquals(entity.getRequerimientos(), newEntity.getRequerimientos());
-    }
-
-    /**
-     * Prueba para eliminar una Servicio.
-     */
-    @Test
-    public void deleteServicioTest() {
-        ServicioEntity entity = data.get(0);
-        servicioPersistence.delete(entity.getId());
-        ServicioEntity deleted = em.find(ServicioEntity.class, entity.getId());
-        Assert.assertNull(deleted);
+        ServicioEntity resultEntity = servicioLogic.getServicio(entity.getId());
+        Assert.assertNotNull(resultEntity);
+        Assert.assertEquals(entity.getId(), resultEntity.getId());
+        Assert.assertEquals(entity.getDescripcion(), resultEntity.getDescripcion());
+        Assert.assertEquals(entity.getRequerimientos(), resultEntity.getRequerimientos());
     }
 
     /**
@@ -180,16 +151,27 @@ public class ServicioPersistenceTest {
     @Test
     public void updateServicioTest() {
         ServicioEntity entity = data.get(0);
-        PodamFactory factory = new PodamFactoryImpl();
-        ServicioEntity newEntity = factory.manufacturePojo(ServicioEntity.class);
+        ServicioEntity pojoEntity = factory.manufacturePojo(ServicioEntity.class);
 
-        newEntity.setId(entity.getId());
+        pojoEntity.setId(entity.getId());
 
-        servicioPersistence.update(newEntity);
+        servicioLogic.updateServicio(pojoEntity.getId(), pojoEntity);
 
         ServicioEntity resp = em.find(ServicioEntity.class, entity.getId());
 
-        Assert.assertEquals(newEntity.getDescripcion(), resp.getDescripcion());
-        Assert.assertEquals(newEntity.getRequerimientos(), resp.getRequerimientos());
+        Assert.assertEquals(pojoEntity.getId(), resp.getId());
+        Assert.assertEquals(pojoEntity.getDescripcion(), resp.getDescripcion());
+        Assert.assertEquals(pojoEntity.getRequerimientos(), resp.getRequerimientos());
+    }
+
+    /**
+     * Prueba para eliminar un Servicio.
+     */
+    @Test
+    public void deleteServicioTest() {
+        ServicioEntity entity = data.get(0);
+        servicioLogic.deleteServicio(entity.getId());
+        ServicioEntity deleted = em.find(ServicioEntity.class, entity.getId());
+        Assert.assertNull(deleted);
     }
 }

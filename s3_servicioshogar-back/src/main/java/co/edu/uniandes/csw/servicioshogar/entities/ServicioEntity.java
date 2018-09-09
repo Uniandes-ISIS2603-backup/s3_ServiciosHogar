@@ -18,7 +18,6 @@ import javax.persistence.Entity;
 public class ServicioEntity extends BaseEntity implements Serializable{
     
     private String descripcion, requerimientos;
-    private Double calificacion;
 
     /**
      * Devuelve la descripcion del servicio.
@@ -50,21 +49,5 @@ public class ServicioEntity extends BaseEntity implements Serializable{
      */
     public void setRequerimientos(String requerimientos) {
         this.requerimientos = requerimientos;
-    }
-
-    /**
-     * Devuelve la calificacion del servicio.
-     * @return calificacion del servicio.
-     */
-    public Double getCalificacion() {
-        return calificacion;
-    }
- 
-    /**
-     * Modifica la colificacion del servicio.
-     * @param calificacion. Nueva calificacion.
-     */
-    public void setCalificacion(Double calificacion) {
-        this.calificacion = calificacion;
     }
 }

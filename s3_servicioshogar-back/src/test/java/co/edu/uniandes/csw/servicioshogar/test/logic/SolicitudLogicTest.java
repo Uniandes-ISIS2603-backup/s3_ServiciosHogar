@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package co.edu.uniandes.csw.servicioshogar.test.persistence;
+package co.edu.uniandes.csw.servicioshogar.test.logic;
 
 import co.edu.uniandes.csw.servicioshogar.entities.SolicitudEntity;
+import co.edu.uniandes.csw.servicioshogar.ejb.SolicitudLogic;
 import co.edu.uniandes.csw.servicioshogar.persistence.SolicitudPersistence;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,44 +30,30 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  * @author Steven Tarazona <ys.tarazona@uniandes.edu.co>
  */
 @RunWith(Arquillian.class)
-public class SolicitudPersistenceTest {
-    
-    /**
-     * Inyección de la dependencia a la clase SolicitudPersistence cuyos métodos
-     * se van a probar.
-     */
-    @Inject
-    private SolicitudPersistence solicitudPersistence;
+public class SolicitudLogicTest {
+    private PodamFactory factory = new PodamFactoryImpl();
 
-    /**
-     * Contexto de Persistencia que se va a utilizar para acceder a la Base de
-     * datos por fuera de los métodos que se están probando.
-     */
+    @Inject
+    private SolicitudLogic solicitudLogic;
+
     @PersistenceContext
     private EntityManager em;
 
-    /**
-     * Variable para martcar las transacciones del em anterior cuando se
-     * crean/borran datos para las pruebas.
-     */
     @Inject
-    UserTransaction utx;
+    private UserTransaction utx;
 
-    /**
-     * lista que tiene los datos de prueba.
-     */
     private List<SolicitudEntity> data = new ArrayList<SolicitudEntity>();
 
     /**
-     * @return Devuelve el jar que Arquillian va a desplegar en el Glassfish
-     * embebido. El jar contiene las clases de Solicitud, el descriptor de la
-     * base de datos y el archivo beans.xml para resolver la inyección de
-     * dependencias.
+     * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
+     * El jar contiene las clases, el descriptor de la base de datos y el
+     * archivo beans.xml para resolver la inyección de dependencias.
      */
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(SolicitudEntity.class.getPackage())
+                .addPackage(SolicitudLogic.class.getPackage())
                 .addPackage(SolicitudPersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
@@ -74,12 +61,12 @@ public class SolicitudPersistenceTest {
 
     /**
      * Configuración inicial de la prueba.
+     *
      */
     @Before
     public void configTest() {
         try {
             utx.begin();
-            em.joinTransaction();
             clearData();
             insertData();
             utx.commit();
@@ -95,6 +82,7 @@ public class SolicitudPersistenceTest {
 
     /**
      * Limpia las tablas que están implicadas en la prueba.
+     *
      */
     private void clearData() {
         em.createQuery("delete from SolicitudEntity").executeUpdate();
@@ -103,34 +91,28 @@ public class SolicitudPersistenceTest {
     /**
      * Inserta los datos iniciales para el correcto funcionamiento de las
      * pruebas.
+     *
      */
     private void insertData() {
-        PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
-
             SolicitudEntity entity = factory.manufacturePojo(SolicitudEntity.class);
 
             em.persist(entity);
-
             data.add(entity);
         }
     }
 
     /**
-     * Prueba para crear una Solicitud.
+     * Prueba para crear una Solicitud
      */
     @Test
-    public void createSolicitudTest() {
-        PodamFactory factory = new PodamFactoryImpl();
+    public void createSolicitudTest(){
         SolicitudEntity newEntity = factory.manufacturePojo(SolicitudEntity.class);
-        SolicitudEntity result = solicitudPersistence.create(newEntity);
-
+        SolicitudEntity result = solicitudLogic.createSolicitud(newEntity);
         Assert.assertNotNull(result);
-
         SolicitudEntity entity = em.find(SolicitudEntity.class, result.getId());
-
-        Assert.assertEquals(newEntity.getDireccion(), entity.getDireccion());
-        Assert.assertEquals(newEntity.getFecha(), entity.getFecha());
+        Assert.assertEquals(entity.getDireccion(), newEntity.getDireccion());
+        Assert.assertEquals(entity.getFecha(), newEntity.getFecha());
     }
 
     /**
@@ -138,12 +120,12 @@ public class SolicitudPersistenceTest {
      */
     @Test
     public void getSolicitudesTest() {
-        List<SolicitudEntity> list = solicitudPersistence.findAll();
+        List<SolicitudEntity> list = solicitudLogic.getSolicitudes();
         Assert.assertEquals(data.size(), list.size());
-        for (SolicitudEntity ent : list) {
+        for (SolicitudEntity entity : list) {
             boolean found = false;
-            for (SolicitudEntity entity : data) {
-                if (ent.getId().equals(entity.getId())) {
+            for (SolicitudEntity storedEntity : data) {
+                if (entity.getId().equals(storedEntity.getId())) {
                     found = true;
                 }
             }
@@ -157,21 +139,11 @@ public class SolicitudPersistenceTest {
     @Test
     public void getSolicitudTest() {
         SolicitudEntity entity = data.get(0);
-        SolicitudEntity newEntity = solicitudPersistence.find(entity.getId());
-        Assert.assertNotNull(newEntity);
-        Assert.assertEquals(newEntity.getDireccion(), entity.getDireccion());
-        Assert.assertEquals(newEntity.getFecha(), entity.getFecha());
-    }
-
-    /**
-     * Prueba para eliminar una Solicitud.
-     */
-    @Test
-    public void deleteSolicitudTest() {
-        SolicitudEntity entity = data.get(0);
-        solicitudPersistence.delete(entity.getId());
-        SolicitudEntity deleted = em.find(SolicitudEntity.class, entity.getId());
-        Assert.assertNull(deleted);
+        SolicitudEntity resultEntity = solicitudLogic.getSolicitud(entity.getId());
+        Assert.assertNotNull(resultEntity);
+        Assert.assertEquals(entity.getId(), resultEntity.getId());
+        Assert.assertEquals(entity.getDireccion(), resultEntity.getDireccion());
+        Assert.assertEquals(entity.getFecha(), resultEntity.getFecha());
     }
 
     /**
@@ -180,16 +152,27 @@ public class SolicitudPersistenceTest {
     @Test
     public void updateSolicitudTest() {
         SolicitudEntity entity = data.get(0);
-        PodamFactory factory = new PodamFactoryImpl();
-        SolicitudEntity newEntity = factory.manufacturePojo(SolicitudEntity.class);
+        SolicitudEntity pojoEntity = factory.manufacturePojo(SolicitudEntity.class);
 
-        newEntity.setId(entity.getId());
+        pojoEntity.setId(entity.getId());
 
-        solicitudPersistence.update(newEntity);
+        solicitudLogic.updateSolicitud(pojoEntity.getId(), pojoEntity);
 
         SolicitudEntity resp = em.find(SolicitudEntity.class, entity.getId());
 
-        Assert.assertEquals(newEntity.getDireccion(), resp.getDireccion());
-        Assert.assertEquals(newEntity.getFecha(), resp.getFecha());
+        Assert.assertEquals(pojoEntity.getId(), resp.getId());
+        Assert.assertEquals(pojoEntity.getDireccion(), resp.getDireccion());
+        Assert.assertEquals(pojoEntity.getFecha(), resp.getFecha());
     }
+
+    /**
+     * Prueba para eliminar una Solicitud.
+     */
+    @Test
+    public void deleteSolicitudTest() {
+        SolicitudEntity entity = data.get(0);
+        solicitudLogic.deleteSolicitud(entity.getId());
+        SolicitudEntity deleted = em.find(SolicitudEntity.class, entity.getId());
+        Assert.assertNull(deleted);
+    } 
 }
