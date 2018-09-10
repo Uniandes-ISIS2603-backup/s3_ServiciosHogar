@@ -36,9 +36,61 @@ public class HojaDeVidaPersistence {
        public List<HojaDeVidaEntity> findAll()
     {
         LOGGER.log(Level.INFO, "Consultando todas las hojas de vida");
-        /*Se crea un query para buscar todas los  en la base de datos.*/
         TypedQuery query = em.createQuery("select u from HojaDeVidaEntity u", HojaDeVidaEntity.class);
         return query.getResultList();
     }
    
+    public HojaDeVidaEntity find(Long telPrestador)
+    {
+        LOGGER.log(Level.INFO, "Consultando hoja de vida del prestador con telefono={0}", telPrestador);
+        return em.find(HojaDeVidaEntity.class, telPrestador);
+    }
+    
+    /**
+     * Modifica un cliente identificado con el 'id' ingresado por parametro
+     * @param hojaDeVidaEntity. Cliente que viene con los nuevos cambios.
+     * @return hoja de vda con los cambios aplicados.
+     */
+    public HojaDeVidaEntity update(HojaDeVidaEntity hojaDeVidaEntity)
+    {
+        LOGGER.log(Level.INFO, "Actualizando hoja de vida asociada con telefono= {0}", hojaDeVidaEntity.getId());
+        LOGGER.log(Level.INFO, "Saliendo de actualizar la hoja de vida asociada con telefono= {0}", hojaDeVidaEntity.getId());
+        return em.merge(hojaDeVidaEntity);
+    }
+    
+    public void delete(Long telPrestador)
+    {
+        LOGGER.log(Level.INFO, "Borrando hoja de vida asociada con telefono= {0}", telPrestador);
+        HojaDeVidaEntity entity = em.find(HojaDeVidaEntity.class, telPrestador);
+        em.remove(entity);
+        LOGGER.log(Level.INFO, "Saliendo de borrar la hoja de vida asociada con telefono= {0}", telPrestador);
+    }
+    
+    /**
+     * Busca si existe un cliente con el nombre enviado por parametro.
+     * @param nombre. Nombre del cliente a buscar.
+     * @return cliente con el nombre correspondiente. Null en caso de no encontrarlo
+     */
+    public HojaDeVidaEntity findByName(String nombre) 
+    {
+        LOGGER.log(Level.INFO, "Consultando cliente por nombre ", nombre);
+        /*Se crea un query para buscar editoriales con el nombre que recibe el método como argumento.
+        ":name" es un placeholder que debe ser remplazado*/
+        TypedQuery query = em.createQuery("Select e From ClienteEntity e where e.nombre = :nombre", HojaDeVidaEntity.class);
+        /*Se remplaza el placeholder ":name" con el valor del argumento */
+        query = query.setParameter("nombre", nombre);
+        /*Se invoca el query se obtiene la lista resultado*/
+        List<HojaDeVidaEntity> sameName = query.getResultList();
+        HojaDeVidaEntity result;
+        
+        if (sameName == null)
+            result = null;
+        else if (sameName.isEmpty())
+            result = null;
+        else
+            result = sameName.get(0);
+        
+        LOGGER.log(Level.INFO, "Saliendo de consultar cliente por nombre ", nombre);
+        return result;
+    }
 }

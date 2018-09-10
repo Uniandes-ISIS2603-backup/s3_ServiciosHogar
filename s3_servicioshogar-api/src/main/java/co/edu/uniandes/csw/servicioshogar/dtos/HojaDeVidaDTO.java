@@ -30,7 +30,7 @@ public class HojaDeVidaDTO implements Serializable{
     /**
      * Atributo que representa el teléfono del prestador.
      */
-    private Integer telefono;
+    private Long telefono;
     /**
      * Atributo que representa la dirección del prestador.
      */
@@ -92,11 +92,11 @@ public class HojaDeVidaDTO implements Serializable{
         this.email = email;
     }
 
-    public Integer getTelefono() {
+    public Long getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(Integer telefono) {
+    public void setTelefono(Long telefono) {
         this.telefono = telefono;
     }
 

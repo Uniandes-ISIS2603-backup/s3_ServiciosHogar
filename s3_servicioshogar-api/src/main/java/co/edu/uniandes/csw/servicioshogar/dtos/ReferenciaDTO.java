@@ -14,7 +14,7 @@ import java.io.Serializable;
  */
 public class ReferenciaDTO implements Serializable {
 
-       
+   
     private String empresa;
     private String nombreRemitente;
     private int idRemitente;
