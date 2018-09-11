@@ -6,7 +6,7 @@
 package co.edu.uniandes.csw.servicioshogar.test.persistence;
 
 import co.edu.uniandes.csw.servicioshogar.entities.ClienteEntity;
-import co.uniandes.csw.servicioshogar.persistence.ClientePersistence;
+import co.edu.uniandes.csw.servicioshogar.persistence.ClientePersistence;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
