@@ -33,7 +33,6 @@ public class ServicioDTO {
     
     private Long id;
     private String descripcion, requerimientos;
-    private Double calificacion;
     
     /**
      * Constructor por defecto.
@@ -52,7 +51,6 @@ public class ServicioDTO {
             this.id=servicioEntity.getId();
             this.descripcion=servicioEntity.getDescripcion();
             this.requerimientos=servicioEntity.getRequerimientos();
-            this.calificacion=servicioEntity.getCalificacion();
         }
     }
 
@@ -103,22 +101,6 @@ public class ServicioDTO {
     public void setRequerimientos(String requerimientos) {
         this.requerimientos = requerimientos;
     }
-
-    /**
-     * Devuelve la calificion del servicio.
-     * @return calificion del servicio.
-     */
-    public Double getCalificacion() {
-        return calificacion;
-    }
-
-    /**
-     * Modifica la calificacion del servicio
-     * @param calificacion. Nueva calificacion.
-     */
-    public void setCalificacion(Double calificacion) {
-        this.calificacion = calificacion;
-    }
     
         /**
      * Convertir DTO a Entity
@@ -130,7 +112,6 @@ public class ServicioDTO {
         servicioEntity.setId(this.id);
         servicioEntity.setDescripcion(this.descripcion);
         servicioEntity.setRequerimientos(this.requerimientos);
-        servicioEntity.setCalificacion(calificacion);
         return servicioEntity;
     }
     

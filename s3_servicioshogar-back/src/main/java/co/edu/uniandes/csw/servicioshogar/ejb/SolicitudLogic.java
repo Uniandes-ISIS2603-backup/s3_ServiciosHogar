@@ -6,7 +6,7 @@
 package co.edu.uniandes.csw.servicioshogar.ejb;
 
 import co.edu.uniandes.csw.servicioshogar.entities.SolicitudEntity;
-import co.uniandes.csw.servicioshogar.persistence.SolicitudPersistence;
+import co.edu.uniandes.csw.servicioshogar.persistence.SolicitudPersistence;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;

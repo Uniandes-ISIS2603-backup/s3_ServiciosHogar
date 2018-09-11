@@ -7,7 +7,7 @@ package co.edu.uniandes.csw.servicioshogar.ejb;
 
 import co.edu.uniandes.csw.servicioshogar.entities.ClienteEntity;
 import co.edu.uniandes.csw.servicioshogar.exceptions.BusinessLogicException;
-import co.uniandes.csw.servicioshogar.persistence.ClientePersistence;
+import co.edu.uniandes.csw.servicioshogar.persistence.ClientePersistence;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package co.uniandes.csw.servicioshogar.persistence;
+package co.edu.uniandes.csw.servicioshogar.persistence;
 
 import co.edu.uniandes.csw.servicioshogar.entities.ClienteEntity;
 import java.util.List;
