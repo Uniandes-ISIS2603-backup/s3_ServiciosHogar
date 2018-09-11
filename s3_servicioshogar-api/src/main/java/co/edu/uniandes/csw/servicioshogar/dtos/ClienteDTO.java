@@ -25,7 +25,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * {
  *      "nombre": "Carlos Eduardo Robles",
  *      "direccion": "AK72 #23 24",
- *      "correo": "ce.robles@uniandes.edu.co
+ *      "correo": "ce.robles@uniandes.edu.co 
  * }
  * </pre>
  * @author Carlos Eduardo Robles
@@ -54,7 +54,7 @@ public class ClienteDTO implements Serializable
             this.id = clienteEntity.getId();
             this.nombre = clienteEntity.getNombre();
             this.direccion = clienteEntity.getDireccion();
-            this.correo = clienteEntity.getCorreo();
+            this.correo = clienteEntity.getCorreo();          
         }         
     }
     
