@@ -43,8 +43,8 @@ public class ClienteLogic
     {
         LOGGER.log(Level.INFO, "Inicia proceso de creación del cliente");
         /*Verifica la regla de negocio que dice no puede haber dos clientes con el mismo nombre*/
-        if(persistence.findByName(clienteEntity.getNombre()) != null)
-            throw new BusinessLogicException("Ya existe un Cliente con el nombre \"" + clienteEntity.getNombre()+ "\"");
+        if(persistence.findByCorreo(clienteEntity.getCorreo()) != null)
+            throw new BusinessLogicException("Ya existe un Cliente con el correo \"" + clienteEntity.getNombre()+ "\"");
         /*Invoca la persistencia para crear el cliente*/
         persistence.create(clienteEntity);
         LOGGER.log(Level.INFO, "Termina proceso de creación del cliente");

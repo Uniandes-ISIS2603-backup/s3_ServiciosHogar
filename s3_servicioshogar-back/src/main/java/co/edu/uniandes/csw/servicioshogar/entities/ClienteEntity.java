@@ -6,7 +6,12 @@
 package co.edu.uniandes.csw.servicioshogar.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
@@ -22,6 +27,10 @@ public class ClienteEntity extends BaseEntity implements Serializable
             nombre /*Nombre del cliente*/, 
             direccion /*Direccion del Cliente*/, 
             correo /*Correo del Cliente*/ ;
+    
+    @PodamExclude
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    private List<CalificacionEntity> calificaciones = new ArrayList<CalificacionEntity>();
     
     //------------------------------------------
     //------------------Metodos-----------------
@@ -60,5 +69,12 @@ public class ClienteEntity extends BaseEntity implements Serializable
      * Asigna el correo del cliente segun el 'corre' ingresado por parametro.
      * @param correo. Correo electronico del cliente.
      */
-    public void setCorreo(String correo) {this.correo = correo;}   
+    public void setCorreo(String correo) {this.correo = correo;} 
+
+    public List<CalificacionEntity> getCalificaciones() {return calificaciones;
+    }
+
+    public void setCalificaciones(List<CalificacionEntity> calificaciones) {this.calificaciones = calificaciones;}
+    
+    
 }
