@@ -37,7 +37,7 @@ public class HojaDeVidaResource {
         private static final Logger LOGGER = Logger.getLogger(HojaDeVidaResource.class.getName());
   
     /**
-     * Variable para acceder a la lÃ³gica de la aplicaciÃ³n. Es una inyecciÃ³n de dependencias.
+     * Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
      */
     @Inject
     HojaDeVidaLogic clienteLogic;
@@ -45,7 +45,7 @@ public class HojaDeVidaResource {
     private HojaDeVidaLogic hojaDeVidaLogic;
     
      @POST
-    public HojaDeVidaDTO crearCliente(HojaDeVidaDTO hojaDeVida) throws BusinessLogicException
+    public HojaDeVidaDTO crearHojaDeVida(HojaDeVidaDTO hojaDeVida) throws BusinessLogicException
     {
          LOGGER.log(Level.INFO, "ClienteResource crearCliente: input: {0}", hojaDeVida.toString());
          HojaDeVidaEntity hojaDeVidaEntity = hojaDeVida.toEntity();
@@ -98,7 +98,7 @@ public class HojaDeVidaResource {
 
     @DELETE
     @Path("{hojaDeVida:\\d+}")
-    public void deleteCliente(@PathParam("telefono") Long telPrestador) throws BusinessLogicException
+    public void deleteHojaDeVida(@PathParam("telefono") Long telPrestador) throws BusinessLogicException
     {
         LOGGER.log(Level.INFO, "HojaDeVidaResource deleteCliente: input: {0}", telPrestador);
         if (hojaDeVidaLogic.gethojaDeVida(telPrestador) == null) 

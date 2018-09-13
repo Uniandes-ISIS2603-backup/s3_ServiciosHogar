@@ -68,29 +68,29 @@ public class HojaDeVidaPersistence {
     
     /**
      * Busca si existe un cliente con el nombre enviado por parametro.
-     * @param nombre. Nombre del cliente a buscar.
+     * @param email. Nombre del cliente a buscar.
      * @return cliente con el nombre correspondiente. Null en caso de no encontrarlo
      */
-    public HojaDeVidaEntity findByName(String nombre) 
+    public HojaDeVidaEntity findByEmail(String email) 
     {
-        LOGGER.log(Level.INFO, "Consultando cliente por nombre ", nombre);
+        LOGGER.log(Level.INFO, "Consultando hoja de vida por email ", email);
         /*Se crea un query para buscar editoriales con el nombre que recibe el método como argumento.
         ":name" es un placeholder que debe ser remplazado*/
-        TypedQuery query = em.createQuery("Select e From ClienteEntity e where e.nombre = :nombre", HojaDeVidaEntity.class);
+        TypedQuery query = em.createQuery("Select e From HojaDeVidaEntity e where e.email = :email", HojaDeVidaEntity.class);
         /*Se remplaza el placeholder ":name" con el valor del argumento */
-        query = query.setParameter("nombre", nombre);
+        query = query.setParameter("email", email);
         /*Se invoca el query se obtiene la lista resultado*/
-        List<HojaDeVidaEntity> sameName = query.getResultList();
+        List<HojaDeVidaEntity> sameEmail = query.getResultList();
         HojaDeVidaEntity result;
         
-        if (sameName == null)
+        if (sameEmail == null)
             result = null;
-        else if (sameName.isEmpty())
+        else if (sameEmail.isEmpty())
             result = null;
         else
-            result = sameName.get(0);
+            result = sameEmail.get(0);
         
-        LOGGER.log(Level.INFO, "Saliendo de consultar cliente por nombre ", nombre);
+        LOGGER.log(Level.INFO, "Saliendo de consultar hoja de vida por email ", email);
         return result;
     }
 }

@@ -110,5 +110,23 @@ public class ReferenciaDTO implements Serializable {
         this.parentesco = parentesco;
     }
     
- 
+    /**
+     * Convierte DTO a Entity
+     * @return entidad de la referencia.
+     */
+    public ReferenciaEntity toEntity() 
+    {
+        ReferenciaEntity referenciaEntity = new ReferenciaEntity();
+        referenciaEntity.setEmpresa(this.empresa);
+        referenciaEntity.setNombreRemitente(this.nombreRemitente);
+        referenciaEntity.setIdRemitente(this.idRemitente);
+        referenciaEntity.setTelRemitente(this.telRemitente);
+        referenciaEntity.setCargo(this.cargo);
+        referenciaEntity.setEmail(this.email);
+        referenciaEntity.setParentesco(this.parentesco);
+        
+        return referenciaEntity;
+    }    
+    
 }
+    

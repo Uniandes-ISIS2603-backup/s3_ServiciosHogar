@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package co.uniandes.csw.servicioshogar.persistence;
+package co.edu.uniandes.csw.servicioshogar.persistence;
 
 import co.edu.uniandes.csw.servicioshogar.entities.ReferenciaEntity;
 import java.util.List;
@@ -46,7 +46,7 @@ public ReferenciaEntity create(ReferenciaEntity referenciaEntity)
      * @param clientesId. Id del cliente a buscar.
      * @return clienteEntity.
      */
-    public ReferenciaEntity find(Integer idRemitente)
+    public ReferenciaEntity find(Long idRemitente)
     {
         LOGGER.log(Level.INFO, "Consultando referencia con idRemitente={0}", idRemitente);
         return em.find(ReferenciaEntity.class, idRemitente);
@@ -68,7 +68,7 @@ public ReferenciaEntity create(ReferenciaEntity referenciaEntity)
      * Borra un cliente identificado con el 'id' ingresado por parametro de la BD.
      * @param clientesId. Id del cliente a borrar.
      */
-    public void delete(Integer idRemitente)
+    public void delete(Long idRemitente)
     {
         LOGGER.log(Level.INFO, "Borrando referencia con idRemitente = {0}", idRemitente);
         ReferenciaEntity entity = em.find(ReferenciaEntity.class, idRemitente);

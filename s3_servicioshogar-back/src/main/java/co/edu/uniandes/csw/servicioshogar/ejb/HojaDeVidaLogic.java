@@ -48,11 +48,11 @@ public class HojaDeVidaLogic {
     
     public HojaDeVidaEntity gethojaDeVida(Long telPrestador) {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar hoja de vida asociada con telefono= {0}", telPrestador);
-        HojaDeVidaEntity servicioEntity = persistence.find(telPrestador);
-        if (servicioEntity == null)
+        HojaDeVidaEntity hojaDeVidaEntity = persistence.find(telPrestador);
+        if (hojaDeVidaEntity == null)
             LOGGER.log(Level.SEVERE, "El servicio con hoja de vida asociada con telefono= {0}", telPrestador);
         LOGGER.log(Level.INFO, "Termina proceso de consultar hoja de vida asociada con telefono= {0}", telPrestador);
-        return servicioEntity;
+        return hojaDeVidaEntity;
     }
 
   
