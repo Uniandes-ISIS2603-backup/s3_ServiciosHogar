@@ -7,6 +7,8 @@ package co.edu.uniandes.csw.servicioshogar.entities;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  * Clase que representa un servicio en la persistencia y permite su
@@ -18,6 +20,10 @@ import javax.persistence.Entity;
 public class ServicioEntity extends BaseEntity implements Serializable{
     
     private String descripcion, requerimientos;
+    
+    @PodamExclude
+    @ManyToOne
+    private SolicitudEntity solicitud;
 
     /**
      * Devuelve la descripcion del servicio.
@@ -49,5 +55,23 @@ public class ServicioEntity extends BaseEntity implements Serializable{
      */
     public void setRequerimientos(String requerimientos) {
         this.requerimientos = requerimientos;
+    }
+    
+    /**
+     * Devuelve la solicitud a la que pertenece el servicio.
+     *
+     * @return Una entidad de solicitud.
+     */
+    public SolicitudEntity getSolicitud() {
+        return solicitud;
+    }
+
+    /**
+     * Modifica la solicitud a la que pertenece el servicio.
+     *
+     * @param solicitudEntity La nueva solicitud.
+     */
+    public void setSolicitud(SolicitudEntity solicitudEntity) {
+        this.solicitud = solicitudEntity;
     }
 }

@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.servicioshogar.resources;
 
 import co.edu.uniandes.csw.servicioshogar.dtos.SolicitudDTO;
+import co.edu.uniandes.csw.servicioshogar.dtos.SolicitudDetailDTO;
 import co.edu.uniandes.csw.servicioshogar.ejb.SolicitudLogic;
 import co.edu.uniandes.csw.servicioshogar.entities.SolicitudEntity;
 import co.edu.uniandes.csw.servicioshogar.exceptions.BusinessLogicException;
@@ -73,9 +74,9 @@ public class SolicitudResource {
      * la aplicación. Si no hay ninguna retorna una lista vacía.
      */
     @GET
-    public List<SolicitudDTO> getSolicitudes() {
+    public List<SolicitudDetailDTO> getSolicitudes() {
         LOGGER.info("ServicioResource getServicios: input: void");
-        List<SolicitudDTO> listaServicios = listEntity2DetailDTO(solicitudLogic.getSolicitudes());
+        List<SolicitudDetailDTO> listaServicios = listEntity2DetailDTO(solicitudLogic.getSolicitudes());
         LOGGER.log(Level.INFO, "ServicioResource getServicios: output: {0}", listaServicios.toString());
         return listaServicios;
     }
@@ -91,13 +92,13 @@ public class SolicitudResource {
      */
     @GET
     @Path("{solicitudesId: \\d+}")
-    public SolicitudDTO getSolicitud(@PathParam("solicitudesId") Long solicitudesId) throws WebApplicationException {
+    public SolicitudDetailDTO getSolicitud(@PathParam("solicitudesId") Long solicitudesId) throws WebApplicationException {
         LOGGER.log(Level.INFO, "SolicitudResource getSolicitud: input: {0}", solicitudesId);
         SolicitudEntity solicitudEntity = solicitudLogic.getSolicitud(solicitudesId);
         if (solicitudEntity == null) {
             throw new WebApplicationException("El recurso /solicitudes/" + solicitudesId + " no existe.", 404);
         }
-        SolicitudDTO detailDTO = new SolicitudDTO(solicitudEntity);
+        SolicitudDetailDTO detailDTO = new SolicitudDetailDTO(solicitudEntity);
         LOGGER.log(Level.INFO, "olicitudResource getolicitud: output: {0}", detailDTO.toString());
         return detailDTO;
     }
@@ -116,13 +117,13 @@ public class SolicitudResource {
      */
     @PUT
     @Path("{solicitudesId: \\d+}")
-    public SolicitudDTO updateSolicitud(@PathParam("solicitudesId") Long solicitudesId, SolicitudDTO solicitud) throws WebApplicationException {
+    public SolicitudDetailDTO updateSolicitud(@PathParam("solicitudesId") Long solicitudesId, SolicitudDTO solicitud) throws WebApplicationException {
         LOGGER.log(Level.INFO, "SolicitudResource updateSolicitud: input: id:{0} , solicitud: {1}", new Object[]{solicitudesId, solicitud.toString()});
         solicitud.setId(solicitudesId);
         if (solicitudLogic.getSolicitud(solicitudesId) == null) {
             throw new WebApplicationException("El recurso /solicitudes/" + solicitudesId + " no existe.", 404);
         }
-        SolicitudDTO detailDTO = new SolicitudDTO(solicitudLogic.updateSolicitud(solicitudesId, solicitud.toEntity()));
+        SolicitudDetailDTO detailDTO = new SolicitudDetailDTO(solicitudLogic.updateSolicitud(solicitudesId, solicitud.toEntity()));
         LOGGER.log(Level.INFO, "SolicitudResource updateSolicitud: output: {0}", detailDTO.toString());
         return detailDTO;
     }
@@ -147,6 +148,27 @@ public class SolicitudResource {
         solicitudLogic.deleteSolicitud(solicitudesId);
         LOGGER.info("SolicitudResource deleteSolicitud: output: void");
     }
+    
+    /**
+     * Conexión con el servicio de servicios para una solicitud. {@link ServicioResource}
+     *
+     * Este método conecta la ruta de /solicitudes con las rutas de /servicios que
+     * dependen de la solicitud, es una redirección al servicio que maneja el segmento
+     * de la URL que se encarga de las reseñas.
+     *
+     * @param solicitudesId El ID de la solicitud con respecto al cual se accede al
+     * servicio.
+     * @return El servicio de servicios para esa solicitud en paricular.\
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
+     * Error de lógica que se genera cuando no se encuentra la solicitud.
+     */
+    @Path("{solicitudesId: \\d+}/servicios")
+    public Class<ServicioResource> getServicioResource(@PathParam("solicitudesId") Long solicitudesId) {
+        if (solicitudLogic.getSolicitud(solicitudesId) == null) 
+            throw new WebApplicationException("El recurso /solicitudes/" + solicitudesId + "/servicios no existe.", 404);
+        
+        return ServicioResource.class;
+    }
 
     /**
      * Convierte una lista de entidades a DTO.
@@ -158,10 +180,10 @@ public class SolicitudResource {
      * que vamos a convertir a DTO.
      * @return la lista de solicitudes en forma DTO (json)
      */
-    private List<SolicitudDTO> listEntity2DetailDTO(List<SolicitudEntity> entityList) {
-        List<SolicitudDTO> list = new ArrayList<>();
+    private List<SolicitudDetailDTO> listEntity2DetailDTO(List<SolicitudEntity> entityList) {
+        List<SolicitudDetailDTO> list = new ArrayList<>();
         for (SolicitudEntity entity : entityList) {
-            list.add(new SolicitudDTO(entity));
+            list.add(new SolicitudDetailDTO(entity));
         }
         return list;
     }

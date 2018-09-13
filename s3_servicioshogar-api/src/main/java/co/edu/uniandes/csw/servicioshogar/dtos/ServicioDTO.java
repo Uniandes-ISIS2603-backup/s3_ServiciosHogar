@@ -14,16 +14,14 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * <pre>
  *   {
  *      "descripcion": string,
- *      "requerimientos": string,
- *      "calificacion": number
+ *      "requerimientos": string
  *   }
  * </pre> Por ejemplo una editorial se representa asi:<br>
  *
  * <pre>
  *   {
  *      "descripción": "Cambiar las cerraduras de tres puertas",
-        "requerimientos": "CERRAJERIA",
-        "calificación": "4"
+        "requerimientos": "CERRAJERIA"
  *   }
  * </pre>
  *
@@ -33,6 +31,12 @@ public class ServicioDTO {
     
     private Long id;
     private String descripcion, requerimientos;
+    
+    /*
+    * Relación a una solicitud  
+    * dado que esta tiene cardinalidad 1.
+     */
+    private SolicitudDTO solicitud;
     
     /**
      * Constructor por defecto.
