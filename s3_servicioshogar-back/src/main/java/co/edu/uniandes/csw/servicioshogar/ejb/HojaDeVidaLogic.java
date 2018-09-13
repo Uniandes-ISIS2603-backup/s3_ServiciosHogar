@@ -30,18 +30,18 @@ public class HojaDeVidaLogic {
 
    
     public HojaDeVidaEntity createHojaDeVida(HojaDeVidaEntity hojaDeVidaEntity){
-        LOGGER.log(Level.INFO, "Inicia proceso de creación del servicio");
+        LOGGER.log(Level.INFO, "Inicia proceso de creación de la hoja de vida");
         // Invoca la persistencia para crear el servicio
         persistence.create(hojaDeVidaEntity);
-        LOGGER.log(Level.INFO, "Termina proceso de creación del servicio");
+        LOGGER.log(Level.INFO, "Termina proceso de creación de la hoja de vida");
         return hojaDeVidaEntity;
     }
 
  
     public List<HojaDeVidaEntity> getHojasDeVida() {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los servicios");
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar todas las hojas de vida");
         List<HojaDeVidaEntity> hojasDeVida = persistence.findAll();
-        LOGGER.log(Level.INFO, "Termina proceso de consultar todos los servicios");
+        LOGGER.log(Level.INFO, "Termina proceso de consultar todas las hojas de vida");
         return hojasDeVida;
     }
 
@@ -50,7 +50,7 @@ public class HojaDeVidaLogic {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar hoja de vida asociada con telefono= {0}", telPrestador);
         HojaDeVidaEntity hojaDeVidaEntity = persistence.find(telPrestador);
         if (hojaDeVidaEntity == null)
-            LOGGER.log(Level.SEVERE, "El servicio con hoja de vida asociada con telefono= {0}", telPrestador);
+            LOGGER.log(Level.SEVERE, "La hoja de vida asociada con telefono= {0}", telPrestador);
         LOGGER.log(Level.INFO, "Termina proceso de consultar hoja de vida asociada con telefono= {0}", telPrestador);
         return hojaDeVidaEntity;
     }

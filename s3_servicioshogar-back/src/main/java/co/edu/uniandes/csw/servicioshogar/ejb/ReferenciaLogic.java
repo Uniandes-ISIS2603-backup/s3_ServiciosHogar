@@ -28,44 +28,44 @@ public class ReferenciaLogic {
     
     
     public ReferenciaEntity createReferencia(ReferenciaEntity referenciaEntity){
-        LOGGER.log(Level.INFO, "Inicia proceso de creación del servicio");
+        LOGGER.log(Level.INFO, "Inicia proceso de creación de la referencia");
         // Invoca la persistencia para crear el servicio
         persistence.create(referenciaEntity);
-        LOGGER.log(Level.INFO, "Termina proceso de creación del servicio");
+        LOGGER.log(Level.INFO, "Termina proceso de creación de la referencia");
         return referenciaEntity;
     }
 
  
     public List<ReferenciaEntity> getReferencias() {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los servicios");
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar todas las referencias");
         List<ReferenciaEntity> referencias = persistence.findAll();
-        LOGGER.log(Level.INFO, "Termina proceso de consultar todos los servicios");
+        LOGGER.log(Level.INFO, "Termina proceso de consultar todas las referencias");
         return referencias;
     }
 
     
     public ReferenciaEntity getReferencia(Long idRemitente) {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar hoja de vida asociada con telefono= {0}", idRemitente);
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar referencia con idRemitente= {0}", idRemitente);
         ReferenciaEntity referenciaEntity = persistence.find(idRemitente);
         if (referenciaEntity == null)
-            LOGGER.log(Level.SEVERE, "El servicio con hoja de vida asociada con telefono= {0}", idRemitente);
-        LOGGER.log(Level.INFO, "Termina proceso de consultar hoja de vida asociada con telefono= {0}", idRemitente);
+            LOGGER.log(Level.SEVERE, "La referencia con idRemitente= {0}", idRemitente);
+        LOGGER.log(Level.INFO, "Termina proceso de consultar referencia con idRemitente= {0}", idRemitente);
         return referenciaEntity;
     }
 
   
     public ReferenciaEntity updateReferencia(Long telPrestador, ReferenciaEntity hojaDeVidaEntity) {
-        LOGGER.log(Level.INFO, "Inicia proceso de actualizar hoja de vida asociada con telefono= {0}", telPrestador);
+        LOGGER.log(Level.INFO, "Inicia proceso de actualizar referencia con idRemitente= {0}", telPrestador);
         ReferenciaEntity newEntity = persistence.update(hojaDeVidaEntity);
-        LOGGER.log(Level.INFO, "Termina proceso de actualizar hoja de vida asociada con telefono= {0}", hojaDeVidaEntity.getId());
+        LOGGER.log(Level.INFO, "Termina proceso de actualizar referencia con idRemitente= {0}", hojaDeVidaEntity.getId());
         return newEntity;
     }
 
   
     public void deleteReferencia(Long idRemitente) {
-        LOGGER.log(Level.INFO, "Inicia proceso de borrar hoja de vida asociada con telefono= {0}", idRemitente);
+        LOGGER.log(Level.INFO, "Inicia proceso de borrar referencia con idRemitente= {0}", idRemitente);
         persistence.delete(idRemitente);
-        LOGGER.log(Level.INFO, "Termina proceso de borrar hoja de vida asociada con telefono= {0}", idRemitente);
+        LOGGER.log(Level.INFO, "Termina proceso de borrar referencia con idRemitente= {0}", idRemitente);
     }
 
     
