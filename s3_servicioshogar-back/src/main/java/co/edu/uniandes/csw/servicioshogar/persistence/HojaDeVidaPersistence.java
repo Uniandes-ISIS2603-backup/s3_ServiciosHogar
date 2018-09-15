@@ -53,8 +53,12 @@ public class HojaDeVidaPersistence {
      */
     public HojaDeVidaEntity update(HojaDeVidaEntity hojaDeVidaEntity)
     {
-        LOGGER.log(Level.INFO, "Actualizando hoja de vida asociada con telefono= {0}", hojaDeVidaEntity.getId());
-        LOGGER.log(Level.INFO, "Saliendo de actualizar la hoja de vida asociada con telefono= {0}", hojaDeVidaEntity.getId());
+        LOGGER.log(Level.INFO, "Actualizando hojaDeVida con id = {0}", hojaDeVidaEntity.getId());
+       
+
+        LOGGER.log(Level.INFO, "Saliendo de actualizar la hoja de vida asociada con telefono= {0}", hojaDeVidaEntity.getTelefono());
+        
+     
         return em.merge(hojaDeVidaEntity);
     }
     

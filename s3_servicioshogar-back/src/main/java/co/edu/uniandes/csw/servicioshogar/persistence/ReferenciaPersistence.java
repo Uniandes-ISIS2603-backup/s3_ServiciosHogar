@@ -35,9 +35,9 @@ public ReferenciaEntity create(ReferenciaEntity referenciaEntity)
 
  public List<ReferenciaEntity> findAll()
     {
-        LOGGER.log(Level.INFO, "Consultando todas las referncias");
-        /*Se crea un query para buscar todas las referencias en la base de datos.*/
+        LOGGER.log(Level.INFO, "Consultando todas las referencias");
         TypedQuery query = em.createQuery("select u from ReferenciaEntity u", ReferenciaEntity.class);
+     
         return query.getResultList();
     }
     
@@ -59,8 +59,8 @@ public ReferenciaEntity create(ReferenciaEntity referenciaEntity)
      */
     public ReferenciaEntity update(ReferenciaEntity referenciaEntity)
     {
-        LOGGER.log(Level.INFO, "Actualizando referencia con idRemitente = {0}", referenciaEntity.getIdRemitente());
-        LOGGER.log(Level.INFO, "Saliendo de actualizar referencia con idRemitente = {0}", referenciaEntity.getIdRemitente());
+        LOGGER.log(Level.INFO, "Actualizando referencia con id = {0}", referenciaEntity.getId());
+        LOGGER.log(Level.INFO, "Saliendo de actualizar referencia con id = {0}", referenciaEntity.getId());
         return em.merge(referenciaEntity);
     }
     

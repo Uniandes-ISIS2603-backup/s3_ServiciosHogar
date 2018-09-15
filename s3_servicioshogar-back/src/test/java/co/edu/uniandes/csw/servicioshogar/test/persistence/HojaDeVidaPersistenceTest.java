@@ -126,7 +126,7 @@ public class HojaDeVidaPersistenceTest
     }
 
     /**
-     * Prueba para consultar la lista de Servicios.
+     * Prueba para consultar la lista de Hojas de vida.
      */
     @Test
     public void getHojasDeVidaTest() {
@@ -144,7 +144,7 @@ public class HojaDeVidaPersistenceTest
     }
 
     /**
-     * Prueba para consultar un Servicio.
+     * Prueba para consultar una Hoja de vida.
      */
     @Test
     public void getHojaDeVidaTest() {
@@ -156,10 +156,10 @@ public class HojaDeVidaPersistenceTest
     }
 
     /**
-     * Prueba para eliminar una Servicio.
+     * Prueba para eliminar una Hoja de vida.
      */
     @Test
-    public void deleteServicioTest() {
+    public void deleteHojaDeVidaTest() {
         HojaDeVidaEntity entity = data.get(0);
         hojaDeVidaPersistence.delete(entity.getId());
         HojaDeVidaEntity deleted = em.find(HojaDeVidaEntity.class, entity.getId());
@@ -167,22 +167,28 @@ public class HojaDeVidaPersistenceTest
     }
 
     /**
-     * Prueba para actualizar un Servicio.
+     * Prueba para actualizar una Hoja de vida.
      */
     @Test
-    public void updateServicioTest() {
+    public void updateHojaDeVidaTest() {
         HojaDeVidaEntity entity = data.get(0);
+          
+            
         PodamFactory factory = new PodamFactoryImpl();
         HojaDeVidaEntity newEntity = factory.manufacturePojo(HojaDeVidaEntity.class);
-
         newEntity.setId(entity.getId());
-
         hojaDeVidaPersistence.update(newEntity);
-
         HojaDeVidaEntity resp = em.find(HojaDeVidaEntity.class, entity.getId());
-
-        Assert.assertEquals(entity.getEmail(), newEntity.getEmail());
-        Assert.assertEquals(entity.getTelefono(), newEntity.getTelefono());
+        
+    
+    Assert.assertEquals(entity.getTrayectoria(), newEntity.getTrayectoria());    
+    Assert.assertEquals(entity.getFechaNacimiento(), newEntity.getFechaNacimiento());
+    Assert.assertEquals(entity.getEmail(), newEntity.getEmail());
+    Assert.assertEquals(entity.getTelefono(), newEntity.getTelefono());
+    Assert.assertEquals(entity.getDireccion(), newEntity.getDireccion());
+    Assert.assertEquals(entity.getFormacion(), newEntity.getFormacion());
+    
+    
     }
 
 

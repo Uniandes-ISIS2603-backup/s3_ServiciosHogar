@@ -46,7 +46,7 @@ public class HojaDeVidaLogic {
     }
 
     
-    public HojaDeVidaEntity gethojaDeVida(Long telPrestador) {
+    public HojaDeVidaEntity getHojaDeVida(Long telPrestador) {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar hoja de vida asociada con telefono= {0}", telPrestador);
         HojaDeVidaEntity hojaDeVidaEntity = persistence.find(telPrestador);
         if (hojaDeVidaEntity == null)
@@ -55,7 +55,9 @@ public class HojaDeVidaLogic {
         return hojaDeVidaEntity;
     }
 
-  
+ 
+
+    
     public HojaDeVidaEntity updateHojaDeVida(Long telPrestador, HojaDeVidaEntity hojaDeVidaEntity) {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar hoja de vida asociada con telefono= {0}", telPrestador);
         HojaDeVidaEntity newEntity = persistence.update(hojaDeVidaEntity);
@@ -70,6 +72,6 @@ public class HojaDeVidaLogic {
         LOGGER.log(Level.INFO, "Termina proceso de borrar hoja de vida asociada con telefono= {0}", telPrestador);
     }
 
-    
+  
     
 }
