@@ -54,10 +54,10 @@ public class ReferenciaLogic {
     }
 
   
-    public ReferenciaEntity updateReferencia(Long telPrestador, ReferenciaEntity hojaDeVidaEntity) {
-        LOGGER.log(Level.INFO, "Inicia proceso de actualizar referencia con idRemitente= {0}", telPrestador);
-        ReferenciaEntity newEntity = persistence.update(hojaDeVidaEntity);
-        LOGGER.log(Level.INFO, "Termina proceso de actualizar referencia con idRemitente= {0}", hojaDeVidaEntity.getId());
+    public ReferenciaEntity updateReferencia(Long idRemitente, ReferenciaEntity referenciaEntity) {
+        LOGGER.log(Level.INFO, "Inicia proceso de actualizar referencia con id= {0}", idRemitente);
+        ReferenciaEntity newEntity = persistence.update(referenciaEntity);
+        LOGGER.log(Level.INFO, "Termina proceso de actualizar referencia con id= {0}", referenciaEntity.getIdRemitente());
         return newEntity;
     }
 

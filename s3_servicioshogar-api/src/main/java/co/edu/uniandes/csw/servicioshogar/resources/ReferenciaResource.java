@@ -38,30 +38,30 @@ public class ReferenciaResource {
     private static final Logger LOGGER = Logger.getLogger(HojaDeVidaResource.class.getName());
   
     /**
-     * Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
+     * Variable para acceder a la lÃ³gica de la aplicaciÃ³n. Es una inyecciÃ³n de dependencias.
      */
     @Inject
     ReferenciaLogic referenciaLogic;
     
-     @POST
+    @POST
     public ReferenciaDTO crearReferencia(ReferenciaDTO referencia) throws BusinessLogicException
     {
-              LOGGER.log(Level.INFO, "ClienteResource crearCliente: input: {0}", referencia.toString());
+              LOGGER.log(Level.INFO, "ReferenciaResource crearReferencia: input: {0}", referencia.toString());
          ReferenciaEntity referenciaEntity = referencia.toEntity();
          ReferenciaEntity nuevaReferenciaEntity = referenciaLogic.createReferencia(referenciaEntity);
          /*Como debe retornar un DTO (json) se invoca el constructor del DTO con argumento el entity nuevo*/
-         ReferenciaDTO nuevaHojaDeVidaDTO = new ReferenciaDTO(nuevaReferenciaEntity);
-         LOGGER.log(Level.INFO, "HojaDeVidaResource crearHojaDeVida: output: {0}", nuevaHojaDeVidaDTO.toString());
-         return nuevaHojaDeVidaDTO;
+         ReferenciaDTO nuevaReferenciaDTO = new ReferenciaDTO(nuevaReferenciaEntity);
+         LOGGER.log(Level.INFO, "ReferenciaResource crearReferencia: output: {0}", nuevaReferenciaDTO.toString());
+         return nuevaReferenciaDTO;
     }
 
     @GET
     public List<ReferenciaDTO> getReferencias()
     {
-        LOGGER.info("HojaDeVidaResource getHojasDeVida: input: void");
-        List<ReferenciaDTO> listaHojasDeVida = listEntity2DetailDTO(referenciaLogic.getReferencias());
-        LOGGER.log(Level.INFO, "HojaDeVidaResource getHojasDeVida: output: {0}", listaHojasDeVida.toString());
-        return listaHojasDeVida;
+        LOGGER.info("ReferenciaResource getReferencias: input: void");
+        List<ReferenciaDTO> listaReferencias = listEntity2DetailDTO(referenciaLogic.getReferencias());
+        LOGGER.log(Level.INFO, "ReferenciaResource getReferencias: output: {0}", listaReferencias.toString());
+        return listaReferencias;
     }
     
 
@@ -69,13 +69,13 @@ public class ReferenciaResource {
     @Path("{referencias:\\d+}")
     public ReferenciaDTO getReferencia(@PathParam("idRemitente") Long idRemitente) throws WebApplicationException
     {
-        LOGGER.log(Level.INFO, "HojaDeVidaResource getHojaDeVida: input: {0}", idRemitente);
-        ReferenciaEntity clienteEntity = referenciaLogic.getReferencia(idRemitente);
-        if (clienteEntity == null)
-            throw new WebApplicationException("El recurso /clientes/" + idRemitente + " no existe.", 404);
+        LOGGER.log(Level.INFO, "ReferenciaResource getReferencia: input: {0}", idRemitente);
+        ReferenciaEntity referenciaEntity = referenciaLogic.getReferencia(idRemitente);
+        if (referenciaEntity == null)
+            throw new WebApplicationException("El recurso /referencias/" + idRemitente + " no existe.", 404);
         
-        ReferenciaDTO detailDTO = new ReferenciaDTO(clienteEntity);
-        LOGGER.log(Level.INFO, "HojaDeVidaResource getHojaDeVida: {0}", detailDTO.toString());
+        ReferenciaDTO detailDTO = new ReferenciaDTO(referenciaEntity);
+        LOGGER.log(Level.INFO, "ReferenciaResource getReferencia: {0}", detailDTO.toString());
         return detailDTO;
     }
 
@@ -83,13 +83,13 @@ public class ReferenciaResource {
     @Path("{referencias:\\d+}")
     public ReferenciaDTO modificarReferencia(@PathParam("idRemitente") Long idRemitente, ReferenciaDTO referencia) throws WebApplicationException
     {
-        LOGGER.log(Level.INFO, "HojaDeVidaResource modificarReferencia: input: id:{0} , cliente: {1}", new Object[]{idRemitente, referencia.toString()});
+       LOGGER.log(Level.INFO, "ReferenciaResource modificarReferencia: input: id:{0} , referencia: {1}", new Object[]{idRemitente, referencia.toString()});
         referencia.setIdRemitente(idRemitente);
-        if (ReferenciaLogic.getReferencia(idRemitente) == null)
-            throw new WebApplicationException("El recurso /clientes/" + idRemitente + " no existe.", 404);
+        if (referenciaLogic.getReferencia(idRemitente) == null)
+            throw new WebApplicationException("El recurso /referencias/" + idRemitente + " no existe.", 404);
         
-        ReferenciaDTO detailDTO = new ReferenciaDTO(ReferenciaLogic.updateReferencia(idRemitente, referencia.toEntity()));
-        LOGGER.log(Level.INFO, "HojaDeVidaResource modificarHojaDeVida: output: {0}", detailDTO.toString());
+        ReferenciaDTO detailDTO = new ReferenciaDTO(referenciaLogic.updateReferencia(idRemitente, referencia.toEntity()));
+        LOGGER.log(Level.INFO, "ReferenciaResource modificarReferencia: output: {0}", detailDTO.toString());
         return detailDTO;
     }
     
@@ -98,12 +98,12 @@ public class ReferenciaResource {
     @Path("{referencias:\\d+}")
     public void deleteReferencia(@PathParam("idRemitente") Long idRemitente) throws BusinessLogicException
     {
-        LOGGER.log(Level.INFO, "HojaDeVidaResource deleteCliente: input: {0}", idRemitente);
+        LOGGER.log(Level.INFO, "ReferenciaResource deleteReferencia: input: {0}", idRemitente);
         if (referenciaLogic.getReferencia(idRemitente) == null) 
-            throw new WebApplicationException("El recurso /clientes/" + idRemitente + " no existe.", 404);
+            throw new WebApplicationException("El recurso /referencias/" + idRemitente + " no existe.", 404);
         
         referenciaLogic.deleteReferencia(idRemitente);
-        LOGGER.info("HojaDeVidaResource deleteCliente: output: void");
+        LOGGER.info("ReferenciaResource deleteReferencia: output: void");
     }
     
   

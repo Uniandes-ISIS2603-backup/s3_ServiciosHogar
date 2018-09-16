@@ -176,19 +176,17 @@ public class ReferenciaPersistenceTest {
         ReferenciaEntity newEntity = factory.manufacturePojo(ReferenciaEntity.class);
 
         newEntity.setId(entity.getId());
-
         referenciaPersistence.update(newEntity);
 
         ReferenciaEntity resp = em.find(ReferenciaEntity.class, entity.getId());
-        
-    
-    Assert.assertEquals(entity.getEmpresa(), newEntity.getEmpresa());  
-    Assert.assertEquals(entity.getNombreRemitente(), newEntity.getNombreRemitente());
-    Assert.assertEquals(entity.getIdRemitente(), newEntity.getIdRemitente());  
-    Assert.assertEquals(entity.getTelRemitente(), newEntity.getTelRemitente());  
-    Assert.assertEquals(entity.getCargo(), newEntity.getCargo());  
-    Assert.assertEquals(entity.getEmpresa(), newEntity.getEmpresa());  
-    Assert.assertEquals(entity.getEmail(), newEntity.getEmail());  
+  
+    Assert.assertEquals(resp.getEmpresa(), newEntity.getEmpresa());  
+    Assert.assertEquals(resp.getNombreRemitente(), newEntity.getNombreRemitente());
+    Assert.assertEquals(resp.getIdRemitente(), newEntity.getIdRemitente());  
+    Assert.assertEquals(resp.getTelRemitente(), newEntity.getTelRemitente());  
+    Assert.assertEquals(resp.getCargo(), newEntity.getCargo());  
+    Assert.assertEquals(resp.getEmpresa(), newEntity.getEmpresa());  
+    Assert.assertEquals(resp.getEmail(), newEntity.getEmail());  
 
     
 

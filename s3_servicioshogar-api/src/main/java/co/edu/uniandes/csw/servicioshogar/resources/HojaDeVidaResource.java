@@ -37,17 +37,15 @@ public class HojaDeVidaResource {
         private static final Logger LOGGER = Logger.getLogger(HojaDeVidaResource.class.getName());
   
     /**
-     * Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
+     * Variable para acceder a la lÃ³gica de la aplicaciÃ³n. Es una inyecciÃ³n de dependencias.
      */
     @Inject
-    HojaDeVidaLogic clienteLogic;
-    
     private HojaDeVidaLogic hojaDeVidaLogic;
     
      @POST
     public HojaDeVidaDTO crearHojaDeVida(HojaDeVidaDTO hojaDeVida) throws BusinessLogicException
     {
-         LOGGER.log(Level.INFO, "ClienteResource crearCliente: input: {0}", hojaDeVida.toString());
+         LOGGER.log(Level.INFO, "HojaDeVidaResource crearHojaDeVida: input: {0}", hojaDeVida.toString());
          HojaDeVidaEntity hojaDeVidaEntity = hojaDeVida.toEntity();
          HojaDeVidaEntity nuevaHojaDeVidaEntity = hojaDeVidaLogic.createHojaDeVida(hojaDeVidaEntity);
          /*Como debe retornar un DTO (json) se invoca el constructor del DTO con argumento el entity nuevo*/
@@ -72,9 +70,9 @@ public class HojaDeVidaResource {
     public HojaDeVidaDTO getHojaDeVida(@PathParam("telefono") Long telPrestador) throws WebApplicationException
     {
         LOGGER.log(Level.INFO, "HojaDeVidaResource getHojaDeVida: input: {0}", telPrestador);
-        HojaDeVidaEntity clienteEntity = hojaDeVidaLogic.gethojaDeVida(telPrestador);
+        HojaDeVidaEntity clienteEntity = hojaDeVidaLogic.getHojaDeVida(telPrestador);
         if (clienteEntity == null)
-            throw new WebApplicationException("El recurso /clientes/" + telPrestador + " no existe.", 404);
+            throw new WebApplicationException("El recurso /hojaDeVida/" + telPrestador + " no existe.", 404);
         
         HojaDeVidaDTO detailDTO = new HojaDeVidaDTO(clienteEntity);
         LOGGER.log(Level.INFO, "HojaDeVidaResource getHojaDeVida: {0}", detailDTO.toString());
@@ -85,10 +83,10 @@ public class HojaDeVidaResource {
     @Path("{hojaDeVida:\\d+}")
     public HojaDeVidaDTO modificarHojaDeVida(@PathParam("telefono") Long telPrestador, HojaDeVidaDTO hojaDeVida) throws WebApplicationException
     {
-        LOGGER.log(Level.INFO, "HojaDeVidaResource modificarHojaDeVida: input: id:{0} , cliente: {1}", new Object[]{telPrestador, hojaDeVida.toString()});
+        LOGGER.log(Level.INFO, "HojaDeVidaResource modificarHojaDeVida: input: id:{0} , hojaDeVida: {1}", new Object[]{telPrestador, hojaDeVida.toString()});
         hojaDeVida.setTelefono(telPrestador);
-        if (hojaDeVidaLogic.gethojaDeVida(telPrestador) == null)
-            throw new WebApplicationException("El recurso /clientes/" + telPrestador + " no existe.", 404);
+        if (hojaDeVidaLogic.getHojaDeVida(telPrestador) == null)
+            throw new WebApplicationException("El recurso /hojaDeVida/" + telPrestador + " no existe.", 404);
         
         HojaDeVidaDTO detailDTO = new HojaDeVidaDTO(hojaDeVidaLogic.updateHojaDeVida(telPrestador, hojaDeVida.toEntity()));
         LOGGER.log(Level.INFO, "HojaDeVidaResource modificarHojaDeVida: output: {0}", detailDTO.toString());
@@ -100,12 +98,12 @@ public class HojaDeVidaResource {
     @Path("{hojaDeVida:\\d+}")
     public void deleteHojaDeVida(@PathParam("telefono") Long telPrestador) throws BusinessLogicException
     {
-        LOGGER.log(Level.INFO, "HojaDeVidaResource deleteCliente: input: {0}", telPrestador);
-        if (hojaDeVidaLogic.gethojaDeVida(telPrestador) == null) 
-            throw new WebApplicationException("El recurso /clientes/" + telPrestador + " no existe.", 404);
+        LOGGER.log(Level.INFO, "HojaDeVidaResource deleteHojaDeVida: input: {0}", telPrestador);
+        if (hojaDeVidaLogic.getHojaDeVida(telPrestador) == null) 
+            throw new WebApplicationException("El recurso /hojaDeVida/" + telPrestador + " no existe.", 404);
         
         hojaDeVidaLogic.deleteHojaDeVida(telPrestador);
-        LOGGER.info("HojaDeVidaResource deleteCliente: output: void");
+        LOGGER.info("HojaDeVidaResource deleteHojaDeVida: output: void");
     }
     
   

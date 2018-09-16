@@ -41,33 +41,22 @@ public ReferenciaEntity create(ReferenciaEntity referenciaEntity)
         return query.getResultList();
     }
     
-    /**
-     * Devuelve un cliente identificado con el 'id' ingresado por parametro.
-     * @param clientesId. Id del cliente a buscar.
-     * @return clienteEntity.
-     */
+  
     public ReferenciaEntity find(Long idRemitente)
     {
         LOGGER.log(Level.INFO, "Consultando referencia con idRemitente={0}", idRemitente);
         return em.find(ReferenciaEntity.class, idRemitente);
     }
     
-    /**
-     * Modifica un cliente identificado con el 'id' ingresado por parametro
-     * @param clienteEntity. Cliente que viene con los nuevos cambios.
-     * @return cliente con los cambios aplicados.
-     */
+   
     public ReferenciaEntity update(ReferenciaEntity referenciaEntity)
     {
-        LOGGER.log(Level.INFO, "Actualizando referencia con id = {0}", referenciaEntity.getId());
-        LOGGER.log(Level.INFO, "Saliendo de actualizar referencia con id = {0}", referenciaEntity.getId());
+        LOGGER.log(Level.INFO, "Actualizando referencia con  = {0}", referenciaEntity.getId());
+        LOGGER.log(Level.INFO, "Saliendo de actualizar referencia con id= {0}", referenciaEntity.getId());
         return em.merge(referenciaEntity);
     }
     
-    /**
-     * Borra un cliente identificado con el 'id' ingresado por parametro de la BD.
-     * @param clientesId. Id del cliente a borrar.
-     */
+  
     public void delete(Long idRemitente)
     {
         LOGGER.log(Level.INFO, "Borrando referencia con idRemitente = {0}", idRemitente);

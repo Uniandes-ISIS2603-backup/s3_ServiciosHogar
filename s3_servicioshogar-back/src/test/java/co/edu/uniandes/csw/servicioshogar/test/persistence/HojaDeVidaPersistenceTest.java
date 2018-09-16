@@ -181,12 +181,12 @@ public class HojaDeVidaPersistenceTest
         HojaDeVidaEntity resp = em.find(HojaDeVidaEntity.class, entity.getId());
         
     
-    Assert.assertEquals(entity.getTrayectoria(), newEntity.getTrayectoria());    
-    Assert.assertEquals(entity.getFechaNacimiento(), newEntity.getFechaNacimiento());
-    Assert.assertEquals(entity.getEmail(), newEntity.getEmail());
-    Assert.assertEquals(entity.getTelefono(), newEntity.getTelefono());
-    Assert.assertEquals(entity.getDireccion(), newEntity.getDireccion());
-    Assert.assertEquals(entity.getFormacion(), newEntity.getFormacion());
+    Assert.assertEquals(resp.getTrayectoria(), newEntity.getTrayectoria());    
+    Assert.assertEquals(resp.getFechaNacimiento(), newEntity.getFechaNacimiento());
+    Assert.assertEquals(resp.getEmail(), newEntity.getEmail());
+    Assert.assertEquals(resp.getTelefono(), newEntity.getTelefono());
+    Assert.assertEquals(resp.getDireccion(), newEntity.getDireccion());
+    Assert.assertEquals(resp.getFormacion(), newEntity.getFormacion());
     
     
     }
