@@ -23,7 +23,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * <pre>
  *   {
  *      "fecha": "2000-08-20T00:00:00-05:00",
- *      "dirección": "Cale 22 No. 22-22",
+ *      "direccion": "Cale 22 No. 22-22",
  *   }
  * </pre>
  *

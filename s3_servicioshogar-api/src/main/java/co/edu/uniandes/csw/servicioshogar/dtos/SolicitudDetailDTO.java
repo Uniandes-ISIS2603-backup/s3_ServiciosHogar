@@ -10,53 +10,81 @@ import co.edu.uniandes.csw.servicioshogar.entities.SolicitudEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
+ * Al serializarse como JSON esta clase implementa el siguiente modelo: <br>
+ * <pre>
+ *   {
+ *      "fecha": date,
+ *      "direccion": string,
+ *      "servicios":[{@link ServicioDTO}]
+ *   }
+ * </pre> Por ejemplo una editorial se representa asi:<br>
+ *
+ * <pre>
+ *   {
+ *      "fecha": "2000-08-20T00:00:00-05:00",
+ *      "direccion": "Cale 22 No. 22-22",
+ *      "servicios": [
+ *          {
+ *              "descripción": "Cambiar las cerraduras de tres puertas",
+                "requerimientos": "CERRAJERIA",
+ *              "solicitud":
+ *              {
+ *                  "fecha": "2000-08-20T00:00:00-05:00",
+ *                  "direccion": "Cale 22 No. 22-22"
+ *              }
+ *          },
+ *          {
+ *              "descripción": "Desinstalar retrete antiguo y cambiar por uno nuevo",
+                "requerimientos": "PLOMERIA",
+ *              "solicitud":
+ *              {
+ *                  "fecha": "2000-08-20T00:00:00-05:00",
+ *                  "direccion": "Cale 22 No. 22-22"
+ *              }
+ *              }
+ *          }
+ *      ]
+ *   }
+ * </pre>
  *
  * @author Steven Tarazona <ys.tarazona@uniandes.edu.co>
  */
 public class SolicitudDetailDTO extends SolicitudDTO implements Serializable{
-        /*
-    * Esta lista de tipo ServicioDTO contiene los servicios que estan asociados a una solicitud
-     */
+    // relación  cero o muchos servicios 
     private List<ServicioDTO> servicios;
 
-    /**
-     * Constructor por defecto
-     */
     public SolicitudDetailDTO() {
+        super();
     }
 
     /**
      * Constructor para transformar un Entity a un DTO
      *
-     * @param solicitudEntity La entidad de la solicitud para transformar a DTO.
+     * @param solicitudEntity La entidad de la cual se construye el DTO
      */
     public SolicitudDetailDTO(SolicitudEntity solicitudEntity) {
         super(solicitudEntity);
-        if (solicitudEntity != null) {
-            if (solicitudEntity.getServicios() != null) {
-                servicios = new ArrayList<>();
-                for (ServicioEntity entityServicio : solicitudEntity.getServicios()) {
-                    servicios.add(new ServicioDTO(entityServicio));
-                }
+        if (solicitudEntity.getServicios() != null) {
+            servicios = new ArrayList<>();
+            for (ServicioEntity entityServicio : solicitudEntity.getServicios()) {
+                servicios.add(new ServicioDTO(entityServicio));
             }
         }
     }
 
     /**
-     * Transformar un DTO a un Entity
+     * Transformar el DTO a una entidad
      *
-     * @return El DTO de la solicitud para transformar a Entity
+     * @return La entidad que representa el solicitud.
      */
     @Override
     public SolicitudEntity toEntity() {
         SolicitudEntity solicitudEntity = super.toEntity();
         if (servicios != null) {
             List<ServicioEntity> serviciosEntity = new ArrayList<>();
-            for (ServicioDTO dtoServicio : servicios) {
+            for (ServicioDTO dtoServicio : getServicios()) {
                 serviciosEntity.add(dtoServicio.toEntity());
             }
             solicitudEntity.setServicios(serviciosEntity);
@@ -65,25 +93,20 @@ public class SolicitudDetailDTO extends SolicitudDTO implements Serializable{
     }
 
     /**
-     * Devuelve la lista de libros de la solicitud.
+     * Devuelve las reseñas asociadas a este solicitud
      *
-     * @return the servicios
+     * @return Lista de DTOs de Reseñas
      */
     public List<ServicioDTO> getServicios() {
         return servicios;
     }
 
     /**
-     * Modifica la lista de libros de la solicitud.
+     * Modifica las reseñas de este solicitud.
      *
-     * @param servicios the servicios to set
+     * @param servicios Las nuevas reseñas
      */
     public void setServicios(List<ServicioDTO> servicios) {
         this.servicios = servicios;
-    }
-
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
 }

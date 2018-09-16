@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.servicioshogar.test.logic;
 
 import co.edu.uniandes.csw.servicioshogar.entities.SolicitudEntity;
 import co.edu.uniandes.csw.servicioshogar.ejb.SolicitudLogic;
+import co.edu.uniandes.csw.servicioshogar.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.servicioshogar.persistence.SolicitudPersistence;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +62,6 @@ public class SolicitudLogicTest {
 
     /**
      * Configuración inicial de la prueba.
-     *
      */
     @Before
     public void configTest() {
@@ -82,16 +82,16 @@ public class SolicitudLogicTest {
 
     /**
      * Limpia las tablas que están implicadas en la prueba.
-     *
      */
     private void clearData() {
         em.createQuery("delete from SolicitudEntity").executeUpdate();
+        em.createQuery("delete from EditorialEntity").executeUpdate();
+        em.createQuery("delete from AuthorEntity").executeUpdate();
     }
 
     /**
      * Inserta los datos iniciales para el correcto funcionamiento de las
      * pruebas.
-     *
      */
     private void insertData() {
         for (int i = 0; i < 3; i++) {
@@ -103,7 +103,7 @@ public class SolicitudLogicTest {
     }
 
     /**
-     * Prueba para crear una Solicitud
+     * Prueba para crear un Solicitud
      */
     @Test
     public void createSolicitudTest(){
@@ -111,10 +111,11 @@ public class SolicitudLogicTest {
         SolicitudEntity result = solicitudLogic.createSolicitud(newEntity);
         Assert.assertNotNull(result);
         SolicitudEntity entity = em.find(SolicitudEntity.class, result.getId());
-        Assert.assertEquals(entity.getDireccion(), newEntity.getDireccion());
-        Assert.assertEquals(entity.getFecha(), newEntity.getFecha());
+        Assert.assertEquals(newEntity.getId(), entity.getId());
+        Assert.assertEquals(newEntity.getDireccion(), entity.getDireccion());
+        Assert.assertEquals(newEntity.getFecha(), entity.getFecha());
     }
-
+    
     /**
      * Prueba para consultar la lista de Solicitudes.
      */
@@ -134,7 +135,7 @@ public class SolicitudLogicTest {
     }
 
     /**
-     * Prueba para consultar una Solicitud.
+     * Prueba para consultar un Solicitud.
      */
     @Test
     public void getSolicitudTest() {
@@ -147,32 +148,28 @@ public class SolicitudLogicTest {
     }
 
     /**
-     * Prueba para actualizar una Solicitud.
+     * Prueba para actualizar un Solicitud.
      */
     @Test
-    public void updateSolicitudTest() {
+    public void updateSolicitudTest(){
         SolicitudEntity entity = data.get(0);
         SolicitudEntity pojoEntity = factory.manufacturePojo(SolicitudEntity.class);
-
         pojoEntity.setId(entity.getId());
-
         solicitudLogic.updateSolicitud(pojoEntity.getId(), pojoEntity);
-
         SolicitudEntity resp = em.find(SolicitudEntity.class, entity.getId());
-
         Assert.assertEquals(pojoEntity.getId(), resp.getId());
         Assert.assertEquals(pojoEntity.getDireccion(), resp.getDireccion());
         Assert.assertEquals(pojoEntity.getFecha(), resp.getFecha());
     }
 
     /**
-     * Prueba para eliminar una Solicitud.
+     * Prueba para eliminar un Solicitud.
      */
     @Test
-    public void deleteSolicitudTest() {
+    public void deleteSolicitudTest(){
         SolicitudEntity entity = data.get(0);
         solicitudLogic.deleteSolicitud(entity.getId());
         SolicitudEntity deleted = em.find(SolicitudEntity.class, entity.getId());
         Assert.assertNull(deleted);
-    } 
+    }
 }

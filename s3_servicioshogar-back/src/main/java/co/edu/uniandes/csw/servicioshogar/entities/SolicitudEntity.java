@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
@@ -29,7 +30,7 @@ public class SolicitudEntity extends BaseEntity implements Serializable{
     private Date fecha;
     
     @PodamExclude
-    @OneToMany(mappedBy = "solicitud")
+    @OneToMany(mappedBy = "solicitud", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<ServicioEntity> servicios = new ArrayList<ServicioEntity>();
 
     /**

@@ -15,13 +15,19 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  *   {
  *      "descripcion": string,
  *      "requerimientos": string
+ *      "solicitud": {@link SolicitudDTO}
  *   }
  * </pre> Por ejemplo una editorial se representa asi:<br>
  *
  * <pre>
  *   {
  *      "descripción": "Cambiar las cerraduras de tres puertas",
-        "requerimientos": "CERRAJERIA"
+ *      "requerimientos": "CERRAJERIA"
+ *      "solicitud":
+ *      {
+ *          "fecha": "2000-08-20T00:00:00-05:00",
+ *          "direccion": "Cale 22 No. 22-22"
+ *      }
  *   }
  * </pre>
  *
@@ -82,6 +88,10 @@ public class ServicioDTO {
         return descripcion;
     }
 
+    public SolicitudDTO getSolicitud() {
+        return solicitud;
+    }
+
     /**
      * Modificar la descripcion del servicio.
      * @param descripcion. Nueva descripcion.
@@ -104,6 +114,10 @@ public class ServicioDTO {
      */
     public void setRequerimientos(String requerimientos) {
         this.requerimientos = requerimientos;
+    }
+
+    public void setSolicitud(SolicitudDTO solicitud) {
+        this.solicitud = solicitud;
     }
     
         /**
