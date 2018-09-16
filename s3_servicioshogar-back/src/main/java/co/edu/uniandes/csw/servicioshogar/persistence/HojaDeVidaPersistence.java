@@ -36,9 +36,64 @@ public class HojaDeVidaPersistence {
        public List<HojaDeVidaEntity> findAll()
     {
         LOGGER.log(Level.INFO, "Consultando todas las hojas de vida");
-        /*Se crea un query para buscar todas los  en la base de datos.*/
         TypedQuery query = em.createQuery("select u from HojaDeVidaEntity u", HojaDeVidaEntity.class);
         return query.getResultList();
     }
    
+    public HojaDeVidaEntity find(Long telPrestador)
+    {
+        LOGGER.log(Level.INFO, "Consultando hoja de vida del prestador con telefono={0}", telPrestador);
+        return em.find(HojaDeVidaEntity.class, telPrestador);
+    }
+    
+    /**
+     * Modifica un cliente identificado con el 'id' ingresado por parametro
+     * @param hojaDeVidaEntity. Cliente que viene con los nuevos cambios.
+     * @return hoja de vda con los cambios aplicados.
+     */
+    public HojaDeVidaEntity update(HojaDeVidaEntity hojaDeVidaEntity)
+    {
+        LOGGER.log(Level.INFO, "Actualizando hojaDeVida con id = {0}", hojaDeVidaEntity.getId());
+      
+        LOGGER.log(Level.INFO, "Saliendo de actualizar la hoja de vida asociada con telefono= {0}", hojaDeVidaEntity.getTelefono());
+        
+     
+        return em.merge(hojaDeVidaEntity);
+    }
+    
+    public void delete(Long telPrestador)
+    {
+        LOGGER.log(Level.INFO, "Borrando hoja de vida asociada con telefono= {0}", telPrestador);
+        HojaDeVidaEntity entity = em.find(HojaDeVidaEntity.class, telPrestador);
+        em.remove(entity);
+        LOGGER.log(Level.INFO, "Saliendo de borrar la hoja de vida asociada con telefono= {0}", telPrestador);
+    }
+    
+    /**
+     * Busca si existe un cliente con el nombre enviado por parametro.
+     * @param email. Nombre del cliente a buscar.
+     * @return cliente con el nombre correspondiente. Null en caso de no encontrarlo
+     */
+    public HojaDeVidaEntity findByEmail(String email) 
+    {
+        LOGGER.log(Level.INFO, "Consultando hoja de vida por email ", email);
+        /*Se crea un query para buscar editoriales con el nombre que recibe el método como argumento.
+        ":name" es un placeholder que debe ser remplazado*/
+        TypedQuery query = em.createQuery("Select e From HojaDeVidaEntity e where e.email = :email", HojaDeVidaEntity.class);
+        /*Se remplaza el placeholder ":name" con el valor del argumento */
+        query = query.setParameter("email", email);
+        /*Se invoca el query se obtiene la lista resultado*/
+        List<HojaDeVidaEntity> sameEmail = query.getResultList();
+        HojaDeVidaEntity result;
+        
+        if (sameEmail == null)
+            result = null;
+        else if (sameEmail.isEmpty())
+            result = null;
+        else
+            result = sameEmail.get(0);
+        
+        LOGGER.log(Level.INFO, "Saliendo de consultar hoja de vida por email ", email);
+        return result;
+    }
 }
