@@ -62,18 +62,18 @@ public class HojaDeVidaLogic {
  
 
     
-    public HojaDeVidaEntity updateHojaDeVida(Long telPrestador, HojaDeVidaEntity hojaDeVidaEntity) {
-        LOGGER.log(Level.INFO, "Inicia proceso de actualizar hoja de vida asociada con telefono= {0}", telPrestador);
+    public HojaDeVidaEntity updateHojaDeVida(Long id, HojaDeVidaEntity hojaDeVidaEntity) {
+        LOGGER.log(Level.INFO, "Inicia proceso de actualizar hoja de vida asociada con id= {0}", id);
         HojaDeVidaEntity newEntity = persistence.update(hojaDeVidaEntity);
-        LOGGER.log(Level.INFO, "Termina proceso de actualizar hoja de vida asociada con telefono= {0}", hojaDeVidaEntity.getId());
+        LOGGER.log(Level.INFO, "Termina proceso de actualizar hoja de vida asociada con id= {0}", hojaDeVidaEntity.getId());
         return newEntity;
     }
 
   
-    public void deleteHojaDeVida(Long telPrestador) {
-        LOGGER.log(Level.INFO, "Inicia proceso de borrar hoja de vida asociada con telefono= {0}", telPrestador);
-        persistence.delete(telPrestador);
-        LOGGER.log(Level.INFO, "Termina proceso de borrar hoja de vida asociada con telefono= {0}", telPrestador);
+    public void deleteHojaDeVida(Long id) {
+        LOGGER.log(Level.INFO, "Inicia proceso de borrar hoja de vida asociada con id= {0}", id);
+        persistence.delete(id);
+        LOGGER.log(Level.INFO, "Termina proceso de borrar hoja de vida asociada con id= {0}", id);
     }
 
   

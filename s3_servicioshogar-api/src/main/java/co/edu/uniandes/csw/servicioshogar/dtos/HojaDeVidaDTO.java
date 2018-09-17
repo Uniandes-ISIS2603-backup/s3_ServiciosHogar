@@ -10,19 +10,33 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- *
+ *<pre>
+ * Json:
+ * {
+ * "id": "1",
+ * "trayectoria": "7 meses",
+ * "fechaNacimiento": "1998/02/03",
+ * "email": "caro@gmail.com",
+ * "telefono": 3102569876,
+ * "direccion": "Cll. 30 #25-02",
+ * "formacion": "bachiller"
+ * }
+ * 
+ * 
  * @author Daniela Rocha Torres
  */
 public class HojaDeVidaDTO implements Serializable{
 
+    private Long id;
     /**
      * Atributo que representa la trayectoria (experiencia) del prestador.
      */
     private String trayectoria; 
     /**
      * Atributo que representa la fecha de nacimiento del prestador.
+     * FORMATO: DD/MM/YYYY
      */
-    private Date fechaNacimiento;
+    private String fechaNacimiento;
     /**
      * Atributo que representa el email del prestador.
      */
@@ -68,6 +82,16 @@ public class HojaDeVidaDTO implements Serializable{
             return hojaDeVida;
     }
     
+    
+    public Long getId()
+    {
+        return id;
+    }
+    
+    public void setId(Long id){
+        this.id=id;
+    }
+    
      public String getTrayectoria() {
         return trayectoria;
     }
@@ -76,11 +100,11 @@ public class HojaDeVidaDTO implements Serializable{
         this.trayectoria = trayectoria;
     }
 
-    public Date getFechaNacimiento() {
+    public String getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(Date fechaNacimiento) {
+    public void setFechaNacimiento(String fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 

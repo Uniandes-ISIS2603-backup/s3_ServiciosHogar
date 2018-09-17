@@ -31,7 +31,7 @@ public class HojaDeVidaEntity extends BaseEntity implements Serializable{
     /**
      * Atributo que representa la fecha de nacimiento del prestador.
      */
-    private Date fechaNacimiento;
+    private String fechaNacimiento;
     /**
      * Atributo que representa el email del prestador.
      */
@@ -57,11 +57,11 @@ public class HojaDeVidaEntity extends BaseEntity implements Serializable{
         this.trayectoria = trayectoria;
     }
 
-    public Date getFechaNacimiento() {
+    public String getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(Date fechaNacimiento) {
+    public void setFechaNacimiento(String fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
@@ -96,6 +96,11 @@ public class HojaDeVidaEntity extends BaseEntity implements Serializable{
     public void setFormacion(String formacion) {
         this.formacion = formacion;
     }
+   
+       public List<ReferenciaEntity> getReferencias() {return referencias;
+    }
+
+    public void setCalificaciones(List<ReferenciaEntity> referencias) {this.referencias = referencias;}
     
   
 }
