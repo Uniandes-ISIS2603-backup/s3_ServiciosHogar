@@ -29,8 +29,12 @@ public class HojaDeVidaLogic {
     
 
    
-    public HojaDeVidaEntity createHojaDeVida(HojaDeVidaEntity hojaDeVidaEntity){
+    public HojaDeVidaEntity createHojaDeVida(HojaDeVidaEntity hojaDeVidaEntity) throws BusinessLogicException{
         LOGGER.log(Level.INFO, "Inicia proceso de creación de la hoja de vida");
+        
+        if(persistence.findByEmail(hojaDeVidaEntity.getEmail())!=null){
+            throw new BusinessLogicException("Ya existe una hoja de vida asociada al email: "+hojaDeVidaEntity.getEmail());
+        }
         // Invoca la persistencia para crear el servicio
         persistence.create(hojaDeVidaEntity);
         LOGGER.log(Level.INFO, "Termina proceso de creación de la hoja de vida");

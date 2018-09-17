@@ -5,8 +5,12 @@
  */
 package co.edu.uniandes.csw.servicioshogar.entities;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
@@ -14,6 +18,11 @@ import javax.persistence.Entity;
  */
 @Entity
 public class HojaDeVidaEntity extends BaseEntity implements Serializable{
+    
+    
+    @PodamExclude
+    @OneToMany(mappedBy = "hojaDeVida")
+    private List<ReferenciaEntity> referencias = new ArrayList<ReferenciaEntity>();
     
         /**
      * Atributo que representa la trayectoria (experiencia) del prestador.
