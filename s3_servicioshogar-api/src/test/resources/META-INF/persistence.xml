@@ -13,7 +13,6 @@
     <class>co.edu.uniandes.csw.servicioshogar.entities.ServicioEntity</class>
     <class>co.edu.uniandes.csw.servicioshogar.entities.SolicitudEntity</class>
     <class>co.edu.uniandes.csw.servicioshogar.entities.TarjetaCreditoEntity</class>
-  </persistence-unit>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
  <shared-cache-mode>NONE</shared-cache-mode>
     <properties>
