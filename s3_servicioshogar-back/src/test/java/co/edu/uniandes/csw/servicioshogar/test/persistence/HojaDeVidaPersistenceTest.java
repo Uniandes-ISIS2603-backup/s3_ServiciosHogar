@@ -5,8 +5,13 @@
  */
 package co.edu.uniandes.csw.servicioshogar.test.persistence;
 
-import co.edu.uniandes.csw.servicioshogar.entities.ClienteEntity;
-import co.edu.uniandes.csw.servicioshogar.persistence.ClientePersistence;
+/**
+ *
+ * @author Daniela Rocha Torres
+ */
+
+import co.edu.uniandes.csw.servicioshogar.entities.HojaDeVidaEntity;
+import co.edu.uniandes.csw.servicioshogar.persistence.HojaDeVidaPersistence;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -25,18 +30,18 @@ import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 /**
- * Pruebas de persistencia Cliente
- * @author Carlos Eduardo Robles Quevedo
+ * Pruebas de persistencia Hoja de vida
+ * @author Daniela Rocha Torres
  */
 @RunWith(Arquillian.class)
-public class ClientePersistenceTest 
+public class HojaDeVidaPersistenceTest 
 {
     //------------------------------------------
     //-----------------Atributos----------------
     //------------------------------------------
     /*Inyectas las dependencias.*/
     @Inject
-    private ClientePersistence clientePersistence;
+    private HojaDeVidaPersistence hojaDeVidaPersistence;
     
     @PersistenceContext
     private EntityManager em;
@@ -44,7 +49,7 @@ public class ClientePersistenceTest
     @Inject
     UserTransaction utx;
     
-    private List<ClienteEntity> data = new ArrayList<>();
+    private List<HojaDeVidaEntity> data = new ArrayList<>();
     
     //------------------------------------------
     //------------------Metodos-----------------
@@ -59,8 +64,8 @@ public class ClientePersistenceTest
     public static JavaArchive createDeployment() 
     {
         return ShrinkWrap.create(JavaArchive.class)
-                .addPackage(ClienteEntity.class.getPackage())
-                .addPackage(ClientePersistence.class.getPackage())
+                .addPackage(HojaDeVidaEntity.class.getPackage())
+                .addPackage(HojaDeVidaPersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
@@ -90,7 +95,7 @@ public class ClientePersistenceTest
     /**
      * Limpia las tablas implicadas en la prueba.
      */
-    private void clearData() {em.createQuery("delete from ClienteEntity").executeUpdate();}
+    private void clearData() {em.createQuery("delete from HojaDeVidaEntity").executeUpdate();}
     
     /**
      * Inserta los datos iniciales para que las pruebas funcionen correctamente.
@@ -100,85 +105,92 @@ public class ClientePersistenceTest
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) 
         {
-            ClienteEntity entity = factory.manufacturePojo(ClienteEntity.class);
+            HojaDeVidaEntity entity = factory.manufacturePojo(HojaDeVidaEntity.class);
             em.persist(entity);
             data.add(entity);
         }
     }
     
-    /**
-     * Prueba para crear un Cliente.
-     */
     @Test
-    public void createClienteTest() 
-    {
+    public void createHojaDeVidaTest() {
         PodamFactory factory = new PodamFactoryImpl();
-        ClienteEntity newEntity = factory.manufacturePojo(ClienteEntity.class);
-        ClienteEntity result = clientePersistence.create(newEntity);
+        HojaDeVidaEntity newEntity = factory.manufacturePojo(HojaDeVidaEntity.class);
+        HojaDeVidaEntity result = hojaDeVidaPersistence.create(newEntity);
 
         Assert.assertNotNull(result);
-        ClienteEntity entity = em.find(ClienteEntity.class, result.getId());
-        Assert.assertEquals(newEntity.getNombre(), entity.getNombre());
+
+        HojaDeVidaEntity entity = em.find(HojaDeVidaEntity.class, result.getId());
+
+        Assert.assertEquals(entity.getEmail(), newEntity.getEmail());
+        Assert.assertEquals(entity.getTelefono(), newEntity.getTelefono());
     }
-    
+
     /**
-     * Prueba para consultar la lista de todos los clientes.
+     * Prueba para consultar la lista de Hojas de vida.
      */
     @Test
-    public void getClientesTest() 
-    {
-        List<ClienteEntity> list = clientePersistence.findAll();
+    public void getHojasDeVidaTest() {
+        List<HojaDeVidaEntity> list = hojaDeVidaPersistence.findAll();
         Assert.assertEquals(data.size(), list.size());
-        for (ClienteEntity ent : list) 
-        {
+        for (HojaDeVidaEntity ent : list) {
             boolean found = false;
-            
-            for (ClienteEntity entity : data)             
-                if (ent.getId().equals(entity.getId()))
-                    found = true;            
-            
+            for (HojaDeVidaEntity entity : data) {
+                if (ent.getId().equals(entity.getId())) {
+                    found = true;
+                }
+            }
             Assert.assertTrue(found);
         }
     }
-    
+
     /**
-     * Prueba para consultar un cliente.
+     * Prueba para consultar una Hoja de vida.
      */
     @Test
-    public void getClienteTest() 
-    {
-        ClienteEntity entity = data.get(0);
-        ClienteEntity newEntity = clientePersistence.find(entity.getId());
+    public void getHojaDeVidaTest() {
+        HojaDeVidaEntity entity = data.get(0);
+        HojaDeVidaEntity newEntity = hojaDeVidaPersistence.find(entity.getId());
         Assert.assertNotNull(newEntity);
-        Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
-        Assert.assertEquals(entity.getCorreo(), newEntity.getCorreo());
-        Assert.assertEquals(entity.getDireccion(), newEntity.getDireccion());
+        Assert.assertEquals(entity.getEmail(), newEntity.getEmail());
+        Assert.assertEquals(entity.getTelefono(), newEntity.getTelefono());
     }
-    
+
     /**
-     * Prueba para actualizar un cliente.
+     * Prueba para eliminar una Hoja de vida.
      */
     @Test
-    public void updateClienteTest() 
-    {
-        ClienteEntity entity = data.get(0);
-        PodamFactory factory = new PodamFactoryImpl();
-        ClienteEntity newEntity = factory.manufacturePojo(ClienteEntity.class);
-        newEntity.setId(entity.getId());
-        clientePersistence.update(newEntity);
-        ClienteEntity resp = em.find(ClienteEntity.class, entity.getId());
-        Assert.assertEquals(newEntity.getNombre(), resp.getNombre());
-    }
-    
-    /**
-     * Prueba para eliminar un cliente.
-     */
-    @Test
-    public void deleteAuthorTest() 
-    {
-        ClienteEntity entity = data.get(0);
-        clientePersistence.delete(entity.getId());
-        ClienteEntity deleted = em.find(ClienteEntity.class, entity.getId());
+    public void deleteHojaDeVidaTest() {
+        HojaDeVidaEntity entity = data.get(0);
+        hojaDeVidaPersistence.delete(entity.getId());
+        HojaDeVidaEntity deleted = em.find(HojaDeVidaEntity.class, entity.getId());
         Assert.assertNull(deleted);
-    }  
+    }
+
+    /**
+     * Prueba para actualizar una Hoja de vida.
+     */
+    @Test
+    public void updateHojaDeVidaTest() {
+        HojaDeVidaEntity entity = data.get(0);
+          
+            
+        PodamFactory factory = new PodamFactoryImpl();
+        HojaDeVidaEntity newEntity = factory.manufacturePojo(HojaDeVidaEntity.class);
+        newEntity.setId(entity.getId());
+        hojaDeVidaPersistence.update(newEntity);
+        HojaDeVidaEntity resp = em.find(HojaDeVidaEntity.class, entity.getId());
+        
+    
+    Assert.assertEquals(resp.getTrayectoria(), newEntity.getTrayectoria());    
+    Assert.assertEquals(resp.getFechaNacimiento(), newEntity.getFechaNacimiento());
+    Assert.assertEquals(resp.getEmail(), newEntity.getEmail());
+    Assert.assertEquals(resp.getTelefono(), newEntity.getTelefono());
+    Assert.assertEquals(resp.getDireccion(), newEntity.getDireccion());
+    Assert.assertEquals(resp.getFormacion(), newEntity.getFormacion());
+    
+    
+    }
+
+
 }
+

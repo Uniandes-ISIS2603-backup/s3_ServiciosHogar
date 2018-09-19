@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
+import junit.framework.TestCase;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -29,39 +30,22 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  * @author Steven Tarazona <ys.tarazona@uniandes.edu.co>
  */
 @RunWith(Arquillian.class)
-public class SolicitudPersistenceTest {
-    
-    /**
-     * Inyección de la dependencia a la clase SolicitudPersistence cuyos métodos
-     * se van a probar.
-     */
+public class SolicitudPersistenceTest{
     @Inject
     private SolicitudPersistence solicitudPersistence;
 
-    /**
-     * Contexto de Persistencia que se va a utilizar para acceder a la Base de
-     * datos por fuera de los métodos que se están probando.
-     */
     @PersistenceContext
     private EntityManager em;
 
-    /**
-     * Variable para martcar las transacciones del em anterior cuando se
-     * crean/borran datos para las pruebas.
-     */
     @Inject
     UserTransaction utx;
 
-    /**
-     * lista que tiene los datos de prueba.
-     */
     private List<SolicitudEntity> data = new ArrayList<SolicitudEntity>();
 
     /**
-     * @return Devuelve el jar que Arquillian va a desplegar en el Glassfish
-     * embebido. El jar contiene las clases de Solicitud, el descriptor de la
-     * base de datos y el archivo beans.xml para resolver la inyección de
-     * dependencias.
+     * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
+     * El jar contiene las clases, el descriptor de la base de datos y el
+     * archivo beans.xml para resolver la inyección de dependencias.
      */
     @Deployment
     public static JavaArchive createDeployment() {
@@ -107,17 +91,15 @@ public class SolicitudPersistenceTest {
     private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
-
             SolicitudEntity entity = factory.manufacturePojo(SolicitudEntity.class);
 
             em.persist(entity);
-
             data.add(entity);
         }
     }
 
     /**
-     * Prueba para crear una Solicitud.
+     * Prueba para crear un Solicitud.
      */
     @Test
     public void createSolicitudTest() {
@@ -152,19 +134,19 @@ public class SolicitudPersistenceTest {
     }
 
     /**
-     * Prueba para consultar una Solicitud.
+     * Prueba para consultar un Solicitud.
      */
     @Test
     public void getSolicitudTest() {
         SolicitudEntity entity = data.get(0);
         SolicitudEntity newEntity = solicitudPersistence.find(entity.getId());
         Assert.assertNotNull(newEntity);
-        Assert.assertEquals(newEntity.getDireccion(), entity.getDireccion());
-        Assert.assertEquals(newEntity.getFecha(), entity.getFecha());
+        Assert.assertEquals(entity.getDireccion(), newEntity.getDireccion());
+        Assert.assertEquals(entity.getFecha(), newEntity.getFecha());;
     }
 
     /**
-     * Prueba para eliminar una Solicitud.
+     * Prueba para eliminar un Solicitud.
      */
     @Test
     public void deleteSolicitudTest() {
@@ -175,7 +157,7 @@ public class SolicitudPersistenceTest {
     }
 
     /**
-     * Prueba para actualizar una Solicitud.
+     * Prueba para actualizar un Solicitud.
      */
     @Test
     public void updateSolicitudTest() {

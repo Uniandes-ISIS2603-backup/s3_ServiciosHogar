@@ -14,86 +14,80 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 /**
- * Clase que implementa la conexion con la persistencia para la entidad de
- * Solicitud.
  *
  * @author Steven Tarazona <ys.tarazona@uniandes.edu.co>
  */
 @Stateless
 public class SolicitudLogic {
-    
     private static final Logger LOGGER = Logger.getLogger(SolicitudLogic.class.getName());
 
     @Inject
-    private SolicitudPersistence persistence; // Variable para acceder a la persistencia de la aplicación. Es una inyección de dependencias.
-    
+    private SolicitudPersistence persistence;
+
     /**
-     * Crea una solicitud en la persistencia.
+     * Guardar un nuevo solicitud
      *
-     * @param solicitudEntity  La entidad que representa la solicitud a
-     * persistir.
-     * @return La entiddad de la solicitud luego de persistirla.
+     * @param solicitudEntity La entidad de tipo solicitud del nuevo solicitud a persistir.
+     * @return La entidad luego de persistirla
+     * persistencia.
      */
-    public SolicitudEntity createSolicitud(SolicitudEntity solicitudEntity) {
-        LOGGER.log(Level.INFO, "Inicia proceso de creación de la solicitud");
-        /*Invoca la persistencia para crear el cliente*/
+    public SolicitudEntity createSolicitud(SolicitudEntity solicitudEntity){
+        LOGGER.log(Level.INFO, "Inicia proceso de creación del solicitud");
         persistence.create(solicitudEntity);
-        LOGGER.log(Level.INFO, "Termina proceso de creación del cliente");
-        return solicitudEntity;    
+        LOGGER.log(Level.INFO, "Termina proceso de creación del solicitud");
+        return solicitudEntity;
     }
-    
+
     /**
-     * Obtener todas las solicitudes existentes en la base de datos.
+     * Devuelve todos los solicitudes que hay en la base de datos.
      *
-     * @return una lista de solicitudes.
+     * @return Lista de entidades de tipo solicitud.
      */
     public List<SolicitudEntity> getSolicitudes() {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar todas las editoriales");
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los solicitudes");
         List<SolicitudEntity> solicitudes = persistence.findAll();
-        LOGGER.log(Level.INFO, "Termina proceso de consultar todas las editoriales");
+        LOGGER.log(Level.INFO, "Termina proceso de consultar todos los solicitudes");
         return solicitudes;
     }
 
-    
     /**
-     * Obtener una solicitud por medio de su id.
+     * Busca un solicitud por ID
      *
-     * @param solicitudesId: id de la solicitud para ser buscada.
-     * @return la solicitud solicitada por medio de su id.
+     * @param solicitudesId El id del solicitud a buscar
+     * @return El solicitud encontrado, null si no lo encuentra.
      */
     public SolicitudEntity getSolicitud(Long solicitudesId) {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar la solicitud con id = {0}", solicitudesId);
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar el solicitud con id = {0}", solicitudesId);
         SolicitudEntity solicitudEntity = persistence.find(solicitudesId);
-        if (solicitudEntity == null)
-            LOGGER.log(Level.SEVERE, "La solicitud con el id = {0} no existe", solicitudesId);
-        LOGGER.log(Level.INFO, "Termina proceso de consultar la solicitud con id = {0}", solicitudesId);
+        if (solicitudEntity == null) {
+            LOGGER.log(Level.SEVERE, "El solicitud con el id = {0} no existe", solicitudesId);
+        }
+        LOGGER.log(Level.INFO, "Termina proceso de consultar el solicitud con id = {0}", solicitudesId);
         return solicitudEntity;
-    }
-    
-    /**
-     * Actualizar una solicitud.
-     *
-     * @param solicitudesId : id de la solicitud para buscarla en la base de
-     * datos.
-     * @param solicitudEntity: solicitud con los cambios para ser actualizada,
-     * por ejemplo la fecha.
-     * @return la solicitud con los cambios actualizados en la base de datos.
-     */
-    public SolicitudEntity updateSolicitud(Long solicitudesId, SolicitudEntity solicitudEntity) {
-        LOGGER.log(Level.INFO, "Inicia proceso de actualizar la solicitud con id = {0}", solicitudesId);
-        SolicitudEntity newEntity = persistence.update(solicitudEntity);
-        LOGGER.log(Level.INFO, "Termina proceso de actualizar la editorial con id = {0}", solicitudEntity.getId());
-        return newEntity;
     }
 
     /**
-     * Borrar una solicitud.
+     * Actualizar un solicitud por ID
      *
-     * @param solicitudesId: id de la solicitud a borrar.
+     * @param solicitudesId El ID del solicitud a actualizar
+     * @param solicitudEntity La entidad del solicitud con los cambios deseados
+     * @return La entidad del solicitud luego de actualizarla
      */
-    public void deleteSolicitud(Long solicitudesId) {
-        LOGGER.log(Level.INFO, "Inicia proceso de borrar la editorial con id = {0}", solicitudesId);
-        persistence.delete(solicitudesId);
-        LOGGER.log(Level.INFO, "Termina proceso de borrar la editorial con id = {0}", solicitudesId);    }
+    public SolicitudEntity updateSolicitud(Long solicitudesId, SolicitudEntity solicitudEntity){
+        LOGGER.log(Level.INFO, "Inicia proceso de actualizar el solicitud con id = {0}", solicitudesId);
+        SolicitudEntity newEntity = persistence.update(solicitudEntity);
+        LOGGER.log(Level.INFO, "Termina proceso de actualizar el solicitud con id = {0}", solicitudEntity.getId());
+        return newEntity;
+    }
     
+    /**
+     * Eliminar un solicitud por ID
+     *
+     * @param solicitudesId El ID del solicitud a eliminar
+     */
+    public void deleteSolicitud(Long solicitudesId){
+        LOGGER.log(Level.INFO, "Inicia proceso de borrar el solicitud con id = {0}", solicitudesId);
+        persistence.delete(solicitudesId);
+        LOGGER.log(Level.INFO, "Termina proceso de borrar el solicitud con id = {0}", solicitudesId);
+    }
 }

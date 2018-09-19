@@ -14,18 +14,16 @@ import java.io.Serializable;
  */
 public class ReferenciaDTO implements Serializable {
 
-       
+   
     private String empresa;
     private String nombreRemitente;
-    private int idRemitente;
-    private int telRemitente;
+    private Long idRemitente;
+    private Long telRemitente;
     private String cargo;
     private String email;
     private String parentesco;
     
-    public ReferenciaDTO(){
-        
-    }
+    public ReferenciaDTO(){}
     
     public ReferenciaDTO(ReferenciaEntity referenciaEntity) {
         if(referenciaEntity!=null){
@@ -39,21 +37,7 @@ public class ReferenciaDTO implements Serializable {
                    
         }
     }
-    
-    public ReferenciaEntity toEntity(ReferenciaEntity referenciaEntity ){
-        ReferenciaEntity referencia = new ReferenciaEntity();
-        
-        referencia.setEmpresa(this.empresa);
-        referencia.setNombreRemitente(this.nombreRemitente);
-        referencia.setIdRemitente(this.idRemitente);
-        referencia.setTelRemitente(this.telRemitente);
-        referencia.setCargo(this.cargo);
-        referencia.setEmail(this.email);
-        referencia.setParentesco(this.parentesco);
-      
-        return referencia;
-    } 
-    
+
     public String getEmpresa() {
         return empresa;
     }
@@ -70,19 +54,19 @@ public class ReferenciaDTO implements Serializable {
         this.nombreRemitente = nombreRemitente;
     }
     
-    public int getIdRemitente(){
+    public Long getIdRemitente(){
         return idRemitente;
     }
 
-    public void setIdRemitente(int idRemitente){
+    public void setIdRemitente(Long idRemitente){
         this.idRemitente = idRemitente;
     }
     
-    public int getTelRemitente() {
+    public Long getTelRemitente() {
         return telRemitente;
     }
 
-    public void setTelRemitente(int telRemitente) {
+    public void setTelRemitente(Long telRemitente) {
         this.telRemitente = telRemitente;
     }
 
@@ -110,5 +94,24 @@ public class ReferenciaDTO implements Serializable {
         this.parentesco = parentesco;
     }
     
- 
+    /**
+     * Convierte DTO a Entity
+     * @return entidad de la referencia.
+     */
+    public ReferenciaEntity toEntity() 
+    {
+        ReferenciaEntity referenciaEntity = new ReferenciaEntity();
+        referenciaEntity.setEmpresa(this.empresa);
+        referenciaEntity.setNombreRemitente(this.nombreRemitente);
+        referenciaEntity.setIdRemitente(this.idRemitente);
+        referenciaEntity.setTelRemitente(this.telRemitente);
+        referenciaEntity.setCargo(this.cargo);
+        referenciaEntity.setEmail(this.email);
+        referenciaEntity.setParentesco(this.parentesco);
+        
+        return referenciaEntity;
+    }    
+    
+    
 }
+    

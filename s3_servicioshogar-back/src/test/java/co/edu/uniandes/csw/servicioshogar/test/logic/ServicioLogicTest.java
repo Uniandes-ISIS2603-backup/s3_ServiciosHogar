@@ -6,7 +6,9 @@
 package co.edu.uniandes.csw.servicioshogar.test.logic;
 
 import co.edu.uniandes.csw.servicioshogar.entities.ServicioEntity;
+import co.edu.uniandes.csw.servicioshogar.entities.SolicitudEntity;
 import co.edu.uniandes.csw.servicioshogar.ejb.ServicioLogic;
+import co.edu.uniandes.csw.servicioshogar.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.servicioshogar.persistence.ServicioPersistence;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +46,8 @@ public class ServicioLogicTest {
 
     private List<ServicioEntity> data = new ArrayList<ServicioEntity>();
 
+    private List<SolicitudEntity> dataSolicitud = new ArrayList<SolicitudEntity>();
+
     /**
      * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
      * El jar contiene las clases, el descriptor de la base de datos y el
@@ -61,7 +65,6 @@ public class ServicioLogicTest {
 
     /**
      * Configuración inicial de la prueba.
-     *
      */
     @Before
     public void configTest() {
@@ -82,44 +85,52 @@ public class ServicioLogicTest {
 
     /**
      * Limpia las tablas que están implicadas en la prueba.
-     *
      */
     private void clearData() {
         em.createQuery("delete from ServicioEntity").executeUpdate();
+        em.createQuery("delete from SolicitudEntity").executeUpdate();
+        em.createQuery("delete from EditorialEntity").executeUpdate();
     }
 
     /**
      * Inserta los datos iniciales para el correcto funcionamiento de las
      * pruebas.
-     *
      */
     private void insertData() {
+
         for (int i = 0; i < 3; i++) {
             ServicioEntity entity = factory.manufacturePojo(ServicioEntity.class);
-
+            entity.setSolicitud(dataSolicitud.get(1));
             em.persist(entity);
             data.add(entity);
         }
     }
 
     /**
-     * Prueba para crear un Servicio
+     * Prueba para crear un Servicio.
+     *
+     * @throws co.edu.uniandes.csw.servicioshogar.exceptions.BusinessLogicException
      */
     @Test
-    public void createServicioTest(){
+    public void createServicioTest() throws BusinessLogicException {
         ServicioEntity newEntity = factory.manufacturePojo(ServicioEntity.class);
-        ServicioEntity result = servicioLogic.createServicio(newEntity);
+        newEntity.setSolicitud(dataSolicitud.get(1));
+        ServicioEntity result = servicioLogic.createServicio(dataSolicitud.get(1).getId(), newEntity);
         Assert.assertNotNull(result);
-        ServicioEntity entity = em.find(ServicioEntity.class, result.getId());Assert.assertEquals(entity.getDescripcion(), newEntity.getDescripcion());
-        Assert.assertEquals(entity.getRequerimientos(), newEntity.getRequerimientos());
+        ServicioEntity entity = em.find(ServicioEntity.class, result.getId());
+        Assert.assertEquals(newEntity.getId(), entity.getId());
+        Assert.assertEquals(newEntity.getDescripcion(), entity.getDescripcion());
+        Assert.assertEquals(newEntity.getRequerimientos(), entity.getRequerimientos());
     }
 
     /**
      * Prueba para consultar la lista de Servicios.
+     *
+     * @throws co.edu.uniandes.csw.servicioshogar.exceptions.BusinessLogicException
      */
     @Test
-    public void getServiciosTest() {
-        List<ServicioEntity> list = servicioLogic.getServicios();
+    public void getServiciosTest() throws BusinessLogicException {
+        List<ServicioEntity> list = servicioLogic.getServicios(dataSolicitud.get(1).getId());
         Assert.assertEquals(data.size(), list.size());
         for (ServicioEntity entity : list) {
             boolean found = false;
@@ -138,7 +149,7 @@ public class ServicioLogicTest {
     @Test
     public void getServicioTest() {
         ServicioEntity entity = data.get(0);
-        ServicioEntity resultEntity = servicioLogic.getServicio(entity.getId());
+        ServicioEntity resultEntity = servicioLogic.getServicio(dataSolicitud.get(1).getId(), entity.getId());
         Assert.assertNotNull(resultEntity);
         Assert.assertEquals(entity.getId(), resultEntity.getId());
         Assert.assertEquals(entity.getDescripcion(), resultEntity.getDescripcion());
@@ -155,7 +166,7 @@ public class ServicioLogicTest {
 
         pojoEntity.setId(entity.getId());
 
-        servicioLogic.updateServicio(pojoEntity.getId(), pojoEntity);
+        servicioLogic.updateServicio(dataSolicitud.get(1).getId(), pojoEntity);
 
         ServicioEntity resp = em.find(ServicioEntity.class, entity.getId());
 
@@ -166,12 +177,25 @@ public class ServicioLogicTest {
 
     /**
      * Prueba para eliminar un Servicio.
+     *
+     * @throws co.edu.uniandes.csw.servicioshogar.exceptions.BusinessLogicException
      */
     @Test
-    public void deleteServicioTest() {
+    public void deleteServicioTest() throws BusinessLogicException {
         ServicioEntity entity = data.get(0);
-        servicioLogic.deleteServicio(entity.getId());
+        servicioLogic.deleteServicio(dataSolicitud.get(1).getId(), entity.getId());
         ServicioEntity deleted = em.find(ServicioEntity.class, entity.getId());
         Assert.assertNull(deleted);
+    }
+
+    /**
+     * Prueba para eliminarle un servicio a un solicitud del cual no pertenece.
+     *
+     * @throws co.edu.uniandes.csw.servicioshogar.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void deleteServicioConSolicitudNoAsociadoTest() throws BusinessLogicException {
+        ServicioEntity entity = data.get(0);
+        servicioLogic.deleteServicio(dataSolicitud.get(0).getId(), entity.getId());
     }
 }

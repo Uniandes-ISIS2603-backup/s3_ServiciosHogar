@@ -5,21 +5,21 @@
  */
 package co.edu.uniandes.csw.servicioshogar.test.logic;
 
-import co.edu.uniandes.csw.servicioshogar.entities.SolicitudEntity;
-import co.edu.uniandes.csw.servicioshogar.ejb.SolicitudLogic;
+import co.edu.uniandes.csw.servicioshogar.ejb.ReferenciaLogic;
+import co.edu.uniandes.csw.servicioshogar.entities.ReferenciaEntity;
 import co.edu.uniandes.csw.servicioshogar.exceptions.BusinessLogicException;
-import co.edu.uniandes.csw.servicioshogar.persistence.SolicitudPersistence;
+import co.edu.uniandes.csw.servicioshogar.persistence.ReferenciaPersistence;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
+import org.junit.Assert;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,14 +28,14 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 /**
  *
- * @author Steven Tarazona <ys.tarazona@uniandes.edu.co>
+ * @author Daniela Rocha Torres
  */
 @RunWith(Arquillian.class)
-public class SolicitudLogicTest {
+public class ReferenciaLogicTest {
     private PodamFactory factory = new PodamFactoryImpl();
 
     @Inject
-    private SolicitudLogic solicitudLogic;
+    private ReferenciaLogic referenciaLogic;
 
     @PersistenceContext
     private EntityManager em;
@@ -43,7 +43,8 @@ public class SolicitudLogicTest {
     @Inject
     private UserTransaction utx;
 
-    private List<SolicitudEntity> data = new ArrayList<SolicitudEntity>();
+    private List<ReferenciaEntity> data = new ArrayList<ReferenciaEntity>();
+
 
     /**
      * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
@@ -53,9 +54,9 @@ public class SolicitudLogicTest {
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
-                .addPackage(SolicitudEntity.class.getPackage())
-                .addPackage(SolicitudLogic.class.getPackage())
-                .addPackage(SolicitudPersistence.class.getPackage())
+                .addPackage(ReferenciaEntity.class.getPackage())
+                .addPackage(ReferenciaLogic.class.getPackage())
+                .addPackage(ReferenciaPersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
@@ -84,9 +85,7 @@ public class SolicitudLogicTest {
      * Limpia las tablas que están implicadas en la prueba.
      */
     private void clearData() {
-        em.createQuery("delete from SolicitudEntity").executeUpdate();
-        em.createQuery("delete from EditorialEntity").executeUpdate();
-        em.createQuery("delete from AuthorEntity").executeUpdate();
+        em.createQuery("delete from ReferenciaEntity").executeUpdate();
     }
 
     /**
@@ -94,38 +93,39 @@ public class SolicitudLogicTest {
      * pruebas.
      */
     private void insertData() {
-        for (int i = 0; i < 3; i++) {
-            SolicitudEntity entity = factory.manufacturePojo(SolicitudEntity.class);
 
+        for (int i = 0; i < 3; i++) {
+            ReferenciaEntity entity = factory.manufacturePojo(ReferenciaEntity.class);
             em.persist(entity);
             data.add(entity);
+          
         }
     }
 
     /**
-     * Prueba para crear un Solicitud
+     * Prueba para crear un Editorial
+     * 
+     * @throws co.edu.uniandes.csw.bookstore.exceptions.BusinessLogicException
      */
     @Test
-    public void createSolicitudTest(){
-        SolicitudEntity newEntity = factory.manufacturePojo(SolicitudEntity.class);
-        SolicitudEntity result = solicitudLogic.createSolicitud(newEntity);
+    public void createReferenciaTest() throws BusinessLogicException {
+        ReferenciaEntity newEntity = factory.manufacturePojo(ReferenciaEntity.class);
+        ReferenciaEntity result = referenciaLogic.createReferencia(newEntity);
         Assert.assertNotNull(result);
-        SolicitudEntity entity = em.find(SolicitudEntity.class, result.getId());
+        ReferenciaEntity entity = em.find(ReferenciaEntity.class, result.getId());
         Assert.assertEquals(newEntity.getId(), entity.getId());
-        Assert.assertEquals(newEntity.getDireccion(), entity.getDireccion());
-        Assert.assertEquals(newEntity.getFecha(), entity.getFecha());
     }
-    
+
     /**
-     * Prueba para consultar la lista de Solicitudes.
+     * Prueba para consultar la lista de Editorials.
      */
     @Test
-    public void getSolicitudesTest() {
-        List<SolicitudEntity> list = solicitudLogic.getSolicitudes();
+    public void getReferenciasTest() {
+        List<ReferenciaEntity> list = referenciaLogic.getReferencias();
         Assert.assertEquals(data.size(), list.size());
-        for (SolicitudEntity entity : list) {
+        for (ReferenciaEntity entity : list) {
             boolean found = false;
-            for (SolicitudEntity storedEntity : data) {
+            for (ReferenciaEntity storedEntity : data) {
                 if (entity.getId().equals(storedEntity.getId())) {
                     found = true;
                 }
@@ -135,41 +135,43 @@ public class SolicitudLogicTest {
     }
 
     /**
-     * Prueba para consultar un Solicitud.
+     * Prueba para consultar un Editorial.
      */
     @Test
-    public void getSolicitudTest() {
-        SolicitudEntity entity = data.get(0);
-        SolicitudEntity resultEntity = solicitudLogic.getSolicitud(entity.getId());
+    public void getReferenciaTest() {
+        ReferenciaEntity entity = data.get(0);
+        ReferenciaEntity resultEntity = referenciaLogic.getReferencia(entity.getId());
         Assert.assertNotNull(resultEntity);
         Assert.assertEquals(entity.getId(), resultEntity.getId());
-        Assert.assertEquals(entity.getDireccion(), resultEntity.getDireccion());
-        Assert.assertEquals(entity.getFecha(), resultEntity.getFecha());
+        Assert.assertEquals(entity.getIdRemitente(), resultEntity.getIdRemitente());
     }
 
     /**
-     * Prueba para actualizar un Solicitud.
+     * Prueba para actualizar un Editorial.
      */
     @Test
-    public void updateSolicitudTest(){
-        SolicitudEntity entity = data.get(0);
-        SolicitudEntity pojoEntity = factory.manufacturePojo(SolicitudEntity.class);
+    public void updateReferenciaTest() {
+        ReferenciaEntity entity = data.get(0);
+        ReferenciaEntity pojoEntity = factory.manufacturePojo(ReferenciaEntity.class);
         pojoEntity.setId(entity.getId());
-        solicitudLogic.updateSolicitud(pojoEntity.getId(), pojoEntity);
-        SolicitudEntity resp = em.find(SolicitudEntity.class, entity.getId());
-        Assert.assertEquals(pojoEntity.getId(), resp.getId());
-        Assert.assertEquals(pojoEntity.getDireccion(), resp.getDireccion());
-        Assert.assertEquals(pojoEntity.getFecha(), resp.getFecha());
+        referenciaLogic.updateReferencia(pojoEntity.getId(), pojoEntity);
+        ReferenciaEntity resp = em.find(ReferenciaEntity.class, entity.getId());
+        Assert.assertEquals(pojoEntity.getId(), resp.getId());  
+        Assert.assertEquals(pojoEntity.getIdRemitente(), resp.getIdRemitente());
     }
 
     /**
-     * Prueba para eliminar un Solicitud.
+     * Prueba para eliminar un Editorial.
+     *
+     * @throws co.edu.uniandes.csw.bookstore.exceptions.BusinessLogicException
      */
     @Test
-    public void deleteSolicitudTest(){
-        SolicitudEntity entity = data.get(0);
-        solicitudLogic.deleteSolicitud(entity.getId());
-        SolicitudEntity deleted = em.find(SolicitudEntity.class, entity.getId());
+    public void deleteReferenciaTest() throws BusinessLogicException {
+        ReferenciaEntity entity = data.get(1);
+        referenciaLogic.deleteReferencia(entity.getId());
+        ReferenciaEntity deleted = em.find(ReferenciaEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }
+
+
 }

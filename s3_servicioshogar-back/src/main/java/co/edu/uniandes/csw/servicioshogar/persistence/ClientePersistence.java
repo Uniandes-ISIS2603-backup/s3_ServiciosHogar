@@ -93,18 +93,18 @@ public class ClientePersistence
     }
     
     /**
-     * Busca si existe un cliente con el nombre enviado por parametro.
-     * @param nombre. Nombre del cliente a buscar.
-     * @return cliente con el nombre correspondiente. Null en caso de no encontrarlo
+     * Busca si existe un cliente con el correo enviado por parametro.
+     * @param correo. Nombre del cliente a buscar.
+     * @return cliente con el correo correspondiente. Null en caso de no encontrarlo
      */
-    public ClienteEntity findByName(String nombre) 
+    public ClienteEntity findByCorreo(String correo) 
     {
-        LOGGER.log(Level.INFO, "Consultando cliente por nombre ", nombre);
-        /*Se crea un query para buscar editoriales con el nombre que recibe el método como argumento.
+        LOGGER.log(Level.INFO, "Consultando cliente por correo ", correo);
+        /*Se crea un query para buscar editoriales con el correo que recibe el método como argumento.
         ":name" es un placeholder que debe ser remplazado*/
-        TypedQuery query = em.createQuery("Select e From ClienteEntity e where e.nombre = :nombre", ClienteEntity.class);
+        TypedQuery query = em.createQuery("Select e From ClienteEntity e where e.correo = :correo", ClienteEntity.class);
         /*Se remplaza el placeholder ":name" con el valor del argumento */
-        query = query.setParameter("nombre", nombre);
+        query = query.setParameter("correo", correo);
         /*Se invoca el query se obtiene la lista resultado*/
         List<ClienteEntity> sameName = query.getResultList();
         ClienteEntity result;
@@ -116,7 +116,7 @@ public class ClientePersistence
         else
             result = sameName.get(0);
         
-        LOGGER.log(Level.INFO, "Saliendo de consultar cliente por nombre ", nombre);
+        LOGGER.log(Level.INFO, "Saliendo de consultar cliente por correo ", correo);
         return result;
     }
 }
