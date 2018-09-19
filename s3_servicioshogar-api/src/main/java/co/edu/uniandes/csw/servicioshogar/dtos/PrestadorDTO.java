@@ -14,24 +14,50 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
+ * PrestadorDTO Objeto de transferencia de datos de Prestadores. Los DTO contienen
+ * las representaciones de los JSON que se transfieren entre el cliente y el
+ * servidor.
  *
- * @author María Ocampo
+ * Al serializarse como JSON esta clase implementa el siguiente modelo: <br>
+ * <pre>
+ *   {
+ *      "id": number,
+ *      "nombre": string,
+ *      "cedula": number
+ *   }
+ * </pre> Por ejemplo un prestador se representa asi:<br>
+ *
+ * <pre>
+ *
+ *   {
+ *      "id": 123,
+ *      "nombre": "Maria Ocampo",
+ *      "cedula": 1007784099
+ *   }
+ *
+ * </pre>
+ *
+ * @author Maria Ocampo
  */
 public class PrestadorDTO implements Serializable {
     
     private static final long serialVersionUID = 1L;
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
     private String nombre;
-    
     private Integer cedula;
     
+    /**
+     * Constructor por defecto
+     */
     public PrestadorDTO()    {
         
     }
     
-     public PrestadorDTO(PrestadorEntity prestadorEntity)    {
+    /**
+     * Constructor a partir de una entidad
+     * @param prestadorEntity La entidad del prestador
+     */
+    public PrestadorDTO(PrestadorEntity prestadorEntity)    {
         if(prestadorEntity != null)
         {
             this.id = prestadorEntity.getId();
@@ -40,26 +66,50 @@ public class PrestadorDTO implements Serializable {
         }
     }
 
+    /**
+     * Modifica la cedula del prestador
+     * @param cedula the cedula to set
+     */
     public void setCedula(Integer cedula) {
         this.cedula = cedula;
     }
 
+    /**
+     * Devuelve la cedula del prestador
+     * @return the cedula
+     */
     public Integer getCedula() {
         return cedula;
     }
 
+    /**
+     * Modifica el nombre del prestador
+     * @param nombre the nombre to set
+     */
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
+    /**
+     * Devuelve el nombre del prestador
+     * @return the name
+     */
     public String getNombre() {
         return nombre;
     }
 
+    /**
+     * Devuelve el id del prestador
+     * @return the id
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * Modifica el id del prestador
+     * @param id the id to set
+     */
     public void setId(Long id) {
         this.id = id;
     }
@@ -73,6 +123,8 @@ public class PrestadorDTO implements Serializable {
         PrestadorEntity prestadorEntity = new PrestadorEntity();
         prestadorEntity.setId(this.id);
         prestadorEntity.setNombre(this.nombre);
+        prestadorEntity.setCedula(this.cedula);
+        
         return prestadorEntity;
     }
 
