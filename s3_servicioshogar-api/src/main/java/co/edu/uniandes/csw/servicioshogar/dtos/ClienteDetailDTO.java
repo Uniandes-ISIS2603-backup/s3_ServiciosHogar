@@ -5,7 +5,7 @@
  */
 package co.edu.uniandes.csw.servicioshogar.dtos;
 
-import co.edu.uniandes.csw.servicioshogar.entities.CalificacionEntity;
+import co.edu.uniandes.csw.servicioshogar.entities.SolicitudEntity;
 import co.edu.uniandes.csw.servicioshogar.entities.ClienteEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class ClienteDetailDTO extends ClienteDTO implements Serializable
 {
-    private List<CalificacionDTO> calificaciones;
+    private List<SolicitudDTO> solicitudes;
     
     private ClienteDetailDTO(){super();}
     
@@ -29,11 +29,11 @@ public class ClienteDetailDTO extends ClienteDTO implements Serializable
     public ClienteDetailDTO(ClienteEntity clienteEntity) 
     {
         super(clienteEntity);
-        if (clienteEntity.getCalificaciones() != null) 
+        if (clienteEntity.getSolicitudes() != null) 
         {
-            calificaciones = new ArrayList<>();
-            for (CalificacionEntity entityCalificacion : clienteEntity.getCalificaciones()) 
-                calificaciones.add(new CalificacionDTO(entityCalificacion));
+            solicitudes = new ArrayList<>();
+            for (SolicitudEntity entitySolicitud : clienteEntity.getSolicitudes()) 
+                solicitudes.add(new SolicitudDTO(entitySolicitud));
             
         }
     }
@@ -46,28 +46,28 @@ public class ClienteDetailDTO extends ClienteDTO implements Serializable
     @Override
     public ClienteEntity toEntity() {
         ClienteEntity clienteEntity = super.toEntity();
-        if (calificaciones != null) {
-            List<CalificacionEntity> calificacionesEntity = new ArrayList<>();
-            for (CalificacionDTO dtoReview : getCalificaciones()) 
-                calificacionesEntity.add(dtoReview.toEntity());
+        if (solicitudes != null) {
+            List<SolicitudEntity> solicitudesEntity = new ArrayList<>();
+            for (SolicitudDTO dtoReview : getSolicitudes()) 
+                solicitudesEntity.add(dtoReview.toEntity());
             
-            clienteEntity.setCalificaciones(calificacionesEntity);
+            clienteEntity.setSolicitudes(solicitudesEntity);
         }        
         return clienteEntity;
     }
 
     /**
-     * Devuelve las calificaciones asociadas a este cliente
+     * Devuelve las solicitudes asociadas a este cliente
      *
      * @return Lista de DTOs de Reseñas
      */
-    public List<CalificacionDTO> getCalificaciones() {return calificaciones;}
+    public List<SolicitudDTO> getSolicitudes() {return solicitudes;}
 
     /**
-     * Modifica las calificaciones de este cliente.
+     * Modifica las solicitudes de este cliente.
      *
-     * @param calificaciones Las nuevas calificaciones
+     * @param solicitudes Las nuevas solicitudes
      */
-    public void setCalificaciones(List<CalificacionDTO> calificaciones) {this.calificaciones = calificaciones;}
+    public void setSolicitudes(List<SolicitudDTO> solicitudes) {this.solicitudes = solicitudes;}
 
 }
