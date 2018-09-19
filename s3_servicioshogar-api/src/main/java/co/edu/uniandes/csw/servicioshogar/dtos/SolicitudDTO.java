@@ -34,6 +34,8 @@ public class SolicitudDTO implements Serializable{
     private Long id;
     private String direccion;
     private Date fecha;
+    
+    private ClienteDTO cliente;
 
     /**
      * Constructor por defecto.
@@ -119,5 +121,13 @@ public class SolicitudDTO implements Serializable{
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+    }
+
+    public ClienteDTO getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(ClienteDTO cliente) {
+        this.cliente = cliente;
     }
 }
