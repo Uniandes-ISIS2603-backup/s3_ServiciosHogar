@@ -38,10 +38,10 @@ public class CalificacionResource
     private CalificacionLogic calificacionLogic;
     
     @POST
-    public CalificacionDTO createCalificacion(@PathParam("serviciosId") Long serviciosId, CalificacionDTO calificacion) throws BusinessLogicException 
+    public CalificacionDTO createCalificacion(@PathParam("solicitudId") Long solicitudId, @PathParam("serviciosId") Long serviciosId, CalificacionDTO calificacion) throws BusinessLogicException 
     {
         LOGGER.log(Level.INFO, "CalificacionResource createCalificacion: input: {0}", calificacion.toString());
-        CalificacionDTO nuevaCalificacionDTO = new CalificacionDTO(calificacionLogic.createCalificacion(serviciosId, calificacion.toEntity()));
+        CalificacionDTO nuevaCalificacionDTO = new CalificacionDTO(calificacionLogic.createCalificacion(solicitudId, serviciosId, calificacion.toEntity()));
         LOGGER.log(Level.INFO, "CalificacionResource createCalificacion: output: {0}", nuevaCalificacionDTO.toString());
         return nuevaCalificacionDTO;
     }
@@ -70,7 +70,7 @@ public class CalificacionResource
     
     @PUT
     @Path("{calificacionId: \\d+}")
-    public CalificacionDTO updateCalificacion(@PathParam("serviciosId") Long serviciosId, @PathParam("calificacionId") Long calificacionId, CalificacionDTO calificacion) throws BusinessLogicException 
+    public CalificacionDTO updateCalificacion(@PathParam("solicitudId") Long solicitudId, @PathParam("serviciosId") Long serviciosId, @PathParam("calificacionId") Long calificacionId, CalificacionDTO calificacion) throws BusinessLogicException 
     {
                 LOGGER.log(Level.INFO, "CalificacionResource updateCalificacion: input: serviciosId: {0} , calificacionId: {1} , calificacion:{2}", new Object[]{serviciosId, calificacionId, calificacion.toString()});
         if (calificacionId.equals(calificacion.getId()))
@@ -81,7 +81,7 @@ public class CalificacionResource
             throw new WebApplicationException("El recurso /servicios/" + serviciosId + "/calificacion/" + calificacionId + " no existe.", 404);
 
         
-        CalificacionDTO calificacionDTO = new CalificacionDTO(calificacionLogic.updateCalificacion(serviciosId, calificacion.toEntity()));
+        CalificacionDTO calificacionDTO = new CalificacionDTO(calificacionLogic.updateCalificacion(solicitudId, serviciosId, calificacion.toEntity()));
         LOGGER.log(Level.INFO, "CalificacionResource updateCalificacion: output:{0}", calificacionDTO.toString());
         return calificacionDTO;
 

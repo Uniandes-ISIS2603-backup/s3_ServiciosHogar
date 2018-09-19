@@ -31,10 +31,10 @@ public class CalificacionLogic
     @Inject
     private ServicioPersistence servicioPersistence;
     
-    public CalificacionEntity createCalificacion(Long serviciosId, CalificacionEntity calificacionEntity) throws BusinessLogicException 
+    public CalificacionEntity createCalificacion(Long solicitudId, Long serviciosId, CalificacionEntity calificacionEntity) throws BusinessLogicException 
     {
         LOGGER.log(Level.INFO, "Inicia proceso de crear calificacion");
-        ServicioEntity servicio = servicioPersistence.find(serviciosId);
+        ServicioEntity servicio = servicioPersistence.find(solicitudId, serviciosId);
         calificacionEntity.setServicio(servicio);
         LOGGER.log(Level.INFO, "Termina proceso de creación del calificacion");
         return persistence.create(calificacionEntity);
@@ -53,9 +53,9 @@ public class CalificacionLogic
         return persistence.find(serviciosId, calificacionsId);
     }
 
-    public CalificacionEntity updateCalificacion(Long serviciosId, CalificacionEntity calificacionEntity) {
+    public CalificacionEntity updateCalificacion(Long solicitudId, Long serviciosId, CalificacionEntity calificacionEntity) {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar el calificacion con id = {0} del servicio con id = " + serviciosId, calificacionEntity.getId());
-        ServicioEntity servicioEntity = servicioPersistence.find(serviciosId);
+        ServicioEntity servicioEntity = servicioPersistence.find(solicitudId, serviciosId);
         calificacionEntity.setServicio(servicioEntity);
         persistence.update(calificacionEntity);
         LOGGER.log(Level.INFO, "Termina proceso de actualizar el calificacion con id = {0} del servicio con id = " + serviciosId, calificacionEntity.getId());
