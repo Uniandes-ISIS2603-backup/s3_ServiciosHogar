@@ -9,6 +9,7 @@ import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import uk.co.jemos.podam.common.PodamExclude;
 
 /**
@@ -16,14 +17,14 @@ import uk.co.jemos.podam.common.PodamExclude;
  * @author Carlos Eduardo Robles
  */
 @Entity
-public class CalificacionEntity extends BaseEntity implements Serializable
+public class CalificacionEntity  extends BaseEntity implements Serializable
 {
-    private Double calificacion;    
+    private Double calificacion;
     private String comentario;
     
     @PodamExclude
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    private ClienteEntity cliente;
+    @OneToOne
+    private ServicioEntity servicio;
 
     public Double getCalificacion() {return calificacion;}
 
@@ -33,9 +34,8 @@ public class CalificacionEntity extends BaseEntity implements Serializable
 
     public void setComentario(String comentario) {this.comentario = comentario;}
 
-    public ClienteEntity getCliente() {return cliente;}
+    public ServicioEntity getServicio() {return servicio;}
 
-    public void setCliente(ClienteEntity cliente) {this.cliente = cliente;}
-    
+    public void setServicio(ServicioEntity servicio) {this.servicio = servicio;}
     
 }

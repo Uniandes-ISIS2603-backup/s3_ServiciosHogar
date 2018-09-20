@@ -30,7 +30,7 @@ public class ClienteEntity extends BaseEntity implements Serializable
     
     @PodamExclude
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.PERSIST, orphanRemoval = true)
-    private List<CalificacionEntity> calificaciones = new ArrayList<CalificacionEntity>();
+    private List<SolicitudEntity> solicitudes = new ArrayList<SolicitudEntity>();
     
     //------------------------------------------
     //------------------Metodos-----------------
@@ -71,10 +71,10 @@ public class ClienteEntity extends BaseEntity implements Serializable
      */
     public void setCorreo(String correo) {this.correo = correo;} 
 
-    public List<CalificacionEntity> getCalificaciones() {return calificaciones;
+    public List<SolicitudEntity> getSolicitudes() {return solicitudes;
     }
 
-    public void setCalificaciones(List<CalificacionEntity> calificaciones) {this.calificaciones = calificaciones;}
+    public void setSolicitudes(List<SolicitudEntity> solicitudes) {this.solicitudes = solicitudes;}
     
     
 }

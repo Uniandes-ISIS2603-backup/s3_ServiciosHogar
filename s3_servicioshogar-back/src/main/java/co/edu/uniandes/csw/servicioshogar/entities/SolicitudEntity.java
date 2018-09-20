@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -32,6 +33,10 @@ public class SolicitudEntity extends BaseEntity implements Serializable{
     @PodamExclude
     @OneToMany(mappedBy = "solicitud", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<ServicioEntity> servicios = new ArrayList<ServicioEntity>();
+    
+    @PodamExclude
+    @ManyToOne
+    private ClienteEntity cliente;
 
     /**
      * Devuelve la fecha de la solicitud.
@@ -82,4 +87,14 @@ public class SolicitudEntity extends BaseEntity implements Serializable{
     public void setServicios(List<ServicioEntity> servicios) {
         this.servicios = servicios;
     }
+
+    public ClienteEntity getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(ClienteEntity cliente) {
+        this.cliente = cliente;
+    }
+    
+    
 }

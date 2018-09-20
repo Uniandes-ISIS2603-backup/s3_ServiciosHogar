@@ -52,14 +52,31 @@ public class SolicitudPersistence {
     }
 
     /**
-     * Busca si hay algun lubro con el id que se envía de argumento
+     * Buscar una reseña
      *
-     * @param solicitudesId: id correspondiente al solicitud buscado.
-     * @return un solicitud.
+     * Busca si hay alguna reseña asociada a un libro y con un ID específico
+     *
+     * @param clientesId El ID del libro con respecto al cual se busca
+     * @param solicitudesId El ID de la reseña buscada
+     * @return La reseña encontrada o null. Nota: Si existe una o más reseñas
+     * devuelve siempre la primera que encuentra
      */
-    public SolicitudEntity find(Long solicitudesId) {
-        LOGGER.log(Level.INFO, "Consultando el solicitud con id={0}", solicitudesId);
-        return em.find(SolicitudEntity.class, solicitudesId);
+    public SolicitudEntity find(Long clientesId, Long solicitudesId) {
+        LOGGER.log(Level.INFO, "Consultando el solicitud con id = {0} del libro con id = " + clientesId, solicitudesId);
+        TypedQuery<SolicitudEntity> q = em.createQuery("select p from SolicitudEntity p where (p.cliente.id = :clienteid) and (p.id = :solicitudesId)", SolicitudEntity.class);
+        q.setParameter("clienteid", clientesId);
+        q.setParameter("solicitudesId", solicitudesId);
+        List<SolicitudEntity> results = q.getResultList();
+        SolicitudEntity solicitud = null;
+        if (results == null) {
+            solicitud = null;
+        } else if (results.isEmpty()) {
+            solicitud = null;
+        } else if (results.size() >= 1) {
+            solicitud = results.get(0);
+        }
+        LOGGER.log(Level.INFO, "Saliendo de consultar el solicitud con id = {0} del libro con id =" + clientesId, solicitudesId);
+        return solicitud;
     }
 
     /**

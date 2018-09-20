@@ -30,7 +30,6 @@ import javax.ws.rs.WebApplicationException;
  *
  * @author Steven Tarazona <ys.tarazona@uniandes.edu.co>
  */
-@Path("solicitudes")
 @Produces("application/json")
 @Consumes("application/json")
 @RequestScoped
@@ -45,6 +44,7 @@ public class SolicitudResource {
      * petición y se regresa un objeto identico con un id auto-generado por la
      * base de datos.
      *
+     * @param clientesId
      * @param solicitud {@link SolicitudDTO} - EL solicitud que se desea guardar.
      * @return JSON {@link SolicitudDTO} - El solicitud guardado con el atributo id
      * autogenerado.
@@ -53,9 +53,9 @@ public class SolicitudResource {
      * inválido o si la editorial ingresada es invalida.
      */
     @POST
-    public SolicitudDTO createSolicitud(SolicitudDTO solicitud) throws BusinessLogicException {
+    public SolicitudDTO createSolicitud(@PathParam("clientesId") Long clientesId, SolicitudDTO solicitud) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "SolicitudResource createSolicitud: input: {0}", solicitud.toString());
-        SolicitudDTO nuevoSolicitudDTO = new SolicitudDTO(solicitudLogic.createSolicitud(solicitud.toEntity()));
+        SolicitudDTO nuevoSolicitudDTO = new SolicitudDTO(solicitudLogic.createSolicitud(clientesId, solicitud.toEntity()));
         LOGGER.log(Level.INFO, "SolicitudResource createSolicitud: output: {0}", nuevoSolicitudDTO.toString());
         return nuevoSolicitudDTO;
     }
@@ -63,13 +63,14 @@ public class SolicitudResource {
     /**
      * Busca y devuelve todos los solicitudes que existen en la aplicacion.
      *
+     * @param clientesId
      * @return JSONArray {@link SolicitudDetailDTO} - Los solicitudes encontrados en la
      * aplicación. Si no hay ninguno retorna una lista vacía.
      */
     @GET
-    public List<SolicitudDetailDTO> getSolicitudes() {
+    public List<SolicitudDetailDTO> getSolicitudes(@PathParam("clientesId") Long clientesId) {
         LOGGER.info("SolicitudResource getSolicitudes: input: void");
-        List<SolicitudDetailDTO> listaSolicitudes = listEntity2DetailDTO(solicitudLogic.getSolicitudes());
+        List<SolicitudDetailDTO> listaSolicitudes = listEntity2DetailDTO(solicitudLogic.getSolicitudes(clientesId));
         LOGGER.log(Level.INFO, "SolicitudResource getSolicitudes: output: {0}", listaSolicitudes.toString());
         return listaSolicitudes;
     }
@@ -77,6 +78,7 @@ public class SolicitudResource {
     /**
      * Busca el solicitud con el id asociado recibido en la URL y lo devuelve.
      *
+     * @param clientesId
      * @param solicitudesId Identificador del solicitud que se esta buscando. Este debe
      * ser una cadena de dígitos.
      * @return JSON {@link SolicitudDetailDTO} - El solicitud buscado
@@ -85,9 +87,9 @@ public class SolicitudResource {
      */
     @GET
     @Path("{solicitudesId: \\d+}")
-    public SolicitudDetailDTO getSolicitud(@PathParam("solicitudesId") Long solicitudesId) {
+    public SolicitudDetailDTO getSolicitud(@PathParam("clientesId") Long clientesId, @PathParam("solicitudesId") Long solicitudesId) {
         LOGGER.log(Level.INFO, "SolicitudResource getSolicitud: input: {0}", solicitudesId);
-        SolicitudEntity solicitudEntity = solicitudLogic.getSolicitud(solicitudesId);
+        SolicitudEntity solicitudEntity = solicitudLogic.getSolicitud(clientesId, solicitudesId);
         if (solicitudEntity == null) {
             throw new WebApplicationException("El recurso /solicitudes/" + solicitudesId + " no existe.", 404);
         }
@@ -100,6 +102,7 @@ public class SolicitudResource {
      * Actualiza el solicitud con el id recibido en la URL con la información que se
      * recibe en el cuerpo de la petición.
      *
+     * @param clientesId
      * @param solicitudesId Identificador del solicitud que se desea actualizar. Este debe
      * ser una cadena de dígitos.
      * @param solicitud {@link SolicitudDTO} El solicitud que se desea guardar.
@@ -112,20 +115,25 @@ public class SolicitudResource {
      */
     @PUT
     @Path("{solicitudesId: \\d+}")
-    public SolicitudDetailDTO updateSolicitud(@PathParam("solicitudesId") Long solicitudesId, SolicitudDTO solicitud) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "SolicitudResource updateSolicitud: input: id: {0} , solicitud: {1}", new Object[]{solicitudesId, solicitud.toString()});
-        solicitud.setId(solicitudesId);
-        if (solicitudLogic.getSolicitud(solicitudesId) == null) {
-            throw new WebApplicationException("El recurso /solicitudes/" + solicitudesId + " no existe.", 404);
+    public SolicitudDetailDTO updateSolicitud(@PathParam("clientesId") Long clientesId, @PathParam("solicitudesId") Long solicitudesId, SolicitudDTO solicitud) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "SolicitudResource updateSolicitud: input: clientesId: {0} , solicitudesId: {1} , solicitud:{2}", new Object[]{clientesId, solicitudesId, solicitud.toString()});
+        if (solicitudesId.equals(solicitud.getId())) {
+            throw new BusinessLogicException("Los ids del Solicitud no coinciden.");
         }
-        SolicitudDetailDTO detailDTO = new SolicitudDetailDTO(solicitudLogic.updateSolicitud(solicitudesId, solicitud.toEntity()));
-        LOGGER.log(Level.INFO, "SolicitudResource updateSolicitud: output: {0}", detailDTO.toString());
-        return detailDTO;
+        SolicitudEntity entity = solicitudLogic.getSolicitud(clientesId, solicitudesId);
+        if (entity == null) {
+            throw new WebApplicationException("El recurso /clientes/" + clientesId + "/solicitudes/" + solicitudesId + " no existe.", 404);
+
+        }
+        SolicitudDetailDTO solicitudDTO = new SolicitudDetailDTO(solicitudLogic.updateSolicitud(clientesId, solicitud.toEntity()));
+        LOGGER.log(Level.INFO, "SolicitudResource updateSolicitud: output:{0}", solicitudDTO.toString());
+        return solicitudDTO;
     }
 
     /**
      * Borra el solicitud con el id asociado recibido en la URL.
      *
+     * @param clientesId
      * @param solicitudesId Identificador del solicitud que se desea borrar. Este debe ser
      * una cadena de dígitos.
      * @throws co.edu.uniandes.csw.servicioshogar.exceptions.BusinessLogicException
@@ -135,13 +143,13 @@ public class SolicitudResource {
      */
     @DELETE
     @Path("{solicitudesId: \\d+}")
-    public void deleteSolicitud(@PathParam("solicitudesId") Long solicitudesId) throws BusinessLogicException {
+    public void deleteSolicitud(@PathParam("clientesId") Long clientesId, @PathParam("solicitudesId") Long solicitudesId) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "SolicitudResource deleteSolicitud: input: {0}", solicitudesId);
-        SolicitudEntity entity = solicitudLogic.getSolicitud(solicitudesId);
+        SolicitudEntity entity = solicitudLogic.getSolicitud(clientesId, solicitudesId);
         if (entity == null) {
-            throw new WebApplicationException("El recurso /solicitudes/" + solicitudesId + " no existe.", 404);
+            throw new WebApplicationException("El recurso clientes/"+clientesId+"/solicitudes/" + solicitudesId + " no existe.", 404);
         }
-        solicitudLogic.deleteSolicitud(solicitudesId);
+        solicitudLogic.deleteSolicitud(clientesId, solicitudesId);
         LOGGER.info("SolicitudResource deleteSolicitud: output: void");
     }
 
@@ -159,9 +167,9 @@ public class SolicitudResource {
      * Error de lógica que se genera cuando no se encuentra el solicitud.
      */
     @Path("{solicitudesId: \\d+}/servicios")
-    public Class<ServicioResource> getServicioResource(@PathParam("solicitudesId") Long solicitudesId) {
-        if (solicitudLogic.getSolicitud(solicitudesId) == null) {
-            throw new WebApplicationException("El recurso /solicitudes/" + solicitudesId + "/servicios no existe.", 404);
+    public Class<ServicioResource> getServicioResource(@PathParam("clientesId") Long clientesId, @PathParam("solicitudesId") Long solicitudesId) {
+        if (solicitudLogic.getSolicitud(clientesId, solicitudesId) == null) {
+            throw new WebApplicationException("El recurso clientes/"+clientesId+"/solicitudes/" + solicitudesId + "/servicios no existe.", 404);
         }
         return ServicioResource.class;
     }
