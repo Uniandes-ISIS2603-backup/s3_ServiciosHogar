@@ -67,12 +67,12 @@ public class ReferenciaResource {
 
     @GET
     @Path("{referencias:\\d+}")
-    public ReferenciaDTO getReferencia(@PathParam("idRemitente") Long idRemitente) throws WebApplicationException
+    public ReferenciaDTO getReferencia(@PathParam("id") Long id) throws WebApplicationException
     {
-        LOGGER.log(Level.INFO, "ReferenciaResource getReferencia: input: {0}", idRemitente);
-        ReferenciaEntity referenciaEntity = referenciaLogic.getReferencia(idRemitente);
+        LOGGER.log(Level.INFO, "ReferenciaResource getReferencia: input: {0}", id);
+        ReferenciaEntity referenciaEntity = referenciaLogic.getReferencia(id);
         if (referenciaEntity == null)
-            throw new WebApplicationException("El recurso /referencias/" + idRemitente + " no existe.", 404);
+            throw new WebApplicationException("El recurso /referencias/" + id + " no existe.", 404);
         
         ReferenciaDTO detailDTO = new ReferenciaDTO(referenciaEntity);
         LOGGER.log(Level.INFO, "ReferenciaResource getReferencia: {0}", detailDTO.toString());
@@ -81,14 +81,14 @@ public class ReferenciaResource {
 
     @PUT
     @Path("{referencias:\\d+}")
-    public ReferenciaDTO modificarReferencia(@PathParam("idRemitente") Long idRemitente, ReferenciaDTO referencia) throws WebApplicationException
+    public ReferenciaDTO modificarReferencia(@PathParam("id") Long id, ReferenciaDTO referencia) throws WebApplicationException
     {
-       LOGGER.log(Level.INFO, "ReferenciaResource modificarReferencia: input: id:{0} , referencia: {1}", new Object[]{idRemitente, referencia.toString()});
-        referencia.setIdRemitente(idRemitente);
-        if (referenciaLogic.getReferencia(idRemitente) == null)
-            throw new WebApplicationException("El recurso /referencias/" + idRemitente + " no existe.", 404);
+       LOGGER.log(Level.INFO, "ReferenciaResource modificarReferencia: input: id:{0} , referencia: {1}", new Object[]{id, referencia.toString()});
+        referencia.setIdRemitente(id);
+        if (referenciaLogic.getReferencia(id) == null)
+            throw new WebApplicationException("El recurso /referencias/" + id + " no existe.", 404);
         
-        ReferenciaDTO detailDTO = new ReferenciaDTO(referenciaLogic.updateReferencia(idRemitente, referencia.toEntity()));
+        ReferenciaDTO detailDTO = new ReferenciaDTO(referenciaLogic.updateReferencia(id, referencia.toEntity()));
         LOGGER.log(Level.INFO, "ReferenciaResource modificarReferencia: output: {0}", detailDTO.toString());
         return detailDTO;
     }
@@ -96,13 +96,13 @@ public class ReferenciaResource {
 
     @DELETE
     @Path("{referencias:\\d+}")
-    public void deleteReferencia(@PathParam("idRemitente") Long idRemitente) throws BusinessLogicException
+    public void deleteReferencia(@PathParam("id") Long id) throws BusinessLogicException
     {
-        LOGGER.log(Level.INFO, "ReferenciaResource deleteReferencia: input: {0}", idRemitente);
-        if (referenciaLogic.getReferencia(idRemitente) == null) 
-            throw new WebApplicationException("El recurso /referencias/" + idRemitente + " no existe.", 404);
+        LOGGER.log(Level.INFO, "ReferenciaResource deleteReferencia: input: {0}", id);
+        if (referenciaLogic.getReferencia(id) == null) 
+            throw new WebApplicationException("El recurso /referencias/" + id + " no existe.", 404);
         
-        referenciaLogic.deleteReferencia(idRemitente);
+        referenciaLogic.deleteReferencia(id);
         LOGGER.info("ReferenciaResource deleteReferencia: output: void");
     }
     

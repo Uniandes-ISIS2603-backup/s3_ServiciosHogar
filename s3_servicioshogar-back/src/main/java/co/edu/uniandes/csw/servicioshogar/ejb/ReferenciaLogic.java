@@ -27,9 +27,12 @@ public class ReferenciaLogic {
     private ReferenciaPersistence persistence;
     
     
-    public ReferenciaEntity createReferencia(ReferenciaEntity referenciaEntity){
+    public ReferenciaEntity createReferencia(ReferenciaEntity referenciaEntity) throws BusinessLogicException{
         LOGGER.log(Level.INFO, "Inicia proceso de creación de la referencia");
         // Invoca la persistencia para crear el servicio
+        if(persistence.find(referenciaEntity.getIdRemitente())!=null){
+            throw new BusinessLogicException("Ya existe una referencia co idRemitente: "+referenciaEntity.getIdRemitente());
+        }
         persistence.create(referenciaEntity);
         LOGGER.log(Level.INFO, "Termina proceso de creación de la referencia");
         return referenciaEntity;
