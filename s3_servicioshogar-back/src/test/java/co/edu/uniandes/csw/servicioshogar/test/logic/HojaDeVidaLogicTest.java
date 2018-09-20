@@ -25,8 +25,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
-import org.jboss.arquillian.junit.Arquillian;
-import org.junit.runner.RunWith;
 
 /**
  *
