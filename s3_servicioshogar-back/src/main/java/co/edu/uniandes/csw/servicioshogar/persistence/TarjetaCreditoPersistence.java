@@ -81,7 +81,7 @@ public class TarjetaCreditoPersistence {
      * Borra un cliente identificado con el 'id' ingresado por parametro de la BD.
      * @param tarjetaId. Titular de tarjeta de credito a borrar.
      */
-    public void delete(String tarjetaId)
+    public void delete(Long tarjetaId)
     {
         LOGGER.log(Level.INFO, "Borrando cliente con id = {0}", tarjetaId);
         TarjetaCreditoEntity entity = em.find(TarjetaCreditoEntity.class, tarjetaId);
