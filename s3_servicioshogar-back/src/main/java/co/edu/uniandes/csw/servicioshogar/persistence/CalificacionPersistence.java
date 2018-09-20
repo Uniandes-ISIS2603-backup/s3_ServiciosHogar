@@ -50,20 +50,20 @@ public class CalificacionPersistence
     
     public CalificacionEntity find(Long serviciosId, Long calificacionId) 
     {
-        LOGGER.log(Level.INFO, "Consultando el calificacion con id = {0} del libro con id = " + serviciosId, calificacionId);
-        TypedQuery<CalificacionEntity> q = em.createQuery("select p from CalificacionEntity p where (p.servicio.id = :serviciosId) and (p.id = :calificacionId)", CalificacionEntity.class);
-        q.setParameter("serviciosId", serviciosId);
+        LOGGER.log(Level.INFO, "Consultando la calificacion con id = {0} del servicio con id = " + serviciosId, calificacionId);
+        TypedQuery<CalificacionEntity> q = em.createQuery("select p from CalificacionEntity p where (p.servicio.id = :servicioid) and (p.id = :calificacionId)", CalificacionEntity.class);
+        q.setParameter("servicioid", serviciosId);
         q.setParameter("calificacionId", calificacionId);
         List<CalificacionEntity> results = q.getResultList();
-        CalificacionEntity calificacion = null;
-        if (results == null) 
-            calificacion = null;
-        else if (results.isEmpty()) 
-            calificacion = null;
-        else if (results.size() >= 1) 
-            calificacion = results.get(0);
-        
-        LOGGER.log(Level.INFO, "Saliendo de consultar el calificacion con id = {0} del servicio con id =" + serviciosId, calificacionId);
-        return calificacion;
+        CalificacionEntity review = null;
+        if (results == null) {
+            review = null;
+        } else if (results.isEmpty()) {
+            review = null;
+        } else if (results.size() >= 1) {
+            review = results.get(0);
+        }
+        LOGGER.log(Level.INFO, "Saliendo de consultar la calificacion con id = {0} del libro con id =" + serviciosId, calificacionId);
+        return review;
     }
 }
