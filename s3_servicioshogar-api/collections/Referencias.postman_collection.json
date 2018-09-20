@@ -1,0 +1,264 @@
+{
+	"info": {
+		"_postman_id": "25e2fdf5-9fcf-4703-8eff-a9efccd71ba6",
+		"name": "Referencias",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Crear referencia ej #1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3afbc2a3-7e28-4952-aaf6-9dc0c0630bd2",
+						"type": "text/javascript",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_e\",data.id);",
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"empresa\":\"Alpes\",\n\"nombreRemitente\": \"Juan Guerrero\",\n\"idRemitente\": 1,\n\"telRemitente\": 3185698763.0,\n\"cargo\":\"gerente\",\n\"email\":\"j.guerrero@alpes.com\",\n\"parentesco\":\"null\"}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/s3_servicioshogar-api/api/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear referencia Ej#2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c6d194b4-b2ce-4ba8-a160-579f8736049e",
+						"type": "text/javascript",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_e\",data.id);",
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"id\":2,\n\"empresa\":\"Cerrajeros\",\n\"nombreRemitente\": \"María Gutierrez\",\n\"idRemitente\": 2,\n\"telRemitente\": 3185697963.0,\n\"cargo\":\"gerente\",\n\"email\":\"maria.g@cerrajeros.com\",\n\"parentesco\":\"null\"}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/s3_servicioshogar-api/api/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener referencias",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9a3f1875-eeea-43e8-ba39-79c5ba439cbb",
+						"type": "text/javascript",
+						"exec": [
+							"var data= JSON.parse(responseBody);",
+							"tests[\"No genera error en el Get all\"] = responseCode.code === 200;",
+							"tests[\"referencias count\"] = data.length >= 0;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"empresa\" : \"espejosBogota\",\r\n\"nombreRemitente\" : \"Sebastian Torres\",\r\n\"idRemitente\" : \"1014597632\",\r\n\"telRemitente\" : \"3169875632\",\r\n\"cargo\" : \"cortador de vidrios y espejos\",\r\n\"email\" : \"sebTorres@gmail.com\",\r\n\"parentesco\" : null } \r\n"
+				},
+				"url": {
+					"raw": "http://localhost:8080/s3_servicioshogar-api/api/referencias",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"referencias"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener referencia id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b4c6adb9-e772-444c-90f6-4646d3f28422",
+						"type": "text/javascript",
+						"exec": [
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"No genera error en el Get\"] = responseCode.code === 200;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/s3_servicioshogar-api/api/referencias/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"referencias",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Actualizar referencia id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "00f40d9e-bf45-4032-85ec-d959e4151888",
+						"type": "text/javascript",
+						"exec": [
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"No genera error en el Put\"] = responseCode.code === 200;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"empresa\":\"Alpes\",\n\"nombreRemitente\": \"Juan Guerrero\",\n\"idRemitente\": 1,\n\"telRemitente\": 3115638763.0,\n\"cargo\":\"gerente\",\n\"email\":\"j.guerrero@alpes.com\",\n\"parentesco\":\"null\"}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/s3_servicioshogar-api/api/referencias/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"referencias",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar referencia ej#1",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/s3_servicioshogar-api/api/referencias/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"referencias",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar referencia ej#2",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/s3_servicioshogar-api/api/referencias/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"referencias",
+						"2"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
