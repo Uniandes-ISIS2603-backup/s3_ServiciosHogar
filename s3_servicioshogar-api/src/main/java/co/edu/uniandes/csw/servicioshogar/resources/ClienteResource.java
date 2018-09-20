@@ -147,9 +147,9 @@ public class ClienteResource
     }
     
     /**
-     * Conexión con el servicio de reseñas para un libro. {@link CalificacionResource}
+     * Conexión con el servicio de reseñas para un libro. {@link SolicitudResource}
      *
-     * Este método conecta la ruta de /clientes con las rutas de /calificaciones que
+     * Este método conecta la ruta de /clientes con las rutas de /solicitudes que
      * dependen del libro, es una redirección al servicio que maneja el segmento
      * de la URL que se encarga de las reseñas.
      *
@@ -159,12 +159,12 @@ public class ClienteResource
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra el libro.
      */
-    @Path("{clientesId: \\d+}/calificaciones")
-    public Class<CalificacionResource> getCalificacionResource(@PathParam("clientesId") Long clientesId) {
+    @Path("{clientesId: \\d+}/solicitudes")
+    public Class<SolicitudResource> getSolicitudResource(@PathParam("clientesId") Long clientesId) {
         if (clienteLogic.getCliente(clientesId) == null) 
-            throw new WebApplicationException("El recurso /clientes/" + clientesId + "/calificaciones no existe.", 404);
+            throw new WebApplicationException("El recurso /clientes/" + clientesId + "/solicitudes no existe.", 404);
         
-        return CalificacionResource.class;
+        return SolicitudResource.class;
     }
     
     /**

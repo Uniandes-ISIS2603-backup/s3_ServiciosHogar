@@ -33,6 +33,7 @@ public class ServicioLogic {
     /**
      * Se encarga de crear un Servicio en la base de datos.
      *
+     * @param clientesId
      * @param servicioEntity Objeto de ServicioEntity con los datos nuevos
      * @param solicitudesId id del Solicitud el cual sera padre del nuevo Servicio.
      * @return Objeto de ServicioEntity con los datos nuevos y su ID.
@@ -40,9 +41,9 @@ public class ServicioLogic {
      * entity.
      *
      */
-    public ServicioEntity createServicio(Long solicitudesId, ServicioEntity servicioEntity) throws BusinessLogicException {
+    public ServicioEntity createServicio(Long clientesId, Long solicitudesId, ServicioEntity servicioEntity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de crear servicio");
-        SolicitudEntity solicitud = solicitudPersistence.find(solicitudesId);
+        SolicitudEntity solicitud = solicitudPersistence.find(clientesId, solicitudesId);
         servicioEntity.setSolicitud(solicitud);
         LOGGER.log(Level.INFO, "Termina proceso de creación del servicio");
         return persistence.create(servicioEntity);
@@ -51,12 +52,13 @@ public class ServicioLogic {
     /**
      * Obtiene la lista de los registros de Servicio que pertenecen a un Solicitud.
      *
+     * @param clientesId
      * @param solicitudesId id del Solicitud el cual es padre de los Servicios.
      * @return Colección de objetos de ServicioEntity.
      */
-    public List<ServicioEntity> getServicios(Long solicitudesId) {
+    public List<ServicioEntity> getServicios(Long clientesId, Long solicitudesId) {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar los servicios asociados al solicitud con id = {0}", solicitudesId);
-        SolicitudEntity solicitudEntity = solicitudPersistence.find(solicitudesId);
+        SolicitudEntity solicitudEntity = solicitudPersistence.find(clientesId, solicitudesId);
         LOGGER.log(Level.INFO, "Termina proceso de consultar los servicios asociados al solicitud con id = {0}", solicitudesId);
         return solicitudEntity.getServicios();
     }
@@ -83,9 +85,9 @@ public class ServicioLogic {
      * @return Instancia de ServicioEntity con los datos actualizados.
      *
      */
-    public ServicioEntity updateServicio(Long solicitudesId, ServicioEntity servicioEntity) {
+    public ServicioEntity updateServicio(long clientesId, Long solicitudesId, ServicioEntity servicioEntity) {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar el servicio con id = {0} del solicitud con id = " + solicitudesId, servicioEntity.getId());
-        SolicitudEntity solicitudEntity = solicitudPersistence.find(solicitudesId);
+        SolicitudEntity solicitudEntity = solicitudPersistence.find(clientesId, solicitudesId);
         servicioEntity.setSolicitud(solicitudEntity);
         persistence.update(servicioEntity);
         LOGGER.log(Level.INFO, "Termina proceso de actualizar el servicio con id = {0} del solicitud con id = " + solicitudesId, servicioEntity.getId());

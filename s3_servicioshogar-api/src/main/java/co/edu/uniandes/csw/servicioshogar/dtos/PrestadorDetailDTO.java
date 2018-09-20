@@ -14,8 +14,55 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
+ * Clase que extiende de {@link PresatdorDTO} para manejar las relaciones entre los
+ * PrestadorDTO y otros DTOs. Para conocer el contenido de la un Prestador vaya a la
+ * documentacion de {@link PrestadorDTO}
  *
- * @author estudiante
+ * Al serializarse como JSON esta clase implementa el siguiente modelo: <br>
+ * <pre>
+ *   {
+ *      "id": number,
+ *      "nombre": string,
+ *      "cedula": number,
+ *      "habilidades": [{@link HabilidadDTO}]
+ *   }
+ * </pre> Por ejemplo un prestador se representa asi:<br>
+ *
+ * <pre>
+ *
+ *   {
+ *      "id": 123,
+ *      "nombre": "Maria Ocampo",
+ *      "cedula": 1007784099,
+ *      "habilidades": [
+ *          {
+ *              "id": 123,
+ *              "tipo": "CERRAJERIA",
+ *              "descripcion": "Duplicado de llaves",
+ *              "prestador":
+ *              {
+ *                  "id": 123,
+ *                  "nombre": "Maria Ocampo",
+ *                   "cedula": 1007784099
+ *              }
+ *          },
+ *          {
+ *              "id": 124,
+ *              "tipo": "CARPINTERIA",
+ *              "descripcion": "Fabricaicon de puertas y muebles"
+ *              "prestador":
+ *              {
+ *                 "id": 123,
+ *                 "nombre": "Maria Ocampo",
+ *                 "cedula": 1007784099
+ *              }
+ *          }
+ *      ]
+ *   }
+ *
+ * </pre>
+ *
+ * @author Maria Ocampo
  */
 public class PrestadorDetailDTO extends PrestadorDTO implements Serializable{
     
@@ -32,8 +79,8 @@ public class PrestadorDetailDTO extends PrestadorDTO implements Serializable{
     }
     
     /**
-     * 
-     * @param prestadorEntity 
+     * Constructor para transformar un Entity en un DTO
+     * @param prestadorEntity  La entidad a la cual se le construye el DTO
      */
     public PrestadorDetailDTO(PrestadorEntity prestadorEntity){
         super(prestadorEntity);
@@ -50,6 +97,10 @@ public class PrestadorDetailDTO extends PrestadorDTO implements Serializable{
         }
     }
     
+    /**
+     * Transformar el DTO a una entidad
+     * @return La entidad que representa el prestador
+     */
     public PrestadorEntity  toEntity(){
         PrestadorEntity prestadorEntity = super.toEntity();
         if(habilities != null)
@@ -67,7 +118,7 @@ public class PrestadorDetailDTO extends PrestadorDTO implements Serializable{
     }
     
     /**
-     * Devuelbe las habilidades del prestador
+     * Devuelve las habilidades del prestador
      * @return Habilidades
      */
     public List<HabilidadDTO> getHabilities() {
@@ -80,10 +131,5 @@ public class PrestadorDetailDTO extends PrestadorDTO implements Serializable{
      */
     public void setHabilities(List<HabilidadDTO> habilities) {
         this.habilities = habilities;
-    }
-    
-      @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
 }
