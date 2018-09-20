@@ -8,6 +8,20 @@
 	"item": [
 		{
 			"name": "Obtener las servicios",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "631ed4fc-0d70-48a3-baf2-91f7f1189ddf",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [
@@ -21,7 +35,7 @@
 					"raw": "{\n\t\"nombre\":\"Carlos\",\n\t\"direccion\":\"AK\",\n\t\"correo\":\"carlos\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/s3_servicioshogar-api/api/servicios",
+					"raw": "http://localhost:8080/s3_servicioshogar-api/api/clientes/7/solicitudes/31/servicios",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -30,6 +44,10 @@
 					"path": [
 						"s3_servicioshogar-api",
 						"api",
+						"clientes",
+						"7",
+						"solicitudes",
+						"31",
 						"servicios"
 					]
 				},
@@ -39,6 +57,26 @@
 		},
 		{
 			"name": "Crear un servicio #1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8a61e1f8-90b3-4c91-9800-ffb86eb855e9",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"valores\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.descripcion).to.eql(\"descripcionEjemplo #1\");",
+							"    pm.expect(jsonData.requerimientos).to.eql(\"requeriemientoEjemplo #1\");",
+							"});"
+						]
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [
@@ -49,10 +87,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"descripcion\": \"descripcionEjemplo #1\",\n\t\"requerimientos\": \"requeriemientoEjemplo #1\",\n\t\"calificacion\": \"1\"\n}"
+					"raw": "{\n\t\"descripcion\": \"descripcionEjemplo #1\",\n\t\"requerimientos\": \"requeriemientoEjemplo #1\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/s3_servicioshogar-api/api/servicios",
+					"raw": "http://localhost:8080/s3_servicioshogar-api/api/clientes/7/solicitudes/31/servicios",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -61,6 +99,10 @@
 					"path": [
 						"s3_servicioshogar-api",
 						"api",
+						"clientes",
+						"7",
+						"solicitudes",
+						"31",
 						"servicios"
 					]
 				},
@@ -70,6 +112,26 @@
 		},
 		{
 			"name": "Crear un servicio #2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "262c961a-13ac-4ad7-96e6-c1634ea3b4df",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"valores\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.descripcion).to.eql(\"descripcionEjemplo #2\");",
+							"    pm.expect(jsonData.requerimientos).to.eql(\"requeriemientoEjemplo #2\");",
+							"});"
+						]
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [
@@ -80,10 +142,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"descripcion\": \"descripcionEjemplo #2\",\n\t\"requerimientos\": \"requeriemientoEjemplo #2\",\n\t\"calificacion\": \"2\"\n}"
+					"raw": "{\n\t\"descripcion\": \"descripcionEjemplo #2\",\n\t\"requerimientos\": \"requeriemientoEjemplo #2\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/s3_servicioshogar-api/api/servicios",
+					"raw": "http://localhost:8080/s3_servicioshogar-api/api/clientes/7/solicitudes/31/servicios",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -92,6 +154,10 @@
 					"path": [
 						"s3_servicioshogar-api",
 						"api",
+						"clientes",
+						"7",
+						"solicitudes",
+						"31",
 						"servicios"
 					]
 				},
@@ -101,6 +167,26 @@
 		},
 		{
 			"name": "Crear una servicio#3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "15da77ec-5b1f-41b0-8095-00fb73b2597d",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"valores\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.descripcion).to.eql(\"descripcionEjemplo #3\");",
+							"    pm.expect(jsonData.requerimientos).to.eql(\"requeriemientoEjemplo #3\");",
+							"});"
+						]
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [
@@ -111,10 +197,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"descripcion\": \"descripcionEjemplo #3\",\n\t\"requerimientos\": \"requeriemientoEjemplo #3\",\n\t\"calificacion\": \"3\"\n}"
+					"raw": "{\n\t\"descripcion\": \"descripcionEjemplo #3\",\n\t\"requerimientos\": \"requeriemientoEjemplo #3\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/s3_servicioshogar-api/api/servicios",
+					"raw": "http://localhost:8080/s3_servicioshogar-api/api/clientes/7/solicitudes/31/servicios",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -123,6 +209,10 @@
 					"path": [
 						"s3_servicioshogar-api",
 						"api",
+						"clientes",
+						"7",
+						"solicitudes",
+						"31",
 						"servicios"
 					]
 				},
@@ -132,6 +222,26 @@
 		},
 		{
 			"name": "Obtener solicitud #1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "aab1e7d5-efe9-4c84-9fa2-7fbd83a9d61c",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"valores\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.descripcion).to.eql(\"descripcionEjemplo #1\");",
+							"    pm.expect(jsonData.requerimientos).to.eql(\"requeriemientoEjemplo #1\");",
+							"});"
+						]
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [
@@ -145,7 +255,7 @@
 					"raw": "{\n\t\"nombre\":\"Ejemplo #2\",\n\t\"direccion\":\"Direccion Ej #2\",\n\t\"correo\":\"ejemplo2@hotmail.com\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/s3_servicioshogar-api/api/servicios/1",
+					"raw": "http://localhost:8080/s3_servicioshogar-api/api/clientes/7/solicitudes/31/servicios/31",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -154,8 +264,12 @@
 					"path": [
 						"s3_servicioshogar-api",
 						"api",
+						"clientes",
+						"7",
+						"solicitudes",
+						"31",
 						"servicios",
-						"1"
+						"31"
 					]
 				},
 				"description": "Verificacion de que la solicitud haya sido guardado exitosamente y su id haya sido asignado automaticamente por la BD."
@@ -164,6 +278,26 @@
 		},
 		{
 			"name": "Obtener solicitud #2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d0d9d2a8-3d99-430d-b4ab-30d2514a6acc",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"valores\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.descripcion).to.eql(\"descripcionEjemplo #2\");",
+							"    pm.expect(jsonData.requerimientos).to.eql(\"requeriemientoEjemplo #2\");",
+							"});"
+						]
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [
@@ -177,7 +311,7 @@
 					"raw": "{\n\t\"nombre\":\"Ejemplo #2\",\n\t\"direccion\":\"Direccion Ej #2\",\n\t\"correo\":\"ejemplo2@hotmail.com\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/s3_servicioshogar-api/api/servicios/2",
+					"raw": "http://localhost:8080/s3_servicioshogar-api/api/clientes/7/solicitudes/31/servicios/32",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -186,8 +320,12 @@
 					"path": [
 						"s3_servicioshogar-api",
 						"api",
+						"clientes",
+						"7",
+						"solicitudes",
+						"31",
 						"servicios",
-						"2"
+						"32"
 					]
 				},
 				"description": "Verificacion de que la solicitud haya sido guardado exitosamente y su id haya sido asignado automaticamente por la BD."
@@ -196,6 +334,26 @@
 		},
 		{
 			"name": "Obtener servicio #3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7c9c4076-f0cd-49f7-83b9-0f2f78d92987",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"valores\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.descripcion).to.eql(\"descripcionEjemplo #3\");",
+							"    pm.expect(jsonData.requerimientos).to.eql(\"requeriemientoEjemplo #3\");",
+							"});"
+						]
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [
@@ -209,7 +367,7 @@
 					"raw": "{\n\t\"nombre\":\"Ejemplo #2\",\n\t\"direccion\":\"Direccion Ej #2\",\n\t\"correo\":\"ejemplo2@hotmail.com\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/s3_servicioshogar-api/api/servicios/3",
+					"raw": "http://localhost:8080/s3_servicioshogar-api/api/clientes/7/solicitudes/31/servicios/33",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -218,8 +376,12 @@
 					"path": [
 						"s3_servicioshogar-api",
 						"api",
+						"clientes",
+						"7",
+						"solicitudes",
+						"31",
 						"servicios",
-						"3"
+						"33"
 					]
 				},
 				"description": "Verificacion de que el servicio haya sido guardado exitosamente y su id haya sido asignado automaticamente por la BD."
@@ -228,6 +390,24 @@
 		},
 		{
 			"name": "Obtener solicitud #4",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "68942d3f-6bd9-42a8-8467-6138b0d75008",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Respuesta\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"El recurso /solicitudes/31/servicios/0 no existe.\");",
+							"});"
+						]
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [
@@ -241,7 +421,7 @@
 					"raw": "{\n\t\"nombre\":\"Ejemplo #2\",\n\t\"direccion\":\"Direccion Ej #2\",\n\t\"correo\":\"ejemplo2@hotmail.com\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/s3_servicioshogar-api/api/servicios/4",
+					"raw": "http://localhost:8080/s3_servicioshogar-api/api/clientes/7/solicitudes/31/servicios/0",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -250,8 +430,12 @@
 					"path": [
 						"s3_servicioshogar-api",
 						"api",
+						"clientes",
+						"7",
+						"solicitudes",
+						"31",
 						"servicios",
-						"4"
+						"0"
 					]
 				},
 				"description": "Debido a que no se creo solicitud #4, la app deberia devolver un mensaje informando que esa soliciyud no se creo."
@@ -260,6 +444,20 @@
 		},
 		{
 			"name": "Verificacion todas los servicios fueron creadas",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a3f07b07-e18c-41ad-b67d-17ce14ecaac5",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [
@@ -273,7 +471,7 @@
 					"raw": "{\n\t\"nombre\":\"Ejemplo #2\",\n\t\"direccion\":\"Direccion Ej #2\",\n\t\"correo\":\"ejemplo2@hotmail.com\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/s3_servicioshogar-api/api/servicios",
+					"raw": "http://localhost:8080/s3_servicioshogar-api/api/clientes/7/solicitudes/31/servicios",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -282,6 +480,10 @@
 					"path": [
 						"s3_servicioshogar-api",
 						"api",
+						"clientes",
+						"7",
+						"solicitudes",
+						"31",
 						"servicios"
 					]
 				},
@@ -304,7 +506,7 @@
 					"raw": "{\n\t\"descripcion\": \"descripcionEjemplo #4\",\n\t\"requerimientos\": \"requeriemientoEjemplo #4\",\n\t\"calificacion\": \"4\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/s3_servicioshogar-api/api/servicios/3",
+					"raw": "http://localhost:8080/s3_servicioshogar-api/api/clientes/7/solicitudes/31/servicios/33",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -313,8 +515,12 @@
 					"path": [
 						"s3_servicioshogar-api",
 						"api",
+						"clientes",
+						"7",
+						"solicitudes",
+						"31",
 						"servicios",
-						"3"
+						"33"
 					]
 				},
 				"description": "Se modifica el servicio #3 de tal forma que podamos confirmar que el cambio se puede realizar"
@@ -323,6 +529,26 @@
 		},
 		{
 			"name": "Verificacion servicio #3 fue modificado",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "01c84e8a-731a-49f0-b5bd-7aef5289086e",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"valores\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.descripcion).to.eql(\"descripcionEjemplo #4\");",
+							"    pm.expect(jsonData.requerimientos).to.eql(\"requeriemientoEjemplo #4\");",
+							"});"
+						]
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [
@@ -336,7 +562,7 @@
 					"raw": "{\n\t\"nombre\":\"Ejemplo #2\",\n\t\"direccion\":\"Direccion Ej #2\",\n\t\"correo\":\"ejemplo2@hotmail.com\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/s3_servicioshogar-api/api/servicios/3",
+					"raw": "http://localhost:8080/s3_servicioshogar-api/api/clientes/7/solicitudes/31/servicios/33",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -345,74 +571,15 @@
 					"path": [
 						"s3_servicioshogar-api",
 						"api",
+						"clientes",
+						"7",
+						"solicitudes",
+						"31",
 						"servicios",
-						"3"
+						"33"
 					]
 				},
 				"description": "Llamamos al objeto en la BD para verificar doblemente que el servicio haya sido modificado"
-			},
-			"response": []
-		},
-		{
-			"name": "Eliminar servicio #3",
-			"request": {
-				"method": "DELETE",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "http://localhost:8080/s3_servicioshogar-api/api/servicios/3",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"s3_servicioshogar-api",
-						"api",
-						"servicios",
-						"3"
-					]
-				},
-				"description": "Se elimina el servicio #3 de la base de datos"
-			},
-			"response": []
-		},
-		{
-			"name": "Verificacion servicio #3 fue eliminada exitosamente",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"nombre\":\"Ejemplo #2\",\n\t\"direccion\":\"Direccion Ej #2\",\n\t\"correo\":\"ejemplo2@hotmail.com\"\n}"
-				},
-				"url": {
-					"raw": "http://localhost:8080/s3_servicioshogar-api/api/servicios",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"s3_servicioshogar-api",
-						"api",
-						"servicios"
-					]
-				},
-				"description": "Deberia devolver todos los objetos de la BD demostrando que el servicio #3 ya no existe o fue eliminado."
 			},
 			"response": []
 		}
