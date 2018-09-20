@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.servicioshogar.dtos;
 
 import co.edu.uniandes.csw.servicioshogar.entities.SolicitudEntity;
 import java.io.Serializable;
+import java.util.Date;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -14,15 +15,15 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * Al serializarse como JSON esta clase implementa el siguiente modelo: <br>
  * <pre>
  *   {
- *      "fecha": string,
+ *      "fecha": date,
  *      "direccion": string
  *   }
  * </pre> Por ejemplo una editorial se representa asi:<br>
  *
  * <pre>
  *   {
- *      "fecha": "25/12/2018",
- *      "dirección": "Cale 22 No. 22-22",
+ *      "fecha": "2000-08-20T00:00:00-05:00",
+ *      "direccion": "Cale 22 No. 22-22",
  *   }
  * </pre>
  *
@@ -31,7 +32,10 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 public class SolicitudDTO implements Serializable{
     
     private Long id;
-    private String fecha, direccion;
+    private String direccion;
+    private Date fecha;
+    
+    private ClienteDTO cliente;
 
     /**
      * Constructor por defecto.
@@ -73,7 +77,7 @@ public class SolicitudDTO implements Serializable{
      * Devuelve la fecha de la solicitud.
      * @return fecha de la solicitud.
      */
-    public String getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
@@ -81,7 +85,7 @@ public class SolicitudDTO implements Serializable{
      * Modifica la fecha de la solicitud.
      * @param fecha. nueva fecha.
      */
-    public void setFecha(String fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 
@@ -117,5 +121,13 @@ public class SolicitudDTO implements Serializable{
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+    }
+
+    public ClienteDTO getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(ClienteDTO cliente) {
+        this.cliente = cliente;
     }
 }

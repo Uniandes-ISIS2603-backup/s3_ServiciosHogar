@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.servicioshogar.test.persistence;
 
 import co.edu.uniandes.csw.servicioshogar.entities.ServicioEntity;
+import co.edu.uniandes.csw.servicioshogar.entities.SolicitudEntity;
 import co.edu.uniandes.csw.servicioshogar.persistence.ServicioPersistence;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
+import junit.framework.TestCase;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -29,39 +31,24 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  * @author Steven Tarazona <ys.tarazona@uniandes.edu.co>
  */
 @RunWith(Arquillian.class)
-public class ServicioPersistenceTest {
-
-    /**
-     * Inyección de la dependencia a la clase ServicioPersistence cuyos métodos
-     * se van a probar.
-     */
+public class ServicioPersistenceTest{
     @Inject
     private ServicioPersistence servicioPersistence;
 
-    /**
-     * Contexto de Persistencia que se va a utilizar para acceder a la Base de
-     * datos por fuera de los métodos que se están probando.
-     */
     @PersistenceContext
     private EntityManager em;
 
-    /**
-     * Variable para martcar las transacciones del em anterior cuando se
-     * crean/borran datos para las pruebas.
-     */
     @Inject
     UserTransaction utx;
 
-    /**
-     * lista que tiene los datos de prueba.
-     */
     private List<ServicioEntity> data = new ArrayList<ServicioEntity>();
+	
+    private List<SolicitudEntity> dataSolicitud = new ArrayList<SolicitudEntity>();
 
     /**
-     * @return Devuelve el jar que Arquillian va a desplegar en el Glassfish
-     * embebido. El jar contiene las clases de Servicio, el descriptor de la
-     * base de datos y el archivo beans.xml para resolver la inyección de
-     * dependencias.
+     * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
+     * El jar contiene las clases, el descriptor de la base de datos y el
+     * archivo beans.xml para resolver la inyección de dependencias.
      */
     @Deployment
     public static JavaArchive createDeployment() {
@@ -98,6 +85,7 @@ public class ServicioPersistenceTest {
      */
     private void clearData() {
         em.createQuery("delete from ServicioEntity").executeUpdate();
+        em.createQuery("delete from SolicitudEntity").executeUpdate();
     }
 
     /**
@@ -107,11 +95,16 @@ public class ServicioPersistenceTest {
     private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
-
-            ServicioEntity entity = factory.manufacturePojo(ServicioEntity.class);
-
+            SolicitudEntity entity = factory.manufacturePojo(SolicitudEntity.class);
             em.persist(entity);
-
+            dataSolicitud.add(entity);
+        }
+        for (int i = 0; i < 3; i++) {
+            ServicioEntity entity = factory.manufacturePojo(ServicioEntity.class);
+            if (i == 0) {
+                entity.setSolicitud(dataSolicitud.get(0));
+            }
+            em.persist(entity);
             data.add(entity);
         }
     }
@@ -121,6 +114,7 @@ public class ServicioPersistenceTest {
      */
     @Test
     public void createServicioTest() {
+
         PodamFactory factory = new PodamFactoryImpl();
         ServicioEntity newEntity = factory.manufacturePojo(ServicioEntity.class);
         ServicioEntity result = servicioPersistence.create(newEntity);
@@ -129,26 +123,8 @@ public class ServicioPersistenceTest {
 
         ServicioEntity entity = em.find(ServicioEntity.class, result.getId());
 
-        Assert.assertEquals(entity.getDescripcion(), newEntity.getDescripcion());
-        Assert.assertEquals(entity.getRequerimientos(), newEntity.getRequerimientos());
-    }
-
-    /**
-     * Prueba para consultar la lista de Servicios.
-     */
-    @Test
-    public void getServiciosTest() {
-        List<ServicioEntity> list = servicioPersistence.findAll();
-        Assert.assertEquals(data.size(), list.size());
-        for (ServicioEntity ent : list) {
-            boolean found = false;
-            for (ServicioEntity entity : data) {
-                if (ent.getId().equals(entity.getId())) {
-                    found = true;
-                }
-            }
-            Assert.assertTrue(found);
-        }
+        Assert.assertEquals(newEntity.getDescripcion(), entity.getDescripcion());
+        Assert.assertEquals(newEntity.getRequerimientos(), entity.getRequerimientos());
     }
 
     /**
@@ -157,14 +133,14 @@ public class ServicioPersistenceTest {
     @Test
     public void getServicioTest() {
         ServicioEntity entity = data.get(0);
-        ServicioEntity newEntity = servicioPersistence.find(entity.getId());
+        ServicioEntity newEntity = servicioPersistence.find(dataSolicitud.get(0).getId(), entity.getId());
         Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getDescripcion(), newEntity.getDescripcion());
         Assert.assertEquals(entity.getRequerimientos(), newEntity.getRequerimientos());
     }
 
     /**
-     * Prueba para eliminar una Servicio.
+     * Prueba para eliminar un Servicio.
      */
     @Test
     public void deleteServicioTest() {

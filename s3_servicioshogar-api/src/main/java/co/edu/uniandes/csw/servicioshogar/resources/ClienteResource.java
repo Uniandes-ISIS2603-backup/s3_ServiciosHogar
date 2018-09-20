@@ -147,6 +147,27 @@ public class ClienteResource
     }
     
     /**
+     * Conexión con el servicio de reseñas para un libro. {@link SolicitudResource}
+     *
+     * Este método conecta la ruta de /clientes con las rutas de /solicitudes que
+     * dependen del libro, es una redirección al servicio que maneja el segmento
+     * de la URL que se encarga de las reseñas.
+     *
+     * @param clientesId El ID del libro con respecto al cual se accede al
+     * servicio.
+     * @return El servicio de Reseñas para ese libro en paricular.\
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
+     * Error de lógica que se genera cuando no se encuentra el libro.
+     */
+    @Path("{clientesId: \\d+}/solicitudes")
+    public Class<SolicitudResource> getSolicitudResource(@PathParam("clientesId") Long clientesId) {
+        if (clienteLogic.getCliente(clientesId) == null) 
+            throw new WebApplicationException("El recurso /clientes/" + clientesId + "/solicitudes no existe.", 404);
+        
+        return SolicitudResource.class;
+    }
+    
+    /**
      * Convierte una lista de entidades a DTO
      * @param entityList. Corresponde a la lista de clientes de tipo Entity que se convertira en DTO.
      * @return lista de editoriales en forma DTO (json).

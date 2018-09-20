@@ -14,16 +14,20 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * <pre>
  *   {
  *      "descripcion": string,
- *      "requerimientos": string,
- *      "calificacion": number
+ *      "requerimientos": string
+ *      "solicitud": {@link SolicitudDTO}
  *   }
  * </pre> Por ejemplo una editorial se representa asi:<br>
  *
  * <pre>
  *   {
  *      "descripción": "Cambiar las cerraduras de tres puertas",
-        "requerimientos": "CERRAJERIA",
-        "calificación": "4"
+ *      "requerimientos": "CERRAJERIA"
+ *      "solicitud":
+ *      {
+ *          "fecha": "2000-08-20T00:00:00-05:00",
+ *          "direccion": "Cale 22 No. 22-22"
+ *      }
  *   }
  * </pre>
  *
@@ -33,6 +37,12 @@ public class ServicioDTO {
     
     private Long id;
     private String descripcion, requerimientos;
+    
+    /*
+    * Relación a una solicitud  
+    * dado que esta tiene cardinalidad 1.
+     */
+    private SolicitudDTO solicitud;
     
     /**
      * Constructor por defecto.
@@ -78,6 +88,10 @@ public class ServicioDTO {
         return descripcion;
     }
 
+    public SolicitudDTO getSolicitud() {
+        return solicitud;
+    }
+
     /**
      * Modificar la descripcion del servicio.
      * @param descripcion. Nueva descripcion.
@@ -100,6 +114,10 @@ public class ServicioDTO {
      */
     public void setRequerimientos(String requerimientos) {
         this.requerimientos = requerimientos;
+    }
+
+    public void setSolicitud(SolicitudDTO solicitud) {
+        this.solicitud = solicitud;
     }
     
         /**

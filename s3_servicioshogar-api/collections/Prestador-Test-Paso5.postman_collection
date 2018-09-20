@@ -1,0 +1,592 @@
+{
+	"info": {
+		"_postman_id": "46258fc8-6fcf-4ff5-8557-01db276164f2",
+		"name": "Prestador Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Crear un prestador",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0373ce37-dcb3-45e0-b36f-1a95d9f054cb",
+						"type": "text/javascript",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_p\",data.id);",
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\":\"Maria Ocampo\",\n\t\"cedula\":1007784095\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"prestadores"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear un prestador 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3535c112-b45c-4f25-a122-c29c1e4aa1c6",
+						"type": "text/javascript",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_p2\",data.id);",
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\":\"Angela Vargas\",\n\t\"cedula\":1007784098\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"prestadores"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear un prestador con cedula invalida 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "74d82b79-9172-4733-aaf6-bf41eea37bab",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"No crea con cédula invalida\"] = responseCode.code === 412;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"La cédula es inválida\");"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\":\"Maria Ocampo\",\n\t\"cedula\":null\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"prestadores"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear un prestador con cedula invalida 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d2e90828-87f1-4dc5-90de-558b80a2d550",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"No crea con cédula invalida\"] = responseCode.code === 412;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"La cédula es inválida\");"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\":\"Maria Ocampo\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"prestadores"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear un prestador con la misma cedula",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "36dea60f-010a-4bbf-a8a8-0ab89ccb4c2a",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"No crea con la misma cedula\"] = responseCode.code === 412;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"La cédula ya existe\");"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\":\"Adrian Ocampo\",\n\t\"cedula\":1007784099\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"prestadores"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener todos los prestadores",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1a157514-95de-41ec-9638-a439a91babd3",
+						"type": "text/javascript",
+						"exec": [
+							"var data= JSON.parse(responseBody);",
+							"tests[\"No genera error en el Get all\"] = responseCode.code === 200;",
+							"tests[\"prestadores count\"] = data.length >= 0;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\":\"Adrian Ocampo\",\n\t\"cedula\":1007784099\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"prestadores"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener un prestador",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a0eea643-287e-4629-ba0f-614c7c8ca059",
+						"type": "text/javascript",
+						"exec": [
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"No genera error en el Get\"] = responseCode.code === 200;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\":\"Adrian Ocampo\",\n\t\"cedula\":1007784099\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"prestadores",
+						"{{new_id_p}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener un prestador que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "213d69d4-a734-44e0-bfc6-b1f77a54d69b",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"No consulta con id que no existe\"] = responseCode.code === 404; ",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /prestadores/0 no existe\");"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\":\"Adrian Ocampo\",\n\t\"cedula\":1007784099\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"prestadores",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar un prestador que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0a390f60-9204-466e-ad1d-79e8377b40ac",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"No actualiza con id que no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /prestadores/0 no existe\");"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\":\"Majo Ocampo\",\n\t\"cedula\":1007784099\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"prestadores",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar un prestador con cedula invalida",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "382619d9-6340-4da4-b9c2-e1c1a86fa455",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"No crea con cedula invalida\"] = responseCode.code === 412;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"La cédula es inválida\");"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\":\"Majo Ocampo\",\n\t\"cedula\":null\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"prestadores",
+						"{{new_id_p}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar un prestador",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0b13a4a9-5122-4acb-af1d-0b3edf09999a",
+						"type": "text/javascript",
+						"exec": [
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"No genera error en el Put\"] = responseCode.code === 200;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\":\"Majo Ocampo\",\n\t\"cedula\":1007784096\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"prestadores",
+						"{{new_id_p}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar un prestador",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "651af667-0813-474a-a97d-61880f135891",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"prestadores",
+						"{{new_id_p}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar un prestador 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "651af667-0813-474a-a97d-61880f135891",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p2}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"prestadores",
+						"{{new_id_p2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar un prestador que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "158b4822-6648-4e6d-935b-f333a5f9bd83",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"No borra con id que no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /prestadores/0 no existe\");"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"prestadores",
+						"0"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

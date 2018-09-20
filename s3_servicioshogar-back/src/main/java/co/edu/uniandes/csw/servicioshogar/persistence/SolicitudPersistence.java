@@ -15,7 +15,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 /**
- * Clase que maneja la persistencia para Solicitud.
  *
  * @author Steven Tarazona <ys.tarazona@uniandes.edu.co>
  */
@@ -33,57 +32,75 @@ public class SolicitudPersistence {
      * @return devuelve la entidad creada con un id dado por la base de datos.
      */
     public SolicitudEntity create(SolicitudEntity solicitudEntity) {
-        LOGGER.log(Level.INFO, "Creando una solicitud nueva");
+        LOGGER.log(Level.INFO, "Creando un solicitud nuevo");
         em.persist(solicitudEntity);
-        LOGGER.log(Level.INFO, "Saliendo de crear una solicitud nueva");
+        LOGGER.log(Level.INFO, "Libro creado");
         return solicitudEntity;
     }
 
     /**
-     * Devuelve todas las solicitudes de la base de datos.
+     * Devuelve todos lossolicitudes de la base de datos.
      *
-     * @return una lista con todas las solicitudes que encuentre en la base de datos.
+     * @return una lista con todos los solicitudes que encuentre en la base de datos,
+     * "select u from SolicitudEntity u" es como un "select * from SolicitudEntity;" -
+     * "SELECT * FROM table_name" en SQL.
      */
     public List<SolicitudEntity> findAll() {
-        LOGGER.log(Level.INFO, "Consultando todas las solicitudes");
-        // Se crea un query para buscar todas las solicitudes en la base de datos.
-        TypedQuery query = em.createQuery("select u from SolicitudEntity u", SolicitudEntity.class);
-        return query.getResultList();
+        LOGGER.log(Level.INFO, "Consultando todos los solicitudes");
+        TypedQuery q = em.createQuery("select u from SolicitudEntity u", SolicitudEntity.class);
+        return q.getResultList();
     }
 
     /**
-     * Busca si hay alguna solicitud con el id que se envía de argumento
+     * Buscar una reseña
      *
-     * @param solicitudesId: id correspondiente a la solicitud buscada.
-     * @return una solicitud.
+     * Busca si hay alguna reseña asociada a un libro y con un ID específico
+     *
+     * @param clientesId El ID del libro con respecto al cual se busca
+     * @param solicitudesId El ID de la reseña buscada
+     * @return La reseña encontrada o null. Nota: Si existe una o más reseñas
+     * devuelve siempre la primera que encuentra
      */
-    public SolicitudEntity find(Long solicitudesId) {
-        LOGGER.log(Level.INFO, "Consultando solicitud con id={0}", solicitudesId);
-        return em.find(SolicitudEntity.class, solicitudesId);
+    public SolicitudEntity find(Long clientesId, Long solicitudesId) {
+        LOGGER.log(Level.INFO, "Consultando el solicitud con id = {0} del libro con id = " + clientesId, solicitudesId);
+        TypedQuery<SolicitudEntity> q = em.createQuery("select p from SolicitudEntity p where (p.cliente.id = :clienteid) and (p.id = :solicitudesId)", SolicitudEntity.class);
+        q.setParameter("clienteid", clientesId);
+        q.setParameter("solicitudesId", solicitudesId);
+        List<SolicitudEntity> results = q.getResultList();
+        SolicitudEntity solicitud = null;
+        if (results == null) {
+            solicitud = null;
+        } else if (results.isEmpty()) {
+            solicitud = null;
+        } else if (results.size() >= 1) {
+            solicitud = results.get(0);
+        }
+        LOGGER.log(Level.INFO, "Saliendo de consultar el solicitud con id = {0} del libro con id =" + clientesId, solicitudesId);
+        return solicitud;
     }
 
     /**
-     * Actualiza una solicitud.
+     * Actualiza un solicitud.
      *
-     * @param solicitudEntity: la solicitud que viene con los nuevos cambios.
-     * @return una solicitud con los cambios aplicados.
+     * @param solicitudEntity: el solicitud que viene con los nuevos cambios. Por ejemplo
+     * el nombre pudo cambiar. En ese caso, se haria uso del método update.
+     * @return un solicitud con los cambios aplicados.
      */
     public SolicitudEntity update(SolicitudEntity solicitudEntity) {
-        LOGGER.log(Level.INFO, "Actualizando solicitud con id = {0}", solicitudEntity.getId());
-        LOGGER.log(Level.INFO, "Saliendo de actualizar la solicitud con id = {0}", solicitudEntity.getId());
+        LOGGER.log(Level.INFO, "Actualizando el solicitud con id={0}", solicitudEntity.getId());
         return em.merge(solicitudEntity);
     }
 
     /**
-     * Borra una solicitud de la base de datos recibiendo como argumento el id
-     * de la solicitud
      *
-     * @param solicitudesId: id correspondiente a la solicitud a borrar.
+     * Borra un solicitud de la base de datos recibiendo como argumento el id del
+     * solicitud
+     *
+     * @param solicitudesId: id correspondiente al solicitud a borrar.
      */
     public void delete(Long solicitudesId) {
-        LOGGER.log(Level.INFO, "Borrando solicitud con id = {0}", solicitudesId);
-        SolicitudEntity entity = em.find(SolicitudEntity.class, solicitudesId);
-        em.remove(entity);
-        LOGGER.log(Level.INFO, "Saliendo de borrar la solicitud con id = {0}", solicitudesId);
+        LOGGER.log(Level.INFO, "Borrando el solicitud con id={0}", solicitudesId);
+        SolicitudEntity solicitudEntity = em.find(SolicitudEntity.class, solicitudesId);
+        em.remove(solicitudEntity);
     }
 }

@@ -14,13 +14,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
- * @author estudiante
+ * @author Maria Ocampo
  */
 @Entity
 public class PrestadorEntity extends BaseEntity implements Serializable {
@@ -29,43 +30,83 @@ public class PrestadorEntity extends BaseEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
     private Integer cedula;
-    
     private String nombre;
-    
+ 
     @PodamExclude
-    @OneToMany(mappedBy = "prestador")
+    @OneToMany(mappedBy = "prestador", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<HabilidadEntity> habilidades = new ArrayList<HabilidadEntity>();
+    
+    @OneToOne(mappedBy = "prestador")
+    private HojaDeVidaEntity hojaDeVida;
 
+    public void setHojaDeVida(HojaDeVidaEntity hojaDeVida) {
+        this.hojaDeVida = hojaDeVida;
+    }
+
+    public HojaDeVidaEntity getHojaDeVida() {
+        return hojaDeVida;
+    }
+    /**
+     * Modifica la cedula del prestador
+     * @param cedula the cedula to set
+     */
     public void setCedula(Integer cedula) {
         this.cedula = cedula;
     }
 
+    /**
+     * Modifica el nombre del prestador
+     * @param nombre the nombre to set
+     */
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
+    /**
+     * Modifica la lista de habilidades
+     * @param habilidades the habilidades to set
+     */
     public void setHabilidades(List<HabilidadEntity> habilidades) {
         this.habilidades = habilidades;
     }
-
+    
+    /**
+     * Devuelve la cedula del prestador
+     * @return the cedula
+     */
     public Integer getCedula() {
         return cedula;
     }
-
+    
+    /**
+     * Devuelve el nombre del prestador
+     * @return the nombre
+     */
     public String getNombre() {
         return nombre;
     }
-
+    
+    /**
+     * Devuelve las habilidades del prestador
+     * @return the habilidades
+     */
     public List<HabilidadEntity> getHabilidades() {
         return habilidades;
     }
     
+    /**
+     * Devuelve el id del prestador
+     * @return the id
+     */
     public Long getId() {
         return id;
     }
-
+    
+    /**
+     * Modifica el id el prestador
+     * @param id the id to set
+     */
     public void setId(Long id) {
         this.id = id;
     }
