@@ -10,6 +10,7 @@ import java.io.Serializable;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -45,6 +46,7 @@ public class PrestadorDTO implements Serializable {
     private Long id;
     private String nombre;
     private Integer cedula;
+    private HojaDeVidaDTO hojaDeVida;
     
     /**
      * Constructor por defecto
@@ -124,7 +126,7 @@ public class PrestadorDTO implements Serializable {
         prestadorEntity.setId(this.id);
         prestadorEntity.setNombre(this.nombre);
         prestadorEntity.setCedula(this.cedula);
-        
+        prestadorEntity.setHojaDeVida(this.hojaDeVida.toEntity());
         return prestadorEntity;
     }
 
