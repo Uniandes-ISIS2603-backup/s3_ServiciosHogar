@@ -167,4 +167,17 @@ public class ServicioResource {
         }
         return list;
     }
+    
+    //---------------------------------------
+    //-------------Carlos Robles-------------
+    //---------------------------------------
+    
+    @Path("/{serviciosId: \\d+}/calificacion")
+    public Class<CalificacionResource> getCalificacionResource(@PathParam("solicitudesId") Long solicitudesId, @PathParam("serviciosId") Long serviciosId) 
+    {        
+        if (servicioLogic.getServicio(solicitudesId, serviciosId) == null)
+            throw new WebApplicationException("El recurso /solicitud/"+ solicitudesId +  "/servicios/" + serviciosId + "/calificacion no existe.", 404);
+        
+        return CalificacionResource.class;
+    }
 }

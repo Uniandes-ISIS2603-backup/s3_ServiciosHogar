@@ -8,7 +8,9 @@ package co.edu.uniandes.csw.servicioshogar.entities;
 import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import uk.co.jemos.podam.common.PodamExclude;
 
 /**
@@ -75,4 +77,19 @@ public class ServicioEntity extends BaseEntity implements Serializable{
     public void setSolicitud(SolicitudEntity solicitudEntity) {
         this.solicitud = solicitudEntity;
     }
+    
+    //-----------------------------------
+    //----------Carlos Robles------------
+    //-----------------------------------
+    
+    @PodamExclude
+    @OneToOne(mappedBy = "servicio", fetch = FetchType.LAZY)
+    private CalificacionEntity calificacion;
+
+    public CalificacionEntity getCalificacion() {return calificacion;}
+    
+    public void setCalificacion(CalificacionEntity calificacion) {this.calificacion = calificacion;}
+    
+    
+    
 }
