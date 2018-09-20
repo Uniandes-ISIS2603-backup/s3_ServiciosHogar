@@ -39,6 +39,14 @@ public class PrestadorHojaDeVidaLogic {
         LOGGER.log(Level.INFO, "Termina proceso de asociarle una hoja de vida al prestador con id = {0}", prestadorId);
         return hojaDeVidaPersistence.find(hojaDeVidaId);
     }
+    
+    public HojaDeVidaEntity getHojaDeVida(Long prestadorId)
+    {
+        LOGGER.log(Level.INFO, "Inicia proceso de cosultar la hoja de vida de un prestador con id = {0}", prestadorId);
+        HojaDeVidaEntity hojaDeVida = prestadorPersistence.find(prestadorId).getHojaDeVida();;
+        LOGGER.log(Level.INFO, "Termina proceso de consultar la hoja de vida de un prestador con id = {0}", prestadorId);
+        return hojaDeVida;
+    }
 
     public PrestadorEntity replaceHojaDeVida(Long prestadorId, Long hojaDeVidaId) {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar libro con id = {0}", prestadorId);
@@ -49,7 +57,12 @@ public class PrestadorHojaDeVidaLogic {
         return prestadorEntity;
     }
   
- 
+    public void removeHojaDeVida(Long prestadorId)
+    {
+        LOGGER.log(Level.INFO, "Inicia proceso de borrar una hoja de vida del prestador con id = {0}", prestadorId);
+        prestadorPersistence.find(prestadorId).setHojaDeVida(null);
+        LOGGER.log(Level.INFO, "Termina el proceso de borrrar una hoja de vida del prestador con id={0}", prestadorId);
+    }
 
 
 }
