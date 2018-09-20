@@ -6,11 +6,12 @@
 package co.edu.uniandes.csw.servicioshogar.ejb;
 
 import co.edu.uniandes.csw.servicioshogar.entities.CalificacionEntity;
-import co.edu.uniandes.csw.servicioshogar.entities.ClienteEntity;
+import co.edu.uniandes.csw.servicioshogar.entities.ServicioEntity;
+import co.edu.uniandes.csw.servicioshogar.entities.SolicitudEntity;
 import co.edu.uniandes.csw.servicioshogar.exceptions.BusinessLogicException;
-import co.uniandes.csw.servicioshogar.persistence.CalificacionPersistence;
-import co.edu.uniandes.csw.servicioshogar.persistence.ClientePersistence;
-import java.util.List;
+import co.edu.uniandes.csw.servicioshogar.persistence.CalificacionPersistence;
+import co.edu.uniandes.csw.servicioshogar.persistence.ServicioPersistence;
+import co.edu.uniandes.csw.servicioshogar.persistence.SolicitudPersistence;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
@@ -21,95 +22,94 @@ import javax.inject.Inject;
  * @author Carlos Eduardo Robles
  */
 @Stateless
-public class CalificacionLogic
+public class CalificacionLogic 
 {
+    //------------------------------------------
+    //-----------------Atributos----------------
+    //------------------------------------------
     private static final Logger LOGGER = Logger.getLogger(CalificacionLogic.class.getName());
-
+    
+    /**
+     * Inyecta las dependencias.
+     */
     @Inject
     private CalificacionPersistence persistence;
 
-    @Inject
-    private ClientePersistence bookPersistence;
-    
     /**
-     * Se encarga de crear una calificacion en la base de datos.
-     * @param clientesId Id del cliente.
-     * @param calificacionEntity Entidad de tipo calificacion a insertar en el cliente
-     * @return Objeto CalificacionEntity
-     * @throws BusinessLogicException si clientesId no es el mismo que tiene el
-     * entity.
+     * Inyecta las dependencias.
      */
-    public CalificacionEntity createCalificacion(Long clientesId, CalificacionEntity calificacionEntity) throws BusinessLogicException 
+    @Inject
+    private ServicioPersistence servicioPersistence;
+    
+    //@Inject
+    //private SolicitudPersistence solicitudPersistence;
+
+    //------------------------------------------
+    //------------------Metodos-----------------
+    //------------------------------------------  
+    /**
+     * Crea una calificacion en la persistencia.
+     * @param solicitudId - Id de la solicitud al que pertenece el servicio.
+     * @param serviciosId - Id del servicio al que pertenece la calificacion.
+     * @param calificacionEntity - Entidad de la calificacion a ser persistida.
+     * @return Entidad persistida.
+     * @throws BusinessLogicException - Si la calificacion ya existe
+     */
+    public CalificacionEntity createCalificacion(Long solicitudId, Long serviciosId, CalificacionEntity calificacionEntity) throws BusinessLogicException 
     {
         LOGGER.log(Level.INFO, "Inicia proceso de crear calificacion");
-        ClienteEntity cliente = bookPersistence.find(clientesId);
-        calificacionEntity.setCliente(cliente);
-        LOGGER.log(Level.INFO, "Termina proceso de creación del review");
+        //SolicitudEntity solicitud = solicitudPersistence.find(solicitudId);
+        ServicioEntity servicio = servicioPersistence.find(solicitudId ,serviciosId );
+        if(servicio.getCalificacion() != null)
+            throw new BusinessLogicException("El servicio con id = " + serviciosId + "ya tiene calificacion");
+        
+        calificacionEntity.setServicio(servicio);            
+        LOGGER.log(Level.INFO, "Termina proceso de creación del calificacion");        
         return persistence.create(calificacionEntity);
     }
     
     /**
-     * 
-     * @param clientesId
-     * @return 
+     * Obtener una calificacion identificada con el 'id' ingresado por parametro.
+     * @param serviciosId - Id del servcio al que pertenece la calificacion.
+     * @param calificacionId - Id de la calificacion a obtener.
+     * @return calificacion solicitada.
      */
-    public List<CalificacionEntity> getCalificaciones(Long clientesId) 
+    public CalificacionEntity getCalificacion(Long serviciosId, Long calificacionId) 
     {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar las calificaciones asociados al cliente con id = {0}", clientesId);
-        ClienteEntity clienteEntity = bookPersistence.find(clientesId);
-        LOGGER.log(Level.INFO, "Termina proceso de consultar las calificaciones asociados al cliente con id = {0}", clientesId);
-        return clienteEntity.getCalificaciones();
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar el calificacion con id = {0} del servicio con id = " + serviciosId, calificacionId);
+        return persistence.find(serviciosId, calificacionId);
     }
 
     /**
-     * Obtiene los datos de una instancia de Calificacion a partir de su ID. La
-     * existencia del elemento padre Book se debe garantizar.
-     *
-     * @param clientesId El id del Cliente buscado
-     * @param calificacionId Identificador de la Calificacion a consultar
-     * @return Instancia de CalificacionEntity con los datos del Calificacion consultado.
-     *
+     * Modifica la informacion de una calificacion ingresada por parametro.
+     * @param solicitudId - Id de la solicitud del servicio.
+     * @param serviciosId - Id del servicio al que pertenece la calificacion.
+     * @param calificacionEntity - Entidad con los cambios.
+     * @return calificacion con los cambios actualizados en la BD.
      */
-    public CalificacionEntity getCalificacion(Long clientesId, Long calificacionId) 
-    {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar la calificacion con id = {0} del cliente con id = " + clientesId, calificacionId);
-        return persistence.find(clientesId, calificacionId);
-    }
-
-    /**
-     * Actualiza la información de una instancia de Calificacion.
-     *
-     * @param calificacionEntity Instancia de CalificacionEntity con los nuevos datos.
-     * @param clientesId id del Cliente el cual sera padre del Calificacion actualizado.
-     * @return Instancia de CalificacionEntity con los datos actualizados.
-     *
-     */
-    public CalificacionEntity updateCalificacion(Long clientesId, CalificacionEntity calificacionEntity) 
-    {
-        LOGGER.log(Level.INFO, "Inicia proceso de actualizar la calificacion con id = {0} del cliente con id = " + clientesId, calificacionEntity.getId());
-        ClienteEntity clienteEntity = bookPersistence.find(clientesId);
-        calificacionEntity.setCliente(clienteEntity);
+    public CalificacionEntity updateCalificacion(Long solicitudId, Long serviciosId, CalificacionEntity calificacionEntity) {
+        LOGGER.log(Level.INFO, "Inicia proceso de actualizar el calificacion con id = {0} del servicio con id = " + serviciosId, calificacionEntity.getId());
+        //SolicitudEntity solicitud = solicitudPersistence.find(solicitudId);
+        ServicioEntity servicioEntity = servicioPersistence.find(solicitudId ,serviciosId );
+        calificacionEntity.setServicio(servicioEntity);
         persistence.update(calificacionEntity);
-        LOGGER.log(Level.INFO, "Termina proceso de actualizar la calificacion con id = {0} del cliente con id = " + clientesId, calificacionEntity.getId());
+        LOGGER.log(Level.INFO, "Termina proceso de actualizar el calificacion con id = {0} del servicio con id = " + serviciosId, calificacionEntity.getId());
         return calificacionEntity;
     }
-
+    
     /**
-     * Elimina una instancia de Calificacion de la base de datos.
-     *
-     * @param calificacionId Identificador de la instancia a eliminar.
-     * @param clientesId id del Cliente el cual es padre del Calificacion.
-     * @throws BusinessLogicException Si la reseña no esta asociada al libro.
-     *
+     * Borra una calificacion buscada por el 'id' ingresado por parametro.
+     * @param serviciosId - Id del servicio al que pertenece la calificacion.
+     * @param calificacionId - Id de la calificacion a borrar.
+     * @throws BusinessLogicException - Si no existe el servicio o la calificacion.
      */
-    public void deleteCalificacion(Long clientesId, Long calificacionId) throws BusinessLogicException 
-    {
-        LOGGER.log(Level.INFO, "Inicia proceso de borrar la calificacion con id = {0} del cliente con id = " + clientesId, calificacionId);
-        CalificacionEntity old = getCalificacion(clientesId, calificacionId);
+    public void deleteCalificacion(Long serviciosId, Long calificacionId) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "Inicia proceso de borrar el calificacion con id = {0} del servicio con id = " + serviciosId, calificacionId);
+        CalificacionEntity old = getCalificacion(serviciosId, calificacionId);
         if (old == null) {
-            throw new BusinessLogicException("La calificacion con id = " + calificacionId + " no esta asociado a el cliente con id = " + clientesId);
+            throw new BusinessLogicException("El calificacion con id = " + calificacionId + " no esta asociado a el servicio con id = " + serviciosId);
         }
         persistence.delete(old.getId());
-        LOGGER.log(Level.INFO, "Termina proceso de borrar la calificacion con id = {0} del cliente con id = " + clientesId, calificacionId);
-    }
+        LOGGER.log(Level.INFO, "Termina proceso de borrar el calificacion con id = {0} del servicio con id = " + serviciosId, calificacionId);
+    }    
 }

@@ -14,7 +14,7 @@ import java.io.Serializable;
  */
 public class ReferenciaDTO implements Serializable {
 
-   
+   private Long id;
     private String empresa;
     private String nombreRemitente;
     private Long idRemitente;
@@ -38,6 +38,15 @@ public class ReferenciaDTO implements Serializable {
         }
     }
 
+       public Long getId()
+    {
+        return id;
+    }
+    
+    public void setId(Long id){
+        this.id=id;
+    }
+    
     public String getEmpresa() {
         return empresa;
     }

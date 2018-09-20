@@ -17,12 +17,12 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 public class CalificacionDTO implements Serializable
 {
     private Long id;
-    private Double calificacion;
     private String comentario;
+    private Double calificacion;
     
-    private ClienteDTO cliente;
+    private ServicioDTO servicio;
     
-    public CalificacionDTO (){}
+    public CalificacionDTO(){}
     
     public CalificacionDTO(CalificacionEntity calificacionEntity)
     {
@@ -31,40 +31,45 @@ public class CalificacionDTO implements Serializable
             this.id = calificacionEntity.getId();
             this.calificacion = calificacionEntity.getCalificacion();
             this.comentario = calificacionEntity.getComentario();
-            if(calificacionEntity.getCliente() != null)
-                this.cliente = new ClienteDTO(calificacionEntity.getCliente());
+            if(calificacionEntity.getServicio() != null)            
+                this.servicio = new ServicioDTO(calificacionEntity.getServicio());
             else
-                this.cliente = null;
+                this.servicio = null;           
         }
-    }
-    
-    public CalificacionEntity toEntity() {
-        CalificacionEntity calificacionEntity = new CalificacionEntity();
-        calificacionEntity.setId(this.id);
-        calificacionEntity.setCalificacion(this.calificacion);
-        calificacionEntity.setComentario(this.comentario);
-        if (this.cliente != null) 
-            calificacionEntity.setCliente(this.cliente.toEntity());
-        
-        return calificacionEntity;
     }
 
     public Long getId() {return id;}
 
     public void setId(Long id) {this.id = id;}
 
-    public Double getCalificacion() {return calificacion;}
-
-    public void setCalificacion(Double calificacion) {this.calificacion = calificacion;}
-
     public String getComentario() {return comentario;}
 
     public void setComentario(String comentario) {this.comentario = comentario;}
 
-    public ClienteDTO getCliente() {return cliente;}
+    public Double getCalificacion() {return calificacion;}
 
-    public void setCliente(ClienteDTO cliente) {this.cliente = cliente;}   
+    public void setCalificacion(Double calificacion) {this.calificacion = calificacion;}
+
+    public ServicioDTO getServicio() {return servicio;}
+
+    public void setServicio(ServicioDTO servicio) {this.servicio = servicio;}      
+    
+    public CalificacionEntity toEntity() 
+    {
+        CalificacionEntity calificacionEntity = new CalificacionEntity();
+        calificacionEntity.setId(this.id);
+        calificacionEntity.setComentario(this.comentario);
+        calificacionEntity.setCalificacion(this.calificacion);
+        if (this.servicio != null) 
+            calificacionEntity.setServicio(this.servicio.toEntity());
+        
+        return calificacionEntity;
+    }
     
     @Override
-    public String toString() {return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);}
+    public String toString() 
+    {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+    } 
+    
 }

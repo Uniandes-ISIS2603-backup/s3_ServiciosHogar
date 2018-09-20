@@ -5,10 +5,11 @@
  */
 package co.edu.uniandes.csw.servicioshogar.test.logic;
 
+import co.edu.uniandes.csw.servicioshogar.ejb.ClienteLogic;
+import co.edu.uniandes.csw.servicioshogar.entities.ClienteEntity;
 import co.edu.uniandes.csw.servicioshogar.entities.SolicitudEntity;
-import co.edu.uniandes.csw.servicioshogar.ejb.SolicitudLogic;
 import co.edu.uniandes.csw.servicioshogar.exceptions.BusinessLogicException;
-import co.edu.uniandes.csw.servicioshogar.persistence.SolicitudPersistence;
+import co.edu.uniandes.csw.servicioshogar.persistence.ClientePersistence;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -28,38 +29,42 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 /**
  *
- * @author Steven Tarazona <ys.tarazona@uniandes.edu.co>
+ * @author Carlos Eduardo Robles
  */
 @RunWith(Arquillian.class)
-public class SolicitudLogicTest {
+public class ClienteLogicTest 
+{
     private PodamFactory factory = new PodamFactoryImpl();
-
+    
     @Inject
-    private SolicitudLogic solicitudLogic;
+    private ClienteLogic clienteLogic;
 
     @PersistenceContext
     private EntityManager em;
-
+    
     @Inject
     private UserTransaction utx;
-
-    private List<SolicitudEntity> data = new ArrayList<SolicitudEntity>();
-
+    
+    private List<ClienteEntity> data = new ArrayList<ClienteEntity>();
+    
+    private List<SolicitudEntity> dataSolicitud = new ArrayList<SolicitudEntity>();
+    
     /**
      * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
      * El jar contiene las clases, el descriptor de la base de datos y el
      * archivo beans.xml para resolver la inyección de dependencias.
      */
     @Deployment
-    public static JavaArchive createDeployment() {
+    public static JavaArchive createDeployment() 
+    {
         return ShrinkWrap.create(JavaArchive.class)
-                .addPackage(SolicitudEntity.class.getPackage())
-                .addPackage(SolicitudLogic.class.getPackage())
-                .addPackage(SolicitudPersistence.class.getPackage())
+                .addPackage(ClienteEntity.class.getPackage())
+                .addPackage(ClienteLogic.class.getPackage())
+                .addPackage(ClientePersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
-
+    
     /**
      * Configuración inicial de la prueba.
      */
@@ -79,53 +84,58 @@ public class SolicitudLogicTest {
             }
         }
     }
-
+    
     /**
      * Limpia las tablas que están implicadas en la prueba.
      */
-    private void clearData() {
-        em.createQuery("delete from SolicitudEntity").executeUpdate();
-        em.createQuery("delete from EditorialEntity").executeUpdate();
-        em.createQuery("delete from AuthorEntity").executeUpdate();
-    }
-
+    private void clearData() {em.createQuery("delete from ClienteEntity").executeUpdate();}
+    
     /**
      * Inserta los datos iniciales para el correcto funcionamiento de las
      * pruebas.
      */
-    private void insertData() {
-        for (int i = 0; i < 3; i++) {
-            SolicitudEntity entity = factory.manufacturePojo(SolicitudEntity.class);
-
+    private void insertData() 
+    {
+        for (int i = 0; i < 3; i++) 
+        {
+            ClienteEntity entity = factory.manufacturePojo(ClienteEntity.class);
+            entity.setSolicitudes(dataSolicitud);
             em.persist(entity);
             data.add(entity);
         }
     }
-
+    
     /**
-     * Prueba para crear un Solicitud
+     * Prueba para crear un Cliente.
+     *
+     * @throws co.edu.uniandes.csw.bookstore.exceptions.BusinessLogicException
      */
     @Test
-    public void createSolicitudTest(){
-        SolicitudEntity newEntity = factory.manufacturePojo(SolicitudEntity.class);
-        SolicitudEntity result = solicitudLogic.createSolicitud(newEntity);
+    public void createClienteTest() throws BusinessLogicException {
+        ClienteEntity newEntity = factory.manufacturePojo(ClienteEntity.class);
+        newEntity.setSolicitudes(dataSolicitud);
+        ClienteEntity result = clienteLogic.crearCliente(newEntity);
         Assert.assertNotNull(result);
-        SolicitudEntity entity = em.find(SolicitudEntity.class, result.getId());
+        ClienteEntity entity = em.find(ClienteEntity.class, result.getId());
         Assert.assertEquals(newEntity.getId(), entity.getId());
+        Assert.assertEquals(newEntity.getCorreo(), entity.getCorreo());
         Assert.assertEquals(newEntity.getDireccion(), entity.getDireccion());
-        Assert.assertEquals(newEntity.getFecha(), entity.getFecha());
+        Assert.assertEquals(newEntity.getNombre(), entity.getNombre());
     }
     
     /**
-     * Prueba para consultar la lista de Solicitudes.
+     * Prueba para consultar la lista de Clientes.
+     *
+     * @throws co.edu.uniandes.csw.bookstore.exceptions.BusinessLogicException
      */
     @Test
-    public void getSolicitudesTest() {
-        List<SolicitudEntity> list = solicitudLogic.getSolicitudes();
+    public void getClientesTest() throws BusinessLogicException 
+    {
+        List<ClienteEntity> list = clienteLogic.getClientes();
         Assert.assertEquals(data.size(), list.size());
-        for (SolicitudEntity entity : list) {
+        for (ClienteEntity entity : list) {
             boolean found = false;
-            for (SolicitudEntity storedEntity : data) {
+            for (ClienteEntity storedEntity : data) {
                 if (entity.getId().equals(storedEntity.getId())) {
                     found = true;
                 }
@@ -133,43 +143,52 @@ public class SolicitudLogicTest {
             Assert.assertTrue(found);
         }
     }
-
+    
     /**
-     * Prueba para consultar un Solicitud.
+     * Prueba para consultar un Cliente.
      */
     @Test
-    public void getSolicitudTest() {
-        SolicitudEntity entity = data.get(0);
-        SolicitudEntity resultEntity = solicitudLogic.getSolicitud(entity.getId());
+    public void getClienteTest() {
+        ClienteEntity entity = data.get(0);
+        ClienteEntity resultEntity = clienteLogic.getCliente(entity.getId());
         Assert.assertNotNull(resultEntity);
         Assert.assertEquals(entity.getId(), resultEntity.getId());
+        Assert.assertEquals(entity.getCorreo(), resultEntity.getCorreo());
         Assert.assertEquals(entity.getDireccion(), resultEntity.getDireccion());
-        Assert.assertEquals(entity.getFecha(), resultEntity.getFecha());
+        Assert.assertEquals(entity.getNombre(), resultEntity.getNombre());
     }
-
+    
     /**
-     * Prueba para actualizar un Solicitud.
+     * Prueba para actualizar un Cliente.
      */
     @Test
-    public void updateSolicitudTest(){
-        SolicitudEntity entity = data.get(0);
-        SolicitudEntity pojoEntity = factory.manufacturePojo(SolicitudEntity.class);
+    public void updateClienteTest() {
+        ClienteEntity entity = data.get(0);
+        ClienteEntity pojoEntity = factory.manufacturePojo(ClienteEntity.class);
+
         pojoEntity.setId(entity.getId());
-        solicitudLogic.updateSolicitud(pojoEntity.getId(), pojoEntity);
-        SolicitudEntity resp = em.find(SolicitudEntity.class, entity.getId());
-        Assert.assertEquals(pojoEntity.getId(), resp.getId());
-        Assert.assertEquals(pojoEntity.getDireccion(), resp.getDireccion());
-        Assert.assertEquals(pojoEntity.getFecha(), resp.getFecha());
-    }
 
+        clienteLogic.modificarCliente(data.get(1).getId(), pojoEntity);
+
+        ClienteEntity resp = em.find(ClienteEntity.class, entity.getId());
+
+        Assert.assertEquals(pojoEntity.getId(), resp.getId());
+        Assert.assertEquals(pojoEntity.getCorreo(), resp.getCorreo());
+        Assert.assertEquals(pojoEntity.getDireccion(), resp.getDireccion());
+        Assert.assertEquals(pojoEntity.getNombre(), resp.getNombre());
+    }
+    
     /**
-     * Prueba para eliminar un Solicitud.
+     * Prueba para eliminar un Cliente.
+     *
+     * @throws co.edu.uniandes.csw.bookstore.exceptions.BusinessLogicException
      */
     @Test
-    public void deleteSolicitudTest(){
-        SolicitudEntity entity = data.get(0);
-        solicitudLogic.deleteSolicitud(entity.getId());
-        SolicitudEntity deleted = em.find(SolicitudEntity.class, entity.getId());
+    public void deleteClienteTest() throws BusinessLogicException 
+    {
+        ClienteEntity entity = data.get(0);
+        clienteLogic.deleteCliente(entity.getId());
+        ClienteEntity deleted = em.find(ClienteEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }
 }

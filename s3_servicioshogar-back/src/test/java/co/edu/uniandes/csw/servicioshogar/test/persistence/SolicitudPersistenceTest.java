@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.servicioshogar.test.persistence;
 
 import co.edu.uniandes.csw.servicioshogar.entities.SolicitudEntity;
+import co.edu.uniandes.csw.servicioshogar.entities.ClienteEntity;
 import co.edu.uniandes.csw.servicioshogar.persistence.SolicitudPersistence;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,6 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
-import junit.framework.TestCase;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -30,7 +30,7 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  * @author Steven Tarazona <ys.tarazona@uniandes.edu.co>
  */
 @RunWith(Arquillian.class)
-public class SolicitudPersistenceTest{
+public class SolicitudPersistenceTest {
     @Inject
     private SolicitudPersistence solicitudPersistence;
 
@@ -41,6 +41,8 @@ public class SolicitudPersistenceTest{
     UserTransaction utx;
 
     private List<SolicitudEntity> data = new ArrayList<SolicitudEntity>();
+	
+    private List<ClienteEntity> dataCliente = new ArrayList<ClienteEntity>();
 
     /**
      * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
@@ -82,6 +84,7 @@ public class SolicitudPersistenceTest{
      */
     private void clearData() {
         em.createQuery("delete from SolicitudEntity").executeUpdate();
+        em.createQuery("delete from ClienteEntity").executeUpdate();
     }
 
     /**
@@ -91,8 +94,15 @@ public class SolicitudPersistenceTest{
     private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
+            ClienteEntity entity = factory.manufacturePojo(ClienteEntity.class);
+            em.persist(entity);
+            dataCliente.add(entity);
+        }
+        for (int i = 0; i < 3; i++) {
             SolicitudEntity entity = factory.manufacturePojo(SolicitudEntity.class);
-
+            if (i == 0) {
+                entity.setCliente(dataCliente.get(0));
+            }
             em.persist(entity);
             data.add(entity);
         }
@@ -103,6 +113,7 @@ public class SolicitudPersistenceTest{
      */
     @Test
     public void createSolicitudTest() {
+
         PodamFactory factory = new PodamFactoryImpl();
         SolicitudEntity newEntity = factory.manufacturePojo(SolicitudEntity.class);
         SolicitudEntity result = solicitudPersistence.create(newEntity);
@@ -116,33 +127,15 @@ public class SolicitudPersistenceTest{
     }
 
     /**
-     * Prueba para consultar la lista de Solicitudes.
-     */
-    @Test
-    public void getSolicitudesTest() {
-        List<SolicitudEntity> list = solicitudPersistence.findAll();
-        Assert.assertEquals(data.size(), list.size());
-        for (SolicitudEntity ent : list) {
-            boolean found = false;
-            for (SolicitudEntity entity : data) {
-                if (ent.getId().equals(entity.getId())) {
-                    found = true;
-                }
-            }
-            Assert.assertTrue(found);
-        }
-    }
-
-    /**
      * Prueba para consultar un Solicitud.
      */
     @Test
     public void getSolicitudTest() {
         SolicitudEntity entity = data.get(0);
-        SolicitudEntity newEntity = solicitudPersistence.find(entity.getId());
+        SolicitudEntity newEntity = solicitudPersistence.find(dataCliente.get(0).getId(), entity.getId());
         Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getDireccion(), newEntity.getDireccion());
-        Assert.assertEquals(entity.getFecha(), newEntity.getFecha());;
+        Assert.assertEquals(entity.getFecha(), newEntity.getFecha());
     }
 
     /**
