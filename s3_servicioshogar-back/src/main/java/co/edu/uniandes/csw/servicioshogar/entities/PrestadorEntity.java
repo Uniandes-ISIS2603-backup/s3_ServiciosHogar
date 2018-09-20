@@ -14,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import uk.co.jemos.podam.common.PodamExclude;
@@ -35,7 +36,17 @@ public class PrestadorEntity extends BaseEntity implements Serializable {
     @PodamExclude
     @OneToMany(mappedBy = "prestador", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<HabilidadEntity> habilidades = new ArrayList<HabilidadEntity>();
+    
+    @OneToOne(mappedBy = "prestador")
+    private HojaDeVidaEntity hojaDeVida;
 
+    public void setHojaDeVida(HojaDeVidaEntity hojaDeVida) {
+        this.hojaDeVida = hojaDeVida;
+    }
+
+    public HojaDeVidaEntity getHojaDeVida() {
+        return hojaDeVida;
+    }
     /**
      * Modifica la cedula del prestador
      * @param cedula the cedula to set
