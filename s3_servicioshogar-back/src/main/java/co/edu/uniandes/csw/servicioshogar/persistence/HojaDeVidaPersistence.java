@@ -40,10 +40,10 @@ public class HojaDeVidaPersistence {
         return query.getResultList();
     }
    
-    public HojaDeVidaEntity find(Long telPrestador)
+    public HojaDeVidaEntity find(Long id)
     {
-        LOGGER.log(Level.INFO, "Consultando hoja de vida del prestador con telefono={0}", telPrestador);
-        return em.find(HojaDeVidaEntity.class, telPrestador);
+        LOGGER.log(Level.INFO, "Consultando hoja de vida del prestador con id={0}", id);
+        return em.find(HojaDeVidaEntity.class, id);
     }
     
     /**
