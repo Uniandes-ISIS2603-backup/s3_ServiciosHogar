@@ -70,11 +70,11 @@ public class HojaDeVidaResource {
     public HojaDeVidaDTO getHojaDeVida(@PathParam("id") Long id) throws WebApplicationException
     {
         LOGGER.log(Level.INFO, "HojaDeVidaResource getHojaDeVida: input: {0}", id);
-        HojaDeVidaEntity clienteEntity = hojaDeVidaLogic.getHojaDeVida(id);
-        if (clienteEntity == null)
+        HojaDeVidaEntity hojaDeVidaEntity = hojaDeVidaLogic.getHojaDeVida(id);
+        if (hojaDeVidaEntity == null)
             throw new WebApplicationException("El recurso /hojaDeVida/" + id + " no existe.", 404);
         
-        HojaDeVidaDTO detailDTO = new HojaDeVidaDTO(clienteEntity);
+        HojaDeVidaDTO detailDTO = new HojaDeVidaDTO(hojaDeVidaEntity);
         LOGGER.log(Level.INFO, "HojaDeVidaResource getHojaDeVida: {0}", detailDTO.toString());
         return detailDTO;
     }

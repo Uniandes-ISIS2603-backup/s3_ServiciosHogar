@@ -42,7 +42,7 @@ public class HojaDeVidaDetailDTO extends HojaDeVidaDTO implements Serializable{
             for (ReferenciaDTO dtoReview : getReferencias()) 
                 referenciasEntity.add(dtoReview.toEntity());
             
-            hojaDeVidaEntity.setCalificaciones(referenciasEntity);
+            hojaDeVidaEntity.setReferencias(referenciasEntity);
         }        
         return hojaDeVidaEntity;
     }

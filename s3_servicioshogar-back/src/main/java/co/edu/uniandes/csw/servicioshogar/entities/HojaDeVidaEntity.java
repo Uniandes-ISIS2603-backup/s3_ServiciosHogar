@@ -105,7 +105,7 @@ public class HojaDeVidaEntity extends BaseEntity implements Serializable{
        public List<ReferenciaEntity> getReferencias() {return referencias;
     }
 
-    public void setCalificaciones(List<ReferenciaEntity> referencias) {this.referencias = referencias;}
+    public void setReferencias(List<ReferenciaEntity> referencias) {this.referencias = referencias;}
     
   
 }
