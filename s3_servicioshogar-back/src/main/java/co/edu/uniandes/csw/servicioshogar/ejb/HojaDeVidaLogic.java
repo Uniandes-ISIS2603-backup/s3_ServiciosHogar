@@ -50,12 +50,12 @@ public class HojaDeVidaLogic {
     }
 
     
-    public HojaDeVidaEntity getHojaDeVida(Long telPrestador) {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar hoja de vida asociada con telefono= {0}", telPrestador);
-        HojaDeVidaEntity hojaDeVidaEntity = persistence.find(telPrestador);
+    public HojaDeVidaEntity getHojaDeVida(Long id) {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar hoja de vida asociada con id= {0}", id);
+        HojaDeVidaEntity hojaDeVidaEntity = persistence.find(id);
         if (hojaDeVidaEntity == null)
-            LOGGER.log(Level.SEVERE, "La hoja de vida asociada con telefono= {0}", telPrestador);
-        LOGGER.log(Level.INFO, "Termina proceso de consultar hoja de vida asociada con telefono= {0}", telPrestador);
+            LOGGER.log(Level.SEVERE, "La hoja de vida asociada con telefono= {0}", id);
+        LOGGER.log(Level.INFO, "Termina proceso de consultar hoja de vida asociada con telefono= {0}", id);
         return hojaDeVidaEntity;
     }
 

@@ -62,6 +62,7 @@ public class HojaDeVidaDTO implements Serializable{
     public HojaDeVidaDTO(HojaDeVidaEntity hojaDeVidaEntity){
         if(hojaDeVidaEntity!=null)
         {
+            this.id=hojaDeVidaEntity.getId();
             this.trayectoria = hojaDeVidaEntity.getTrayectoria();
             this.fechaNacimiento = hojaDeVidaEntity.getFechaNacimiento();
             this.email = hojaDeVidaEntity.getEmail();
@@ -74,6 +75,7 @@ public class HojaDeVidaDTO implements Serializable{
     public HojaDeVidaEntity toEntity(){
         HojaDeVidaEntity hojaDeVida = new HojaDeVidaEntity();
         
+            hojaDeVida.setId(this.id);
             hojaDeVida.setTrayectoria(this.trayectoria);
             hojaDeVida.setFechaNacimiento(this.fechaNacimiento);
             hojaDeVida.setEmail(this.email);
