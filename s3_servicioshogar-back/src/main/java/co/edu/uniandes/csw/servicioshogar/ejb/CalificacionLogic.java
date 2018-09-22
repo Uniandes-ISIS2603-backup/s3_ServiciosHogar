@@ -55,16 +55,20 @@ public class CalificacionLogic
      * @return Entidad persistida.
      * @throws BusinessLogicException - Si la calificacion ya existe
      */
-    public CalificacionEntity createCalificacion(Long solicitudId, Long serviciosId, CalificacionEntity calificacionEntity) throws BusinessLogicException 
+    public CalificacionEntity createCalificacion(Long solicitudesId, Long serviciosId, CalificacionEntity calificacionEntity) throws BusinessLogicException 
     {
-        LOGGER.log(Level.INFO, "Inicia proceso de crear calificacion");
-        //SolicitudEntity solicitud = solicitudPersistence.find(solicitudId);
-        ServicioEntity servicio = servicioPersistence.find(solicitudId ,serviciosId );
+        LOGGER.log(Level.INFO, "Inicia proceso de crear calificacion");        
+        ServicioEntity servicio = servicioPersistence.find(solicitudesId ,serviciosId );
         if(servicio.getCalificacion() != null)
-            throw new BusinessLogicException("El servicio con id = " + serviciosId + "ya tiene calificacion");
-        
-        calificacionEntity.setServicio(servicio);            
-        LOGGER.log(Level.INFO, "Termina proceso de creación del calificacion");        
+            throw new BusinessLogicException("El servicio con id = " + serviciosId + " ya tiene calificacion");
+        else
+        {        
+            calificacionEntity.setServicio(servicio);            
+            LOGGER.log(Level.INFO, "Termina proceso de creación del calificacion"); 
+        }
+        //ServicioEntity servicio = servicioPersistence.find(solicitudesId ,serviciosId );
+        //calificacionEntity.setServicio(servicio);
+        //LOGGER.log(Level.INFO, "Termina proceso de creación del calificacion");
         return persistence.create(calificacionEntity);
     }
     
@@ -78,19 +82,19 @@ public class CalificacionLogic
     {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar el calificacion con id = {0} del servicio con id = " + serviciosId, calificacionId);
         return persistence.find(serviciosId, calificacionId);
+        //return persistence.findAll(serviciosId);
     }
 
     /**
      * Modifica la informacion de una calificacion ingresada por parametro.
-     * @param solicitudId - Id de la solicitud del servicio.
+     * @param solicitudesId - Id de la solicitud del servicio.
      * @param serviciosId - Id del servicio al que pertenece la calificacion.
      * @param calificacionEntity - Entidad con los cambios.
      * @return calificacion con los cambios actualizados en la BD.
      */
-    public CalificacionEntity updateCalificacion(Long solicitudId, Long serviciosId, CalificacionEntity calificacionEntity) {
+    public CalificacionEntity updateCalificacion(Long solicitudesId, Long serviciosId, CalificacionEntity calificacionEntity) {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar el calificacion con id = {0} del servicio con id = " + serviciosId, calificacionEntity.getId());
-        //SolicitudEntity solicitud = solicitudPersistence.find(solicitudId);
-        ServicioEntity servicioEntity = servicioPersistence.find(solicitudId ,serviciosId );
+        ServicioEntity servicioEntity = servicioPersistence.find(solicitudesId ,serviciosId );
         calificacionEntity.setServicio(servicioEntity);
         persistence.update(calificacionEntity);
         LOGGER.log(Level.INFO, "Termina proceso de actualizar el calificacion con id = {0} del servicio con id = " + serviciosId, calificacionEntity.getId());

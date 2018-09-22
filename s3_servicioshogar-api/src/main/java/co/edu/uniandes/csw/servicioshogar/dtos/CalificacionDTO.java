@@ -31,10 +31,10 @@ public class CalificacionDTO implements Serializable
             this.id = calificacionEntity.getId();
             this.calificacion = calificacionEntity.getCalificacion();
             this.comentario = calificacionEntity.getComentario();
-            if(calificacionEntity.getServicio() != null)            
+            /*if(calificacionEntity.getServicio() != null)            
                 this.servicio = new ServicioDTO(calificacionEntity.getServicio());
             else
-                this.servicio = null;           
+                this.servicio = null;*/   
         }
     }
 
@@ -60,9 +60,9 @@ public class CalificacionDTO implements Serializable
         calificacionEntity.setId(this.id);
         calificacionEntity.setComentario(this.comentario);
         calificacionEntity.setCalificacion(this.calificacion);
-        if (this.servicio != null) 
+        /*if (this.servicio != null) 
             calificacionEntity.setServicio(this.servicio.toEntity());
-        
+        */
         return calificacionEntity;
     }
     
