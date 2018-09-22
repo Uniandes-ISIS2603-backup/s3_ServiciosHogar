@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
@@ -27,11 +28,10 @@ import uk.co.jemos.podam.common.PodamExclude;
 public class SolicitudEntity extends BaseEntity implements Serializable{
     
     private String direccion;
-    @Temporal(TemporalType.DATE)
     private Date fecha;
     
     @PodamExclude
-    @OneToMany(mappedBy = "solicitud", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @OneToMany(mappedBy = "solicitud", fetch = FetchType.LAZY,cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ServicioEntity> servicios = new ArrayList<ServicioEntity>();
     
     @PodamExclude

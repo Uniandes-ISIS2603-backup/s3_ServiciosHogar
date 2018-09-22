@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.servicioshogar.persistence;
 
 import co.edu.uniandes.csw.servicioshogar.entities.CalificacionEntity;
+import co.edu.uniandes.csw.servicioshogar.entities.HabilidadEntity;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,11 +22,22 @@ import javax.persistence.TypedQuery;
 @Stateless
 public class CalificacionPersistence 
 {
+    //------------------------------------------
+    //-----------------Atributos----------------
+    //------------------------------------------
     private static final Logger LOGGER = Logger.getLogger(CalificacionPersistence.class.getName());
 
     @PersistenceContext(unitName = "SechPU")
     protected EntityManager em;
     
+    //------------------------------------------
+    //------------------Metodos-----------------
+    //------------------------------------------
+    /**
+     * Metodo para persistir la entidad en la BD.
+     * @param calificacionEntity - Objeto Calificacion que se creara en la BD.
+     * @return la entidad creada(calificacion) con un id dado por la BD.
+     */
     public CalificacionEntity create(CalificacionEntity calificacionEntity)
     {
         LOGGER.log(Level.INFO, "Creando un calificacion nuevo");
@@ -34,12 +46,21 @@ public class CalificacionPersistence
         return calificacionEntity;
     }
     
+    /**
+     * Modifica una calificacion identificada con el 'id' ingresado por parametro
+     * @param calificacionEntity - Calificacion que viene con los cambios.
+     * @return calificacionEntity modificada.
+     */
     public CalificacionEntity update(CalificacionEntity calificacionEntity) 
     {
         LOGGER.log(Level.INFO, "Actualizando calificacion con id = {0}", calificacionEntity.getId());
         return em.merge(calificacionEntity);
     }
     
+    /**
+     * Borra una calificacion identificada con el 'id' ingresado por parametro en la BD.
+     * @param calificacionId - Id de la calificacion a borrar. 
+     */
     public void delete(Long calificacionId) 
     {
         LOGGER.log(Level.INFO, "Borrando calificacion con id = {0}", calificacionId);
@@ -48,6 +69,21 @@ public class CalificacionPersistence
         LOGGER.log(Level.INFO, "Saliendo de borrar El calificacion con id = {0}", calificacionId);
     }
     
+    public CalificacionEntity findAll(Long serviciosId)
+    {
+        LOGGER.log(Level.INFO, "Consultando todas las calificaciones");
+        
+        TypedQuery query = em.createQuery("select u from CalificacionEntity u where (u.servicio.id = :servicioid)", CalificacionEntity.class);
+        query.setParameter("servicioid", serviciosId);
+        return (CalificacionEntity) query.getResultList().get(0);
+    }
+    
+    /**
+     * Busca si existe una calificacion perteneciente al servicio con el 'serviciosId' ingresado por parametro
+     * @param serviciosId - Id del servicio al que pertenece la calificacion.
+     * @param calificacionId - Id de la calificacion a buscar en el servicio.
+     * @return CalificacionEntity encontrada.
+     */
     public CalificacionEntity find(Long serviciosId, Long calificacionId) 
     {
         LOGGER.log(Level.INFO, "Consultando la calificacion con id = {0} del servicio con id = " + serviciosId, calificacionId);
@@ -55,15 +91,15 @@ public class CalificacionPersistence
         q.setParameter("servicioid", serviciosId);
         q.setParameter("calificacionId", calificacionId);
         List<CalificacionEntity> results = q.getResultList();
-        CalificacionEntity review = null;
+        CalificacionEntity calificacion = null;
         if (results == null) {
-            review = null;
+            calificacion = null;
         } else if (results.isEmpty()) {
-            review = null;
+            calificacion = null;
         } else if (results.size() >= 1) {
-            review = results.get(0);
+            calificacion = results.get(0);
         }
         LOGGER.log(Level.INFO, "Saliendo de consultar la calificacion con id = {0} del libro con id =" + serviciosId, calificacionId);
-        return review;
+        return calificacion;
     }
 }

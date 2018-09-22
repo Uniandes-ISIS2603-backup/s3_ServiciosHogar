@@ -113,20 +113,20 @@ public class PrestadorResource {
     }
     
      @Path("{prestadorId: \\d+}/habilidades")
-    public Class<HabilidadResource> getReviewResource(@PathParam("prestadorId") Long prestadorId) {
+    public Class<HabilidadResource> getHabilidadResource(@PathParam("prestadorId") Long prestadorId) {
         if (prestadorLogic.getPrestador(prestadorId) == null) {
             throw new WebApplicationException("El recurso /prestadores/" + prestadorId + "/habilidades no existe.", 404);
         }
         return HabilidadResource.class;
     }
     
-//    @Path("{prestadorId: \\d+}/hojaDeVida")
-//    public Class<PrestadorHojaDeVidaResource> getBookAuthorsResource(@PathParam("prestadorId") Long prestadorId) {
-//        if (prestadorLogic.getPrestador(prestadorId) == null) {
-//            throw new WebApplicationException("El recurso /prestador/" + prestadorId + " no existe.", 404);
-//        }
-//        return PrestadorHojaDeVidaResource.class;
-//    }
+    @Path("{prestadorId: \\d+}/hojaDeVida")
+    public Class<PrestadorHojaDeVidaResource> getPrestadorHojaDeVidaResource(@PathParam("prestadorId") Long prestadorId) {
+        if (prestadorLogic.getPrestador(prestadorId) == null) {
+            throw new WebApplicationException("El recurso /prestador/" + prestadorId + " no existe.", 404);
+        }
+        return PrestadorHojaDeVidaResource.class;
+    }
     
     /**
      * Convierte una lista de entidades a DTO.

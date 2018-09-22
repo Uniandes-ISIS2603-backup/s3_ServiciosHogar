@@ -126,7 +126,8 @@ public class PrestadorDTO implements Serializable {
         prestadorEntity.setId(this.id);
         prestadorEntity.setNombre(this.nombre);
         prestadorEntity.setCedula(this.cedula);
-        prestadorEntity.setHojaDeVida(this.hojaDeVida.toEntity());
+        if(this.hojaDeVida != null)
+            prestadorEntity.setHojaDeVida(this.hojaDeVida.toEntity());
         return prestadorEntity;
     }
 

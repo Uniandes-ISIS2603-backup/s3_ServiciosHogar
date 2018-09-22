@@ -58,23 +58,25 @@ public class CalificacionResource
     @Path("{calificacionId: \\d+}")
     public CalificacionDTO getCalificacion(@PathParam("serviciosId") Long serviciosId, @PathParam("calificacionId") Long calificacionId) throws BusinessLogicException 
     {
+        System.out.println("Entro a get Calificacion");
         LOGGER.log(Level.INFO, "CalificacionResource getCalificacion: input: {0}", calificacionId);
         CalificacionEntity entity = calificacionLogic.getCalificacion(serviciosId, calificacionId);
+        System.out.println("Obtuvo la entiddad de calificacion");
         if (entity == null) 
             throw new WebApplicationException("El recurso /servicios/" + serviciosId + "/calificacion/" + calificacionId + " no existe.", 404);
         
         CalificacionDTO calificacionDTO = new CalificacionDTO(entity);
+        System.out.println("Creo DTO");
         LOGGER.log(Level.INFO, "CalificacionResource getCalificacion: output: {0}", calificacionDTO.toString());
+        System.out.println("Inserto Calificacion");
         return calificacionDTO;
     }
     
     @PUT
     @Path("{calificacionId: \\d+}")
-    public CalificacionDTO updateCalificacion(@PathParam("solicitudesId") Long solicitudesId, @PathParam("serviciosId") Long serviciosId, @PathParam("calificacionId") Long calificacionId, CalificacionDTO calificacion) throws BusinessLogicException 
+    public CalificacionDTO updateCalificacion(@PathParam("solicitudesId") Long solicitudesId,@PathParam("serviciosId") Long serviciosId, @PathParam("calificacionId") Long calificacionId, CalificacionDTO calificacion) throws BusinessLogicException 
     {
-                LOGGER.log(Level.INFO, "CalificacionResource updateCalificacion: input: serviciosId: {0} , calificacionId: {1} , calificacion:{2}", new Object[]{serviciosId, calificacionId, calificacion.toString()});
-        if (calificacionId.equals(calificacion.getId()))
-            throw new BusinessLogicException("Los ids del Review no coinciden.");
+        LOGGER.log(Level.INFO, "CalificacionResource updateCalificacion: input: serviciosId: {0} , calificacionId: {1} , calificacion:{2}", new Object[]{serviciosId, calificacionId, calificacion.toString()});
         
         CalificacionEntity entity = calificacionLogic.getCalificacion(serviciosId, calificacionId);
         if (entity == null)

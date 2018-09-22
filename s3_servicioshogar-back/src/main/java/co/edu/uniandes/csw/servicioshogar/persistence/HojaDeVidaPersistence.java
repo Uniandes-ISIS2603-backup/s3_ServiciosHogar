@@ -40,10 +40,10 @@ public class HojaDeVidaPersistence {
         return query.getResultList();
     }
    
-    public HojaDeVidaEntity find(Long telPrestador)
+    public HojaDeVidaEntity find(Long id)
     {
-        LOGGER.log(Level.INFO, "Consultando hoja de vida del prestador con telefono={0}", telPrestador);
-        return em.find(HojaDeVidaEntity.class, telPrestador);
+        LOGGER.log(Level.INFO, "Consultando hoja de vida del prestador con id={0}", id);
+        return em.find(HojaDeVidaEntity.class, id);
     }
     
     /**
@@ -55,7 +55,7 @@ public class HojaDeVidaPersistence {
     {
         LOGGER.log(Level.INFO, "Actualizando hojaDeVida con id = {0}", hojaDeVidaEntity.getId());
       
-        LOGGER.log(Level.INFO, "Saliendo de actualizar la hoja de vida asociada con telefono= {0}", hojaDeVidaEntity.getTelefono());
+        LOGGER.log(Level.INFO, "Saliendo de actualizar la hoja de vida asociada con id= {0}", hojaDeVidaEntity.getId());
         
      
         return em.merge(hojaDeVidaEntity);
@@ -96,4 +96,29 @@ public class HojaDeVidaPersistence {
         LOGGER.log(Level.INFO, "Saliendo de consultar hoja de vida por email ", email);
         return result;
     }
+    
+    public HojaDeVidaEntity findById(String id) 
+    {
+        LOGGER.log(Level.INFO, "Consultando hoja de vida por email ", id);
+        /*Se crea un query para buscar editoriales con el nombre que recibe el método como argumento.
+        ":name" es un placeholder que debe ser remplazado*/
+        TypedQuery query = em.createQuery("Select e From HojaDeVidaEntity e where e.id = :id", HojaDeVidaEntity.class);
+        /*Se remplaza el placeholder ":name" con el valor del argumento */
+        query = query.setParameter("id", id);
+        /*Se invoca el query se obtiene la lista resultado*/
+        List<HojaDeVidaEntity> sameEmail = query.getResultList();
+        HojaDeVidaEntity result;
+        
+        if (sameEmail == null)
+            result = null;
+        else if (sameEmail.isEmpty())
+            result = null;
+        else
+            result = sameEmail.get(0);
+        
+        LOGGER.log(Level.INFO, "Saliendo de consultar hoja de vida por id ", id);
+        return result;
+    }
+    
+    
 }

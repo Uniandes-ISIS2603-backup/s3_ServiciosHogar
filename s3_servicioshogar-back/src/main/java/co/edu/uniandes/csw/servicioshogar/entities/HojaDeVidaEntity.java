@@ -5,8 +5,13 @@
  */
 package co.edu.uniandes.csw.servicioshogar.entities;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
@@ -15,6 +20,15 @@ import javax.persistence.Entity;
 @Entity
 public class HojaDeVidaEntity extends BaseEntity implements Serializable{
     
+    
+    @OneToOne
+    private PrestadorEntity prestador;
+    
+    
+    @PodamExclude
+    @OneToMany(mappedBy = "hojaDeVida")
+    private List<ReferenciaEntity> referencias = new ArrayList<ReferenciaEntity>();
+    
         /**
      * Atributo que representa la trayectoria (experiencia) del prestador.
      */
@@ -22,7 +36,7 @@ public class HojaDeVidaEntity extends BaseEntity implements Serializable{
     /**
      * Atributo que representa la fecha de nacimiento del prestador.
      */
-    private Date fechaNacimiento;
+    private String fechaNacimiento;
     /**
      * Atributo que representa el email del prestador.
      */
@@ -48,11 +62,11 @@ public class HojaDeVidaEntity extends BaseEntity implements Serializable{
         this.trayectoria = trayectoria;
     }
 
-    public Date getFechaNacimiento() {
+    public String getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(Date fechaNacimiento) {
+    public void setFechaNacimiento(String fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
@@ -87,6 +101,11 @@ public class HojaDeVidaEntity extends BaseEntity implements Serializable{
     public void setFormacion(String formacion) {
         this.formacion = formacion;
     }
+   
+       public List<ReferenciaEntity> getReferencias() {return referencias;
+    }
+
+    public void setReferencias(List<ReferenciaEntity> referencias) {this.referencias = referencias;}
     
   
 }
