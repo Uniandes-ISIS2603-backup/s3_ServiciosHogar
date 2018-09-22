@@ -37,6 +37,7 @@ public class PrestadorEntity extends BaseEntity implements Serializable {
     @OneToMany(mappedBy = "prestador", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<HabilidadEntity> habilidades = new ArrayList<HabilidadEntity>();
     
+    @PodamExclude
     @OneToOne(mappedBy = "prestador")
     private HojaDeVidaEntity hojaDeVida;
 
