@@ -44,24 +44,39 @@ public class TarjetaCreditoPersistence {
     
     /**
      * Devuelve una lista con todas las tarjetas de credito en la BD.
+     * @param clienteId 
      * @return una lista con todas las tarjetas de credito que se encuentren en la BD.
      */
-    public List<TarjetaCreditoEntity> findAll()
+    public TarjetaCreditoEntity findAll(Long clienteId)
     {
         LOGGER.log(Level.INFO, "Consultando todas las tarjetas creditos");
         /*Se crea un query para buscar todas las tarjetas de credito en la base de datos.*/
         TypedQuery query = em.createQuery("select u from TarjetaCreditoEntity u", TarjetaCreditoEntity.class);
-        return query.getResultList();
+        query.setParameter("clienteId", clienteId);
+        return (TarjetaCreditoEntity) query.getResultList().get(0);
     }
     
     /**
      * Devuelve una tarjeta de crédito identificada por el parametro ingresado.
      * @param tarjetaId. Titular de la tarjeta de credito.
+     * @param clienteId 
      * @return TarjetaCreditoEntity.
      */
-    public TarjetaCreditoEntity find(Long tarjetaId)
+    public TarjetaCreditoEntity find(Long tarjetaId, Long clienteId)
     {
-        LOGGER.log(Level.INFO, "", tarjetaId);
+        LOGGER.log(Level.INFO, "" + clienteId, tarjetaId);
+        TypedQuery<TarjetaCreditoEntity> q = em.createQuery("select p from TarjetaCreditoEntity p where (p.cliente.id = :clienteId) and (p.id = :tarjetaId)", TarjetaCreditoEntity.class);
+        q.setParameter("clienteId", clienteId);
+        q.setParameter("tarjetaId", tarjetaId);
+        List<TarjetaCreditoEntity> results = q.getResultList();
+        TarjetaCreditoEntity tarjeta = null;
+        if(results == null)
+        { tarjeta = null;}
+        else if(results.isEmpty())
+        {tarjeta = null;}
+        else if(results.size() >= 1)
+        {tarjeta = results.get(0);}
+        LOGGER.log(Level.INFO, "Saliendo de consultar la tarjeta con id = {0} del cliente con id =" + clienteId, tarjetaId);
         return em.find(TarjetaCreditoEntity.class, tarjetaId);
     }
     
@@ -73,7 +88,6 @@ public class TarjetaCreditoPersistence {
     public TarjetaCreditoEntity update(TarjetaCreditoEntity tarjetaEntity)
     {
         LOGGER.log(Level.INFO, "Actualizando tarjeta de credito identificada por un titular", tarjetaEntity.getTitular());
-        LOGGER.log(Level.INFO, "Saliendo de actualizar la tarjeta de credito", tarjetaEntity.getTitular());
         return em.merge(tarjetaEntity);
     }
     
@@ -83,10 +97,10 @@ public class TarjetaCreditoPersistence {
      */
     public void delete(Long tarjetaId)
     {
-        LOGGER.log(Level.INFO, "Borrando cliente con id = {0}", tarjetaId);
+        LOGGER.log(Level.INFO, "Borrando tarjeta con id = {0}", tarjetaId);
         TarjetaCreditoEntity entity = em.find(TarjetaCreditoEntity.class, tarjetaId);
         em.remove(entity);
-        LOGGER.log(Level.INFO, "Saliendo de borrar el cliente con id = {0}", tarjetaId);
+        LOGGER.log(Level.INFO, "Saliendo de borrar la tarjeta con id = {0}", tarjetaId);
     }
     
     /**
