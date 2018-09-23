@@ -9,6 +9,8 @@ import co.edu.uniandes.csw.servicioshogar.entities.PrestadorEntity;
 import co.edu.uniandes.csw.servicioshogar.entities.ServicioEntity;
 import co.edu.uniandes.csw.servicioshogar.persistence.PrestadorPersistence;
 import co.edu.uniandes.csw.servicioshogar.persistence.ServicioPersistence;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
@@ -35,6 +37,12 @@ public class ServiciosPrestadorLogic {
         PrestadorEntity prestadorEntity = prestadorPersistence.find(prestadorId);
         ServicioEntity servicioEntity = servicioPersistence.find(solicitudId, servicioId);
         servicioEntity.setPrestador(prestadorEntity);
+        //Agregar servicio al prestador
+        List<ServicioEntity> servicios = prestadorEntity.getServicios();
+        servicios.add(servicioEntity);
+        prestadorEntity.setServicios(servicios);
+        prestadorPersistence.update(prestadorEntity);
+        //Fin agregar servicio prestador
        LOGGER.log(Level.INFO, "Termina el proceso de actualizar el servicio con id= {0}",servicioId);
        return servicioEntity;
     }

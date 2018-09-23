@@ -46,6 +46,14 @@ public class PrestadorEntity extends BaseEntity implements Serializable {
     @OneToMany(mappedBy = "prestador")
     private List<ServicioEntity> servicios;
 
+    public void setServicios(List<ServicioEntity> servicios) {
+        this.servicios = servicios;
+    }
+
+    public List<ServicioEntity> getServicios() {
+        return servicios;
+    }
+
     public void setHojaDeVida(HojaDeVidaEntity hojaDeVida) {
         this.hojaDeVida = hojaDeVida;
     }
