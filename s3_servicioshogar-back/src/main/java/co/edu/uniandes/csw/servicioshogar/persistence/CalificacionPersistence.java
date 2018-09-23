@@ -69,15 +69,6 @@ public class CalificacionPersistence
         LOGGER.log(Level.INFO, "Saliendo de borrar El calificacion con id = {0}", calificacionId);
     }
     
-    public CalificacionEntity findAll(Long serviciosId)
-    {
-        LOGGER.log(Level.INFO, "Consultando todas las calificaciones");
-        
-        TypedQuery query = em.createQuery("select u from CalificacionEntity u where (u.servicio.id = :servicioid)", CalificacionEntity.class);
-        query.setParameter("servicioid", serviciosId);
-        return (CalificacionEntity) query.getResultList().get(0);
-    }
-    
     /**
      * Busca si existe una calificacion perteneciente al servicio con el 'serviciosId' ingresado por parametro
      * @param serviciosId - Id del servicio al que pertenece la calificacion.
