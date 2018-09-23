@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "b1f2fa4e-a274-4ca8-bc61-4bf3f98c5da0",
+		"_postman_id": "61ada8f4-c682-4f9d-8a1b-7d6c9d5a4b8f",
 		"name": "SolicitudPruebas v1",
 		"description": "Pruebas de solicitudes v1. No se probara ningun tipo de relacion ya que no se han realizado. Se realizaran pruebas basica como obtener todos los objetos, obtener un objeto especifico, modifica un objeto especifico y eliminar un objeto especifico para finalmente verificar que todo haya sido realizado correctamente.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -12,12 +12,12 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "89667e36-7b2f-4f22-86e7-5fa48e471d6d",
+						"id": "ccdb2973-0fd0-4a7b-b59d-ae012cf38e78",
 						"type": "text/javascript",
 						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});"
+							"var data= JSON.parse(responseBody);",
+							"tests[\"No genera error en el Get all\"] = responseCode.code === 200;",
+							"tests[\"solicitudes count\"] = data.length >= 0;"
 						]
 					}
 				}
@@ -59,12 +59,12 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "cef7467b-d8b7-49cb-98c0-956a5322e21d",
+						"id": "fd9ccd77-3c15-4e2a-ae4b-c0b10fb933c1",
 						"type": "text/javascript",
 						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});",
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_p\",data.id);",
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;",
 							"",
 							"pm.test(\"Prueba valores\", function () {",
 							"    var jsonData = pm.response.json();",
@@ -112,12 +112,12 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "0d2798a9-7d9a-4c42-93a3-acf05e67b318",
+						"id": "c87b3bac-392a-43e8-a372-74478fabf1b2",
 						"type": "text/javascript",
 						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});",
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_p2\",data.id);",
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;",
 							"",
 							"pm.test(\"Prueba valores\", function () {",
 							"    var jsonData = pm.response.json();",
@@ -165,12 +165,12 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "36b12f50-02b2-4c24-84fa-e8ac291c72f9",
+						"id": "01280c4b-8f24-42ef-a64b-1cc058a1c0e1",
 						"type": "text/javascript",
 						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});",
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_p3\",data.id);",
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;",
 							"",
 							"pm.test(\"Prueba valores\", function () {",
 							"    var jsonData = pm.response.json();",
@@ -218,12 +218,12 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "3a4a0974-42a4-4324-8921-cc5e23352ec8",
+						"id": "fde8586c-3f52-41ce-8552-bd55c4169126",
 						"type": "text/javascript",
 						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});",
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"No genera error en el Get\"] = responseCode.code === 200;",
 							"",
 							"pm.test(\"Prueba valores\", function () {",
 							"    var jsonData = pm.response.json();",
@@ -272,12 +272,12 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "a73802f7-c0c4-4b68-964e-988e5ad49546",
+						"id": "12361ee7-020b-4680-a940-a8501d30fcc8",
 						"type": "text/javascript",
 						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});",
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"No genera error en el Get\"] = responseCode.code === 200;",
 							"",
 							"pm.test(\"Prueba valores\", function () {",
 							"    var jsonData = pm.response.json();",
@@ -326,12 +326,12 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "823745f9-7c56-4046-9483-6e68e8978db6",
+						"id": "f7e4cba2-5b41-40c0-a343-beeeb85c4c7e",
 						"type": "text/javascript",
 						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});",
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"No genera error en el Get\"] = responseCode.code === 200;",
 							"",
 							"pm.test(\"Prueba valores\", function () {",
 							"    var jsonData = pm.response.json();",
@@ -380,16 +380,11 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "8aef248b-056d-4fb1-85b0-7c904a461cf2",
+						"id": "ccadca53-c84b-4723-bbd2-0ff6d294e290",
 						"type": "text/javascript",
 						"exec": [
-							"pm.test(\"Status code is 404\", function () {",
-							"    pm.response.to.have.status(404);",
-							"});",
-							"",
-							"pm.test(\"Mensaje\", function () {",
-							"    pm.expect(pm.response.text()).to.include(\"El recurso /solicitudes/0 no existe.\");",
-							"});"
+							"tests[\"No consulta con id que no existe\"] = responseCode.code === 404; ",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /solicitudes/0 no existe.\");"
 						]
 					}
 				}
@@ -432,12 +427,12 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "fc96c30a-204e-4110-9fb4-e8d25193b30f",
+						"id": "0590b81f-982d-4e2a-9034-6c18bfdcead4",
 						"type": "text/javascript",
 						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});"
+							"var data= JSON.parse(responseBody);",
+							"tests[\"No genera error en el Get all\"] = responseCode.code === 200;",
+							"tests[\"servicios count\"] = data.length >= 0;"
 						]
 					}
 				}
@@ -479,12 +474,12 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "dc2db437-400e-49c8-ac92-9601774686ad",
+						"id": "d4a78fd2-341d-4d32-85b9-937fb917060d",
 						"type": "text/javascript",
 						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});",
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"No genera error en el Put\"] = responseCode.code === 200;",
 							"",
 							"pm.test(\"Prueba valores\", function () {",
 							"    var jsonData = pm.response.json();",
@@ -533,12 +528,12 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "f3f821b8-9815-4edc-ab74-e79066324aa0",
+						"id": "b422f725-b55b-43a3-a533-400bb97882ba",
 						"type": "text/javascript",
 						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});",
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"No genera error en el Get\"] = responseCode.code === 200;",
 							"",
 							"pm.test(\"Prueba valores\", function () {",
 							"    var jsonData = pm.response.json();",
