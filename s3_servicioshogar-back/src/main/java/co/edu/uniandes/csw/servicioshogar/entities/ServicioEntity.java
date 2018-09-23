@@ -28,6 +28,18 @@ public class ServicioEntity extends BaseEntity implements Serializable{
     @ManyToOne(cascade = CascadeType.PERSIST)
     private SolicitudEntity solicitud;
 
+    @PodamExclude
+    @ManyToOne
+    private PrestadorEntity prestador;
+
+    public PrestadorEntity getPrestador() {
+        return prestador;
+    }
+
+    public void setPrestador(PrestadorEntity prestador) {
+        this.prestador = prestador;
+    }
+    
     /**
      * Devuelve la descripcion del servicio.
      * @return descripcion del servicio.

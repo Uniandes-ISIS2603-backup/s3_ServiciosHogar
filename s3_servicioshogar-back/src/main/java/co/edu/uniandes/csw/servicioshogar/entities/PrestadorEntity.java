@@ -41,6 +41,10 @@ public class PrestadorEntity extends BaseEntity implements Serializable {
     @PodamExclude
     @OneToOne(mappedBy = "prestador", fetch = FetchType.LAZY)
     private HojaDeVidaEntity hojaDeVida;
+    
+    @PodamExclude
+    @OneToMany(mappedBy = "prestador")
+    private List<ServicioEntity> servicios;
 
     public void setHojaDeVida(HojaDeVidaEntity hojaDeVida) {
         this.hojaDeVida = hojaDeVida;
