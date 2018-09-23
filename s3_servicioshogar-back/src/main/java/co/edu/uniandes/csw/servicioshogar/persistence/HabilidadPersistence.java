@@ -29,7 +29,6 @@ public class HabilidadPersistence {
     public HabilidadEntity create(HabilidadEntity habilidadEntity)
     {
         LOGGER.log(Level.INFO, "Creando una habilidad nueva");
-        
         em.persist(habilidadEntity);
         LOGGER.log(Level.INFO, "Saliendo de crear una habilidad nueva");
         return habilidadEntity;

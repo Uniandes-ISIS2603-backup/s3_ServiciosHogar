@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,7 +39,7 @@ public class PrestadorEntity extends BaseEntity implements Serializable {
     private List<HabilidadEntity> habilidades = new ArrayList<HabilidadEntity>();
     
     @PodamExclude
-    @OneToOne(mappedBy = "prestador")
+    @OneToOne(mappedBy = "prestador", fetch = FetchType.LAZY)
     private HojaDeVidaEntity hojaDeVida;
 
     public void setHojaDeVida(HojaDeVidaEntity hojaDeVida) {
