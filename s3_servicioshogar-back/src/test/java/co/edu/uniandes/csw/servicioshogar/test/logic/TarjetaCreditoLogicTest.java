@@ -45,6 +45,7 @@ public class TarjetaCreditoLogicTest {
     
     private List<TarjetaCreditoEntity> data = new ArrayList<TarjetaCreditoEntity>();
 
+    private List<ClienteEntity> dataCliente = new ArrayList<ClienteEntity>();
     @Deployment
     public static JavaArchive createDeployment()
     {
@@ -80,13 +81,21 @@ public class TarjetaCreditoLogicTest {
     private void clearData()
     {
         em.createQuery("delete from TarjetaCreditoEntity").executeUpdate();
+        em.createQuery("delete from ClienteEntity").executeUpdate();
     }
     
     private void insertData()
     {
         for(int i =0; i<3; i++)
         {
-            TarjetaCreditoEntity entity = factory.manufacturePojo(TarjetaCreditoEntity.class);
+            ClienteEntity entity = factory.manufacturePojo(ClienteEntity.class);
+            em.persist(entity);
+            dataCliente.add(entity);
+        }
+        for( int i = 0; i<3; i++)
+        {
+            TarjetaCreditoEntity entity= factory.manufacturePojo(TarjetaCreditoEntity.class);
+            entity.setCliente(dataCliente.get(i));
             em.persist(entity);
             data.add(entity);
         }
@@ -96,8 +105,8 @@ public class TarjetaCreditoLogicTest {
     public void createTarjetaTest() throws BusinessLogicException
     {
         TarjetaCreditoEntity entity = factory.manufacturePojo(TarjetaCreditoEntity.class);
-
-        TarjetaCreditoEntity result = tarjetaLogic.createTarjeta(entity);
+        entity.setCliente(dataCliente.get(1));
+        TarjetaCreditoEntity result = tarjetaLogic.createTarjeta(entity, dataCliente.get(1).getId());
         Assert.assertNotNull(result);
         
         TarjetaCreditoEntity newEntity = em.find(TarjetaCreditoEntity.class, result.getId());
@@ -107,30 +116,12 @@ public class TarjetaCreditoLogicTest {
         Assert.assertEquals(entity.getFechaVencimiento(), newEntity.getFechaVencimiento());
     }
     
-       @Test
-    public void getTarjetasTest() throws BusinessLogicException
-    {
-        List<TarjetaCreditoEntity> list = tarjetaLogic.getTarjetas();
-        org.junit.Assert.assertEquals(data.size(),list.size());
-        for(TarjetaCreditoEntity ent : list)
-        {
-            boolean found = false;
-            for(TarjetaCreditoEntity entity : data)
-            {
-                if(ent.getId().equals(entity.getId()))
-                {
-                    found = true;
-                }
-            }
-            org.junit.Assert.assertTrue(found);
-        }
-    }
     
     @Test
     public void getTarjetaTest() throws BusinessLogicException
     {
         TarjetaCreditoEntity entity = data.get(0);
-        TarjetaCreditoEntity newEntity = tarjetaLogic.getTarjeta(entity.getId());
+        TarjetaCreditoEntity newEntity = tarjetaLogic.getTarjeta(dataCliente.get(1).getId(), entity.getId());
         org.junit.Assert.assertNotNull(newEntity);
         org.junit.Assert.assertEquals(entity.getId(), newEntity.getId());
         org.junit.Assert.assertEquals(entity.getNumero(), newEntity.getNumero());
@@ -142,7 +133,7 @@ public class TarjetaCreditoLogicTest {
     public void deleteTarjetaTest() throws BusinessLogicException
     {
         TarjetaCreditoEntity entity = data.get(0);
-        tarjetaLogic.deleteFactura(entity.getId());
+        tarjetaLogic.deleteTarjeta(dataCliente.get(1).getId(), entity.getId() );
         TarjetaCreditoEntity deleted = em.find(TarjetaCreditoEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }
@@ -155,7 +146,7 @@ public class TarjetaCreditoLogicTest {
         
         pojo.setId(entity.getId());
                 
-        tarjetaLogic.updateTarjeta(pojo.getId(), pojo);
+        tarjetaLogic.updateTarjeta(dataCliente.get(1).getId(), pojo);
         
         TarjetaCreditoEntity resp = em.find(TarjetaCreditoEntity.class, entity.getId());
         

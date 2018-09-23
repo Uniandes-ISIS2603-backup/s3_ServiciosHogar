@@ -6,9 +6,14 @@
 package co.edu.uniandes.csw.servicioshogar.resources;
 
 import co.edu.uniandes.csw.servicioshogar.dtos.FacturaDTO;
+import co.edu.uniandes.csw.servicioshogar.ejb.FacturaLogic;
+import co.edu.uniandes.csw.servicioshogar.entities.FacturaEntity;
+import co.edu.uniandes.csw.servicioshogar.exceptions.BusinessLogicException;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -17,6 +22,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 
 /**
  *
@@ -29,26 +35,55 @@ import javax.ws.rs.Produces;
 public class FacturaResource {
     private static final Logger LOGGER = Logger.getLogger(FacturaResource.class.getName());
   
-    @POST
- public FacturaDTO crearFactura( FacturaDTO factura) 
- { return factura;}
+  @Inject 
+ private FacturaLogic facturaLogic;
  
+ @POST
+ public FacturaDTO crearFactura( FacturaDTO factura, @PathParam("clientesId") Long clientesId) throws BusinessLogicException 
+ { 
+     LOGGER.log(Level.INFO, "FacturaResource: input : {0}", factura.toString());
+     FacturaDTO facturaDTO = new FacturaDTO(facturaLogic.createFactura(factura.toEntity(), clientesId));
+     LOGGER.log(Level.INFO, "FacturaResource: output : {0}", facturaDTO.toString());
+     return facturaDTO;
+ }
+  
  @GET
- public List<FacturaDTO> getFacturas()
- { return null;}
- 
- @GET
- @Path("{facturaNum : \\d+}")
- public FacturaDTO getFactura (@PathParam ("facturaNum") Integer facturaNum)
- {return null;}
+ @Path("{facturaId : \\d+}")
+ public FacturaDTO getTarjeta (@PathParam ("facturaId") Long facturaId)
+ {
+     LOGGER.log(Level.INFO, "FacturaResource: input: {0}", facturaId);
+     FacturaEntity entity = facturaLogic.getFactura(facturaId);
+     
+     if(entity == null)
+     { throw new WebApplicationException("El recurso factura" + facturaId + "no existe", 404);}
+     
+     FacturaDTO facturaDTO = new FacturaDTO(entity);
+     LOGGER.log(Level.INFO, "FacturaResource: output: {0}", facturaDTO.toString());
+     return facturaDTO;     
+ }
  
  @PUT
- @Path("{facturaNum : \\d+}")
-public FacturaDTO updateFactura(@PathParam ("facturaNum") Integer facturaNum, FacturaDTO factura)
-{return factura;}
+ @Path("{facturaId : \\d+}")
+public FacturaDTO updateTarjeta(@PathParam ("facturaId") Long facturaId, FacturaDTO factura)
+{
+    LOGGER.log(Level.INFO, "FacturaResource: input: {0}", facturaId);
+    FacturaEntity entity = facturaLogic.getFactura(facturaId);
+    if(entity == null)
+    {throw new WebApplicationException("El recurso factura " + facturaId, 404);}
+    
+    FacturaDTO facturaDTO = new FacturaDTO(facturaLogic.updateFactura(facturaId, entity));
+    LOGGER.log(Level.INFO, "FacturaResource: output: {0}", facturaDTO.toString());
+    return facturaDTO;
+}
  
  @DELETE
- @Path("{facturaNum : \\d+}")
- public void deleteFactura(@PathParam ("facturaNum") Integer facturaNum)
- {}
+ @Path("{facturaId : \\d+}")
+ public void deleteTarjeta(@PathParam ("facturaId") Long facturaId)throws BusinessLogicException
+ {
+     FacturaEntity entity = facturaLogic.getFactura(facturaId);
+     if(entity == null)
+     { throw new WebApplicationException("El recurso factura " + facturaId + "no existe", 404);}
+     
+     facturaLogic.deleteFactura(facturaId);
+ }
 }
