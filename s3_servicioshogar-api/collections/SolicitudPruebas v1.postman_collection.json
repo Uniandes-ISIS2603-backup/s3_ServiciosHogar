@@ -35,12 +35,12 @@
 					"raw": "{\n\t\"descripcion\": \"descripcionEjemplo #1\",\n\t\"requerimientos\": \"requeriemientoEjemplo #1\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/s3_servicioshogar-api/api/clientes/7/solicitudes",
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/clientes/7/solicitudes",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{ip}}"
 					],
-					"port": "8080",
+					"port": "{{puerto}}",
 					"path": [
 						"s3_servicioshogar-api",
 						"api",
@@ -88,12 +88,12 @@
 					"raw": "{\n\t\"fecha\": \"2020-05-16T00:00:00-05:00\",\n\t\"direccion\": \"Cale 11 No. 11-11\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/s3_servicioshogar-api/api/clientes/7/solicitudes",
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/clientes/7/solicitudes",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{ip}}"
 					],
-					"port": "8080",
+					"port": "{{puerto}}",
 					"path": [
 						"s3_servicioshogar-api",
 						"api",
@@ -141,12 +141,12 @@
 					"raw": "{\n\t\"fecha\": \"2017-11-06T00:00:00-05:00\",\n\t\"direccion\": \"Cale 22 No. 22-22\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/s3_servicioshogar-api/api/clientes/7/solicitudes",
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/clientes/7/solicitudes",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{ip}}"
 					],
-					"port": "8080",
+					"port": "{{puerto}}",
 					"path": [
 						"s3_servicioshogar-api",
 						"api",
@@ -194,12 +194,12 @@
 					"raw": "{\n\t\"fecha\": \"2004-10-19T00:00:00-05:00\",\n\t\"direccion\": \"Cale 33 No. 33-33\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/s3_servicioshogar-api/api/clientes/7/solicitudes",
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/clientes/7/solicitudes",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{ip}}"
 					],
-					"port": "8080",
+					"port": "{{puerto}}",
 					"path": [
 						"s3_servicioshogar-api",
 						"api",
@@ -247,12 +247,12 @@
 					"raw": "{\n\t\"nombre\":\"Ejemplo #2\",\n\t\"direccion\":\"Direccion Ej #2\",\n\t\"correo\":\"ejemplo2@hotmail.com\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/s3_servicioshogar-api/api/clientes/7/solicitudes/31",
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/clientes/7/solicitudes/31",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{ip}}"
 					],
-					"port": "8080",
+					"port": "{{puerto}}",
 					"path": [
 						"s3_servicioshogar-api",
 						"api",
@@ -301,12 +301,12 @@
 					"raw": "{\n\t\"nombre\":\"Ejemplo #2\",\n\t\"direccion\":\"Direccion Ej #2\",\n\t\"correo\":\"ejemplo2@hotmail.com\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/s3_servicioshogar-api/api/clientes/7/solicitudes/32",
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/clientes/7/solicitudes/32",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{ip}}"
 					],
-					"port": "8080",
+					"port": "{{puerto}}",
 					"path": [
 						"s3_servicioshogar-api",
 						"api",
@@ -355,12 +355,12 @@
 					"raw": "{\n\t\"nombre\":\"Ejemplo #2\",\n\t\"direccion\":\"Direccion Ej #2\",\n\t\"correo\":\"ejemplo2@hotmail.com\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/s3_servicioshogar-api/api/clientes/7/solicitudes/33",
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/clientes/7/solicitudes/33",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{ip}}"
 					],
-					"port": "8080",
+					"port": "{{puerto}}",
 					"path": [
 						"s3_servicioshogar-api",
 						"api",
@@ -402,12 +402,12 @@
 					"raw": "{\n\t\"nombre\":\"Ejemplo #2\",\n\t\"direccion\":\"Direccion Ej #2\",\n\t\"correo\":\"ejemplo2@hotmail.com\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/s3_servicioshogar-api/api/clientes/7/solicitudes/0",
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/clientes/7/solicitudes/0",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{ip}}"
 					],
-					"port": "8080",
+					"port": "{{puerto}}",
 					"path": [
 						"s3_servicioshogar-api",
 						"api",
@@ -450,12 +450,12 @@
 					"raw": "{\n\t\"nombre\":\"Ejemplo #2\",\n\t\"direccion\":\"Direccion Ej #2\",\n\t\"correo\":\"ejemplo2@hotmail.com\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/s3_servicioshogar-api/api/clientes/7/solicitudes",
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/clientes/7/solicitudes",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{ip}}"
 					],
-					"port": "8080",
+					"port": "{{puerto}}",
 					"path": [
 						"s3_servicioshogar-api",
 						"api",
@@ -503,12 +503,12 @@
 					"raw": "{\n\t\"fecha\": \"2044-04-14T00:00:00-05:00\",\n\t\"direccion\": \"Cale 44 No. 44-44\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/s3_servicioshogar-api/api/clientes/7/solicitudes/33",
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/clientes/7/solicitudes/33",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{ip}}"
 					],
-					"port": "8080",
+					"port": "{{puerto}}",
 					"path": [
 						"s3_servicioshogar-api",
 						"api",
@@ -557,12 +557,12 @@
 					"raw": "{\n\t\"nombre\":\"Ejemplo #2\",\n\t\"direccion\":\"Direccion Ej #2\",\n\t\"correo\":\"ejemplo2@hotmail.com\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/s3_servicioshogar-api/api/clientes/7/solicitudes/33",
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/clientes/7/solicitudes/33",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{ip}}"
 					],
-					"port": "8080",
+					"port": "{{puerto}}",
 					"path": [
 						"s3_servicioshogar-api",
 						"api",

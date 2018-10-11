@@ -46,12 +46,12 @@
 					"raw": "    {\r\n    \t\"id\":1,\r\n        \"direccion\": \"calle 83a carrera 114\",\r\n        \"email\": \"carito@gmail.com\",\r\n        \"formacion\": \"pregrado\",\r\n        \"trayectoria\": \"4 meses\",\r\n\t\t\"telefono\": \"3212566762.0\",\r\n\t\t\"data1\" : \"foo\",\"date\" : \"Fri May 04 2012 01:17:07 GMT-0700 (PDT)\"\r\n    }"
 				},
 				"url": {
-					"raw": "http://localhost:8080/s3_servicioshogar-api/api/referencias",
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/referencias",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{ip}}"
 					],
-					"port": "8080",
+					"port": "{{puerto}}",
 					"path": [
 						"s3_servicioshogar-api",
 						"api",
@@ -82,12 +82,12 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "http://localhost:8080/s3_servicioshogar-api/api/hojaDeVida/1",
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/hojaDeVida/1",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{ip}}"
 					],
-					"port": "8080",
+					"port": "{{puerto}}",
 					"path": [
 						"s3_servicioshogar-api",
 						"api",
@@ -122,12 +122,12 @@
 					"raw": "    {\r\n        \"direccion\": \"calle 87a carrera 35-20\",\r\n        \"email\": \"carito@gmail.com\",\r\n        \"formacion\": \"pregrado\",\r\n        \"trayectoria\": \"4 meses\",\r\n\t\t\"telefono\": \"3212562596.0\",\r\n\t\t\"data1\" : \"foo\",\"date\" : \"Fri May 04 2012 01:17:07 GMT-0700 (PDT)\"\r\n    }"
 				},
 				"url": {
-					"raw": "http://localhost:8080/s3_servicioshogar-api/api/referencias/1",
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/referencias/1",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{ip}}"
 					],
-					"port": "8080",
+					"port": "{{puerto}}",
 					"path": [
 						"s3_servicioshogar-api",
 						"api",
@@ -157,12 +157,12 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "http://localhost:8080/s3_servicioshogar-api/api/hojaDeVida/1",
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/hojaDeVida/1",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{ip}}"
 					],
-					"port": "8080",
+					"port": "{{puerto}}",
 					"path": [
 						"s3_servicioshogar-api",
 						"api",
