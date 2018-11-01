@@ -137,10 +137,12 @@ public class CalificacionLogicTest
         solicitudEntity.setServicios(lista);
         newEntity.setServicio(lista.get(0));
         lista.get(0).setCalificacion(newEntity);
-        
-        CalificacionEntity result = calificacionLogic.createCalificacion(solicitudEntity.getId(), lista.get(0).getId() ,newEntity);       
+        System.out.println("Entro");
+        printStackTrace();
+        CalificacionEntity result = calificacionLogic.createCalificacion(solicitudEntity.getId(), lista.get(0).getId() ,newEntity);
+        System.out.println("Salio");
+
         Assert.assertNotNull(result);
-        
         CalificacionEntity entity = em.find(CalificacionEntity.class, result.getId());        
         Assert.assertEquals(newEntity.getId(), entity.getId());
         Assert.assertEquals(newEntity.getCalificacion(), entity.getCalificacion());
