@@ -14,6 +14,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import uk.co.jemos.podam.common.PodamExclude;
@@ -37,6 +38,11 @@ public class SolicitudEntity extends BaseEntity implements Serializable{
     @PodamExclude
     @ManyToOne
     private ClienteEntity cliente;
+    
+    @PodamExclude
+    @OneToOne(mappedBy = "solicitud", fetch = FetchType.LAZY)
+    private FacturaEntity factura;
+   
 
     /**
      * Devuelve la fecha de la solicitud.
@@ -94,6 +100,16 @@ public class SolicitudEntity extends BaseEntity implements Serializable{
 
     public void setCliente(ClienteEntity cliente) {
         this.cliente = cliente;
+    }
+    
+    public FacturaEntity getFactura()
+    {
+        return factura;
+    }
+    
+    public void setFactura(FacturaEntity factura)
+    {
+        this.factura = factura;
     }
     
     

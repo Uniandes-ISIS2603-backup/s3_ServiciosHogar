@@ -32,6 +32,10 @@ public class ClienteEntity extends BaseEntity implements Serializable
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<SolicitudEntity> solicitudes = new ArrayList<SolicitudEntity>();
     
+    @PodamExclude
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    private List<TarjetaCreditoEntity> tarjetas = new ArrayList<TarjetaCreditoEntity>();
+    
     //------------------------------------------
     //------------------Metodos-----------------
     //------------------------------------------
@@ -76,5 +80,8 @@ public class ClienteEntity extends BaseEntity implements Serializable
 
     public void setSolicitudes(List<SolicitudEntity> solicitudes) {this.solicitudes = solicitudes;}
     
+    public List<TarjetaCreditoEntity> getTarjetas() {return tarjetas;}
+    
+    public void setTarjetas(List<TarjetaCreditoEntity> tarjetas) {this.tarjetas = tarjetas;}
     
 }

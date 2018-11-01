@@ -112,7 +112,7 @@ public class PrestadorResource {
         LOGGER.log(Level.INFO, "PrestadorResource getPrestador : outpu : void");        
     }
     
-     @Path("{prestadorId: \\d+}/habilidades")
+    @Path("{prestadorId: \\d+}/habilidades")
     public Class<HabilidadResource> getHabilidadResource(@PathParam("prestadorId") Long prestadorId) {
         if (prestadorLogic.getPrestador(prestadorId) == null) {
             throw new WebApplicationException("El recurso /prestadores/" + prestadorId + "/habilidades no existe.", 404);
@@ -121,11 +121,11 @@ public class PrestadorResource {
     }
     
     @Path("{prestadorId: \\d+}/hojaDeVida")
-    public Class<PrestadorHojaDeVidaResource> getPrestadorHojaDeVidaResource(@PathParam("prestadorId") Long prestadorId) {
+    public Class<HojaDeVidaResource> getHojaDeVidaResource(@PathParam("prestadorId") Long prestadorId) {
         if (prestadorLogic.getPrestador(prestadorId) == null) {
             throw new WebApplicationException("El recurso /prestador/" + prestadorId + " no existe.", 404);
         }
-        return PrestadorHojaDeVidaResource.class;
+        return HojaDeVidaResource.class;
     }
     
     /**

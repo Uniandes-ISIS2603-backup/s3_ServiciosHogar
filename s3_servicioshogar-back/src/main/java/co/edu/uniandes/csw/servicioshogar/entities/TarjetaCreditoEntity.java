@@ -55,4 +55,10 @@ public class TarjetaCreditoEntity extends BaseEntity implements Serializable {
     public void setNumero( Integer pNumero)
     { this.numero = pNumero;}
     
+    public ClienteEntity getCliente()
+    {return cliente;}
+    
+    public void setCliente(ClienteEntity cliente)
+    {this.cliente = cliente;}
+    
 }

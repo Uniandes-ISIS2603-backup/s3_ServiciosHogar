@@ -74,7 +74,7 @@ public class ServicioLogic {
      */
     public ServicioEntity getServicio(Long solicitudesId, Long serviciosId) {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar el servicio con id = {0} del solicitud con id = " + solicitudesId, serviciosId);
-        return persistence.find(solicitudesId, serviciosId);
+        return persistence.findBySolicitud(solicitudesId, serviciosId);
     }
 
     /**

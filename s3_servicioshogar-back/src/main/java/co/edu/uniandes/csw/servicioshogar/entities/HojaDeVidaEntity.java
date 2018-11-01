@@ -20,10 +20,9 @@ import uk.co.jemos.podam.common.PodamExclude;
 @Entity
 public class HojaDeVidaEntity extends BaseEntity implements Serializable{
     
-    
+    @PodamExclude
     @OneToOne
     private PrestadorEntity prestador;
-    
     
     @PodamExclude
     @OneToMany(mappedBy = "hojaDeVida")
@@ -53,6 +52,14 @@ public class HojaDeVidaEntity extends BaseEntity implements Serializable{
      * Atributo que representa el nivel educativo del prestador.
      */
     private String formacion;
+
+    public PrestadorEntity getPrestador() {
+        return prestador;
+    }
+
+    public void setPrestador(PrestadorEntity prestador) {
+        this.prestador = prestador;
+    }
 
     public String getTrayectoria() {
         return trayectoria;

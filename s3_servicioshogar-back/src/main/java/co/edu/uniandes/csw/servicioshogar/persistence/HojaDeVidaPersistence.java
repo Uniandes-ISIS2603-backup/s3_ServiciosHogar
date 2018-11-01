@@ -32,18 +32,22 @@ public class HojaDeVidaPersistence {
         LOGGER.log(Level.INFO, "Saliendo de crear una hoja de vida nuevo");
         return hojaDeVidaEntity;       
     }
-       
-       public List<HojaDeVidaEntity> findAll()
+
+    public HojaDeVidaEntity find(Long prestadorId)
     {
-        LOGGER.log(Level.INFO, "Consultando todas las hojas de vida");
-        TypedQuery query = em.createQuery("select u from HojaDeVidaEntity u", HojaDeVidaEntity.class);
-        return query.getResultList();
-    }
-   
-    public HojaDeVidaEntity find(Long id)
-    {
-        LOGGER.log(Level.INFO, "Consultando hoja de vida del prestador con id={0}", id);
-        return em.find(HojaDeVidaEntity.class, id);
+        LOGGER.log(Level.INFO, "Consultando hoja de vida del prestador con id={0}", prestadorId);
+        TypedQuery<HojaDeVidaEntity> q = em.createQuery("select p from HojaDeVidaEntity p where (p.prestador.id = :prestadorid)", HojaDeVidaEntity.class);
+        q.setParameter("prestadorid", prestadorId);
+        List<HojaDeVidaEntity> results = q.getResultList();
+        HojaDeVidaEntity hojaDeVida = null;
+        if (results == null) {
+            hojaDeVida = null;
+        } else if (results.isEmpty()) {
+            hojaDeVida = null;
+        } else if (results.size() >= 1) {
+            hojaDeVida = results.get(0);
+        }
+        return hojaDeVida;
     }
     
     /**
@@ -54,19 +58,19 @@ public class HojaDeVidaPersistence {
     public HojaDeVidaEntity update(HojaDeVidaEntity hojaDeVidaEntity)
     {
         LOGGER.log(Level.INFO, "Actualizando hojaDeVida con id = {0}", hojaDeVidaEntity.getId());
-      
         LOGGER.log(Level.INFO, "Saliendo de actualizar la hoja de vida asociada con id= {0}", hojaDeVidaEntity.getId());
         
      
         return em.merge(hojaDeVidaEntity);
     }
     
-    public void delete(Long telPrestador)
+    public void delete(Long hojaDeVidaId)
     {
-        LOGGER.log(Level.INFO, "Borrando hoja de vida asociada con telefono= {0}", telPrestador);
-        HojaDeVidaEntity entity = em.find(HojaDeVidaEntity.class, telPrestador);
+        LOGGER.log(Level.INFO, "Borrando hoja de vida asociada con telefono= {0}", hojaDeVidaId);
+        HojaDeVidaEntity entity = em.find(HojaDeVidaEntity.class, hojaDeVidaId);
         em.remove(entity);
-        LOGGER.log(Level.INFO, "Saliendo de borrar la hoja de vida asociada con telefono= {0}", telPrestador);
+        
+        LOGGER.log(Level.INFO, "Saliendo de borrar la hoja de vida asociada con telefono= {0}", hojaDeVidaId);
     }
     
     /**

@@ -65,6 +65,7 @@ public class PrestadorDTO implements Serializable {
             this.id = prestadorEntity.getId();
             this.nombre = prestadorEntity.getNombre();
             this.cedula = prestadorEntity.getCedula();
+            this.hojaDeVida=new HojaDeVidaDTO(prestadorEntity.getHojaDeVida());
         }
     }
 

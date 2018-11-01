@@ -6,7 +6,10 @@
 package co.edu.uniandes.csw.servicioshogar.test.logic;
 
 import co.edu.uniandes.csw.servicioshogar.ejb.FacturaLogic;
+import co.edu.uniandes.csw.servicioshogar.ejb.SolicitudLogic;
+import co.edu.uniandes.csw.servicioshogar.entities.ClienteEntity;
 import co.edu.uniandes.csw.servicioshogar.entities.FacturaEntity;
+import co.edu.uniandes.csw.servicioshogar.entities.SolicitudEntity;
 import co.edu.uniandes.csw.servicioshogar.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.servicioshogar.persistence.FacturaPersistence;
 import java.util.ArrayList;
@@ -38,6 +41,9 @@ public class FacturaLogicTest {
     @Inject
     private FacturaLogic facturaLogic;
     
+    @Inject 
+    private SolicitudLogic solLogic;
+    
     @PersistenceContext
     private EntityManager em;
     
@@ -45,6 +51,10 @@ public class FacturaLogicTest {
     private UserTransaction ut;
     
     private List<FacturaEntity> data = new ArrayList<FacturaEntity>();
+    
+    private List<SolicitudEntity> dataSol = new ArrayList<SolicitudEntity>();
+    
+    private List<ClienteEntity> dataCliente = new ArrayList<ClienteEntity>();
     
     @Deployment
     public static JavaArchive createDeployment()
@@ -81,24 +91,43 @@ public class FacturaLogicTest {
     private void clearData()
     {
         em.createQuery("delete from FacturaEntity").executeUpdate();
+        em.createQuery("delete from SolicitudEntity").executeUpdate();
+        em.createQuery("delete from ClienteEntity").executeUpdate();
     }
     
     private void insertData()
     {
         for(int i =0; i<3; i++)
         {
-            FacturaEntity entity = factory.manufacturePojo(FacturaEntity.class);
+            ClienteEntity entity = factory.manufacturePojo(ClienteEntity.class);
             em.persist(entity);
-            data.add(entity);
+            dataCliente.add(entity);
         }
+        for(int i = 0; i<3; i++)
+        {
+            SolicitudEntity entity = factory.manufacturePojo(SolicitudEntity.class);
+            entity.setCliente(dataCliente.get(i));
+            em.persist(entity);
+            dataSol.add(entity);
+        }
+        for(int i = 0; i<3 ; i++)
+            {
+             FacturaEntity entity = factory.manufacturePojo(FacturaEntity.class);
+             entity.setSolicitud(dataSol.get(1));
+             em.persist(entity);
+             data.add(entity);
+            }
     }
     
     @Test
     public void createFacturaTest() throws BusinessLogicException
     {
         FacturaEntity entity = factory.manufacturePojo(FacturaEntity.class);
+        SolicitudEntity solEntity = factory.manufacturePojo(SolicitudEntity.class);
         
-        FacturaEntity result = facturaLogic.createFactura(entity);
+        solEntity = solLogic.createSolicitud(dataCliente.get(1).getId(), solEntity);
+        entity.setSolicitud(solEntity);
+        FacturaEntity result = facturaLogic.createFactura(entity, dataCliente.get(1).getId());
         Assert.assertNotNull(result);
         
         FacturaEntity newEntity = em.find(FacturaEntity.class, result.getId());
@@ -106,6 +135,7 @@ public class FacturaLogicTest {
         Assert.assertEquals(entity.getNoFactura(), newEntity.getNoFactura());
     }
     
+   
        @Test
     public void getFacturasTest()
     {

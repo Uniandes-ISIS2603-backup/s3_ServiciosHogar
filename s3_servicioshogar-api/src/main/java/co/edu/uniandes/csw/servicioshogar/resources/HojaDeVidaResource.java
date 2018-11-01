@@ -9,8 +9,6 @@ import co.edu.uniandes.csw.servicioshogar.dtos.HojaDeVidaDTO;
 import co.edu.uniandes.csw.servicioshogar.ejb.HojaDeVidaLogic;
 import co.edu.uniandes.csw.servicioshogar.entities.HojaDeVidaEntity;
 import co.edu.uniandes.csw.servicioshogar.exceptions.BusinessLogicException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
@@ -28,13 +26,13 @@ import javax.ws.rs.WebApplicationException;
  *
  * @author Daniela Rocha Torres
  */
-
 @Path("hojaDeVida")
 @Produces("application/json")
 @Consumes("application/json")
 @RequestScoped
 public class HojaDeVidaResource {
-        private static final Logger LOGGER = Logger.getLogger(HojaDeVidaResource.class.getName());
+    
+    private static final Logger LOGGER = Logger.getLogger(HojaDeVidaResource.class.getName());
   
     /**
      * Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
@@ -42,77 +40,55 @@ public class HojaDeVidaResource {
     @Inject
     private HojaDeVidaLogic hojaDeVidaLogic;
     
-     @POST
-    public HojaDeVidaDTO crearHojaDeVida(HojaDeVidaDTO hojaDeVida) throws BusinessLogicException
+    @POST
+    public HojaDeVidaDTO crearHojaDeVida(@PathParam("prestadorId") Long prestadorId, HojaDeVidaDTO hojaDeVida) throws BusinessLogicException
     {
          LOGGER.log(Level.INFO, "HojaDeVidaResource crearHojaDeVida: input: {0}", hojaDeVida.toString());
          HojaDeVidaEntity hojaDeVidaEntity = hojaDeVida.toEntity();
-         HojaDeVidaEntity nuevaHojaDeVidaEntity = hojaDeVidaLogic.createHojaDeVida(hojaDeVidaEntity);
+         HojaDeVidaEntity nuevaHojaDeVidaEntity = hojaDeVidaLogic.createHojaDeVida(prestadorId,hojaDeVidaEntity);
          /*Como debe retornar un DTO (json) se invoca el constructor del DTO con argumento el entity nuevo*/
          HojaDeVidaDTO nuevaHojaDeVidaDTO = new HojaDeVidaDTO(nuevaHojaDeVidaEntity);
          LOGGER.log(Level.INFO, "HojaDeVidaResource crearHojaDeVida: output: {0}", nuevaHojaDeVidaDTO.toString());
          return nuevaHojaDeVidaDTO;
     }
 
-
     @GET
-    public List<HojaDeVidaDTO> getHojasDeVida()
+    public HojaDeVidaDTO getHojaDeVida(@PathParam("prestadorId") Long prestadorId) throws WebApplicationException
     {
-        LOGGER.info("HojaDeVidaResource getHojasDeVida: input: void");
-        List<HojaDeVidaDTO> listaHojasDeVida = listEntity2DetailDTO(hojaDeVidaLogic.getHojasDeVida());
-        LOGGER.log(Level.INFO, "HojaDeVidaResource getHojasDeVida: output: {0}", listaHojasDeVida.toString());
-        return listaHojasDeVida;
-    }
-    
-
-    @GET
-    @Path("{hojaDeVida:\\d+}")
-    public HojaDeVidaDTO getHojaDeVida(@PathParam("hojaDeVida") Long id) throws WebApplicationException
-    {
-        LOGGER.log(Level.INFO, "HojaDeVidaResource getHojaDeVida: input: {0}", id);
-        HojaDeVidaEntity hojaDeVidaEntity = hojaDeVidaLogic.getHojaDeVida(id);
+        System.out.println("entra al get"+prestadorId);
+        LOGGER.log(Level.INFO, "HojaDeVidaResource getHojaDeVida: input: {0}", prestadorId);
+        HojaDeVidaEntity hojaDeVidaEntity = hojaDeVidaLogic.getHojaDeVida(prestadorId);
         if (hojaDeVidaEntity == null)
-            throw new WebApplicationException("El recurso /hojaDeVida/" + id + " no existe.", 404);
-        
+            throw new WebApplicationException("El recurso " + prestadorId + "/hojaDeVida no existe.", 404);
+        System.out.println("La lógica lo encuentra");
         HojaDeVidaDTO detailDTO = new HojaDeVidaDTO(hojaDeVidaEntity);
         LOGGER.log(Level.INFO, "HojaDeVidaResource getHojaDeVida: {0}", detailDTO.toString());
         return detailDTO;
     }
 
     @PUT
-    @Path("{hojaDeVida:\\d+}")
-    public HojaDeVidaDTO modificarHojaDeVida(@PathParam("hojaDeVida") Long id, HojaDeVidaDTO hojaDeVida) throws WebApplicationException
+    public HojaDeVidaDTO modificarHojaDeVida(@PathParam("prestadorId") Long prestadorId, HojaDeVidaDTO hojaDeVida) throws WebApplicationException
     {
-        LOGGER.log(Level.INFO, "HojaDeVidaResource modificarHojaDeVida: input: hojaDeVida:{0} , hojaDeVida: {1}", new Object[]{id, hojaDeVida.toString()});
-        hojaDeVida.setTelefono(id);
-        if (hojaDeVidaLogic.getHojaDeVida(id) == null)
-            throw new WebApplicationException("El recurso /hojaDeVida/" + id + " no existe.", 404);
+        LOGGER.log(Level.INFO, "HojaDeVidaResource modificarHojaDeVida: input: prestadorId:{0} , hojaDeVida: {1}", new Object[]{prestadorId, hojaDeVida.toString()});
         
-        HojaDeVidaDTO detailDTO = new HojaDeVidaDTO(hojaDeVidaLogic.updateHojaDeVida(id, hojaDeVida.toEntity()));
+        if (hojaDeVidaLogic.getHojaDeVida(prestadorId) == null)
+            throw new WebApplicationException("El recurso " + prestadorId + "/hojaDeVida no existe.", 404);
+        
+        HojaDeVidaDTO detailDTO = new HojaDeVidaDTO(hojaDeVidaLogic.updateHojaDeVida(prestadorId, hojaDeVida.toEntity()));
         LOGGER.log(Level.INFO, "HojaDeVidaResource modificarHojaDeVida: output: {0}", detailDTO.toString());
         return detailDTO;
     }
     
 
     @DELETE
-    @Path("{hojaDeVida:\\d+}")
-    public void deleteHojaDeVida(@PathParam("hojaDeVida") Long id) throws BusinessLogicException
+    public void deleteHojaDeVida(@PathParam("prestadorId") Long prestadorId) throws BusinessLogicException
     {
-        LOGGER.log(Level.INFO, "HojaDeVidaResource deleteHojaDeVida: input: {0}", id);
-        if (hojaDeVidaLogic.getHojaDeVida(id) == null) 
-            throw new WebApplicationException("El recurso /hojaDeVida/" + id + " no existe.", 404);
+        LOGGER.log(Level.INFO, "HojaDeVidaResource deleteHojaDeVida: input: {0}", prestadorId);
+        if (hojaDeVidaLogic.getHojaDeVida(prestadorId) == null) 
+            throw new WebApplicationException("El recurso " + prestadorId + "/hojaDeVida no existe.", 404);
         
-        hojaDeVidaLogic.deleteHojaDeVida(id);
+        hojaDeVidaLogic.deleteHojaDeVida(prestadorId);
         LOGGER.info("HojaDeVidaResource deleteHojaDeVida: output: void");
     }
     
-  
-    private List<HojaDeVidaDTO> listEntity2DetailDTO(List<HojaDeVidaEntity> entityList) {
-        List<HojaDeVidaDTO> list = new ArrayList<>();
-        for (HojaDeVidaEntity entity : entityList) 
-        {
-            list.add(new HojaDeVidaDTO(entity));
-        }
-        return list;
-    }
 }

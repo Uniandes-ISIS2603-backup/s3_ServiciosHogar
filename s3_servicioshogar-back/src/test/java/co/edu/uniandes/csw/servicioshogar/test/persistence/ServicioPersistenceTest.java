@@ -133,7 +133,7 @@ public class ServicioPersistenceTest{
     @Test
     public void getServicioTest() {
         ServicioEntity entity = data.get(0);
-        ServicioEntity newEntity = servicioPersistence.find(dataSolicitud.get(0).getId(), entity.getId());
+        ServicioEntity newEntity = servicioPersistence.findBySolicitud(dataSolicitud.get(0).getId(), entity.getId());
         Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getDescripcion(), newEntity.getDescripcion());
         Assert.assertEquals(entity.getRequerimientos(), newEntity.getRequerimientos());

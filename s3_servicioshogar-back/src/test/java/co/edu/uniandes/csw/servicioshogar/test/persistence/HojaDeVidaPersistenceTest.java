@@ -11,6 +11,7 @@ package co.edu.uniandes.csw.servicioshogar.test.persistence;
  */
 
 import co.edu.uniandes.csw.servicioshogar.entities.HojaDeVidaEntity;
+import co.edu.uniandes.csw.servicioshogar.entities.PrestadorEntity;
 import co.edu.uniandes.csw.servicioshogar.persistence.HojaDeVidaPersistence;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +51,9 @@ public class HojaDeVidaPersistenceTest
     UserTransaction utx;
     
     private List<HojaDeVidaEntity> data = new ArrayList<>();
+    
+    private List<PrestadorEntity> dataPrestadores = new ArrayList<>();
+    
     
     //------------------------------------------
     //------------------Metodos-----------------
@@ -95,7 +99,11 @@ public class HojaDeVidaPersistenceTest
     /**
      * Limpia las tablas implicadas en la prueba.
      */
-    private void clearData() {em.createQuery("delete from HojaDeVidaEntity").executeUpdate();}
+    private void clearData() {
+        em.createQuery("delete from HojaDeVidaEntity").executeUpdate();
+        em.createQuery("delete from PrestadorEntity").executeUpdate();
+    
+    }
     
     /**
      * Inserta los datos iniciales para que las pruebas funcionen correctamente.
@@ -103,9 +111,16 @@ public class HojaDeVidaPersistenceTest
     private void insertData() 
     {
         PodamFactory factory = new PodamFactoryImpl();
-        for (int i = 0; i < 3; i++) 
+        for (int i = 0; i < 1; i++) {
+
+           PrestadorEntity entity = factory.manufacturePojo(PrestadorEntity.class);
+           em.persist(entity);
+           dataPrestadores.add(entity);
+        }
+        for (int i = 0; i < 1; i++) 
         {
             HojaDeVidaEntity entity = factory.manufacturePojo(HojaDeVidaEntity.class);
+            entity.setPrestador(dataPrestadores.get(0));
             em.persist(entity);
             data.add(entity);
         }
@@ -115,6 +130,7 @@ public class HojaDeVidaPersistenceTest
     public void createHojaDeVidaTest() {
         PodamFactory factory = new PodamFactoryImpl();
         HojaDeVidaEntity newEntity = factory.manufacturePojo(HojaDeVidaEntity.class);
+       
         HojaDeVidaEntity result = hojaDeVidaPersistence.create(newEntity);
 
         Assert.assertNotNull(result);
@@ -126,30 +142,14 @@ public class HojaDeVidaPersistenceTest
     }
 
     /**
-     * Prueba para consultar la lista de Hojas de vida.
-     */
-    @Test
-    public void getHojasDeVidaTest() {
-        List<HojaDeVidaEntity> list = hojaDeVidaPersistence.findAll();
-        Assert.assertEquals(data.size(), list.size());
-        for (HojaDeVidaEntity ent : list) {
-            boolean found = false;
-            for (HojaDeVidaEntity entity : data) {
-                if (ent.getId().equals(entity.getId())) {
-                    found = true;
-                }
-            }
-            Assert.assertTrue(found);
-        }
-    }
-
-    /**
      * Prueba para consultar una Hoja de vida.
      */
     @Test
     public void getHojaDeVidaTest() {
         HojaDeVidaEntity entity = data.get(0);
-        HojaDeVidaEntity newEntity = hojaDeVidaPersistence.find(entity.getId());
+        
+        HojaDeVidaEntity newEntity = hojaDeVidaPersistence.find(dataPrestadores.get(0).getId());
+        
         Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getEmail(), newEntity.getEmail());
         Assert.assertEquals(entity.getTelefono(), newEntity.getTelefono());

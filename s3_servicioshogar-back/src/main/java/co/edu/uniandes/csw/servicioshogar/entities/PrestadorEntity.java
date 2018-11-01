@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -37,8 +38,21 @@ public class PrestadorEntity extends BaseEntity implements Serializable {
     @OneToMany(mappedBy = "prestador", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<HabilidadEntity> habilidades = new ArrayList<HabilidadEntity>();
     
-    @OneToOne(mappedBy = "prestador")
+    @PodamExclude
+    @OneToOne(mappedBy = "prestador", fetch = FetchType.LAZY)
     private HojaDeVidaEntity hojaDeVida;
+    
+    @PodamExclude
+    @OneToMany(mappedBy = "prestador")
+    private List<ServicioEntity> servicios;
+
+    public void setServicios(List<ServicioEntity> servicios) {
+        this.servicios = servicios;
+    }
+
+    public List<ServicioEntity> getServicios() {
+        return servicios;
+    }
 
     public void setHojaDeVida(HojaDeVidaEntity hojaDeVida) {
         this.hojaDeVida = hojaDeVida;
