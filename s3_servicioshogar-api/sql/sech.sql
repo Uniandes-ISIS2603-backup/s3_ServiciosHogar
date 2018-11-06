@@ -19,3 +19,15 @@ insert into ClienteEntity (id, nombre, direccion, correo) values (17, 'Tamma Str
 insert into ClienteEntity (id, nombre, direccion, correo) values (18, 'Harli Earnshaw', '3349 Coolidge Street', 'hearnshawh@printfriendly.com');
 insert into ClienteEntity (id, nombre, direccion, correo) values (19, 'Tildi Strangman', '0148 Sundown Alley', 'tstrangmani@washington.edu');
 insert into ClienteEntity (id, nombre, direccion, correo) values (20, 'Iolande Ledamun', '366 Green Street', 'iledamunj@ca.gov');
+
+delete from prestadorentity;
+insert into PRESTADORENTITY (id, nombre, cedula) values (1, 'Tessi Perkins', 642702709);
+insert into PRESTADORENTITY (id, nombre, cedula) values (2, 'Bambi Beswetherick', 591237150);
+insert into PRESTADORENTITY (id, nombre, cedula) values (3, 'Tomasina Shiril', 569160688);
+insert into PRESTADORENTITY (id, nombre, cedula) values (4, 'Adiana Turpin', 997948403);
+insert into PRESTADORENTITY (id, nombre, cedula) values (5, 'Marjory Stent', 35727495);
+insert into PRESTADORENTITY (id, nombre, cedula) values (6, 'Eziechiele Laity', 317414876);
+insert into PRESTADORENTITY (id, nombre, cedula) values (7, 'Jonas Vaudre', 918011116);
+insert into PRESTADORENTITY (id, nombre, cedula) values (8, 'Maxy Bremner', 654835077);
+insert into PRESTADORENTITY (id, nombre, cedula) values (9, 'Nevsa Streight', 966207541);
+insert into PRESTADORENTITY (id, nombre, cedula) values (10, 'Heloise McElvogue', 678621139);
