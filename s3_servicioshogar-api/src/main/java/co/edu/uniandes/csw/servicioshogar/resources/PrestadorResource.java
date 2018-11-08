@@ -38,11 +38,18 @@ public class PrestadorResource {
  
     private static final Logger LOGGER = Logger.getLogger(PrestadorResource.class.getName());
     
+    /**
+     * Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
+     */
     @Inject
     private PrestadorLogic prestadorLogic;
+    
     /**
-     * 
-     * @param prestador
+     * Crea un nuevo prestador con la información que se recibe en el cuerpo de la petición
+     * y se agrega un objeto idéntico con id autogenerado por la BD.
+     * @param prestador {@link PrestadorDTO} - El prestador que desea guardar
+     * @return JSON {@link PrestadorDTO} - El prestador guardado con el id autogenerado.
+     * @throws BusinessLogicException  {@link BussinesLogicException} - Erro de lógica generado cuando el prestador ya existe
      */
     @POST
     public PrestadorDTO createPrestador(PrestadorDTO  prestador) throws BusinessLogicException
@@ -54,8 +61,9 @@ public class PrestadorResource {
     }
     
     /**
-     * 
-     * @return 
+     * Busca y retorna todos los prestadores existentes en la app
+     * @return JSONArray {@link PrestadorDTO} - Los prestadores encontrados en el app.
+     * Sino retorna vacío.
      */
     @GET
     public List<PrestadorDetailDTO> getPrestadores()
@@ -66,6 +74,12 @@ public class PrestadorResource {
         return listaPrestadores;
     }
     
+    /**
+     * Busca el prestador con el id dado por parámetro y lo retorna 
+     * @param prestadorId. El id del prestador que se está buscando
+     * @return JSON {@link PrestadorDTO} - Prestador buscado
+     * @throws WebApplicationException {@link WebApplicationException} Cuando no se encuentra al prestador
+     */
     @GET
     @Path("{prestadoresId: \\d+}")
     public PrestadorDetailDTO getPrestador(@PathParam("prestadoresId") Long prestadorId)
@@ -80,11 +94,11 @@ public class PrestadorResource {
     }
     
     /**
-     * 
-     * @param prestadoresId
-     * @param prestador
-     * @return 
-     * /prestadores/id/habilidades/id
+     * Actualiza/Modifca el prestador con el id dado por parámetro
+     * @param prestadorId. El id del prestador que se desea actualizar
+     * @param prestador {@link PrestadorDTO} - El prestador que se desea guardad
+     * @return JSON {@link PrestadorDetailDTO} - El cliente guardado con la modificaciones
+     * @throws BusinessLogicException {@link WebApplicationException} Cuando no se encentra el cliente a modificar.
      */
     @PUT
     @Path("{prestadoresId: \\d+}")
@@ -100,6 +114,11 @@ public class PrestadorResource {
         return detailDTO;
     }
     
+    /**
+     * Borra el cliente asociado con el id dado por parámetro
+     * @param prestadorId. El identificador del prestador a borrar
+     * @throws WebApplicationException {@link WebApplicationException} Cuando el prestador a eliminar no existe
+     */
     @DELETE
     @Path("{prestadoresId: \\d+}")
     public void deletePrestador(@PathParam("prestadoresId") Long prestadorId)
@@ -111,7 +130,16 @@ public class PrestadorResource {
         prestadorLogic.deletePrestador(prestadorId);
         LOGGER.log(Level.INFO, "PrestadorResource getPrestador : outpu : void");        
     }
-    
+
+    /**
+     * Conexión con el servicio de habilidades de un prestador. {@link HabillidadResource}
+     * Este método conecta la ruta /prestadores con la ruta /habilidades que dependen del prestador,
+     * es una redirección al servicio que maneja el segmento de la URL que se encarga de las habilidades.
+     * @param prestadorId. El id del prestador con respecto al cual se va a acceder al servicio
+     * @return El servicio de Habilidades para ese prestador en particular.
+     * @throws WebApplicationException {@link WebApplicationException}
+     * Error de lógico que se genera cuando no se encuentra el prestador 
+     */
     @Path("{prestadorId: \\d+}/habilidades")
     public Class<HabilidadResource> getHabilidadResource(@PathParam("prestadorId") Long prestadorId) {
         if (prestadorLogic.getPrestador(prestadorId) == null) {
@@ -120,6 +148,15 @@ public class PrestadorResource {
         return HabilidadResource.class;
     }
     
+    /**
+     * Conexión con el servicio de hoja de vida de un prestador. {@link HojaDeVidaResource}
+     * Este método conecta la ruta /prestadores con la ruta /hojaDeVida que dependen del prestador,
+     * es una redirección al servicio que maneja el segmento de la URL que se encarga de la hoja de vida.
+     * @param prestadorId. El id del prestador con respecto al cual se va a acceder al servicio
+     * @return El servicio de Hoja de Vida para ese prestador en particular.
+     * @throws WebApplicationException {@link WebApplicationException}
+     * Error de lógico que se genera cuando no se encuentra el prestador 
+     */
     @Path("{prestadorId: \\d+}/hojaDeVida")
     public Class<HojaDeVidaResource> getHojaDeVidaResource(@PathParam("prestadorId") Long prestadorId) {
         if (prestadorLogic.getPrestador(prestadorId) == null) {
@@ -131,8 +168,8 @@ public class PrestadorResource {
     /**
      * Convierte una lista de entidades a DTO.
      *
-     * Este método convierte una lista de objetos BookEntity a una lista de
-     * objetos BookDetailDTO (json)
+     * Este método convierte una lista de objetos PrestadorEntity a una lista de
+     * objetos PrestadorDetailDTO (json)
      *
      * @param entityList corresponde a la lista de libros de tipo Entity que
      * vamos a convertir a DTO.

@@ -36,12 +36,19 @@ public class HabilidadResource {
     
     private static final Logger LOGGER = Logger.getLogger(PrestadorResource.class.getName());
     
+    /**
+    * Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
+    */
     @Inject
     private HabilidadLogic habilidadLogic;
+    
     /**
-     * 
-     * @param habilidad
-     * @return 
+     * Crea una nueva habiidad con la información que se recibe en el cuerpo de la petición y
+     * agrega un objeto idéntico con un id autogenerado por la BD.
+     * @param prestadorId. El id del prestador al que se le va a agregar la habilidad
+     * @param habilidad {@link HabilidadDTO} - La habilidad que se desea guardar
+     * @return JSON {@link HabilidadDTO} - La habilidad guardad con el id autogenerado
+     * @throws BusinessLogicException {@link BusinessLogicException} - Error que ocurre cuando ya existe la habilidad 
      */
     @POST
     public HabilidadDTO createHabilidad(@PathParam("prestadorId") Long prestadorId, HabilidadDTO  habilidad) throws BusinessLogicException
@@ -53,8 +60,9 @@ public class HabilidadResource {
     }
     
     /**
-     * 
-     * @return 
+     * Busca y retorna todas las habilidades existentes del prestador dado por parámetro
+     * @param prestadorId. El id del prestador del cual se quiere consultar sus habilidades
+     * @return JSONArray {@link HabilidadDTO} - Las habilidades del prestador, en caso de que no hayan retorna vacío
      */
     @GET
     public List<HabilidadDTO> getHabilidades(@PathParam("prestadorId") Long prestadorId)
@@ -66,9 +74,12 @@ public class HabilidadResource {
     }
     
     /**
-     * 
-     * @param habilidadId
-     * @return 
+     * Bucsa la habilidad con el id dado por parámetro y la retorna
+     * @param prestadorId. El id del prestador aosciado a la habilidad
+     * @param habilidadId. El id de la habilidad buscada
+     * @return JSON {@link HabilidadDTO} - La habilidad buscada.
+     * @throws WebApplicationException  {@link WebApplicationExceptionMapper} - Error de logica generado
+     * cuando no se encuentra la habilidad
      */
     @GET
     @Path("{habilidadesId: \\d+}")
@@ -85,10 +96,12 @@ public class HabilidadResource {
     }
     
     /**
-     * 
-     * @param habilidadId
-     * @param habilidad
-     * @return 
+     * Actualiza/Modifica la habilidad con el id dado por parámetro
+     * @param prestadorId. El id del prestador asociado a la habildiad
+     * @param habilidadId. El id de la habilidad que se desea actualizar
+     * @param habilidad. {@link HabilidadDTO} - La habilidad con las modificaciones que se desea realizar
+     * @return JSON {@link HabilidadDTO} - La habilidad guardada con las modificaciones
+     * @throws BusinessLogicException {@link BusinessLogicException} Error que ocurre cuando el id´s dados por parámetro no coinciden 
      */
     @PUT
     @Path("{habilidadesId: \\d+}")
@@ -110,8 +123,11 @@ public class HabilidadResource {
     }
     
     /**
-     * 
-     * @param habilidadId 
+     * Borra la habilidad asociada con el id dado por parámetro
+     * @param prestadorId. El id del prestador asociado a la habilidad
+     * @param habilidadId. El id de la habilidad que se desea eliminar
+     * @throws BusinessLogicException {@link BusinessLogicException} Error que ocurre cuando la habilidad
+     * con el id dado no existe.
      */
     @DELETE
     @Path("{habilidadesId: \\d+}")
@@ -127,12 +143,12 @@ public class HabilidadResource {
      /**
      * Lista de entidades a DTO.
      *
-     * Este método convierte una lista de objetos PrizeEntity a una lista de
-     * objetos ReviewDTO (json)
+     * Este método convierte una lista de objetos HabilidadEntity a una lista de
+     * objetos HabilidadDTO (json)
      *
-     * @param entityList corresponde a la lista de reseñas de tipo Entity que
+     * @param entityList corresponde a la lista de habilidades de tipo Entity que
      * vamos a convertir a DTO.
-     * @return la lista de reseñas en forma DTO (json)
+     * @return la lista de habilidades en forma DTO (json)
      */
     private List<HabilidadDTO> listEntity2DTO(List<HabilidadEntity> entityList) {
         List<HabilidadDTO> list = new ArrayList<HabilidadDTO>();

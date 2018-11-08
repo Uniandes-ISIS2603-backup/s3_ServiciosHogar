@@ -22,30 +22,26 @@ import javax.inject.Inject;
  */
 @Stateless
 public class HabilidadLogic {
-    
-    /**
-     * 
-     */
+
     private static final Logger LOGGER = Logger.getLogger(HabilidadLogic.class.getName());
     
     /**
-     * 
+     * Inyección de dependencias
      */
     @Inject
     private HabilidadPersistence persistence;
     
     /**
-     * 
+     * Inyección de dependencias
      */
     @Inject
     private PrestadorPersistence prestadorPersistence;
     
     /**
-     * 
-     * @param prstadorId
-     * @param habilidadEntity
-     * @return
-     * @throws BusinessLogicException 
+     * Crea una habilidad en la persistencia
+     * @param prstadorId. El id del prestador asociado a la habilidad
+     * @param habilidadEntity. La entidad que representa la habilidad a persistir
+     * @return Entidad de la habilidad luego de ser persistida
      */
     public HabilidadEntity createHabilidad(Long prstadorId, HabilidadEntity habilidadEntity) throws BusinessLogicException
     {
@@ -63,9 +59,9 @@ public class HabilidadLogic {
     }
     
     /**
-     * 
-     * @param prestadorId
-     * @return 
+     * Obtener todas la habilidades del prestador dado por parámetro
+     * @param prestadorId. El id del prestador del cual se quieren consultar sus habilidades
+     * @return La lista con todas la habilidades asociadas al prestador dado
      */
     public List<HabilidadEntity> getHabilidades(Long prestadorId)
     {
@@ -77,10 +73,10 @@ public class HabilidadLogic {
     }
     
     /**
-     * 
-     * @param prestadorId
-     * @param habilidadId
-     * @return 
+     * Obtener una habildiad identificada con el id dado por parámetro
+     * @param prestadorId. El id del prestador asociado a la habilidad
+     * @param habilidadId. El id de la habildiad a buscar
+     * @return La habilidad solicitada.
      */
     public HabilidadEntity getHabilidad(Long prestadorId, Long habilidadId)
     {
@@ -89,10 +85,10 @@ public class HabilidadLogic {
     }
     
     /**
-     * 
-     * @param prestadorId
-     * @param habilidadEntity
-     * @return 
+     * Modifica la información de la habilidad dada por parámetro
+     * @param prestadorId. El id del prestador asociado a la habilidad
+     * @param habilidadEntity. La habilidad con los cambios que se quieren realizar.
+     * @return  La habilidad con los cambios actualizados en la BD.
      */
     public HabilidadEntity updateHabilidad(Long prestadorId, HabilidadEntity habilidadEntity)
     {
@@ -105,10 +101,10 @@ public class HabilidadLogic {
     }
     
     /**
-     * 
-     * @param prestadorId
-     * @param habilidadId
-     * @throws BusinessLogicException 
+     * Borra una habilidad con el id dado por parámetro
+     * @param prestadorId. El id del prestador asociado a la habilidad
+     * @param habilidadId. El id de la habilidad que se desea eliminar
+     * @throws BusinessLogicException. Si la habilidad no existe
      */
     public void deleteHabilidad(Long prestadorId, Long habilidadId) throws BusinessLogicException
     {

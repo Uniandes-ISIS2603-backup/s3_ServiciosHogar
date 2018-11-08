@@ -23,10 +23,18 @@ public class PrestadorLogic {
     
     private static final Logger LOGGER = Logger.getLogger(PrestadorLogic.class.getName());
     
+    /**
+     * Inyección de persistencia
+     */
     @Inject
     private PrestadorPersistence persistence;
     
-    
+    /**
+     * Crea un prestador en la persistencia
+     * @param prestadorEntity. Entidad que representa el prestador a persistir
+     * @return La entidad luego de ser persistida
+     * @throws BusinessLogicException . Si el prestador ya existe
+     */
     public PrestadorEntity createPrestador(PrestadorEntity prestadorEntity) throws BusinessLogicException{
         LOGGER.log(Level.INFO, "Inicia el proceso de creación de un prestador");
         if(prestadorEntity.getCedula() == null || prestadorEntity.getCedula().equals(""))
@@ -48,6 +56,10 @@ public class PrestadorLogic {
         return prestadorEntity;
     } 
     
+    /**
+     * Retorna todos los prestadores
+     * @return Una lista con todos los prestadores
+     */
     public List<PrestadorEntity> getPrestadores()
     {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los prestadores");
@@ -56,6 +68,11 @@ public class PrestadorLogic {
         return resultado;
     }
     
+    /**
+     * Obtener el prestador con el id dado por parámetro
+     * @param prestadorId. El id del prestador que se desea buscar
+     * @return El prestador solicitado
+     */
     public PrestadorEntity getPrestador(Long prestadorId)
     {
         LOGGER.log(Level.INFO, "Inicia porceso de consultar el prestador con id={0}", prestadorId);
@@ -68,6 +85,13 @@ public class PrestadorLogic {
         return prestador;
     }
     
+    /**
+     * Modifica la información de un prestador con el id dado por parámetro
+     * @param prestadorId. El id del prestador que se quiere actualizar
+     * @param prestadorEntity. El prestador con las modificaciones que se desean realizar
+     * @return El prestador con los cambios actualizados en la BD.
+     * @throws BusinessLogicException 
+     */
     public PrestadorEntity updatePrestador(Long prestadorId, PrestadorEntity prestadorEntity) throws BusinessLogicException{
         LOGGER.log(Level.INFO,"Inicia porceso de actualizar el prestador con id = {0}", prestadorId);
         //Reglas de negocio: Puede actualizar su nombre
@@ -78,6 +102,10 @@ public class PrestadorLogic {
         return resultado;        
     }
     
+    /**
+     * Borrar un prestador.
+     * @param prestadorId. El id del prestador a eliminar. 
+     */
     public void deletePrestador(Long prestadorId)
     {
         LOGGER.log(Level.INFO, "Inicia proceso de eliminar el prestador con id = {0}", prestadorId);
