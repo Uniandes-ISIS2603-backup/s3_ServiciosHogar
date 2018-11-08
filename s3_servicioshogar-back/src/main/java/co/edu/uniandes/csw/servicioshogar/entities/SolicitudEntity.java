@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.servicioshogar.entities;
 
+import co.edu.uniandes.csw.bookstore.podam.DateStrategy;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,6 +19,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import uk.co.jemos.podam.common.PodamExclude;
+import uk.co.jemos.podam.common.PodamStrategyValue;
 
 /**
  * Clase que representa una solicitud en la persistencia y permite su
@@ -29,6 +31,9 @@ import uk.co.jemos.podam.common.PodamExclude;
 public class SolicitudEntity extends BaseEntity implements Serializable{
     
     private String direccion;
+    
+    @Temporal(TemporalType.DATE)
+    @PodamStrategyValue(DateStrategy.class)
     private Date fecha;
     
     @PodamExclude
