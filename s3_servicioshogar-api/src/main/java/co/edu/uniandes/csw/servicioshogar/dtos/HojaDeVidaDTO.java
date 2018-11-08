@@ -54,7 +54,6 @@ public class HojaDeVidaDTO implements Serializable{
      */
     private String formacion;
     
-    private PrestadorDTO prestador;
     
     public HojaDeVidaDTO(){      
     }
