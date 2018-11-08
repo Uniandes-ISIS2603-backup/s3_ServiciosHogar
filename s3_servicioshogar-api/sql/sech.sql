@@ -20,7 +20,7 @@ insert into ClienteEntity (id, nombre, direccion, correo) values (18, 'Harli Ear
 insert into ClienteEntity (id, nombre, direccion, correo) values (19, 'Tildi Strangman', '0148 Sundown Alley', 'tstrangmani@washington.edu');
 insert into ClienteEntity (id, nombre, direccion, correo) values (20, 'Iolande Ledamun', '366 Green Street', 'iledamunj@ca.gov');
 
-delete from prestadorentity;
+delete from PRESTADORENTITY;
 insert into PRESTADORENTITY (id, nombre, cedula) values (1, 'Tessi Perkins', 642702709);
 insert into PRESTADORENTITY (id, nombre, cedula) values (2, 'Bambi Beswetherick', 591237150);
 insert into PRESTADORENTITY (id, nombre, cedula) values (3, 'Tomasina Shiril', 569160688);
@@ -31,3 +31,29 @@ insert into PRESTADORENTITY (id, nombre, cedula) values (7, 'Jonas Vaudre', 9180
 insert into PRESTADORENTITY (id, nombre, cedula) values (8, 'Maxy Bremner', 654835077);
 insert into PRESTADORENTITY (id, nombre, cedula) values (9, 'Nevsa Streight', 966207541);
 insert into PRESTADORENTITY (id, nombre, cedula) values (10, 'Heloise McElvogue', 678621139);
+
+delete from HABILIDADENTITY;
+insert into HABILIDADENTITY (id, descripcion, tipo, prestador_id) values (1, 'Ut at dolor quis odio consequat varius.', 'faucibus', 1);
+insert into HABILIDADENTITY (id, descripcion, tipo, prestador_id) values (2, 'Donec ut dolor.', 'convallis', 1);
+insert into HABILIDADENTITY (id, descripcion, tipo, prestador_id) values (3, 'Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.', 'scelerisque', 2);
+insert into HABILIDADENTITY (id, descripcion, tipo, prestador_id) values (4, 'In congue.', 'dapibus', 2);
+insert into HABILIDADENTITY (id, descripcion, tipo, prestador_id) values (5, 'Morbi non lectus.', 'lorem', 3);
+insert into HABILIDADENTITY (id, descripcion, tipo, prestador_id) values (6, 'Proin leo odio, porttitor id, consequat in, consequat ut, nulla.', 'vivamus', 3);
+insert into HABILIDADENTITY (id, descripcion, tipo, prestador_id) values (7, 'Maecenas pulvinar lobortis est.', 'ipsum', 4);
+insert into HABILIDADENTITY (id, descripcion, tipo, prestador_id) values (8, 'Curabitur gravida nisi at nibh.', 'in', 4);
+insert into HABILIDADENTITY (id, descripcion, tipo, prestador_id) values (9, 'Praesent lectus.', 'gravida', 5);
+insert into HABILIDADENTITY (id, descripcion, tipo, prestador_id) values (10, 'Suspendisse potenti.', 'vestibulum', 5);
+insert into HABILIDADENTITY (id, descripcion, tipo, prestador_id) values (11, 'Phasellus in felis.', 'sem', 6);
+insert into HABILIDADENTITY (id, descripcion, tipo, prestador_id) values (12, 'Pellentesque ultrices mattis odio.', 'quis', 6);
+insert into HABILIDADENTITY (id, descripcion, tipo, prestador_id) values (13, 'Quisque id justo sit amet sapien dignissim vestibulum.', 'nunc', 7);
+insert into HABILIDADENTITY (id, descripcion, tipo, prestador_id) values (14, 'Suspendisse potenti.', 'penatibus', 7);
+insert into HABILIDADENTITY (id, descripcion, tipo, prestador_id) values (15, 'Etiam justo.', 'odio', 8);
+insert into HABILIDADENTITY (id, descripcion, tipo, prestador_id) values (16, 'Curabitur convallis.', 'sem', 8);
+insert into HABILIDADENTITY (id, descripcion, tipo, prestador_id) values (17, 'Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus.', 'lacinia', 9);
+insert into HABILIDADENTITY (id, descripcion, tipo, prestador_id) values (18, 'Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo.', 'porttitor', 9);
+insert into HABILIDADENTITY (id, descripcion, tipo, prestador_id) values (19, 'Donec semper sapien a libero.', 'ultrices', 10);
+insert into HABILIDADENTITY (id, descripcion, tipo, prestador_id) values (20, 'Duis consequat dui nec nisi volutpat eleifend.', 'ultrices', 10);
+
+delete FROM SERVICIOENTITY;
+delete FROM HojaDEVidaEntity;
+delete FROM 
