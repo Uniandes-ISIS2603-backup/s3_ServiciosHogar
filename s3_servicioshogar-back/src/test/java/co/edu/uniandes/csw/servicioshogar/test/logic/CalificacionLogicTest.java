@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.servicioshogar.test.logic;
 
 import co.edu.uniandes.csw.servicioshogar.ejb.CalificacionLogic;
 import co.edu.uniandes.csw.servicioshogar.entities.CalificacionEntity;
+import co.edu.uniandes.csw.servicioshogar.entities.ClienteEntity;
 import co.edu.uniandes.csw.servicioshogar.entities.ServicioEntity;
 import co.edu.uniandes.csw.servicioshogar.entities.SolicitudEntity;
 import co.edu.uniandes.csw.servicioshogar.exceptions.BusinessLogicException;
@@ -36,6 +37,11 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 @RunWith(Arquillian.class)
 public class CalificacionLogicTest 
 {
+    private List<ClienteEntity> listaCliente = new ArrayList<ClienteEntity>();
+    private List<SolicitudEntity> listaSolicitud = new ArrayList<SolicitudEntity>();
+    private List<ServicioEntity> listaServicio = new ArrayList<ServicioEntity>();
+    private List<CalificacionEntity> listaCalificacion = new ArrayList<CalificacionEntity>();
+
     private PodamFactory factory = new PodamFactoryImpl();
     
     @Inject
@@ -47,9 +53,7 @@ public class CalificacionLogicTest
     @Inject
     private UserTransaction utx;
     
-    private List<CalificacionEntity> data = new ArrayList<CalificacionEntity>();
-    
-    private List<ServicioEntity> dataServicio = new ArrayList<ServicioEntity>();
+   
     
     /**
      * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
@@ -90,7 +94,10 @@ public class CalificacionLogicTest
     /**
      * Limpia las tablas que están implicadas en la prueba.
      */
-    private void clearData() {em.createQuery("delete from CalificacionEntity").executeUpdate();}
+    private void clearData() {em.createQuery("delete from CalificacionEntity").executeUpdate();
+        em.createQuery("delete from ServicioEntity").executeUpdate();
+        em.createQuery("delete from SolicitudEntity").executeUpdate();
+        em.createQuery("delete from ClienteEntity").executeUpdate();}
     
     /**
      * Inserta los datos iniciales para el correcto funcionamiento de las
@@ -98,7 +105,7 @@ public class CalificacionLogicTest
      */
     private void insertData() 
     {   
-        for (int i = 0; i < 3; i++) 
+     /**   for (int i = 0; i < 3; i++) 
         {
             CalificacionEntity entity = factory.manufacturePojo(CalificacionEntity.class);
             ServicioEntity entityServicio = factory.manufacturePojo(ServicioEntity.class);                     
@@ -115,6 +122,42 @@ public class CalificacionLogicTest
         {
             dataServicio.get(i).setSolicitud(entitySolicitud);
         }
+        */
+        PodamFactory factory = new PodamFactoryImpl();
+        //Se agrega un cliente a la bd. 
+        ClienteEntity cliente = factory.manufacturePojo(ClienteEntity.class);
+        
+        listaCliente.add(cliente);
+        em.persist(cliente);
+        
+        //Se agrega una solicitud a un cliente.
+        SolicitudEntity solicitud = factory.manufacturePojo(SolicitudEntity.class);
+        solicitud.setCliente(cliente);
+        listaSolicitud.add(solicitud);
+        em.persist(solicitud);
+        cliente.setSolicitudes(listaSolicitud);
+        
+        
+        //Se agregan 3 servicios a una solicitud
+        for(int i = 0; i < 3; i++)
+        {
+            ServicioEntity servicio = factory.manufacturePojo(ServicioEntity.class);
+            servicio.setSolicitud(solicitud);
+            listaServicio.add(servicio);
+            em.persist(servicio);
+        }
+        solicitud.setServicios(listaServicio);
+        
+        for(int i = 0; i < 3; i++)
+        {
+            CalificacionEntity calificacion = factory.manufacturePojo(CalificacionEntity.class);
+            if(i != 0)
+                calificacion.setServicio(listaServicio.get(i));
+            listaCalificacion.add(calificacion);
+            em.persist(calificacion);
+            if(i != 0)
+                listaServicio.get(i).setCalificacion(calificacion);            
+        }
     }
     
     /**
@@ -125,21 +168,15 @@ public class CalificacionLogicTest
     @Test
     public void createCalificacionTest() throws BusinessLogicException 
     {
+        
+        ClienteEntity cliente = listaCliente.get(0);
         CalificacionEntity newEntity = factory.manufacturePojo(CalificacionEntity.class);
-        SolicitudEntity solicitudEntity = factory.manufacturePojo(SolicitudEntity.class);
-        List<ServicioEntity> lista = new ArrayList<ServicioEntity>();
-        for(int i = 0; i < 3 ;i++)
-        {
-            ServicioEntity servicioEntity = factory.manufacturePojo(ServicioEntity.class);
-            servicioEntity.setSolicitud(solicitudEntity);
-            lista.add(servicioEntity);
-        }            
-        solicitudEntity.setServicios(lista);
-        newEntity.setServicio(lista.get(0));
-        lista.get(0).setCalificacion(newEntity);
+        SolicitudEntity solicitudEntity = listaSolicitud.get(0);
+        ServicioEntity servicioEntity = listaServicio.get(0);
+        newEntity.setServicio(servicioEntity);
+        
         System.out.println("Entro");
-        printStackTrace();
-        CalificacionEntity result = calificacionLogic.createCalificacion(solicitudEntity.getId(), lista.get(0).getId() ,newEntity);
+        CalificacionEntity result = calificacionLogic.createCalificacion(solicitudEntity.getId(), servicioEntity.getId() ,newEntity);
         System.out.println("Salio");
 
         Assert.assertNotNull(result);
@@ -155,7 +192,7 @@ public class CalificacionLogicTest
     @Test
     public void getCalificacionTest() 
     {
-        ServicioEntity servicioEntity = dataServicio.get(0);
+        ServicioEntity servicioEntity = listaServicio.get(1);
         CalificacionEntity entity = servicioEntity.getCalificacion();
         CalificacionEntity resultEntity = calificacionLogic.getCalificacion(servicioEntity.getId(),entity.getId());
         Assert.assertNotNull(resultEntity);
@@ -170,12 +207,12 @@ public class CalificacionLogicTest
     @Test
     public void updateCalificacionTest() 
     {        
-        CalificacionEntity entity = data.get(0);
+        CalificacionEntity entity = listaCalificacion.get(0);
         CalificacionEntity pojoEntity = factory.manufacturePojo(CalificacionEntity.class);    
         pojoEntity.setId(entity.getId());
        
         System.out.println("llego");
-        calificacionLogic.updateCalificacion(dataServicio.get(1).getSolicitud().getId() , data.get(1).getId(), pojoEntity);
+        calificacionLogic.updateCalificacion(listaServicio.get(1).getSolicitud().getId() ,listaCalificacion.get(1).getId(), pojoEntity);
         System.out.println("Salio");   
         CalificacionEntity resp = em.find(CalificacionEntity.class, entity.getId());       
         Assert.assertEquals(pojoEntity.getId(), resp.getId());
@@ -191,7 +228,7 @@ public class CalificacionLogicTest
     @Test
     public void deleteCalificacionTest() throws BusinessLogicException 
     {
-        CalificacionEntity entity = data.get(0);
+        CalificacionEntity entity = listaCalificacion.get(1);
         calificacionLogic.deleteCalificacion(entity.getServicio().getId(),entity.getId());
         CalificacionEntity deleted = em.find(CalificacionEntity.class, entity.getId());
         Assert.assertNull(deleted);
