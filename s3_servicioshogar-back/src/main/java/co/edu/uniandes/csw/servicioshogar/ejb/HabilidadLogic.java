@@ -25,6 +25,10 @@ import java.util.logging.Logger;
 public class HabilidadLogic {
 
     private static final Logger LOGGER = Logger.getLogger(HabilidadLogic.class.getName());
+
+    /**
+     * Mensaje de exception
+     */
     private static final String MENSAJE = "El prestador no existe";
     /**
      * Inyección de dependencias
