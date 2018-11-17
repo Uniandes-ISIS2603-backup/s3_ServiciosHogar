@@ -53,6 +53,10 @@ public class HojaDeVidaDTO implements Serializable{
      * Atributo que representa el nivel educativo del prestador.
      */
     private String formacion;
+    /**
+     * Atributo que representa el prestador asociado a la hoja de vida
+     */
+    private PrestadorDTO prestador;
     
     
     public HojaDeVidaDTO(){      
@@ -142,5 +146,15 @@ public class HojaDeVidaDTO implements Serializable{
     public void setFormacion(String formacion) {
         this.formacion = formacion;
     }
+
+    public PrestadorDTO getPrestador() {
+        return prestador;
+    }
+
+    public void setPrestador(PrestadorDTO prestador) {
+        this.prestador = prestador;
+    }
+    
+    
     
 }

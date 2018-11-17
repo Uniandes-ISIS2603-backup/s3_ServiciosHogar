@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.servicioshogar.dtos;
 
 import co.edu.uniandes.csw.servicioshogar.entities.ServicioEntity;
+import java.io.Serializable;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -33,7 +34,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  *
  * @author Steven Tarazona <ys.tarazona@uniandes.edu.co>
  */
-public class ServicioDTO {
+public class ServicioDTO implements Serializable{
     
     private Long id;
     private String descripcion, requerimientos;

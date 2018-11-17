@@ -48,7 +48,6 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  */
 public class HabilidadDTO implements Serializable {
 
-    private static final long serialVersionUID = 1L;
 //----------------------ATRIBUTOS ------------------------
     private Long id; 
     private String descripcion;

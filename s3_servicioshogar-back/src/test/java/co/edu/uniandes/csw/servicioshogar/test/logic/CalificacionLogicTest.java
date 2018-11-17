@@ -12,7 +12,6 @@ import co.edu.uniandes.csw.servicioshogar.entities.ServicioEntity;
 import co.edu.uniandes.csw.servicioshogar.entities.SolicitudEntity;
 import co.edu.uniandes.csw.servicioshogar.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.servicioshogar.persistence.CalificacionPersistence;
-import static com.sun.corba.ee.impl.util.Utility.printStackTrace;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -161,8 +160,7 @@ public class CalificacionLogicTest
     }
     
     /**
-     * Prueba para crear un Calificacion.
-     *
+     * Prueba para crear un Calificacion.     *
      * @throws co.edu.uniandes.csw.bookstore.exceptions.BusinessLogicException
      */
     @Test
@@ -175,9 +173,7 @@ public class CalificacionLogicTest
         ServicioEntity servicioEntity = listaServicio.get(0);
         newEntity.setServicio(servicioEntity);
         
-        System.out.println("Entro");
         CalificacionEntity result = calificacionLogic.createCalificacion(solicitudEntity.getId(), servicioEntity.getId() ,newEntity);
-        System.out.println("Salio");
 
         Assert.assertNotNull(result);
         CalificacionEntity entity = em.find(CalificacionEntity.class, result.getId());        
@@ -222,7 +218,6 @@ public class CalificacionLogicTest
     
     /**
      * Prueba para eliminar un Calificacion.
-     *
      * @throws co.edu.uniandes.csw.bookstore.exceptions.BusinessLogicException
      */
     @Test

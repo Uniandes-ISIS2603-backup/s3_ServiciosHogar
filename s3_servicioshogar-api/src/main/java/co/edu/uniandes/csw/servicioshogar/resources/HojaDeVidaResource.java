@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.servicioshogar.resources;
 
 import co.edu.uniandes.csw.servicioshogar.dtos.HojaDeVidaDTO;
+import co.edu.uniandes.csw.servicioshogar.dtos.HojaDeVidaDetailDTO;
 import co.edu.uniandes.csw.servicioshogar.ejb.HojaDeVidaLogic;
 import co.edu.uniandes.csw.servicioshogar.entities.HojaDeVidaEntity;
 import co.edu.uniandes.csw.servicioshogar.exceptions.BusinessLogicException;
@@ -53,7 +54,7 @@ public class HojaDeVidaResource {
     }
 
     @GET
-    public HojaDeVidaDTO getHojaDeVida(@PathParam("prestadorId") Long prestadorId) throws WebApplicationException
+    public HojaDeVidaDetailDTO getHojaDeVida(@PathParam("prestadorId") Long prestadorId) throws WebApplicationException
     {
         System.out.println("entra al get"+prestadorId);
         LOGGER.log(Level.INFO, "HojaDeVidaResource getHojaDeVida: input: {0}", prestadorId);
@@ -61,7 +62,7 @@ public class HojaDeVidaResource {
         if (hojaDeVidaEntity == null)
             throw new WebApplicationException("El recurso " + prestadorId + "/hojaDeVida no existe.", 404);
         System.out.println("La lógica lo encuentra");
-        HojaDeVidaDTO detailDTO = new HojaDeVidaDTO(hojaDeVidaEntity);
+        HojaDeVidaDetailDTO detailDTO = new HojaDeVidaDetailDTO(hojaDeVidaEntity);
         LOGGER.log(Level.INFO, "HojaDeVidaResource getHojaDeVida: {0}", detailDTO.toString());
         return detailDTO;
     }

@@ -32,7 +32,7 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  * @author Daniela Rocha Torres
  */
 @RunWith(Arquillian.class)
-public class HojaDeVidaLogicTest {
+public class HojaDeVidaLogicTest{
     private PodamFactory factory = new PodamFactoryImpl();
 
     @Inject

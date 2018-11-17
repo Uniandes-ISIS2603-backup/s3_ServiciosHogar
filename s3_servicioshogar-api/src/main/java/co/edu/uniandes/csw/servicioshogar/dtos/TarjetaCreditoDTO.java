@@ -16,8 +16,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  */
 public class TarjetaCreditoDTO implements Serializable{
     //-------------------Atributos------------------------//
-    long
-            id;
+    private Long id;
     
     private String
             titular,

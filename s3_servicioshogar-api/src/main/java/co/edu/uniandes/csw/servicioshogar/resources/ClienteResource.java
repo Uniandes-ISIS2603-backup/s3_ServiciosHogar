@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.servicioshogar.resources;
 
 import co.edu.uniandes.csw.servicioshogar.dtos.ClienteDTO;
+import co.edu.uniandes.csw.servicioshogar.dtos.ClienteDetailDTO;
 import co.edu.uniandes.csw.servicioshogar.ejb.ClienteLogic;
 import co.edu.uniandes.csw.servicioshogar.entities.ClienteEntity;
 import co.edu.uniandes.csw.servicioshogar.exceptions.BusinessLogicException;
@@ -77,10 +78,10 @@ public class ClienteResource
      * retorna vacio.
      */
     @GET
-    public List<ClienteDTO> getClientes()
+    public List<ClienteDetailDTO> getClientes()
     {
         LOGGER.info("ClienteResource getClientes: input: void");
-        List<ClienteDTO> listaClientes = listEntity2DetailDTO(clienteLogic.getClientes());
+        List<ClienteDetailDTO> listaClientes = listEntity2DetailDTO(clienteLogic.getClientes());
         LOGGER.log(Level.INFO, "ClienteResource getClientes: output: {0}", listaClientes.toString());
         return listaClientes;
     }
@@ -94,14 +95,14 @@ public class ClienteResource
      */
     @GET
     @Path("{clientesId:\\d+}")
-    public ClienteDTO getCliente(@PathParam("clientesId") Long clientesId) throws WebApplicationException
+    public ClienteDetailDTO getCliente(@PathParam("clientesId") Long clientesId) throws WebApplicationException
     {
         LOGGER.log(Level.INFO, "ClienteResource getCliente: input: {0}", clientesId);
         ClienteEntity clienteEntity = clienteLogic.getCliente(clientesId);
         if (clienteEntity == null)
             throw new WebApplicationException("El recurso /clientes/" + clientesId + " no existe.", 404);
         
-        ClienteDTO detailDTO = new ClienteDTO(clienteEntity);
+        ClienteDetailDTO detailDTO = new ClienteDetailDTO(clienteEntity);
         LOGGER.log(Level.INFO, "ClienteResource getCliente: output: {0}", detailDTO.toString());
         return detailDTO;
     }
@@ -172,11 +173,11 @@ public class ClienteResource
      * @param entityList. Corresponde a la lista de clientes de tipo Entity que se convertira en DTO.
      * @return lista de editoriales en forma DTO (json).
      */
-    private List<ClienteDTO> listEntity2DetailDTO(List<ClienteEntity> entityList) {
-        List<ClienteDTO> list = new ArrayList<>();
+    private List<ClienteDetailDTO> listEntity2DetailDTO(List<ClienteEntity> entityList) {
+        List<ClienteDetailDTO> list = new ArrayList<>();
         for (ClienteEntity entity : entityList) 
         {
-            list.add(new ClienteDTO(entity));
+            list.add(new ClienteDetailDTO(entity));
         }
         return list;
     }

@@ -5,6 +5,8 @@
  */
 package co.edu.uniandes.csw.servicioshogar.test.persistence;
 
+import junit.framework.TestCase;
+
 /**
  *
  * @author Adriana Trujillo

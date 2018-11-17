@@ -31,7 +31,7 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  * @author Maria Ocampo
  */
 @RunWith(Arquillian.class)
-public class PrestadorLogicTest {
+public class PrestadorLogicTest{
     
     /**
      * 

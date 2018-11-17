@@ -42,7 +42,6 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  */
 public class PrestadorDTO implements Serializable {
     
-    private static final long serialVersionUID = 1L;
     private Long id;
     private String nombre;
     private Integer cedula;
@@ -95,7 +94,7 @@ public class PrestadorDTO implements Serializable {
 
     /**
      * Devuelve el nombre del prestador
-     * @return the name
+     * @return the nombre
      */
     public String getNombre() {
         return nombre;
@@ -115,6 +114,22 @@ public class PrestadorDTO implements Serializable {
      */
     public void setId(Long id) {
         this.id = id;
+    }
+
+    /**
+     * Retorna la hoja de vida del prestador
+     * @return the hoja de vida
+     */
+    public HojaDeVidaDTO getHojaDeVida() {
+        return hojaDeVida;
+    }
+
+    /**
+     * Modifica la hoja de vida del prestador
+     * @param hojaDeVida the hoja de vida to set
+     */
+    public void setHojaDeVida(HojaDeVidaDTO hojaDeVida) {
+        this.hojaDeVida = hojaDeVida;
     }
     
      /**

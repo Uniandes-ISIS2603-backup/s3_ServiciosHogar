@@ -18,6 +18,7 @@ import javax.inject.Inject;
  *
  * @author Daniela Rocha Torres
  */
+@Stateless
 public class ReferenciaLogic {
     
        private static final Logger LOGGER = Logger.getLogger(ReferenciaLogic.class.getName());
