@@ -48,13 +48,14 @@ public class TarjetaCreditoPersistence {
      * @param clienteId 
      * @return una lista con todas las tarjetas de credito que se encuentren en la BD.
      */
-    public TarjetaCreditoEntity findAll(Long clienteId)
+    //FIXME No se si este bien.
+    public List<TarjetaCreditoEntity> findAll(Long clienteId)
     {
         LOGGER.log(Level.INFO, "Consultando todas las tarjetas creditos");
         /*Se crea un query para buscar todas las tarjetas de credito en la base de datos.*/
-        TypedQuery query = em.createQuery("select u from TarjetaCreditoEntity u", TarjetaCreditoEntity.class);
+        TypedQuery query = em.createQuery("select u from TarjetaCreditoEntity u WHERE u.cliente.id = :clienteId", TarjetaCreditoEntity.class);
         query.setParameter("clienteId", clienteId);
-        return (TarjetaCreditoEntity) query.getResultList().get(0);
+        return query.getResultList();
     }
     
     /**
