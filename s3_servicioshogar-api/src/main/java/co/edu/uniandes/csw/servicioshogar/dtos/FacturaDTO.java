@@ -6,9 +6,10 @@
 package co.edu.uniandes.csw.servicioshogar.dtos;
 
 import co.edu.uniandes.csw.servicioshogar.entities.FacturaEntity;
-import java.io.Serializable;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+
+import java.io.Serializable;
 
 
 /**
@@ -17,14 +18,11 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  */
 public class FacturaDTO implements Serializable{
     
-    Long 
-            id;
-    private Integer
-            noFactura,
-            valor;
-    private String
-            fecha,
-            metodoPago;
+    Long id;
+    private Integer noFactura;
+    private Integer valor;
+    private String fecha;
+    private String metodoPago;
     
     public FacturaDTO(){}
     

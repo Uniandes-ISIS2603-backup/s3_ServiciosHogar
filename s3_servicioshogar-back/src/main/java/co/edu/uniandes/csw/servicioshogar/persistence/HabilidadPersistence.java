@@ -6,13 +6,14 @@
 package co.edu.uniandes.csw.servicioshogar.persistence;
 
 import co.edu.uniandes.csw.servicioshogar.entities.HabilidadEntity;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -28,7 +29,7 @@ public class HabilidadPersistence {
 
     /**
      * Método para persistir la entidad en la BD.
-     * @param habilidadEntity. Objeto Habilidad que se creará en la BD.
+     * @param habilidadEntity Objeto Habilidad que se creará en la BD.
      * @return La entidad creada (Habilidad) con un id dado por la BD.
      */
     public HabilidadEntity create(HabilidadEntity habilidadEntity) {
@@ -40,7 +41,7 @@ public class HabilidadPersistence {
 
     /**
      *  Modifica la habilidad con id dado por parámetro
-     * @param habilidadEntity. Habilidad que viene con al modificaciones que se desean realizar
+     * @param habilidadEntity Habilidad que viene con al modificaciones que se desean realizar
      * @return La habilidad con los cambios aplicados
      */
     public HabilidadEntity update(HabilidadEntity habilidadEntity) {
@@ -50,7 +51,7 @@ public class HabilidadPersistence {
 
     /**
      * Borra la habilidad con el id dado por parámetro
-     * @param habilidadId. El id de la habildad que se desea eliminar
+     * @param habilidadId El id de la habildad que se desea eliminar
      */
     public void delete(Long habilidadId) {
         LOGGER.log(Level.INFO, "Borrando habilidad con id = {0}", habilidadId);
@@ -61,7 +62,7 @@ public class HabilidadPersistence {
 
     /**
      * Devuelve la lista con todas las habilidades asociadas al prestador dado por parámetro
-     * @param prestadorId. El id del prestador asociado a las habilidades
+     * @param prestadorId El id del prestador asociado a las habilidades
      * @return Una lista con todas las habilidades que se encuetran en la BD
      */
     public List<HabilidadEntity> findAll(Long prestadorId) {
@@ -74,8 +75,8 @@ public class HabilidadPersistence {
 
     /**
      * Devuelve una habilidad con el id dado por parámetro
-     * @param prestadorId. El id del prestador asociado a la habilidad
-     * @param habilidadId. El id de la habilidad buscada
+     * @param prestadorId El id del prestador asociado a la habilidad
+     * @param habilidadId El id de la habilidad buscada
      * @return La entidad (Habilidad) encontrada.
      */
     public HabilidadEntity find(Long prestadorId, Long habilidadId) {

@@ -23,12 +23,12 @@ SOFTWARE.
  */
 package co.edu.uniandes.csw.servicioshogar.entities;
 
-import java.io.Serializable;
-import java.util.Objects;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Generic entity with ID and name fields to inherit from.

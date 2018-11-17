@@ -4,17 +4,19 @@
  * and open the template in the editor.
  */
 package co.edu.uniandes.csw.servicioshogar.ejb;
+
 import co.edu.uniandes.csw.servicioshogar.entities.FacturaEntity;
 import co.edu.uniandes.csw.servicioshogar.entities.SolicitudEntity;
 import co.edu.uniandes.csw.servicioshogar.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.servicioshogar.persistence.ClientePersistence;
 import co.edu.uniandes.csw.servicioshogar.persistence.FacturaPersistence;
 import co.edu.uniandes.csw.servicioshogar.persistence.SolicitudPersistence;
+
+import javax.ejb.Stateless;
+import javax.inject.Inject;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.Stateless;
-import javax.inject.Inject;
 
 /**
  *
@@ -33,7 +35,7 @@ private SolicitudPersistence solicitudPeristence;
 @Inject
 private ClientePersistence clientePersistence;
 
-public FacturaEntity createFactura(FacturaEntity facturaEntity, Long clienteId) throws BusinessLogicException {
+public FacturaEntity createFactura(FacturaEntity facturaEntity, Long clienteId){
        LOGGER.log(Level.INFO, "Inicia proceso de creación de factura");
        SolicitudEntity solicitud = solicitudPeristence.find(clienteId, facturaEntity.getSolicitud().getId());
         /*Invoca la persistencia para crear el factura*/

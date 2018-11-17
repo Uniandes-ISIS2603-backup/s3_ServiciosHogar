@@ -9,12 +9,12 @@ import co.edu.uniandes.csw.servicioshogar.entities.PrestadorEntity;
 import co.edu.uniandes.csw.servicioshogar.entities.ServicioEntity;
 import co.edu.uniandes.csw.servicioshogar.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.servicioshogar.persistence.PrestadorPersistence;
-import co.edu.uniandes.csw.servicioshogar.persistence.ServicioPersistence;
+
+import javax.ejb.Stateless;
+import javax.inject.Inject;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.Stateless;
-import javax.inject.Inject;
 
 /**
  *

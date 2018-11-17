@@ -4,16 +4,17 @@
  * and open the template in the editor.
  */
 package co.edu.uniandes.csw.servicioshogar.ejb;
+
 import co.edu.uniandes.csw.servicioshogar.entities.ClienteEntity;
 import co.edu.uniandes.csw.servicioshogar.entities.TarjetaCreditoEntity;
 import co.edu.uniandes.csw.servicioshogar.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.servicioshogar.persistence.ClientePersistence;
 import co.edu.uniandes.csw.servicioshogar.persistence.TarjetaCreditoPersistence;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Stateless
 public class TarjetaCreditoLogic {
