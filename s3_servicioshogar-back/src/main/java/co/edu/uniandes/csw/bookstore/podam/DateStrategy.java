@@ -23,10 +23,11 @@ SOFTWARE.
  */
 package co.edu.uniandes.csw.bookstore.podam;
 
+import uk.co.jemos.podam.common.AttributeStrategy;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
-import uk.co.jemos.podam.common.AttributeStrategy;
 
 /**
  * Strategy to generate random Date instances compatible with DerbyDB Date

@@ -7,15 +7,14 @@ package co.edu.uniandes.csw.servicioshogar.ejb;
 
 import co.edu.uniandes.csw.servicioshogar.entities.CalificacionEntity;
 import co.edu.uniandes.csw.servicioshogar.entities.ServicioEntity;
-import co.edu.uniandes.csw.servicioshogar.entities.SolicitudEntity;
 import co.edu.uniandes.csw.servicioshogar.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.servicioshogar.persistence.CalificacionPersistence;
 import co.edu.uniandes.csw.servicioshogar.persistence.ServicioPersistence;
-import co.edu.uniandes.csw.servicioshogar.persistence.SolicitudPersistence;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -40,16 +39,13 @@ public class CalificacionLogic
      */
     @Inject
     private ServicioPersistence servicioPersistence;
-    
-    //@Inject
-    //private SolicitudPersistence solicitudPersistence;
 
     //------------------------------------------
     //------------------Metodos-----------------
     //------------------------------------------  
     /**
      * Crea una calificacion en la persistencia.
-     * @param solicitudId - Id de la solicitud al que pertenece el servicio.
+     * @param solicitudesId - Id de la solicitud al que pertenece el servicio.
      * @param serviciosId - Id del servicio al que pertenece la calificacion.
      * @param calificacionEntity - Entidad de la calificacion a ser persistida.
      * @return Entidad persistida.
@@ -66,9 +62,6 @@ public class CalificacionLogic
             calificacionEntity.setServicio(servicio);            
             LOGGER.log(Level.INFO, "Termina proceso de creación del calificacion"); 
         }
-        //ServicioEntity servicio = servicioPersistence.find(solicitudesId ,serviciosId );
-        //calificacionEntity.setServicio(servicio);
-        //LOGGER.log(Level.INFO, "Termina proceso de creación del calificacion");
         return persistence.create(calificacionEntity);
     }
     
@@ -80,9 +73,8 @@ public class CalificacionLogic
      */
     public CalificacionEntity getCalificacion(Long serviciosId, Long calificacionId) 
     {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar el calificacion con id = {0} del servicio con id = " + serviciosId, calificacionId);
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar el calificacion con id = {1} del servicio con id ={0} ",new Long[]{  serviciosId, calificacionId});
         return persistence.find(serviciosId, calificacionId);
-        //return persistence.findAll(serviciosId);
     }
 
     /**
@@ -93,11 +85,11 @@ public class CalificacionLogic
      * @return calificacion con los cambios actualizados en la BD.
      */
     public CalificacionEntity updateCalificacion(Long solicitudesId, Long serviciosId, CalificacionEntity calificacionEntity) {
-        LOGGER.log(Level.INFO, "Inicia proceso de actualizar el calificacion con id = {0} del servicio con id = " + serviciosId, calificacionEntity.getId());
+        LOGGER.log(Level.INFO, "Inicia proceso de actualizar el calificacion con id = {1} del servicio con id = {0}" ,new Long[]{ serviciosId, calificacionEntity.getId()});
         ServicioEntity servicioEntity = servicioPersistence.findBySolicitud(solicitudesId ,serviciosId );
         calificacionEntity.setServicio(servicioEntity);
         persistence.update(calificacionEntity);
-        LOGGER.log(Level.INFO, "Termina proceso de actualizar el calificacion con id = {0} del servicio con id = " + serviciosId, calificacionEntity.getId());
+        LOGGER.log(Level.INFO, "Termina proceso de actualizar el calificacion con id = {1} del servicio con id ={0} " ,new Long[]{ serviciosId, calificacionEntity.getId()});
         return calificacionEntity;
     }
     
@@ -108,12 +100,12 @@ public class CalificacionLogic
      * @throws BusinessLogicException - Si no existe el servicio o la calificacion.
      */
     public void deleteCalificacion(Long serviciosId, Long calificacionId) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "Inicia proceso de borrar el calificacion con id = {0} del servicio con id = " + serviciosId, calificacionId);
+        LOGGER.log(Level.INFO, "Inicia proceso de borrar el calificacion con id = {1} del servicio con id ={0} " ,new Long[]{ serviciosId, calificacionId});
         CalificacionEntity old = getCalificacion(serviciosId, calificacionId);
         if (old == null) {
             throw new BusinessLogicException("El calificacion con id = " + calificacionId + " no esta asociado a el servicio con id = " + serviciosId);
         }
         persistence.delete(old.getId());
-        LOGGER.log(Level.INFO, "Termina proceso de borrar el calificacion con id = {0} del servicio con id = " + serviciosId, calificacionId);
+        LOGGER.log(Level.INFO, "Termina proceso de borrar el calificacion con id = {1} del servicio con id ={0} " ,new Long[]{serviciosId, calificacionId});
     }    
 }

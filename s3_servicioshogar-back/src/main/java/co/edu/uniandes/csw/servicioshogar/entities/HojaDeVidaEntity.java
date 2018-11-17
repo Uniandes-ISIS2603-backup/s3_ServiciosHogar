@@ -4,14 +4,15 @@
  * and open the template in the editor.
  */
 package co.edu.uniandes.csw.servicioshogar.entities;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+
+import uk.co.jemos.podam.common.PodamExclude;
+
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import uk.co.jemos.podam.common.PodamExclude;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
