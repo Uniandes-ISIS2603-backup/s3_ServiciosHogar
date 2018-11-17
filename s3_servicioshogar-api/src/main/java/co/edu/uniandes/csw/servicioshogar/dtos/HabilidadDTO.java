@@ -6,12 +6,10 @@
 package co.edu.uniandes.csw.servicioshogar.dtos;
 
 import co.edu.uniandes.csw.servicioshogar.entities.HabilidadEntity;
-import java.io.Serializable;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+
+import java.io.Serializable;
 
 /**
  * HabilidadDTO Objeto de transferencia de datos de Habilidades. Los DTO contienen las
@@ -48,7 +46,6 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  */
 public class HabilidadDTO implements Serializable {
 
-    private static final long serialVersionUID = 1L;
 //----------------------ATRIBUTOS ------------------------
     private Long id; 
     private String descripcion;
@@ -174,15 +171,15 @@ public class HabilidadDTO implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
+        boolean resp = true;
         if (!(object instanceof HabilidadDTO)) {
-            return false;
+            resp =false;
         }
         HabilidadDTO other = (HabilidadDTO) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
+            resp=false;
         }
-        return true;
+        return resp;
     }
 
     @Override

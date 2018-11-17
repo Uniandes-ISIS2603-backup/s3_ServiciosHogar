@@ -5,11 +5,11 @@
  */
 package co.edu.uniandes.csw.servicioshogar.entities;
 
-import java.io.Serializable;
-import java.util.Date;
+import uk.co.jemos.podam.common.PodamExclude;
+
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import uk.co.jemos.podam.common.PodamExclude;
+import java.io.Serializable;
 
 /**
  *

@@ -6,8 +6,9 @@
 package co.edu.uniandes.csw.servicioshogar.dtos;
 
 import co.edu.uniandes.csw.servicioshogar.entities.HojaDeVidaEntity;
+
 import java.io.Serializable;
-import java.util.Date;
+
 
 /**
  *<pre>
@@ -53,8 +54,11 @@ public class HojaDeVidaDTO implements Serializable{
      * Atributo que representa el nivel educativo del prestador.
      */
     private String formacion;
-    
+    /**
+     * Atributo que representa el prestador asociado a la hoja de vida
+     */
     private PrestadorDTO prestador;
+    
     
     public HojaDeVidaDTO(){      
     }
@@ -62,6 +66,7 @@ public class HojaDeVidaDTO implements Serializable{
     public HojaDeVidaDTO(HojaDeVidaEntity hojaDeVidaEntity){
         if(hojaDeVidaEntity!=null)
         {
+            this.id = hojaDeVidaEntity.getId();
             this.trayectoria = hojaDeVidaEntity.getTrayectoria();
             this.fechaNacimiento = hojaDeVidaEntity.getFechaNacimiento();
             this.email = hojaDeVidaEntity.getEmail();
@@ -74,6 +79,7 @@ public class HojaDeVidaDTO implements Serializable{
     public HojaDeVidaEntity toEntity(){
         HojaDeVidaEntity hojaDeVida = new HojaDeVidaEntity();
         
+            hojaDeVida.setId(this.id);
             hojaDeVida.setTrayectoria(this.trayectoria);
             hojaDeVida.setFechaNacimiento(this.fechaNacimiento);
             hojaDeVida.setEmail(this.email);
@@ -141,5 +147,15 @@ public class HojaDeVidaDTO implements Serializable{
     public void setFormacion(String formacion) {
         this.formacion = formacion;
     }
+
+    public PrestadorDTO getPrestador() {
+        return prestador;
+    }
+
+    public void setPrestador(PrestadorDTO prestador) {
+        this.prestador = prestador;
+    }
+    
+    
     
 }

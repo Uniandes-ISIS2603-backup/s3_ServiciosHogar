@@ -8,16 +8,18 @@ package co.edu.uniandes.csw.servicioshogar.ejb;
 import co.edu.uniandes.csw.servicioshogar.entities.ReferenciaEntity;
 import co.edu.uniandes.csw.servicioshogar.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.servicioshogar.persistence.ReferenciaPersistence;
+
+import javax.ejb.Stateless;
+import javax.inject.Inject;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.Stateless;
-import javax.inject.Inject;
 
 /**
  *
  * @author Daniela Rocha Torres
  */
+@Stateless
 public class ReferenciaLogic {
     
        private static final Logger LOGGER = Logger.getLogger(ReferenciaLogic.class.getName());

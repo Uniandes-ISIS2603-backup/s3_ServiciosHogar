@@ -15,11 +15,11 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
-import junit.framework.Assert;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,6 +32,7 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  */
 @RunWith(Arquillian.class)
 public class TarjetaCreditoLogicTest {
+    
     private PodamFactory factory = new PodamFactoryImpl();
     
     @Inject
@@ -45,6 +46,7 @@ public class TarjetaCreditoLogicTest {
     
     private List<TarjetaCreditoEntity> data = new ArrayList<TarjetaCreditoEntity>();
 
+    private List<ClienteEntity> dataCliente = new ArrayList<ClienteEntity>();
     @Deployment
     public static JavaArchive createDeployment()
     {
@@ -80,13 +82,21 @@ public class TarjetaCreditoLogicTest {
     private void clearData()
     {
         em.createQuery("delete from TarjetaCreditoEntity").executeUpdate();
+        em.createQuery("delete from ClienteEntity").executeUpdate();
     }
     
     private void insertData()
     {
         for(int i =0; i<3; i++)
         {
-            TarjetaCreditoEntity entity = factory.manufacturePojo(TarjetaCreditoEntity.class);
+            ClienteEntity entity = factory.manufacturePojo(ClienteEntity.class);
+            em.persist(entity);
+            dataCliente.add(entity);
+        }
+        for( int i = 0; i<3; i++)
+        {
+            TarjetaCreditoEntity entity= factory.manufacturePojo(TarjetaCreditoEntity.class);
+            entity.setCliente(dataCliente.get(i));
             em.persist(entity);
             data.add(entity);
         }
@@ -96,55 +106,37 @@ public class TarjetaCreditoLogicTest {
     public void createTarjetaTest() throws BusinessLogicException
     {
         TarjetaCreditoEntity entity = factory.manufacturePojo(TarjetaCreditoEntity.class);
-
-        TarjetaCreditoEntity result = tarjetaLogic.createTarjeta(entity);
-        Assert.assertNotNull(result);
+        entity.setCliente(dataCliente.get(1));
+        TarjetaCreditoEntity result = tarjetaLogic.createTarjeta(entity, dataCliente.get(1).getId());
+        assertNotNull(result);
         
         TarjetaCreditoEntity newEntity = em.find(TarjetaCreditoEntity.class, result.getId());
-        Assert.assertEquals(entity.getId(), newEntity.getId());
-        Assert.assertEquals(entity.getNumero(), newEntity.getNumero());
-        Assert.assertEquals(entity.getTitular(), newEntity.getTitular());
-        Assert.assertEquals(entity.getFechaVencimiento(), newEntity.getFechaVencimiento());
+        assertEquals(entity.getId(), newEntity.getId());
+        assertEquals(entity.getNumero(), newEntity.getNumero());
+        assertEquals(entity.getTitular(), newEntity.getTitular());
+        assertEquals(entity.getFechaVencimiento(), newEntity.getFechaVencimiento());
     }
     
-       @Test
-    public void getTarjetasTest() throws BusinessLogicException
-    {
-        List<TarjetaCreditoEntity> list = tarjetaLogic.getTarjetas();
-        org.junit.Assert.assertEquals(data.size(),list.size());
-        for(TarjetaCreditoEntity ent : list)
-        {
-            boolean found = false;
-            for(TarjetaCreditoEntity entity : data)
-            {
-                if(ent.getId().equals(entity.getId()))
-                {
-                    found = true;
-                }
-            }
-            org.junit.Assert.assertTrue(found);
-        }
-    }
     
     @Test
     public void getTarjetaTest() throws BusinessLogicException
     {
         TarjetaCreditoEntity entity = data.get(0);
-        TarjetaCreditoEntity newEntity = tarjetaLogic.getTarjeta(entity.getId());
-        org.junit.Assert.assertNotNull(newEntity);
-        org.junit.Assert.assertEquals(entity.getId(), newEntity.getId());
-        org.junit.Assert.assertEquals(entity.getNumero(), newEntity.getNumero());
-        org.junit.Assert.assertEquals(entity.getTitular(), newEntity.getTitular());
-        org.junit.Assert.assertEquals(entity.getFechaVencimiento(), newEntity.getFechaVencimiento());
+        TarjetaCreditoEntity newEntity = tarjetaLogic.getTarjeta(dataCliente.get(1).getId(), entity.getId());
+        assertNotNull(newEntity);
+        assertEquals(entity.getId(), newEntity.getId());
+        assertEquals(entity.getNumero(), newEntity.getNumero());
+        assertEquals(entity.getTitular(), newEntity.getTitular());
+        assertEquals(entity.getFechaVencimiento(), newEntity.getFechaVencimiento());
     }
     
     @Test
     public void deleteTarjetaTest() throws BusinessLogicException
     {
         TarjetaCreditoEntity entity = data.get(0);
-        tarjetaLogic.deleteFactura(entity.getId());
+        tarjetaLogic.deleteTarjeta(dataCliente.get(1).getId(), entity.getId() );
         TarjetaCreditoEntity deleted = em.find(TarjetaCreditoEntity.class, entity.getId());
-        Assert.assertNull(deleted);
+        assertNull(deleted);
     }
     
     @Test()
@@ -155,13 +147,13 @@ public class TarjetaCreditoLogicTest {
         
         pojo.setId(entity.getId());
                 
-        tarjetaLogic.updateTarjeta(pojo.getId(), pojo);
+        tarjetaLogic.updateTarjeta(dataCliente.get(1).getId(), pojo);
         
         TarjetaCreditoEntity resp = em.find(TarjetaCreditoEntity.class, entity.getId());
         
-        Assert.assertEquals(pojo.getId(), resp.getId());
-        Assert.assertEquals(pojo.getNumero(), resp.getNumero());
-        Assert.assertEquals(pojo.getTitular(), resp.getTitular());
-        Assert.assertEquals(pojo.getFechaVencimiento(), resp.getFechaVencimiento());
+        assertEquals(pojo.getId(), resp.getId());
+        assertEquals(pojo.getNumero(), resp.getNumero());
+        assertEquals(pojo.getTitular(), resp.getTitular());
+        assertEquals(pojo.getFechaVencimiento(), resp.getFechaVencimiento());
     }
 }

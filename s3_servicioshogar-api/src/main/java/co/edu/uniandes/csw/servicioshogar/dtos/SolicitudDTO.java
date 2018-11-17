@@ -6,10 +6,11 @@
 package co.edu.uniandes.csw.servicioshogar.dtos;
 
 import co.edu.uniandes.csw.servicioshogar.entities.SolicitudEntity;
-import java.io.Serializable;
-import java.util.Date;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Al serializarse como JSON esta clase implementa el siguiente modelo: <br>
@@ -67,7 +68,7 @@ public class SolicitudDTO implements Serializable{
 
     /**
      * Modifica el ID de la solicitud.
-     * @param id. nuevo ID.
+     * @param id nuevo ID.
      */
     public void setId(Long id) {
         this.id = id;
@@ -83,7 +84,7 @@ public class SolicitudDTO implements Serializable{
 
     /**
      * Modifica la fecha de la solicitud.
-     * @param fecha. nueva fecha.
+     * @param fecha nueva fecha.
      */
     public void setFecha(Date fecha) {
         this.fecha = fecha;
@@ -99,7 +100,7 @@ public class SolicitudDTO implements Serializable{
 
     /**
      * Modifica la direccion de la solicitud
-     * @param direccion. nueva direccion.
+     * @param direccion nueva direccion.
      */
     public void setDireccion(String direccion) {
         this.direccion = direccion;

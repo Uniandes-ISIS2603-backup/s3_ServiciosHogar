@@ -4,14 +4,15 @@
  * and open the template in the editor.
  */
 package co.edu.uniandes.csw.servicioshogar.entities;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+
+import uk.co.jemos.podam.common.PodamExclude;
+
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import uk.co.jemos.podam.common.PodamExclude;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -20,10 +21,9 @@ import uk.co.jemos.podam.common.PodamExclude;
 @Entity
 public class HojaDeVidaEntity extends BaseEntity implements Serializable{
     
-    
+    @PodamExclude
     @OneToOne
     private PrestadorEntity prestador;
-    
     
     @PodamExclude
     @OneToMany(mappedBy = "hojaDeVida")
@@ -53,6 +53,14 @@ public class HojaDeVidaEntity extends BaseEntity implements Serializable{
      * Atributo que representa el nivel educativo del prestador.
      */
     private String formacion;
+
+    public PrestadorEntity getPrestador() {
+        return prestador;
+    }
+
+    public void setPrestador(PrestadorEntity prestador) {
+        this.prestador = prestador;
+    }
 
     public String getTrayectoria() {
         return trayectoria;

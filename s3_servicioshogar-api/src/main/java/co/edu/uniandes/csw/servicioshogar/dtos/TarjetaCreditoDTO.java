@@ -6,9 +6,10 @@
 package co.edu.uniandes.csw.servicioshogar.dtos;
 
 import co.edu.uniandes.csw.servicioshogar.entities.TarjetaCreditoEntity;
-import java.io.Serializable;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+
+import java.io.Serializable;
 
 /**
  *
@@ -16,15 +17,12 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  */
 public class TarjetaCreditoDTO implements Serializable{
     //-------------------Atributos------------------------//
-    long
-            id;
+    private Long id;
     
-    private String
-            titular,
-            fechaVencimiento;
-    private Integer
-            codeSeguridad,
-            numero;
+    private String titular;
+    private String fechaVencimiento;
+    private Integer codeSeguridad;
+    private Integer numero;
    
     //------------------Constructor------------------//
     public TarjetaCreditoDTO()

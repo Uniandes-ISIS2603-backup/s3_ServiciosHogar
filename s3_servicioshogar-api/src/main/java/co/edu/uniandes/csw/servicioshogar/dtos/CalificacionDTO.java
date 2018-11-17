@@ -6,9 +6,10 @@
 package co.edu.uniandes.csw.servicioshogar.dtos;
 
 import co.edu.uniandes.csw.servicioshogar.entities.CalificacionEntity;
-import java.io.Serializable;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+
+import java.io.Serializable;
 
 /**
  *
@@ -31,10 +32,7 @@ public class CalificacionDTO implements Serializable
             this.id = calificacionEntity.getId();
             this.calificacion = calificacionEntity.getCalificacion();
             this.comentario = calificacionEntity.getComentario();
-            /*if(calificacionEntity.getServicio() != null)            
-                this.servicio = new ServicioDTO(calificacionEntity.getServicio());
-            else
-                this.servicio = null;*/   
+
         }
     }
 
@@ -60,9 +58,7 @@ public class CalificacionDTO implements Serializable
         calificacionEntity.setId(this.id);
         calificacionEntity.setComentario(this.comentario);
         calificacionEntity.setCalificacion(this.calificacion);
-        /*if (this.servicio != null) 
-            calificacionEntity.setServicio(this.servicio.toEntity());
-        */
+
         return calificacionEntity;
     }
     

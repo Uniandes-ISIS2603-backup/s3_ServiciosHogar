@@ -5,16 +5,12 @@
  */
 package co.edu.uniandes.csw.servicioshogar.entities;
 
-import java.io.Serializable;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import uk.co.jemos.podam.common.PodamExclude;
+
+import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * 
@@ -23,84 +19,91 @@ import uk.co.jemos.podam.common.PodamExclude;
 @Entity
 public class HabilidadEntity extends BaseEntity implements Serializable {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
     
     /**
-     * 
+     * El id atogenrado
      */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
   
+    /**
+     * El tipo de la habilidad
+     */
     private String tipo;
+    
+    /**
+     * La descripción de la habilidad
+     */
     private String descripcion;
  
+    /**
+     * La relación muchos a uno con prestador
+     */
     @PodamExclude
     @ManyToOne(cascade = CascadeType.PERSIST)
     private PrestadorEntity prestador;
     
     /**
-     * 
-     * @param tipo 
+     * Modifica el tipo de la habildiad
+     * @param tipo El nuevo tipo
      */
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
 
     /**
-     * 
-     * @param descripcion 
+     * Modifica la descripción de la habilidad
+     * @param descripcion La nueva descripción
      */
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
 
     /**
-     * 
-     * @param prestador 
+     * Modifica el prestador asocidado a la habildiad
+     * @param prestador El nuevo prestador
      */
     public void setPrestador(PrestadorEntity prestador) {
         this.prestador = prestador;
     }
     
     /**
-     * 
-     * @return 
+     * Retorna el tipo de la habilidad
+     * @return El tipo
      */
     public String getTipo() {
         return tipo;
     }
     
     /**
-     * 
-     * @return 
+     * Retorna la descripción de la habilidad
+     * @return La descripción
      */
     public String getDescripcion() {
         return descripcion;
     }
     
     /**
-     * 
-     * @return 
+     * Retorna el prestador asociado a la habilidad
+     * @return El prestador asociado
      */
     public PrestadorEntity getPrestador() {
         return prestador;
     }
     
     /**
-     * 
-     * @return 
+     * Retorna el id autogenerado de la habilidad
+     * @return El id autogenrado
      */
     public Long getId() {
         return id;
     }
 
     /**
-     * 
-     * @param id 
+     * Modifica el id de la habilidad
+     * @param id El nuevo id
      */
     public void setId(Long id) {
         this.id = id;

@@ -5,18 +5,15 @@
  */
 package co.edu.uniandes.csw.servicioshogar.entities;
 
+import co.edu.uniandes.csw.bookstore.podam.DateStrategy;
+import uk.co.jemos.podam.common.PodamExclude;
+import uk.co.jemos.podam.common.PodamStrategyValue;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  * Clase que representa una solicitud en la persistencia y permite su
@@ -28,6 +25,9 @@ import uk.co.jemos.podam.common.PodamExclude;
 public class SolicitudEntity extends BaseEntity implements Serializable{
     
     private String direccion;
+    
+    @Temporal(TemporalType.DATE)
+    @PodamStrategyValue(DateStrategy.class)
     private Date fecha;
     
     @PodamExclude
@@ -37,6 +37,11 @@ public class SolicitudEntity extends BaseEntity implements Serializable{
     @PodamExclude
     @ManyToOne
     private ClienteEntity cliente;
+    
+    @PodamExclude
+    @OneToOne(mappedBy = "solicitud", fetch = FetchType.LAZY)
+    private FacturaEntity factura;
+   
 
     /**
      * Devuelve la fecha de la solicitud.
@@ -94,6 +99,16 @@ public class SolicitudEntity extends BaseEntity implements Serializable{
 
     public void setCliente(ClienteEntity cliente) {
         this.cliente = cliente;
+    }
+    
+    public FacturaEntity getFactura()
+    {
+        return factura;
+    }
+    
+    public void setFactura(FacturaEntity factura)
+    {
+        this.factura = factura;
     }
     
     

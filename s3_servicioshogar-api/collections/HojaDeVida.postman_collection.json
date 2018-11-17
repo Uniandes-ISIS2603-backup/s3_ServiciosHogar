@@ -1,0 +1,177 @@
+{
+	"info": {
+		"_postman_id": "d4108fd6-d566-4860-95ea-e8a274aa38fc",
+		"name": "HojaDeVida",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Crea prestador ej#1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear hoja de vida ej #1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5e97427d-8578-4f85-be1d-81cf99e4fd85",
+						"type": "text/javascript",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_e\",data.id);",
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n    \t\"id\":1,\r\n        \"direccion\": \"calle 83a carrera 114\",\r\n        \"email\": \"carito@gmail.com\",\r\n        \"formacion\": \"pregrado\",\r\n        \"trayectoria\": \"4 meses\",\r\n\t\t\"telefono\": \"3212566762.0\",\r\n\t\t\"data1\" : \"foo\",\"date\" : \"Fri May 04 2012 01:17:07 GMT-0700 (PDT)\"\r\n    }"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/referencias",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"referencias"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener hoja de vida id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "217bbaa9-f725-416c-afae-0b03b126789a",
+						"type": "text/javascript",
+						"exec": [
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"No genera error en el Get\"] = responseCode.code === 200;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/hojaDeVida/1",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"hojaDeVida",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Actualizar hoja de vida id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3fabf0d4-3207-4fcb-896c-ac797b7b200e",
+						"type": "text/javascript",
+						"exec": [
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"No genera error en el Put\"] = responseCode.code === 200;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n        \"direccion\": \"calle 87a carrera 35-20\",\r\n        \"email\": \"carito@gmail.com\",\r\n        \"formacion\": \"pregrado\",\r\n        \"trayectoria\": \"4 meses\",\r\n\t\t\"telefono\": \"3212562596.0\",\r\n\t\t\"data1\" : \"foo\",\"date\" : \"Fri May 04 2012 01:17:07 GMT-0700 (PDT)\"\r\n    }"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/referencias/1",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"referencias",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar hoja de vida ej#1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "923b57e7-d6c6-418c-a174-0288260875c9",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/hojaDeVida/1",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"hojaDeVida",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

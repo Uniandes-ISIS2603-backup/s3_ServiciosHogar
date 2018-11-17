@@ -5,8 +5,11 @@
  */
 package co.edu.uniandes.csw.servicioshogar.entities;
 
-import java.io.Serializable;
+import uk.co.jemos.podam.common.PodamExclude;
+
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+import java.io.Serializable;
 
 /**
  *
@@ -21,6 +24,10 @@ public class FacturaEntity extends BaseEntity implements Serializable{
    private String
            fecha,
            metodoPago;
+   
+   @PodamExclude
+   @OneToOne
+   private SolicitudEntity solicitud;
    
    public Integer getNoFactura()
    { return noFactura;}
@@ -45,5 +52,11 @@ public class FacturaEntity extends BaseEntity implements Serializable{
    
    public void setMetodoPago( String pMetodo)
    { this.metodoPago = pMetodo;}
+   
+   public SolicitudEntity getSolicitud()
+   {return solicitud;}
+   
+   public void setSolicitud(SolicitudEntity solicitud)
+   {this.solicitud = solicitud;}
     
 }

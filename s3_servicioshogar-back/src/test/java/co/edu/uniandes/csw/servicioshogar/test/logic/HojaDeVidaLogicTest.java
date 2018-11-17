@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.servicioshogar.test.logic;
 
 import co.edu.uniandes.csw.servicioshogar.ejb.HojaDeVidaLogic;
 import co.edu.uniandes.csw.servicioshogar.entities.HojaDeVidaEntity;
+import co.edu.uniandes.csw.servicioshogar.entities.PrestadorEntity;
 import co.edu.uniandes.csw.servicioshogar.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.servicioshogar.persistence.HojaDeVidaPersistence;
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  * @author Daniela Rocha Torres
  */
 @RunWith(Arquillian.class)
-public class HojaDeVidaLogicTest {
+public class HojaDeVidaLogicTest{
     private PodamFactory factory = new PodamFactoryImpl();
 
     @Inject
@@ -44,6 +45,9 @@ public class HojaDeVidaLogicTest {
     private UserTransaction utx;
 
     private List<HojaDeVidaEntity> data = new ArrayList<HojaDeVidaEntity>();
+    
+    private List<PrestadorEntity> dataPrestador = new ArrayList<>();
+    
 
  //   private List<ReferenciaEntity> referenciaData = new ArrayList();
 
@@ -87,6 +91,7 @@ public class HojaDeVidaLogicTest {
      */
     private void clearData() {
         em.createQuery("delete from HojaDeVidaEntity").executeUpdate();
+        em.createQuery("delete from PrestadorEntity").executeUpdate();
     }
 
     /**
@@ -94,9 +99,16 @@ public class HojaDeVidaLogicTest {
      * pruebas.
      */
     private void insertData() {
-
-        for (int i = 0; i < 3; i++) {
+        
+         for (int i = 0; i < 1; i++) {
+            PrestadorEntity entity = factory.manufacturePojo(PrestadorEntity.class);
+            em.persist(entity);
+            dataPrestador.add(entity);
+        }
+         
+        for (int i = 0; i < 1; i++) {
             HojaDeVidaEntity entity = factory.manufacturePojo(HojaDeVidaEntity.class);
+            entity.setPrestador(dataPrestador.get(0));
             em.persist(entity);
             data.add(entity);
           
@@ -111,31 +123,12 @@ public class HojaDeVidaLogicTest {
     @Test
     public void createHojaDeVidaTest() throws BusinessLogicException {
         HojaDeVidaEntity newEntity = factory.manufacturePojo(HojaDeVidaEntity.class);
-        HojaDeVidaEntity result = hojaDeVidaLogic.createHojaDeVida(newEntity);
+        HojaDeVidaEntity result = hojaDeVidaLogic.createHojaDeVida(dataPrestador.get(0).getId(), newEntity);
         Assert.assertNotNull(result);
         HojaDeVidaEntity entity = em.find(HojaDeVidaEntity.class, result.getId());
         Assert.assertEquals(newEntity.getId(), entity.getId());
     }
 
-
-
-    /**
-     * Prueba para consultar la lista de Editorials.
-     */
-    @Test
-    public void getHojasDeVidaTest() {
-        List<HojaDeVidaEntity> list = hojaDeVidaLogic.getHojasDeVida();
-        Assert.assertEquals(data.size(), list.size());
-        for (HojaDeVidaEntity entity : list) {
-            boolean found = false;
-            for (HojaDeVidaEntity storedEntity : data) {
-                if (entity.getId().equals(storedEntity.getId())) {
-                    found = true;
-                }
-            }
-            Assert.assertTrue(found);
-        }
-    }
 
     /**
      * Prueba para consultar un Editorial.
@@ -143,7 +136,7 @@ public class HojaDeVidaLogicTest {
     @Test
     public void getHojaDeVidaTest() {
         HojaDeVidaEntity entity = data.get(0);
-        HojaDeVidaEntity resultEntity = hojaDeVidaLogic.getHojaDeVida(entity.getId());
+        HojaDeVidaEntity resultEntity = hojaDeVidaLogic.getHojaDeVida(dataPrestador.get(0).getId());
         Assert.assertNotNull(resultEntity);
         Assert.assertEquals(entity.getId(), resultEntity.getId());
     }
@@ -168,8 +161,9 @@ public class HojaDeVidaLogicTest {
      */
     @Test
     public void deleteHojaDeVidaTest() throws BusinessLogicException {
-        HojaDeVidaEntity entity = data.get(1);
-        hojaDeVidaLogic.deleteHojaDeVida(entity.getId());
+        HojaDeVidaEntity entity = data.get(0);
+        
+        hojaDeVidaLogic.deleteHojaDeVida(dataPrestador.get(0).getId());
         HojaDeVidaEntity deleted = em.find(HojaDeVidaEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }

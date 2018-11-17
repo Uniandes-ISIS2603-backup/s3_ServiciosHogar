@@ -88,7 +88,7 @@ public class HabilidadPersistenceTest extends TestCase{
      */
     private void clearData() {
         em.createQuery("delete from HabilidadEntity").executeUpdate();
-         em.createQuery("delete from PrestadorEntity").executeUpdate();
+        em.createQuery("delete from PrestadorEntity").executeUpdate();
     }
 
     /**
@@ -100,10 +100,8 @@ public class HabilidadPersistenceTest extends TestCase{
         for (int i = 0; i < 3; i++) {
 
            PrestadorEntity entity = factory.manufacturePojo(PrestadorEntity.class);
-
-            em.persist(entity);
-
-            dataPrestadores.add(entity);
+           em.persist(entity);
+           dataPrestadores.add(entity);
         }
         for (int i = 0; i < 3; i++) {
 

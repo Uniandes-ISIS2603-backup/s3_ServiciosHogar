@@ -6,14 +6,14 @@
 package co.edu.uniandes.csw.servicioshogar.persistence;
 
 import co.edu.uniandes.csw.servicioshogar.entities.CalificacionEntity;
-import co.edu.uniandes.csw.servicioshogar.entities.HabilidadEntity;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -67,15 +67,6 @@ public class CalificacionPersistence
         CalificacionEntity calificacionEntity = em.find(CalificacionEntity.class, calificacionId);
         em.remove(calificacionEntity);
         LOGGER.log(Level.INFO, "Saliendo de borrar El calificacion con id = {0}", calificacionId);
-    }
-    
-    public CalificacionEntity findAll(Long serviciosId)
-    {
-        LOGGER.log(Level.INFO, "Consultando todas las calificaciones");
-        
-        TypedQuery query = em.createQuery("select u from CalificacionEntity u where (u.servicio.id = :servicioid)", CalificacionEntity.class);
-        query.setParameter("servicioid", serviciosId);
-        return (CalificacionEntity) query.getResultList().get(0);
     }
     
     /**

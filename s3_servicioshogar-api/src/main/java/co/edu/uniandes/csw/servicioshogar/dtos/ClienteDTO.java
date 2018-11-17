@@ -6,9 +6,10 @@
 package co.edu.uniandes.csw.servicioshogar.dtos;
 
 import co.edu.uniandes.csw.servicioshogar.entities.ClienteEntity;
-import java.io.Serializable;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+
+import java.io.Serializable;
 
 /**
  * Al serializarse como JSON esta clase implementa el siguiente modelo.
@@ -37,10 +38,9 @@ public class ClienteDTO implements Serializable
     //------------------------------------------ 
     private Long 
             id /*Id del Cliente*/;
-    private String 
-            nombre /*Nombre del cliente*/, 
-            direccion /*Direccion del Cliente*/, 
-            correo /*Correo del Cliente*/ ;
+    private String nombre /*Nombre del cliente*/;
+    private String direccion /*Direccion del Cliente*/;
+    private String correo /*Correo del Cliente*/ ;
     
     //------------------------------------------
     //---------------Constructor----------------
@@ -69,7 +69,7 @@ public class ClienteDTO implements Serializable
 
     /**
      * Asigna el Id del cliente segun el 'id' ingresado por parametro.
-     * @param id. Id del cliente.
+     * @param id Id del cliente.
      */
     public void setId(Long id) {this.id = id;}
 
@@ -81,7 +81,7 @@ public class ClienteDTO implements Serializable
 
     /**
      * Asigna el nombre del cliente segun el 'nombre' ingresado por parametro.
-     * @param nombre. Nombre del cliente a obtener.
+     * @param nombre Nombre del cliente a obtener.
      */
     public void setNombre(String nombre) {this.nombre = nombre;}
     
@@ -93,7 +93,7 @@ public class ClienteDTO implements Serializable
     
     /**
      * Asigna la direccion del cliente segun la 'direccion' ingresada por parametro.
-     * @param direccion. Direccion del cliente.
+     * @param direccion Direccion del cliente.
      */
     public void setDireccion(String direccion) {this.direccion = direccion;}
 
@@ -105,7 +105,7 @@ public class ClienteDTO implements Serializable
 
     /**
      * Asigna el correo del cliente segun el 'corre' ingresado por parametro.
-     * @param correo. Correo electronico del cliente.
+     * @param correo Correo electronico del cliente.
      */
     public void setCorreo(String correo) {this.correo = correo;}  
 

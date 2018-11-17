@@ -4,16 +4,17 @@
  * and open the template in the editor.
  */
 package co.edu.uniandes.csw.servicioshogar.ejb;
+
 import co.edu.uniandes.csw.servicioshogar.entities.ClienteEntity;
 import co.edu.uniandes.csw.servicioshogar.entities.TarjetaCreditoEntity;
 import co.edu.uniandes.csw.servicioshogar.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.servicioshogar.persistence.ClientePersistence;
 import co.edu.uniandes.csw.servicioshogar.persistence.TarjetaCreditoPersistence;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Stateless
 public class TarjetaCreditoLogic {
@@ -25,15 +26,12 @@ private TarjetaCreditoPersistence persistence;
 @Inject
 private ClientePersistence clientePersistence;
 
-public TarjetaCreditoEntity createTarjeta(TarjetaCreditoEntity tarjetaEntity) throws BusinessLogicException {
-       LOGGER.log(Level.INFO, "Inicia proceso de creación de factura");
-        /*Verifica la regla de negocio que dice no puede haber dos facturas con el mismo nombre*/
-        persistence.create(tarjetaEntity);
-
-        
-        /*Invoca la persistencia para crear el factura*/
-        LOGGER.log(Level.INFO, "Termina proceso de creación de la tarjeta");
-        return tarjetaEntity;
+public TarjetaCreditoEntity createTarjeta(TarjetaCreditoEntity tarjetaEntity, Long clienteId) throws BusinessLogicException {
+       LOGGER.log(Level.INFO, "Inicia proceso de creación de tarjeta");
+       ClienteEntity cliente = clientePersistence.find(clienteId);
+       tarjetaEntity.setCliente(cliente);
+       LOGGER.log(Level.INFO, "Termina proceso de creación tarjeta");
+        return persistence.create(tarjetaEntity);
     }
 
 public boolean validacionNumero( Integer numero )
@@ -51,55 +49,51 @@ public boolean validacionNumero( Integer numero )
     }
         return validar;
 }
+
+/**
+    
     /**
      * Devuelve todos los facturas que hay en la base de datos.
-     *
+     *@param clienteId 
+     *@param tarjetaId 
      * @return Lista de entidades de tipo factura.
      */
-    public List<TarjetaCreditoEntity> getTarjetas() {
+    public TarjetaCreditoEntity getTarjeta(Long clienteId, Long tarjetaId) {
        LOGGER.log(Level.INFO,"Inicia proceso de consultar todos las tarjetas " );
-        List<TarjetaCreditoEntity> tarjeta = persistence.findAll();
-        LOGGER.log(Level.INFO, "Termina proceso de consultar todas las tarjetas ");
-        return tarjeta;
+       
+        return persistence.find(tarjetaId, clienteId);
     }
 
-    /**
-     * Busca un factura por ID
-     *
-     * @param tarjetaId  El id del factura a buscar
-     * @return El factura encontrado, null si no lo encuentra.
-     */
-    public TarjetaCreditoEntity getTarjeta(Long tarjetaId) {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar factura con id = {0}", tarjetaId);
-        TarjetaCreditoEntity tarjeta = persistence.find(tarjetaId);
-        if( tarjeta == null)
-        {LOGGER.log(Level.SEVERE, "La factura con el id = {0} no existe", tarjetaId);}
-        return tarjeta;
-    }
 
     /**
      * Actualizar un factura por ID
      *
-     * @param tarjetaId El ID del factura a actualizar
+     * @param clienteId  El ID del factura a actualizar
      * @param tarjetaEntity  La entidad del factura con los cambios deseados
      * @return La entidad del factura luego de actualizarla
      */
-    public TarjetaCreditoEntity updateTarjeta(Long tarjetaId, TarjetaCreditoEntity tarjetaEntity) {
-        LOGGER.log(Level.INFO, "Inicia proceso de actualizar factura con id = {0}", tarjetaId);
-        TarjetaCreditoEntity tarjeta = persistence.update(tarjetaEntity);
-        LOGGER.log(Level.INFO, "Termina proceso de actualizar factura con id = {0}", tarjetaEntity.getId());
-        return tarjeta;
+    public TarjetaCreditoEntity updateTarjeta(Long clienteId, TarjetaCreditoEntity tarjetaEntity) {
+        LOGGER.log(Level.INFO, "Inicia proceso de actualizar factura con id = {0}" + clienteId, tarjetaEntity.getId());
+        ClienteEntity clienetEntity = clientePersistence.find(clienteId);
+        tarjetaEntity.setCliente(clienetEntity);
+        persistence.update(tarjetaEntity);
+        LOGGER.log(Level.INFO, "Termina proceso de actualizar factura con id = {0}"+ clienteId, tarjetaEntity.getId());
+        return tarjetaEntity;
     }
 
     /**
      * Eliminar un factura por ID
      *
-     * @param tarjetaId El ID del factura a eliminar
+     * @param clienteId El ID del factura a eliminar
+     * @param tarjetaId 
      * @throws BusinessLogicException si el factura tiene un autor asociado.
      */
-    public void deleteFactura(Long tarjetaId) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "Inicia proceso de borrar factura con id = {0}", tarjetaId);
-        persistence.delete(tarjetaId);
+    public void deleteTarjeta(Long clienteId, Long tarjetaId) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "Inicia proceso de borrar factura con id = {0}" + clienteId, tarjetaId);
+        TarjetaCreditoEntity old = getTarjeta(clienteId, tarjetaId);
+        if(old == null)
+        {throw new BusinessLogicException("La tarjeta con id" + tarjetaId + "no esta asociada al cliente con id" + clienteId);}
+        persistence.delete(old.getId());
         LOGGER.log(Level.INFO, "Termina proceso de borrar factura con id = {0}", tarjetaId);
     }
 }

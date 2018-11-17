@@ -5,19 +5,14 @@
  */
 package co.edu.uniandes.csw.servicioshogar.entities;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import uk.co.jemos.podam.common.PodamExclude;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -27,23 +22,73 @@ import uk.co.jemos.podam.common.PodamExclude;
 public class PrestadorEntity extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
+    /**
+     * El id autogenerado del prestador
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    
+    /**
+     * La cédula del prestador
+     */
     private Integer cedula;
+    
+    /**
+     * El nombre del prestador
+     */
     private String nombre;
  
+    /**
+     * La relación uno a muchos con habilidad
+     */
     @PodamExclude
     @OneToMany(mappedBy = "prestador", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<HabilidadEntity> habilidades = new ArrayList<HabilidadEntity>();
     
-    @OneToOne(mappedBy = "prestador")
+    /**
+     * La relación uno a uno con hoja de vida
+     */
+    @PodamExclude
+    @OneToOne(mappedBy = "prestador", fetch = FetchType.LAZY)
     private HojaDeVidaEntity hojaDeVida;
+    
+    /**
+     * La relación uno a muchos con servicios
+     */
+    @PodamExclude
+    @OneToMany(mappedBy = "prestador")
+    private List<ServicioEntity> servicios;
 
+    /**
+     * Modifica los servicios asociados al prestador
+     * @param servicios Los nuevos servicios
+     */
+    public void setServicios(List<ServicioEntity> servicios) {
+        this.servicios = servicios;
+    }
+
+    /**
+     * Retorna los servicios asociados al prestador
+     * @return Los servicios asociados al prestador
+     */
+    public List<ServicioEntity> getServicios() {
+        return servicios;
+    }
+
+    /**
+     * Modifica la hoja de vida asociada al prestador
+     * @param hojaDeVida La hoja de vida del prestador
+     */
     public void setHojaDeVida(HojaDeVidaEntity hojaDeVida) {
         this.hojaDeVida = hojaDeVida;
     }
-
+    
+    /**
+     * Retorna la hoja de vida asociada con el presatador
+     * @return La hoja de vida asociada con el presatador
+     */
     public HojaDeVidaEntity getHojaDeVida() {
         return hojaDeVida;
     }

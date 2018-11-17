@@ -6,13 +6,10 @@
 package co.edu.uniandes.csw.servicioshogar.dtos;
 
 import co.edu.uniandes.csw.servicioshogar.entities.PrestadorEntity;
-import java.io.Serializable;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+
+import java.io.Serializable;
 
 /**
  * PrestadorDTO Objeto de transferencia de datos de Prestadores. Los DTO contienen
@@ -42,7 +39,6 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  */
 public class PrestadorDTO implements Serializable {
     
-    private static final long serialVersionUID = 1L;
     private Long id;
     private String nombre;
     private Integer cedula;
@@ -65,6 +61,7 @@ public class PrestadorDTO implements Serializable {
             this.id = prestadorEntity.getId();
             this.nombre = prestadorEntity.getNombre();
             this.cedula = prestadorEntity.getCedula();
+            this.hojaDeVida=new HojaDeVidaDTO(prestadorEntity.getHojaDeVida());
         }
     }
 
@@ -94,7 +91,7 @@ public class PrestadorDTO implements Serializable {
 
     /**
      * Devuelve el nombre del prestador
-     * @return the name
+     * @return the nombre
      */
     public String getNombre() {
         return nombre;
@@ -114,6 +111,22 @@ public class PrestadorDTO implements Serializable {
      */
     public void setId(Long id) {
         this.id = id;
+    }
+
+    /**
+     * Retorna la hoja de vida del prestador
+     * @return the hoja de vida
+     */
+    public HojaDeVidaDTO getHojaDeVida() {
+        return hojaDeVida;
+    }
+
+    /**
+     * Modifica la hoja de vida del prestador
+     * @param hojaDeVida the hoja de vida to set
+     */
+    public void setHojaDeVida(HojaDeVidaDTO hojaDeVida) {
+        this.hojaDeVida = hojaDeVida;
     }
     
      /**
@@ -140,15 +153,15 @@ public class PrestadorDTO implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
+        boolean resp = true;
         if (!(object instanceof PrestadorDTO)) {
-            return false;
+            resp = false;
         }
         PrestadorDTO other = (PrestadorDTO) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
+            resp =false;
         }
-        return true;
+        return resp;
     }
 
     @Override

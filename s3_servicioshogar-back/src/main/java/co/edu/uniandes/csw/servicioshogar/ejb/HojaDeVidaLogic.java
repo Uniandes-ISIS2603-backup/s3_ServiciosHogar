@@ -6,13 +6,15 @@
 package co.edu.uniandes.csw.servicioshogar.ejb;
 
 import co.edu.uniandes.csw.servicioshogar.entities.HojaDeVidaEntity;
+import co.edu.uniandes.csw.servicioshogar.entities.PrestadorEntity;
 import co.edu.uniandes.csw.servicioshogar.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.servicioshogar.persistence.HojaDeVidaPersistence;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import co.edu.uniandes.csw.servicioshogar.persistence.PrestadorPersistence;
+
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -27,53 +29,63 @@ public class HojaDeVidaLogic {
     @Inject
     private HojaDeVidaPersistence persistence;
     
+    /**
+     * 
+     */
+    @Inject
+    private PrestadorPersistence prestadorPersistence;
 
    
-    public HojaDeVidaEntity createHojaDeVida(HojaDeVidaEntity hojaDeVidaEntity) throws BusinessLogicException{
+    public HojaDeVidaEntity createHojaDeVida(Long prestadorId,HojaDeVidaEntity hojaDeVidaEntity) throws BusinessLogicException{
         LOGGER.log(Level.INFO, "Inicia proceso de creación de la hoja de vida");
-        
+        PrestadorEntity prestador = prestadorPersistence.find(prestadorId);
+        if(prestador == null)
+            throw new BusinessLogicException("El prestador no existe");
         if(persistence.findByEmail(hojaDeVidaEntity.getEmail())!=null){
             throw new BusinessLogicException("Ya existe una hoja de vida asociada al email: "+hojaDeVidaEntity.getEmail());
         }
         // Invoca la persistencia para crear el servicio
-        persistence.create(hojaDeVidaEntity);
+        hojaDeVidaEntity.setPrestador(prestador);
         LOGGER.log(Level.INFO, "Termina proceso de creación de la hoja de vida");
-        return hojaDeVidaEntity;
+        return persistence.create(hojaDeVidaEntity);
     }
 
- 
-    public List<HojaDeVidaEntity> getHojasDeVida() {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar todas las hojas de vida");
-        List<HojaDeVidaEntity> hojasDeVida = persistence.findAll();
-        LOGGER.log(Level.INFO, "Termina proceso de consultar todas las hojas de vida");
-        return hojasDeVida;
-    }
 
-    
-    public HojaDeVidaEntity getHojaDeVida(Long telPrestador) {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar hoja de vida asociada con telefono= {0}", telPrestador);
-        HojaDeVidaEntity hojaDeVidaEntity = persistence.find(telPrestador);
+    public HojaDeVidaEntity getHojaDeVida(Long prestadorId) {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar hoja de vida asociada con telefono= {0}", prestadorId);
+        HojaDeVidaEntity hojaDeVidaEntity = persistence.find(prestadorId);
         if (hojaDeVidaEntity == null)
-            LOGGER.log(Level.SEVERE, "La hoja de vida asociada con telefono= {0}", telPrestador);
-        LOGGER.log(Level.INFO, "Termina proceso de consultar hoja de vida asociada con telefono= {0}", telPrestador);
+            LOGGER.log(Level.SEVERE, "La hoja de vida asociada con telefono= {0}", prestadorId);
+        LOGGER.log(Level.INFO, "Termina proceso de consultar hoja de vida asociada con telefono= {0}", prestadorId);
+        
+        
         return hojaDeVidaEntity;
     }
 
  
 
     
-    public HojaDeVidaEntity updateHojaDeVida(Long id, HojaDeVidaEntity hojaDeVidaEntity) {
-        LOGGER.log(Level.INFO, "Inicia proceso de actualizar hoja de vida asociada con id= {0}", id);
+    public HojaDeVidaEntity updateHojaDeVida(Long prestadorId, HojaDeVidaEntity hojaDeVidaEntity) {
+        LOGGER.log(Level.INFO, "Inicia proceso de actualizar hoja de vida asociada con id= {0}", prestadorId);
+        PrestadorEntity prestadorEntity = prestadorPersistence.find(prestadorId);
+        hojaDeVidaEntity.setPrestador(prestadorEntity);
         HojaDeVidaEntity newEntity = persistence.update(hojaDeVidaEntity);
         LOGGER.log(Level.INFO, "Termina proceso de actualizar hoja de vida asociada con id= {0}", hojaDeVidaEntity.getId());
         return newEntity;
     }
 
   
-    public void deleteHojaDeVida(Long id) {
-        LOGGER.log(Level.INFO, "Inicia proceso de borrar hoja de vida asociada con id= {0}", id);
-        persistence.delete(id);
-        LOGGER.log(Level.INFO, "Termina proceso de borrar hoja de vida asociada con id= {0}", id);
+    public void deleteHojaDeVida(Long prestadorId) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "Inicia proceso de borrar hoja de vida asociada con id= {0}", prestadorId);
+        HojaDeVidaEntity old = getHojaDeVida(prestadorId);
+         if(old == null)
+        {
+            throw new BusinessLogicException("La hoja de vida del prestador con id = "+prestadorId+ " no existe");
+        }
+         
+        persistence.delete(old.getId());
+        
+        LOGGER.log(Level.INFO, "Termina proceso de borrar hoja de vida asociada con id= {0}", prestadorId);
     }
 
   

@@ -10,11 +10,12 @@ import co.edu.uniandes.csw.servicioshogar.entities.SolicitudEntity;
 import co.edu.uniandes.csw.servicioshogar.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.servicioshogar.persistence.ServicioPersistence;
 import co.edu.uniandes.csw.servicioshogar.persistence.SolicitudPersistence;
+
+import javax.ejb.Stateless;
+import javax.inject.Inject;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.Stateless;
-import javax.inject.Inject;
 
 /**
  *
@@ -74,7 +75,7 @@ public class ServicioLogic {
      */
     public ServicioEntity getServicio(Long solicitudesId, Long serviciosId) {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar el servicio con id = {0} del solicitud con id = " + solicitudesId, serviciosId);
-        return persistence.find(solicitudesId, serviciosId);
+        return persistence.findBySolicitud(solicitudesId, serviciosId);
     }
 
     /**

@@ -11,8 +11,8 @@
     <name>s3_sech</name>
  
     <modules>
-        <module>s3_servicioshogar-api</module>
         <module>s3_servicioshogar-back</module>
+        <module>s3_servicioshogar-api</module>
     </modules>
     
     <repositories>

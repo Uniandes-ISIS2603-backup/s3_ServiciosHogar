@@ -5,13 +5,14 @@
  */
 package co.edu.uniandes.csw.servicioshogar.entities;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import uk.co.jemos.podam.common.PodamExclude;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
-import uk.co.jemos.podam.common.PodamExclude;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -31,6 +32,10 @@ public class ClienteEntity extends BaseEntity implements Serializable
     @PodamExclude
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<SolicitudEntity> solicitudes = new ArrayList<SolicitudEntity>();
+    
+    @PodamExclude
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    private List<TarjetaCreditoEntity> tarjetas = new ArrayList<TarjetaCreditoEntity>();
     
     //------------------------------------------
     //------------------Metodos-----------------
@@ -76,5 +81,8 @@ public class ClienteEntity extends BaseEntity implements Serializable
 
     public void setSolicitudes(List<SolicitudEntity> solicitudes) {this.solicitudes = solicitudes;}
     
+    public List<TarjetaCreditoEntity> getTarjetas() {return tarjetas;}
+    
+    public void setTarjetas(List<TarjetaCreditoEntity> tarjetas) {this.tarjetas = tarjetas;}
     
 }

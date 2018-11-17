@@ -5,13 +5,10 @@
  */
 package co.edu.uniandes.csw.servicioshogar.entities;
 
-import java.io.Serializable;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import uk.co.jemos.podam.common.PodamExclude;
+
+import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Clase que representa un servicio en la persistencia y permite su
@@ -28,6 +25,18 @@ public class ServicioEntity extends BaseEntity implements Serializable{
     @ManyToOne(cascade = CascadeType.PERSIST)
     private SolicitudEntity solicitud;
 
+    @PodamExclude
+    @ManyToOne
+    private PrestadorEntity prestador;
+
+    public PrestadorEntity getPrestador() {
+        return prestador;
+    }
+
+    public void setPrestador(PrestadorEntity prestador) {
+        this.prestador = prestador;
+    }
+    
     /**
      * Devuelve la descripcion del servicio.
      * @return descripcion del servicio.

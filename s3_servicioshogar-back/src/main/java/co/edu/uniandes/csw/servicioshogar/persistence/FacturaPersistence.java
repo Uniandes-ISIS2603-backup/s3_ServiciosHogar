@@ -6,13 +6,14 @@
 package co.edu.uniandes.csw.servicioshogar.persistence;
 
 import co.edu.uniandes.csw.servicioshogar.entities.FacturaEntity;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -87,32 +88,5 @@ public class FacturaPersistence {
         em.remove(entity);
         LOGGER.log(Level.INFO, "Saliendo de borrar el cliente con id = {0}", tarjetaId);
     }
-    
-    /**
-     * Busca si existe una tarjeta de credito con el numero enviado por parametro.
-     * @param numero. Numero de la tarjeta de credito a buscar.
-     * @return cliente con el nombre correspondiente. Null en caso de no encontrarlo
-     */
-    public FacturaEntity findByNumber(Integer numero) 
-    {
-        LOGGER.log(Level.INFO, "Consultando factura por numero ", numero);
-        /*Se crea un query para buscar editoriales con el nombre que recibe el método como argumento.*/
-        TypedQuery query = em.createQuery("Select e From FacturaEntity e where e.numero = :numero", FacturaEntity.class);
         
-        query = query.setParameter("numero", numero);
-        /*Se invoca el query se obtiene la lista resultado*/
-        List<FacturaEntity> sameName = query.getResultList();
-        FacturaEntity result;
-        
-        if (sameName == null)
-            result = null;
-        else if (sameName.isEmpty())
-            result = null;
-        else
-            result = sameName.get(0);
-        
-        LOGGER.log(Level.INFO, "Saliendo de consultar factura por numero ", numero);
-        return result;
-    }
-    
 }

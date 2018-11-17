@@ -6,13 +6,14 @@
 package co.edu.uniandes.csw.servicioshogar.persistence;
 
 import co.edu.uniandes.csw.servicioshogar.entities.PrestadorEntity;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -26,6 +27,11 @@ public class PrestadorPersistence {
     @PersistenceContext(unitName = "SechPU")
     protected EntityManager em;
     
+    /**
+     * Método para persistir la entidad en la BD
+     * @param prestadorEntity. Objeto Prestador que se creará en la BD.
+     * @return La entidad creada (Prestador) con un id dado por la BD
+     */
     public PrestadorEntity create(PrestadorEntity prestadorEntity)
     {
         LOGGER.log(Level.INFO, "Creando un nuevo prestador");
@@ -35,13 +41,23 @@ public class PrestadorPersistence {
         return prestadorEntity;
     }
     
+    /**
+     * Devuelve el prestador con el id dado por parámetro
+     * @param prestadorId. El id del prestador a buscar
+     * @return La entidad encontrada (Prestador).
+     */
     public PrestadorEntity find(Long prestadorId)
     {
         LOGGER.log(Level.INFO, "Consultando prestador con id={0}", prestadorId);
-        
+    
         return em.find(PrestadorEntity.class, prestadorId);
     }
     
+    /**
+     * Modifica el prestador con el id dado por parámetro
+     * @param prestadorEntity. El prestador con los cambios que se desean realizar.
+     * @return  El prestador con los cambios aplicados
+     */
     public PrestadorEntity update(PrestadorEntity prestadorEntity)
     {
         LOGGER.log(Level.INFO, "Actualizando prestador con id={0}", prestadorEntity.getId());
@@ -51,6 +67,10 @@ public class PrestadorPersistence {
         return em.merge(prestadorEntity);
     }
     
+    /**
+     * Borra el prestador con el id dado por parámetro
+     * @param prestadorId. El id del prestador que se desea eliminar
+     */
     public void delete(Long prestadorId)
     {
         LOGGER.log(Level.INFO, "Borrando prestador con id={0}", prestadorId);
@@ -62,6 +82,10 @@ public class PrestadorPersistence {
       
     }
     
+    /**
+     * Retorna una lista con todos los prestador en la BD.
+     * @return Una lista con todos los prestador que se encuentren en la BD.
+     */
     public List<PrestadorEntity> findAll() {
         LOGGER.log(Level.INFO, "Consultando todas los prestadores");
         // Se crea un query para buscar todas las editoriales en la base de datos.
@@ -70,6 +94,11 @@ public class PrestadorPersistence {
         return query.getResultList();
     }
 	
+    /**
+     * Busca si existe un prestador con la cédula dada por parámetro
+     * @param cedula. La cédula del prestador a buscar
+     * @return El prestador con la cédula correspondiente. Null en caso de que no exista.
+     */
     public PrestadorEntity findByCedula(Integer cedula)
     {
         LOGGER.log(Level.INFO, "Consultando el prestador con la cédula ", cedula);
