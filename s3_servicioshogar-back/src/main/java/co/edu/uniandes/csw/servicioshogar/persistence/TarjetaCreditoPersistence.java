@@ -48,6 +48,7 @@ public class TarjetaCreditoPersistence {
      * @param clienteId 
      * @return una lista con todas las tarjetas de credito que se encuentren en la BD.
      */
+    //FIXME No se si este bien.
     public List<TarjetaCreditoEntity> findAll(Long clienteId)
     {
         LOGGER.log(Level.INFO, "Consultando todas las tarjetas creditos");
