@@ -53,7 +53,7 @@ public class TarjetaCreditoPersistence {
     {
         LOGGER.log(Level.INFO, "Consultando todas las tarjetas creditos");
         /*Se crea un query para buscar todas las tarjetas de credito en la base de datos.*/
-        TypedQuery query = em.createQuery("select u from TarjetaCreditoEntity u WHERE u.cliente = :clienteId", TarjetaCreditoEntity.class);
+        TypedQuery query = em.createQuery("select u from TarjetaCreditoEntity u WHERE u.cliente.id = :clienteId", TarjetaCreditoEntity.class);
         query.setParameter("clienteId", clienteId);
         return query.getResultList();
     }
