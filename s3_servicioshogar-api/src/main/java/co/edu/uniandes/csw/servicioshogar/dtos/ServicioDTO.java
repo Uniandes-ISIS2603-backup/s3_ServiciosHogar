@@ -6,9 +6,10 @@
 package co.edu.uniandes.csw.servicioshogar.dtos;
 
 import co.edu.uniandes.csw.servicioshogar.entities.ServicioEntity;
-import java.io.Serializable;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+
+import java.io.Serializable;
 
 /**
  * Al serializarse como JSON esta clase implementa el siguiente modelo: <br>
@@ -37,7 +38,8 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 public class ServicioDTO implements Serializable{
     
     private Long id;
-    private String descripcion, requerimientos;
+    private String descripcion;
+    private String requerimientos;
     
     /*
     * Relación a una solicitud  
@@ -75,7 +77,7 @@ public class ServicioDTO implements Serializable{
 
     /**
      * Modifica el ID del servicio.
-     * @param id. Nuevo ID.
+     * @param id Nuevo ID.
      */
     public void setId(Long id) {
         this.id = id;
@@ -95,7 +97,7 @@ public class ServicioDTO implements Serializable{
 
     /**
      * Modificar la descripcion del servicio.
-     * @param descripcion. Nueva descripcion.
+     * @param descripcion Nueva descripcion.
      */
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
@@ -111,7 +113,7 @@ public class ServicioDTO implements Serializable{
 
     /**
      * Modifica los requerimientos del servicio.
-     * @param requerimientos. Nuevos requerimientos.
+     * @param requerimientos Nuevos requerimientos.
      */
     public void setRequerimientos(String requerimientos) {
         this.requerimientos = requerimientos;

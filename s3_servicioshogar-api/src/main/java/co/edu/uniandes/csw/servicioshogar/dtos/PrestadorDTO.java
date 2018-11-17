@@ -6,13 +6,10 @@
 package co.edu.uniandes.csw.servicioshogar.dtos;
 
 import co.edu.uniandes.csw.servicioshogar.entities.PrestadorEntity;
-import java.io.Serializable;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+
+import java.io.Serializable;
 
 /**
  * PrestadorDTO Objeto de transferencia de datos de Prestadores. Los DTO contienen
@@ -156,15 +153,15 @@ public class PrestadorDTO implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
+        boolean resp = true;
         if (!(object instanceof PrestadorDTO)) {
-            return false;
+            resp = false;
         }
         PrestadorDTO other = (PrestadorDTO) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
+            resp =false;
         }
-        return true;
+        return resp;
     }
 
     @Override

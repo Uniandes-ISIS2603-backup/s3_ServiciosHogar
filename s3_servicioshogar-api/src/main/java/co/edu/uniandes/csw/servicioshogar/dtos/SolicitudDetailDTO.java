@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.servicioshogar.dtos;
 
 import co.edu.uniandes.csw.servicioshogar.entities.ServicioEntity;
 import co.edu.uniandes.csw.servicioshogar.entities.SolicitudEntity;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
