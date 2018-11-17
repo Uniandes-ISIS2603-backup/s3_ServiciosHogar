@@ -6,13 +6,14 @@
 package co.edu.uniandes.csw.servicioshogar.persistence;
 
 import co.edu.uniandes.csw.servicioshogar.entities.TarjetaCreditoEntity;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -47,13 +48,14 @@ public class TarjetaCreditoPersistence {
      * @param clienteId 
      * @return una lista con todas las tarjetas de credito que se encuentren en la BD.
      */
-    public TarjetaCreditoEntity findAll(Long clienteId)
+    //FIXME No se si este bien.
+    public List<TarjetaCreditoEntity> findAll(Long clienteId)
     {
         LOGGER.log(Level.INFO, "Consultando todas las tarjetas creditos");
         /*Se crea un query para buscar todas las tarjetas de credito en la base de datos.*/
-        TypedQuery query = em.createQuery("select u from TarjetaCreditoEntity u", TarjetaCreditoEntity.class);
+        TypedQuery query = em.createQuery("select u from TarjetaCreditoEntity u WHERE u.cliente.id = :clienteId", TarjetaCreditoEntity.class);
         query.setParameter("clienteId", clienteId);
-        return (TarjetaCreditoEntity) query.getResultList().get(0);
+        return query.getResultList();
     }
     
     /**

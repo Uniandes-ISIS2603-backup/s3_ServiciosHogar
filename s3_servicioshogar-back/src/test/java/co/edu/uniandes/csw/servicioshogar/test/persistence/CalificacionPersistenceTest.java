@@ -99,41 +99,8 @@ public class CalificacionPersistenceTest
      * Inserta los datos iniciales para el correcto funcionamiento de las
      * pruebas.
      */
-    private void insertData() {
-        /*PodamFactory factory = new PodamFactoryImpl();
-        for (int i = 0; i < 3; i++) {
-            CalificacionEntity entity = factory.manufacturePojo(CalificacionEntity.class);
-            ServicioEntity servicioEntity = factory.manufacturePojo(ServicioEntity.class);
-
-            entity.setServicio(servicioEntity);
-            servicioEntity.setCalificacion(entity);
-
-            em.persist(entity);
-            em.persist(servicioEntity);
-            data.add(entity);
-        }
-        CalificacionEntity entity = factory.manufacturePojo(CalificacionEntity.class);
-        em.persist(entity);
-        data.add(entity);*/
-        /*PodamFactory factory = new PodamFactoryImpl();
-        for (int i = 0; i < 3; i++) 
-        {
-            CalificacionEntity entity = factory.manufacturePojo(CalificacionEntity.class);
-            ServicioEntity entityServicio = factory.manufacturePojo(ServicioEntity.class);                     
-            entityServicio.setCalificacion(entity);
-            entity.setServicio(entityServicio);
-            em.persist(entity);
-            dataServicio.add(entityServicio);
-            em.persist(entityServicio);
-            data.add(entity);
-        }
-        SolicitudEntity entitySolicitud = factory.manufacturePojo(SolicitudEntity.class);
-        entitySolicitud.setServicios(dataServicio);
-        for (int i = 0; i < 3; i++)     
-        {
-            dataServicio.get(i).setSolicitud(entitySolicitud);
-        }*/  
-        
+    private void insertData() 
+    {              
         PodamFactory factory = new PodamFactoryImpl();
         //Se agrega un cliente a la bd. 
         ClienteEntity cliente = factory.manufacturePojo(ClienteEntity.class);
@@ -166,9 +133,7 @@ public class CalificacionPersistenceTest
             listaCalificacion.add(calificacion);
             em.persist(calificacion);
             listaServicio.get(i).setCalificacion(calificacion);            
-        }
-        
-        
+        }       
     }
 
     /**
@@ -194,7 +159,8 @@ public class CalificacionPersistenceTest
      */
     @Test
     public void getCalificacionTest() 
-    {   System.out.println("tam cli: " + listaCliente.size());
+    {  
+        System.out.println("tam cli: " + listaCliente.size());
         System.out.println("tam sol: " + listaSolicitud.size());
         System.out.println("tam servicios: " + listaServicio.size());
         System.out.println("tam calif: "+ listaCalificacion.size());
@@ -214,8 +180,8 @@ public class CalificacionPersistenceTest
     @Test
     public void updateCalificacionTest() 
     {
-        CalificacionEntity entity = listaCalificacion.get(0);       
-        //System.out.println("Salio");
+        CalificacionEntity entity = listaCalificacion.get(0);   
+        
         PodamFactory factory = new PodamFactoryImpl();
         CalificacionEntity newEntity = factory.manufacturePojo(CalificacionEntity.class);
 
