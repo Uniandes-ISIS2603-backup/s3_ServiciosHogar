@@ -174,7 +174,7 @@ public class ClientePersistenceTest
      * Prueba para eliminar un cliente.
      */
     @Test
-    public void deleteAuthorTest() 
+    public void deleteClienteTest() 
     {
         ClienteEntity entity = data.get(0);
         clientePersistence.delete(entity.getId());

@@ -53,6 +53,7 @@ public class FacturaPersistence {
         return query.getResultList();
     }
     
+    //FIXME 
     /**
      * Devuelve una factura identificada por el parametro ingresado.
      * @param facturaId  . Nuemro factura.
