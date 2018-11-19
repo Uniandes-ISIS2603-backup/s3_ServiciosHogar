@@ -9,7 +9,6 @@ import co.edu.uniandes.csw.servicioshogar.entities.PrestadorEntity;
 import co.edu.uniandes.csw.servicioshogar.entities.ServicioEntity;
 import co.edu.uniandes.csw.servicioshogar.persistence.PrestadorPersistence;
 import co.edu.uniandes.csw.servicioshogar.persistence.ServicioPersistence;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,7 +22,7 @@ import javax.inject.Inject;
 @Stateless
 public class ServiciosPrestadorLogic {
  
-    private final static Logger LOGGER = Logger.getLogger(ServiciosPrestadorLogic.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(ServiciosPrestadorLogic.class.getName());
     
     @Inject
     private PrestadorPersistence prestadorPersistence;

@@ -12,8 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import org.apache.commons.lang3.builder.*;
 import uk.co.jemos.podam.common.PodamExclude;
 
 /**
@@ -101,6 +100,7 @@ public class HabilidadEntity extends BaseEntity implements Serializable {
      * Retorna el id autogenerado de la habilidad
      * @return El id autogenrado
      */
+    @Override
     public Long getId() {
         return id;
     }
@@ -109,28 +109,9 @@ public class HabilidadEntity extends BaseEntity implements Serializable {
      * Modifica el id de la habilidad
      * @param id El nuevo id
      */
+    @Override
     public void setId(Long id) {
         this.id = id;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof HabilidadEntity)) {
-            return false;
-        }
-        HabilidadEntity other = (HabilidadEntity) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
     }
 
     @Override

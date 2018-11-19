@@ -50,9 +50,9 @@ public class HabilidadLogic {
         if(prestador == null)
             throw new BusinessLogicException("El prestador no existe");
         if(habilidadEntity.getDescripcion() == null || habilidadEntity.getDescripcion().equals(""))
-            throw new BusinessLogicException("El prestador no existe");
+            throw new BusinessLogicException("La habilidad no tiene descripción");
         if(habilidadEntity.getTipo() == null || habilidadEntity.getTipo().equals(""))
-            throw new BusinessLogicException("El prestador no existe");
+            throw new BusinessLogicException("La habilidad no tiene tipo");
         habilidadEntity.setPrestador(prestador);
         LOGGER.log(Level.INFO,"Termina proceso de creación de una habilidad");
         return persistence.create(habilidadEntity);
@@ -65,7 +65,7 @@ public class HabilidadLogic {
      */
     public List<HabilidadEntity> getHabilidades(Long prestadorId)
     {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar las habilidades aociadas al prestador con id = {0}", prestadorId);
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar las habilidades aociadas al prestador con id {0}", prestadorId);
         PrestadorEntity prestador =  prestadorPersistence.find(prestadorId);
         LOGGER.log(Level.INFO, "Termina proceso de consultar las habilidades aociadas al prestador con id = {0}", prestadorId);
         return prestador.getHabilidades();

@@ -85,11 +85,7 @@ public class HabilidadPersistence {
         q.setParameter("habilidadId", habilidadId);
         List<HabilidadEntity> results = q.getResultList();
         HabilidadEntity review = null;
-        if (results == null) {
-            review = null;
-        } else if (results.isEmpty()) {
-            review = null;
-        } else if (results.size() >= 1) {
+        if (results.size() >= 1) {
             review = results.get(0);
         }
         LOGGER.log(Level.INFO, "Saliendo de consultar la habilidad con id = {0} del prestador con id =" + prestadorId, habilidadId);

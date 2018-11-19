@@ -161,26 +161,6 @@ public class HabilidadDTO implements Serializable {
         }
         return habilidadEntity;
     }
-    
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        boolean resp = true;
-        if (!(object instanceof HabilidadDTO)) {
-            resp =false;
-        }
-        HabilidadDTO other = (HabilidadDTO) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            resp=false;
-        }
-        return resp;
-    }
 
     @Override
     public String toString() {

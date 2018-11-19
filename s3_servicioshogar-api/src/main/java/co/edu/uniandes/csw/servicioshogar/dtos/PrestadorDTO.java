@@ -145,26 +145,6 @@ public class PrestadorDTO implements Serializable {
     }
 
     @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        boolean resp = true;
-        if (!(object instanceof PrestadorDTO)) {
-            resp = false;
-        }
-        PrestadorDTO other = (PrestadorDTO) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            resp =false;
-        }
-        return resp;
-    }
-
-    @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }

@@ -37,11 +37,11 @@ public class PrestadorLogic {
      */
     public PrestadorEntity createPrestador(PrestadorEntity prestadorEntity) throws BusinessLogicException{
         LOGGER.log(Level.INFO, "Inicia el proceso de creación de un prestador");
-        if(prestadorEntity.getCedula() == null || prestadorEntity.getCedula().equals(""))
+        if(prestadorEntity.getCedula() == null)
         {
             throw new BusinessLogicException("La cédula es inválida");
         }
-        if(prestadorEntity.getNombre() == null || prestadorEntity.getNombre().equals(""))
+        if(prestadorEntity.getNombre() == null)
         {
             throw new BusinessLogicException("El nombre es inválido");
         }
@@ -95,7 +95,7 @@ public class PrestadorLogic {
     public PrestadorEntity updatePrestador(Long prestadorId, PrestadorEntity prestadorEntity) throws BusinessLogicException{
         LOGGER.log(Level.INFO,"Inicia porceso de actualizar el prestador con id = {0}", prestadorId);
         //Reglas de negocio: Puede actualizar su nombre
-        if(prestadorEntity.getCedula() == null|| prestadorEntity.getCedula().equals(""))
+        if(prestadorEntity.getCedula() == null)
             throw new BusinessLogicException("La cédula es inválida");
         PrestadorEntity resultado = persistence.update(prestadorEntity);
         LOGGER.log(Level.INFO, "Temirna porceso de actualizar el prestador con id = {0}", prestadorId);

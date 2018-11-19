@@ -8,14 +8,7 @@ package co.edu.uniandes.csw.servicioshogar.entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import uk.co.jemos.podam.common.PodamExclude;
@@ -51,7 +44,7 @@ public class PrestadorEntity extends BaseEntity implements Serializable {
      */
     @PodamExclude
     @OneToMany(mappedBy = "prestador", cascade = CascadeType.PERSIST, orphanRemoval = true)
-    private List<HabilidadEntity> habilidades = new ArrayList<HabilidadEntity>();
+    private List<HabilidadEntity> habilidades = new ArrayList<>();
     
     /**
      * La relación uno a uno con hoja de vida
@@ -150,6 +143,7 @@ public class PrestadorEntity extends BaseEntity implements Serializable {
      * Devuelve el id del prestador
      * @return the id
      */
+    @Override
     public Long getId() {
         return id;
     }
@@ -158,28 +152,9 @@ public class PrestadorEntity extends BaseEntity implements Serializable {
      * Modifica el id el prestador
      * @param id the id to set
      */
+    @Override
     public void setId(Long id) {
         this.id = id;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof PrestadorEntity)) {
-            return false;
-        }
-        PrestadorEntity other = (PrestadorEntity) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
     }
 
     @Override
