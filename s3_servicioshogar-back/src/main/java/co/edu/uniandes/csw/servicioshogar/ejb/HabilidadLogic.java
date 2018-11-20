@@ -42,6 +42,7 @@ public class HabilidadLogic {
      * @param prstadorId. El id del prestador asociado a la habilidad
      * @param habilidadEntity. La entidad que representa la habilidad a persistir
      * @return Entidad de la habilidad luego de ser persistida
+     * @throws co.edu.uniandes.csw.servicioshogar.exceptions.BusinessLogicException
      */
     public HabilidadEntity createHabilidad(Long prstadorId, HabilidadEntity habilidadEntity) throws BusinessLogicException
     {
@@ -80,7 +81,8 @@ public class HabilidadLogic {
      */
     public HabilidadEntity getHabilidad(Long prestadorId, Long habilidadId)
     {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar la habilidad con id = {0} del prestador con id = "+prestadorId, habilidadId);
+        Object[] ids = {habilidadId, prestadorId};
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar la habilidad con id = {0} del prestador con id = {1}", ids);
         return persistence.find(prestadorId, habilidadId);
     }
     
@@ -92,11 +94,12 @@ public class HabilidadLogic {
      */
     public HabilidadEntity updateHabilidad(Long prestadorId, HabilidadEntity habilidadEntity)
     {
-        LOGGER.log(Level.INFO, "Inicia proceso de actualizar la habilidad con id = {0} del prestador con id = " + prestadorId, habilidadEntity.getId());
+        Object[] ids = {habilidadEntity.getId(), prestadorId};
+        LOGGER.log(Level.INFO, "Inicia proceso de actualizar la habilidad con id = {0} del prestador con id = {1} ", ids);
         PrestadorEntity prestadorEntity = prestadorPersistence.find(prestadorId);
         habilidadEntity.setPrestador(prestadorEntity);
         persistence.update(habilidadEntity);
-        LOGGER.log(Level.INFO, "Termina proceso de actualizar la habilidad con id = {0} del prestador con id = " + prestadorId, habilidadEntity.getId());
+        LOGGER.log(Level.INFO, "Termina proceso de actualizar la habilidad con id = {0} del prestador con id = {1}", ids);
         return habilidadEntity;
     }
     
@@ -104,18 +107,18 @@ public class HabilidadLogic {
      * Borra una habilidad con el id dado por parámetro
      * @param prestadorId. El id del prestador asociado a la habilidad
      * @param habilidadId. El id de la habilidad que se desea eliminar
-     * @throws BusinessLogicException. Si la habilidad no existe
+     * @throws co.edu.uniandes.csw.servicioshogar.exceptions.BusinessLogicException
      */
-    public void deleteHabilidad(Long prestadorId, Long habilidadId) throws BusinessLogicException
+    public void deleteHabilidad(Long prestadorId, Long habilidadId) throws BusinessLogicException 
     {
-        LOGGER.log(Level.INFO, "Inicia proceso de borrar la habilidad con id = {0} del prestador con id = "+ prestadorId, habilidadId);
+        Object[] ids = {habilidadId, prestadorId};
+        LOGGER.log(Level.INFO, "Inicia proceso de borrar la habilidad con id = {0} del prestador con id = {1} ", ids);
         HabilidadEntity old = getHabilidad(prestadorId, habilidadId);
         if(old == null)
-        {
             throw new BusinessLogicException("La habilidad con id = "+ habilidadId + " no existe");
-        }
+        
         persistence.delete(old.getId());
-        LOGGER.log(Level.INFO, "Termina proceso de borrar la habilidad con id = {0} del prestador con id = " + prestadorId, habilidadId);
+        LOGGER.log(Level.INFO, "Termina proceso de borrar la habilidad con id = {0} del prestador con id = {1}", ids);
         
     }
 }

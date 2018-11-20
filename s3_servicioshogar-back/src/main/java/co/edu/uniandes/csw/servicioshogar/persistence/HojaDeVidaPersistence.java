@@ -40,11 +40,7 @@ public class HojaDeVidaPersistence {
         q.setParameter("prestadorid", prestadorId);
         List<HojaDeVidaEntity> results = q.getResultList();
         HojaDeVidaEntity hojaDeVida = null;
-        if (results == null) {
-            hojaDeVida = null;
-        } else if (results.isEmpty()) {
-            hojaDeVida = null;
-        } else if (results.size() >= 1) {
+        if (!results.isEmpty()) {
             hojaDeVida = results.get(0);
         }
         return hojaDeVida;
@@ -80,7 +76,7 @@ public class HojaDeVidaPersistence {
      */
     public HojaDeVidaEntity findByEmail(String email) 
     {
-        LOGGER.log(Level.INFO, "Consultando hoja de vida por email ", email);
+        LOGGER.log(Level.INFO, "Consultando hoja de vida por email = {0}", email);
         /*Se crea un query para buscar editoriales con el nombre que recibe el método como argumento.
         ":name" es un placeholder que debe ser remplazado*/
         TypedQuery query = em.createQuery("Select e From HojaDeVidaEntity e where e.email = :email", HojaDeVidaEntity.class);
@@ -97,13 +93,13 @@ public class HojaDeVidaPersistence {
         else
             result = sameEmail.get(0);
         
-        LOGGER.log(Level.INFO, "Saliendo de consultar hoja de vida por email ", email);
+        LOGGER.log(Level.INFO, "Saliendo de consultar hoja de vida por email = {0} ", email);
         return result;
     }
     
     public HojaDeVidaEntity findById(String id) 
     {
-        LOGGER.log(Level.INFO, "Consultando hoja de vida por email ", id);
+        LOGGER.log(Level.INFO, "Consultando hoja de vida por id = {0}", id);
         /*Se crea un query para buscar editoriales con el nombre que recibe el método como argumento.
         ":name" es un placeholder que debe ser remplazado*/
         TypedQuery query = em.createQuery("Select e From HojaDeVidaEntity e where e.id = :id", HojaDeVidaEntity.class);
@@ -120,7 +116,7 @@ public class HojaDeVidaPersistence {
         else
             result = sameEmail.get(0);
         
-        LOGGER.log(Level.INFO, "Saliendo de consultar hoja de vida por id ", id);
+        LOGGER.log(Level.INFO, "Saliendo de consultar hoja de vida por id = {0}", id);
         return result;
     }
     

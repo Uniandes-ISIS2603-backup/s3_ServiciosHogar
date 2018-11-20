@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.servicioshogar.entities;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -118,5 +119,40 @@ public class HabilidadEntity extends BaseEntity implements Serializable {
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final HabilidadEntity other = (HabilidadEntity) obj;
+        if (!Objects.equals(this.tipo, other.tipo)) {
+            return false;
+        }
+        if (!Objects.equals(this.descripcion, other.descripcion)) {
+            return false;
+        }
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return Objects.equals(this.prestador, other.prestador);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 31 * hash + Objects.hashCode(this.id);
+        hash = 31 * hash + Objects.hashCode(this.tipo);
+        hash = 31 * hash + Objects.hashCode(this.descripcion);
+        hash = 31 * hash + Objects.hashCode(this.prestador);
+        return hash;
+    }
+    
     
 }

@@ -100,7 +100,7 @@ public class PrestadorPersistence {
      */
     public PrestadorEntity findByCedula(Integer cedula)
     {
-        LOGGER.log(Level.INFO, "Consultando el prestador con la cédula ", cedula);
+        LOGGER.log(Level.INFO, "Consultando el prestador con la cédula = {0}", cedula);
         TypedQuery query = em.createQuery("Select e From PrestadorEntity e where e.cedula = :cedula" , PrestadorEntity.class);
         query = query.setParameter("cedula", cedula);
         
@@ -112,7 +112,7 @@ public class PrestadorPersistence {
         else
             buscado = sameCedula.get(0);
         
-        LOGGER.log(Level.INFO, "Saliendo de consultar el prestador con cédula ", cedula);
+        LOGGER.log(Level.INFO, "Saliendo de consultar el prestador con cédula = {0}", cedula);
         return buscado;
     }
     

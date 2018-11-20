@@ -36,6 +36,16 @@ public class HojaDeVidaResource {
     private static final Logger LOGGER = Logger.getLogger(HojaDeVidaResource.class.getName());
   
     /**
+     * Constante que represnta la frase El recurso
+     */
+    private static final String RECURSO = "El recurso ";
+            
+    /**
+     * Constante que representa el mensaje de error
+     */
+    private static final String ERROR = "/hojaDeVida no existe.";
+    
+    /**
      * Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
      */
     @Inject
@@ -53,6 +63,12 @@ public class HojaDeVidaResource {
          return nuevaHojaDeVidaDTO;
     }
 
+    /**
+     *
+     * @param prestadorId
+     * @return
+     * @throws WebApplicationException
+     */
     @GET
     public HojaDeVidaDetailDTO getHojaDeVida(@PathParam("prestadorId") Long prestadorId) throws WebApplicationException
     {
@@ -60,33 +76,44 @@ public class HojaDeVidaResource {
         LOGGER.log(Level.INFO, "HojaDeVidaResource getHojaDeVida: input: {0}", prestadorId);
         HojaDeVidaEntity hojaDeVidaEntity = hojaDeVidaLogic.getHojaDeVida(prestadorId);
         if (hojaDeVidaEntity == null)
-            throw new WebApplicationException("El recurso " + prestadorId + "/hojaDeVida no existe.", 404);
+            throw new WebApplicationException(RECURSO + prestadorId + ERROR, 404);
         System.out.println("La lógica lo encuentra");
         HojaDeVidaDetailDTO detailDTO = new HojaDeVidaDetailDTO(hojaDeVidaEntity);
         LOGGER.log(Level.INFO, "HojaDeVidaResource getHojaDeVida: {0}", detailDTO.toString());
         return detailDTO;
     }
 
+    /**
+     *
+     * @param prestadorId
+     * @param hojaDeVida
+     * @return
+     * @throws WebApplicationException
+     */
     @PUT
     public HojaDeVidaDTO modificarHojaDeVida(@PathParam("prestadorId") Long prestadorId, HojaDeVidaDTO hojaDeVida) throws WebApplicationException
     {
         LOGGER.log(Level.INFO, "HojaDeVidaResource modificarHojaDeVida: input: prestadorId:{0} , hojaDeVida: {1}", new Object[]{prestadorId, hojaDeVida.toString()});
         
         if (hojaDeVidaLogic.getHojaDeVida(prestadorId) == null)
-            throw new WebApplicationException("El recurso " + prestadorId + "/hojaDeVida no existe.", 404);
+            throw new WebApplicationException(RECURSO + prestadorId + ERROR, 404);
         
         HojaDeVidaDTO detailDTO = new HojaDeVidaDTO(hojaDeVidaLogic.updateHojaDeVida(prestadorId, hojaDeVida.toEntity()));
         LOGGER.log(Level.INFO, "HojaDeVidaResource modificarHojaDeVida: output: {0}", detailDTO.toString());
         return detailDTO;
     }
     
-
+    /**
+     *
+     * @param prestadorId
+     * @throws BusinessLogicException
+     */
     @DELETE
     public void deleteHojaDeVida(@PathParam("prestadorId") Long prestadorId) throws BusinessLogicException
     {
         LOGGER.log(Level.INFO, "HojaDeVidaResource deleteHojaDeVida: input: {0}", prestadorId);
         if (hojaDeVidaLogic.getHojaDeVida(prestadorId) == null) 
-            throw new WebApplicationException("El recurso " + prestadorId + "/hojaDeVida no existe.", 404);
+            throw new WebApplicationException(RECURSO + prestadorId + ERROR, 404);
         
         hojaDeVidaLogic.deleteHojaDeVida(prestadorId);
         LOGGER.info("HojaDeVidaResource deleteHojaDeVida: output: void");

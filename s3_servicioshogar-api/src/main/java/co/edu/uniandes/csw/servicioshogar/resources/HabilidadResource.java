@@ -37,6 +37,16 @@ public class HabilidadResource {
     private static final Logger LOGGER = Logger.getLogger(PrestadorResource.class.getName());
     
     /**
+     * Constante que representa el path a prestador
+     */
+    private static final String PATH_PRESTADOR = "/prestadores/";
+    
+    /**
+     * Constante que representa el path a habilidad
+     */
+    private static final String PATH_HABILIDAD = "/habilidades/";
+    
+    /**
     * Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
     */
     @Inject
@@ -53,9 +63,9 @@ public class HabilidadResource {
     @POST
     public HabilidadDTO createHabilidad(@PathParam("prestadorId") Long prestadorId, HabilidadDTO  habilidad) throws BusinessLogicException
     {
-        LOGGER.log(Level.INFO, "HabilidadResource createHabilidad: input: {0}", habilidad.toString());
+        LOGGER.log(Level.INFO, "HabilidadResource createHabilidad: input: {0}", habilidad);
         HabilidadDTO nuevoHabilidadDTO = new HabilidadDTO(habilidadLogic.createHabilidad(prestadorId, habilidad.toEntity()));
-        LOGGER.log(Level.INFO, "HabilidadResource createHabilidad: output: {0}", nuevoHabilidadDTO.toString());
+        LOGGER.log(Level.INFO, "HabilidadResource createHabilidad: output: {0}", nuevoHabilidadDTO);
         return nuevoHabilidadDTO;
     }
     
@@ -88,11 +98,11 @@ public class HabilidadResource {
         LOGGER.log(Level.INFO, "HabilidadResource getHabilidad: input: {0}", habilidadId);
         HabilidadEntity hEntity = habilidadLogic.getHabilidad(prestadorId, habilidadId);
         if(hEntity == null)
-            throw new WebApplicationException("El recurso /prestadores/"+prestadorId+"/habilidades/"+habilidadId+"no existe", 404);
+            throw new WebApplicationException("El recurso "+PATH_PRESTADOR+prestadorId+PATH_HABILIDAD+habilidadId+"no existe", 404);
         
-        HabilidadDTO HabilidadDTO = new HabilidadDTO(hEntity);
-        LOGGER.log(Level.INFO, "HabilidadResource getHabilidad: output: {0}", HabilidadDTO.toString());
-        return HabilidadDTO;
+        HabilidadDTO habilidadDTO = new HabilidadDTO(hEntity);
+        LOGGER.log(Level.INFO, "HabilidadResource getHabilidad: output: {0}", habilidadDTO.toString());
+        return habilidadDTO;
     }
     
     /**
@@ -113,7 +123,7 @@ public class HabilidadResource {
         }
         HabilidadEntity entity = habilidadLogic.getHabilidad(prestadorId, habilidadId);
         if (entity == null) {
-            throw new WebApplicationException("El recurso /prestadores/" + prestadorId + "/habilidades/" + habilidadId + " no existe.", 404);
+            throw new WebApplicationException("El recurso "+PATH_PRESTADOR + prestadorId + PATH_HABILIDAD + habilidadId + " no existe.", 404);
 
         }
         HabilidadDTO habilidadDTO = new HabilidadDTO(habilidadLogic.updateHabilidad(prestadorId, habilidad.toEntity()));
@@ -135,7 +145,7 @@ public class HabilidadResource {
     {
         HabilidadEntity entity = habilidadLogic.getHabilidad(prestadorId, habilidadId);
         if (entity == null) {
-            throw new WebApplicationException("El recurso /prestadores/" + prestadorId + "/habilidades/" + habilidadId + " no existe.", 404);
+            throw new WebApplicationException("El recurso "+ PATH_PRESTADOR + prestadorId + PATH_HABILIDAD + habilidadId + " no existe.", 404);
         }
         habilidadLogic.deleteHabilidad(prestadorId, habilidadId);
     }
@@ -151,7 +161,7 @@ public class HabilidadResource {
      * @return la lista de habilidades en forma DTO (json)
      */
     private List<HabilidadDTO> listEntity2DTO(List<HabilidadEntity> entityList) {
-        List<HabilidadDTO> list = new ArrayList<HabilidadDTO>();
+        List<HabilidadDTO> list = new ArrayList<>();
         for (HabilidadEntity entity : entityList) {
             list.add(new HabilidadDTO(entity));
         }

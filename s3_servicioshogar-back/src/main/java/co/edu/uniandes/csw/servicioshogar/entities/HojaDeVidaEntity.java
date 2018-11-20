@@ -4,10 +4,11 @@
  * and open the template in the editor.
  */
 package co.edu.uniandes.csw.servicioshogar.entities;
+
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -18,20 +19,20 @@ import uk.co.jemos.podam.common.PodamExclude;
  * @author Daniela Rocha Torres
  */
 @Entity
-public class HojaDeVidaEntity extends BaseEntity implements Serializable{
-    
+public class HojaDeVidaEntity extends BaseEntity implements Serializable {
+
     @PodamExclude
     @OneToOne
     private PrestadorEntity prestador;
-    
+
     @PodamExclude
     @OneToMany(mappedBy = "hojaDeVida")
-    private List<ReferenciaEntity> referencias = new ArrayList<ReferenciaEntity>();
-    
-        /**
+    private List<ReferenciaEntity> referencias = new ArrayList<>();
+
+    /**
      * Atributo que representa la trayectoria (experiencia) del prestador.
      */
-    private String trayectoria; 
+    private String trayectoria;
     /**
      * Atributo que representa la fecha de nacimiento del prestador.
      */
@@ -108,11 +109,64 @@ public class HojaDeVidaEntity extends BaseEntity implements Serializable{
     public void setFormacion(String formacion) {
         this.formacion = formacion;
     }
-   
-       public List<ReferenciaEntity> getReferencias() {return referencias;
+
+    public List<ReferenciaEntity> getReferencias() {
+        return referencias;
     }
 
-    public void setReferencias(List<ReferenciaEntity> referencias) {this.referencias = referencias;}
+    public void setReferencias(List<ReferenciaEntity> referencias) {
+        this.referencias = referencias;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 61 * hash + Objects.hashCode(this.prestador);
+        hash = 61 * hash + Objects.hashCode(this.referencias);
+        hash = 61 * hash + Objects.hashCode(this.trayectoria);
+        hash = 61 * hash + Objects.hashCode(this.fechaNacimiento);
+        hash = 61 * hash + Objects.hashCode(this.email);
+        hash = 61 * hash + Objects.hashCode(this.telefono);
+        hash = 61 * hash + Objects.hashCode(this.direccion);
+        hash = 61 * hash + Objects.hashCode(this.formacion);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final HojaDeVidaEntity other = (HojaDeVidaEntity) obj;
+        if (!Objects.equals(this.trayectoria, other.trayectoria)) {
+            return false;
+        }
+        if (!Objects.equals(this.fechaNacimiento, other.fechaNacimiento)) {
+            return false;
+        }
+        if (!Objects.equals(this.email, other.email)) {
+            return false;
+        }
+        if (!Objects.equals(this.direccion, other.direccion)) {
+            return false;
+        }
+        if (!Objects.equals(this.formacion, other.formacion)) {
+            return false;
+        }
+        if (!Objects.equals(this.prestador, other.prestador)) {
+            return false;
+        }
+        if (!Objects.equals(this.referencias, other.referencias)) {
+            return false;
+        }
+        return Objects.equals(this.telefono, other.telefono);
+    }
     
-  
+    
 }
