@@ -34,7 +34,7 @@ public class SolicitudPersistence {
     public SolicitudEntity create(SolicitudEntity solicitudEntity) {
         LOGGER.log(Level.INFO, "Creando un solicitud nuevo");
         em.persist(solicitudEntity);
-        LOGGER.log(Level.INFO, "Libro creado");
+        LOGGER.log(Level.INFO, "Solucitud creada");
         return solicitudEntity;
     }
 
@@ -62,20 +62,15 @@ public class SolicitudPersistence {
      * devuelve siempre la primera que encuentra
      */
     public SolicitudEntity find(Long clientesId, Long solicitudesId) {
-        LOGGER.log(Level.INFO, "Consultando el solicitud con id = {0} del libro con id = " + clientesId, solicitudesId);
+        LOGGER.log(Level.INFO, "Consultando el solicitud con id = {1} del libro con id ={0} ",new Long[]{ clientesId, solicitudesId});
         TypedQuery<SolicitudEntity> q = em.createQuery("select p from SolicitudEntity p where (p.cliente.id = :clienteid) and (p.id = :solicitudesId)", SolicitudEntity.class);
         q.setParameter("clienteid", clientesId);
         q.setParameter("solicitudesId", solicitudesId);
         List<SolicitudEntity> results = q.getResultList();
         SolicitudEntity solicitud = null;
-        if (results == null) {
-            solicitud = null;
-        } else if (results.isEmpty()) {
-            solicitud = null;
-        } else if (results.size() >= 1) {
-            solicitud = results.get(0);
-        }
-        LOGGER.log(Level.INFO, "Saliendo de consultar el solicitud con id = {0} del libro con id =" + clientesId, solicitudesId);
+        if (!(results ==null && results.isEmpty()))
+            solicitud= results.get(0);
+        LOGGER.log(Level.INFO, "Saliendo de consultar el solicitud con id = {1} del libro con id ={0}",new Long[]{ clientesId, solicitudesId});
         return solicitud;
     }
 

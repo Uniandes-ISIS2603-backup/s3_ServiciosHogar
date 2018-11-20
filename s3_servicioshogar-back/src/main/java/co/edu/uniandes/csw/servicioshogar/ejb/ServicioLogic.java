@@ -73,7 +73,7 @@ public class ServicioLogic {
      *
      */
     public ServicioEntity getServicio(Long solicitudesId, Long serviciosId) {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar el servicio con id = {0} del solicitud con id = " + solicitudesId, serviciosId);
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar el servicio con id = {1} del solicitud con id ={0} " , new Long[] {solicitudesId, serviciosId});
         return persistence.findBySolicitud(solicitudesId, serviciosId);
     }
 
@@ -86,11 +86,11 @@ public class ServicioLogic {
      *
      */
     public ServicioEntity updateServicio(long clientesId, Long solicitudesId, ServicioEntity servicioEntity) {
-        LOGGER.log(Level.INFO, "Inicia proceso de actualizar el servicio con id = {0} del solicitud con id = " + solicitudesId, servicioEntity.getId());
+        LOGGER.log(Level.INFO, "Inicia proceso de actualizar el servicio con id = {1} del solicitud con id ={0} " , new Long[] {solicitudesId, servicioEntity.getId()});
         SolicitudEntity solicitudEntity = solicitudPersistence.find(clientesId, solicitudesId);
         servicioEntity.setSolicitud(solicitudEntity);
         persistence.update(servicioEntity);
-        LOGGER.log(Level.INFO, "Termina proceso de actualizar el servicio con id = {0} del solicitud con id = " + solicitudesId, servicioEntity.getId());
+        LOGGER.log(Level.INFO, "Termina proceso de actualizar el servicio con id = {1} del solicitud con id ={0} " , new Long[] {solicitudesId, servicioEntity.getId()});
         return servicioEntity;
     }
 
@@ -103,12 +103,12 @@ public class ServicioLogic {
      *
      */
     public void deleteServicio(Long solicitudesId, Long serviciosId) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "Inicia proceso de borrar el servicio con id = {0} del solicitud con id = " + solicitudesId, serviciosId);
+        LOGGER.log(Level.INFO, "Inicia proceso de borrar el servicio con id = {1} del solicitud con id ={0} ",new Long[]{ solicitudesId, serviciosId});
         ServicioEntity old = getServicio(solicitudesId, serviciosId);
         if (old == null) {
             throw new BusinessLogicException("El servicio con id = " + serviciosId + " no esta asociado a el solicitud con id = " + solicitudesId);
         }
         persistence.delete(old.getId());
-        LOGGER.log(Level.INFO, "Termina proceso de borrar el servicio con id = {0} del solicitud con id = " + solicitudesId, serviciosId);
+        LOGGER.log(Level.INFO, "Termina proceso de borrar el servicio con id = {1} del solicitud con id ={0} " ,new Long[]{ solicitudesId, serviciosId});
     }
 }

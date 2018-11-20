@@ -38,7 +38,7 @@ public class SolicitudEntity extends BaseEntity implements Serializable{
     
     @PodamExclude
     @OneToMany(mappedBy = "solicitud", fetch = FetchType.LAZY,cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ServicioEntity> servicios = new ArrayList<ServicioEntity>();
+    private List<ServicioEntity> servicios = new ArrayList<>();
     
     @PodamExclude
     @ManyToOne
@@ -59,7 +59,7 @@ public class SolicitudEntity extends BaseEntity implements Serializable{
 
     /**
      * modifica la fecha de la solicitud.
-     * @param fecha. Nueva fecha.
+     * @param fecha Nueva fecha.
      */
     public void setFecha(Date fecha) {
         this.fecha = fecha;
@@ -75,7 +75,7 @@ public class SolicitudEntity extends BaseEntity implements Serializable{
 
     /**
      * Modifica la direccion de la solicitud.
-     * @param direccion.Nueva direccion.
+     * @param direccion Nueva direccion.
      */
     public void setDireccion(String direccion) {
         this.direccion = direccion;
