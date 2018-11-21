@@ -9,7 +9,6 @@ import co.edu.uniandes.csw.servicioshogar.dtos.FacturaDTO;
 import co.edu.uniandes.csw.servicioshogar.ejb.FacturaLogic;
 import co.edu.uniandes.csw.servicioshogar.entities.FacturaEntity;
 import co.edu.uniandes.csw.servicioshogar.exceptions.BusinessLogicException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
@@ -41,9 +40,9 @@ public class FacturaResource {
  @POST
  public FacturaDTO crearFactura( FacturaDTO factura, @PathParam("clientesId") Long clientesId) throws BusinessLogicException 
  { 
-     LOGGER.log(Level.INFO, "FacturaResource: input : {0}", factura.toString());
+     LOGGER.log(Level.INFO, "FacturaResource: input : {0}", factura);
      FacturaDTO facturaDTO = new FacturaDTO(facturaLogic.createFactura(factura.toEntity(), clientesId));
-     LOGGER.log(Level.INFO, "FacturaResource: output : {0}", facturaDTO.toString());
+     LOGGER.log(Level.INFO, "FacturaResource: output : {0}", facturaDTO);
      return facturaDTO;
  }
   
@@ -58,7 +57,7 @@ public class FacturaResource {
      { throw new WebApplicationException("El recurso factura" + facturaId + "no existe", 404);}
      
      FacturaDTO facturaDTO = new FacturaDTO(entity);
-     LOGGER.log(Level.INFO, "FacturaResource: output: {0}", facturaDTO.toString());
+     LOGGER.log(Level.INFO, "FacturaResource: output: {0}", facturaDTO  );
      return facturaDTO;     
  }
  
@@ -72,7 +71,7 @@ public FacturaDTO updateTarjeta(@PathParam ("facturaId") Long facturaId, Factura
     {throw new WebApplicationException("El recurso factura " + facturaId, 404);}
     
     FacturaDTO facturaDTO = new FacturaDTO(facturaLogic.updateFactura(facturaId, entity));
-    LOGGER.log(Level.INFO, "FacturaResource: output: {0}", facturaDTO.toString());
+    LOGGER.log(Level.INFO, "FacturaResource: output: {0}", facturaDTO);
     return facturaDTO;
 }
  
