@@ -169,9 +169,6 @@ public class PrestadorEntity extends BaseEntity implements Serializable {
         hash = 73 * hash + Objects.hashCode(this.id);
         hash = 73 * hash + Objects.hashCode(this.cedula);
         hash = 73 * hash + Objects.hashCode(this.nombre);
-        hash = 73 * hash + Objects.hashCode(this.habilidades);
-        hash = 73 * hash + Objects.hashCode(this.hojaDeVida);
-        hash = 73 * hash + Objects.hashCode(this.servicios);
         return hash;
     }
 
@@ -193,16 +190,7 @@ public class PrestadorEntity extends BaseEntity implements Serializable {
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
-        if (!Objects.equals(this.cedula, other.cedula)) {
-            return false;
-        }
-        if (!Objects.equals(this.habilidades, other.habilidades)) {
-            return false;
-        }
-        if (!Objects.equals(this.hojaDeVida, other.hojaDeVida)) {
-            return false;
-        }
-        return Objects.equals(this.servicios, other.servicios);
+        return Objects.equals(this.cedula, other.cedula);
     }
     
     

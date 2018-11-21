@@ -97,7 +97,6 @@ public class ReferenciaEntity extends BaseEntity implements Serializable{
         hash = 29 * hash + Objects.hashCode(this.cargo);
         hash = 29 * hash + Objects.hashCode(this.email);
         hash = 29 * hash + Objects.hashCode(this.parentesco);
-        hash = 29 * hash + Objects.hashCode(this.hojaDeVida);
         return hash;
     }
 
@@ -131,10 +130,7 @@ public class ReferenciaEntity extends BaseEntity implements Serializable{
         if (!Objects.equals(this.idRemitente, other.idRemitente)) {
             return false;
         }
-        if (!Objects.equals(this.telRemitente, other.telRemitente)) {
-            return false;
-        }
-        return Objects.equals(this.hojaDeVida, other.hojaDeVida);
+        return Objects.equals(this.telRemitente, other.telRemitente);
     }
     
     

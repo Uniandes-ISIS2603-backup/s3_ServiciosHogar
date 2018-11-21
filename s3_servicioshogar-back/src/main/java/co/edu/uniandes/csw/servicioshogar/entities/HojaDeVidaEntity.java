@@ -121,8 +121,6 @@ public class HojaDeVidaEntity extends BaseEntity implements Serializable {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 61 * hash + Objects.hashCode(this.prestador);
-        hash = 61 * hash + Objects.hashCode(this.referencias);
         hash = 61 * hash + Objects.hashCode(this.trayectoria);
         hash = 61 * hash + Objects.hashCode(this.fechaNacimiento);
         hash = 61 * hash + Objects.hashCode(this.email);
@@ -157,12 +155,6 @@ public class HojaDeVidaEntity extends BaseEntity implements Serializable {
             return false;
         }
         if (!Objects.equals(this.formacion, other.formacion)) {
-            return false;
-        }
-        if (!Objects.equals(this.prestador, other.prestador)) {
-            return false;
-        }
-        if (!Objects.equals(this.referencias, other.referencias)) {
             return false;
         }
         return Objects.equals(this.telefono, other.telefono);

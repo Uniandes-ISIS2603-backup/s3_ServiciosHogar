@@ -138,10 +138,7 @@ public class HabilidadEntity extends BaseEntity implements Serializable {
         if (!Objects.equals(this.descripcion, other.descripcion)) {
             return false;
         }
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return Objects.equals(this.prestador, other.prestador);
+        return Objects.equals(this.id, other.id);
     }
 
     @Override
@@ -150,7 +147,6 @@ public class HabilidadEntity extends BaseEntity implements Serializable {
         hash = 31 * hash + Objects.hashCode(this.id);
         hash = 31 * hash + Objects.hashCode(this.tipo);
         hash = 31 * hash + Objects.hashCode(this.descripcion);
-        hash = 31 * hash + Objects.hashCode(this.prestador);
         return hash;
     }
     
