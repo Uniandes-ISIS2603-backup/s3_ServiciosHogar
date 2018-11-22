@@ -6,9 +6,7 @@
 package co.edu.uniandes.csw.servicioshogar.dtos;
 
 import co.edu.uniandes.csw.servicioshogar.entities.HojaDeVidaEntity;
-
 import java.io.Serializable;
-
 
 /**
  *<pre>

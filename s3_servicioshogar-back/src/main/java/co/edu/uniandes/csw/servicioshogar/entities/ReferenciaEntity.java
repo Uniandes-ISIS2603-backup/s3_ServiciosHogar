@@ -6,7 +6,7 @@
 package co.edu.uniandes.csw.servicioshogar.entities;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import uk.co.jemos.podam.common.PodamExclude;
@@ -86,4 +86,52 @@ public class ReferenciaEntity extends BaseEntity implements Serializable{
     public void setParentesco(String parentesco) {
         this.parentesco = parentesco;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 29 * hash + Objects.hashCode(this.empresa);
+        hash = 29 * hash + Objects.hashCode(this.nombreRemitente);
+        hash = 29 * hash + Objects.hashCode(this.idRemitente);
+        hash = 29 * hash + Objects.hashCode(this.telRemitente);
+        hash = 29 * hash + Objects.hashCode(this.cargo);
+        hash = 29 * hash + Objects.hashCode(this.email);
+        hash = 29 * hash + Objects.hashCode(this.parentesco);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final ReferenciaEntity other = (ReferenciaEntity) obj;
+        if (!Objects.equals(this.empresa, other.empresa)) {
+            return false;
+        }
+        if (!Objects.equals(this.nombreRemitente, other.nombreRemitente)) {
+            return false;
+        }
+        if (!Objects.equals(this.cargo, other.cargo)) {
+            return false;
+        }
+        if (!Objects.equals(this.email, other.email)) {
+            return false;
+        }
+        if (!Objects.equals(this.parentesco, other.parentesco)) {
+            return false;
+        }
+        if (!Objects.equals(this.idRemitente, other.idRemitente)) {
+            return false;
+        }
+        return Objects.equals(this.telRemitente, other.telRemitente);
+    }
+    
+    
 }

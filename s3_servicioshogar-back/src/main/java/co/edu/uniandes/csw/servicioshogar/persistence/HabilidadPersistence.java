@@ -79,16 +79,17 @@ public class HabilidadPersistence {
      * @return La entidad (Habilidad) encontrada.
      */
     public HabilidadEntity find(Long prestadorId, Long habilidadId) {
-        LOGGER.log(Level.INFO, "Consultando la habilidad con id = {0} del prestador con id = " + prestadorId, habilidadId);
+        Object[] ids = {habilidadId, prestadorId};
+        LOGGER.log(Level.INFO, "Consultando la habilidad con id = {0} del prestador con id = {1} ", ids);
         TypedQuery<HabilidadEntity> q = em.createQuery("select p from HabilidadEntity p where (p.prestador.id = :prestadorid) and (p.id = :habilidadId)", HabilidadEntity.class);
         q.setParameter("prestadorid", prestadorId);
         q.setParameter("habilidadId", habilidadId);
         List<HabilidadEntity> results = q.getResultList();
         HabilidadEntity review = null;
-        if (results.size() >= 1) {
+        if (!results.isEmpty()) {
             review = results.get(0);
         }
-        LOGGER.log(Level.INFO, "Saliendo de consultar la habilidad con id = {0} del prestador con id =" + prestadorId, habilidadId);
+        LOGGER.log(Level.INFO, "Saliendo de consultar la habilidad con id = {0} del prestador con id = {1}", ids);
         return review;
     }
 

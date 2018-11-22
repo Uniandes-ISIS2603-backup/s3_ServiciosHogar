@@ -39,6 +39,16 @@ public class PrestadorResource {
     private static final Logger LOGGER = Logger.getLogger(PrestadorResource.class.getName());
     
     /**
+     * Constante que representa el path de prestadores
+     */
+    private static final String PATH_PRESTADOR = "El recurso /prestadores/";
+    
+    /**
+     * Constante que represnta un mensaje de error
+     */
+    private static final String ERROR = " no existe";    
+    
+    /**
      * Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
      */
     @Inject
@@ -87,7 +97,7 @@ public class PrestadorResource {
         LOGGER.log(Level.INFO, "PrestadorResource getPrestador : input {0}", prestadorId);
         PrestadorEntity pEntity = prestadorLogic.getPrestador(prestadorId);
         if(pEntity == null)
-            throw new WebApplicationException("El recurso /prestadores/"+prestadorId+" no existe", 404);
+            throw new WebApplicationException(PATH_PRESTADOR + prestadorId + ERROR, 404);
         PrestadorDetailDTO prestadorDetailDTO = new PrestadorDetailDTO(pEntity);
         LOGGER.log(Level.INFO, "PrestadorResource getPrestador : outpu {0}", prestadorDetailDTO.toString());
         return prestadorDetailDTO;
@@ -107,7 +117,7 @@ public class PrestadorResource {
         LOGGER.log(Level.INFO, "PrestadorResource updatePrestador : input id: {0} , book: {1}", new Object[]{prestadorId, prestador.toString()});
         prestador.setId(prestadorId);
         if(prestadorLogic.getPrestador(prestadorId) == null) 
-            throw new WebApplicationException("El recurso /prestadores/"+prestadorId+" no existe", 404);
+            throw new WebApplicationException(PATH_PRESTADOR + prestadorId + ERROR, 404);
         
         PrestadorDetailDTO detailDTO = new PrestadorDetailDTO(prestadorLogic.updatePrestador(prestadorId, prestador.toEntity()));
         LOGGER.log(Level.INFO, "PrestadorResource updatePrestador : outpu {0}", detailDTO.toString());
@@ -126,7 +136,7 @@ public class PrestadorResource {
         LOGGER.log(Level.INFO, "PrestadorResource getPrestador : input {0}", prestadorId);
         PrestadorEntity pEntity = prestadorLogic.getPrestador(prestadorId);
         if(pEntity == null)
-            throw new WebApplicationException("El recurso /prestadores/"+prestadorId+" no existe", 404);
+            throw new WebApplicationException(PATH_PRESTADOR + prestadorId + ERROR, 404);
         prestadorLogic.deletePrestador(prestadorId);
         LOGGER.log(Level.INFO, "PrestadorResource getPrestador : outpu : void");        
     }
@@ -143,7 +153,7 @@ public class PrestadorResource {
     @Path("{prestadorId: \\d+}/habilidades")
     public Class<HabilidadResource> getHabilidadResource(@PathParam("prestadorId") Long prestadorId) {
         if (prestadorLogic.getPrestador(prestadorId) == null) {
-            throw new WebApplicationException("El recurso /prestadores/" + prestadorId + "/habilidades no existe.", 404);
+            throw new WebApplicationException(PATH_PRESTADOR + prestadorId + "/habilidades no existe.", 404);
         }
         return HabilidadResource.class;
     }
@@ -160,7 +170,7 @@ public class PrestadorResource {
     @Path("{prestadorId: \\d+}/hojaDeVida")
     public Class<HojaDeVidaResource> getHojaDeVidaResource(@PathParam("prestadorId") Long prestadorId) {
         if (prestadorLogic.getPrestador(prestadorId) == null) {
-            throw new WebApplicationException("El recurso /prestador/" + prestadorId + " no existe.", 404);
+            throw new WebApplicationException(PATH_PRESTADOR + prestadorId + ERROR, 404);
         }
         return HojaDeVidaResource.class;
     }

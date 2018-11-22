@@ -29,88 +29,117 @@ import javax.ws.rs.WebApplicationException;
  *
  * @author Daniela Rocha Torres
  */
-
 @Path("referencias")
 @Produces("application/json")
 @Consumes("application/json")
 @RequestScoped
 public class ReferenciaResource {
+
     private static final Logger LOGGER = Logger.getLogger(HojaDeVidaResource.class.getName());
-  
+
     /**
-     * Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
+     * Constante que representa el path de referencias
+     */
+    private static final String PATH_REFERENCIA= "El recurso /referencias/";
+
+    /**
+     * Constante que represnta un mensaje de error
+     */
+    private static final String ERROR = " no existe";
+
+    /**
+     * Variable para acceder a la lógica de la aplicación. Es una inyección de
+     * dependencias.
      */
     @Inject
     ReferenciaLogic referenciaLogic;
-    
+
+    /**
+     *
+     * @param referencia
+     * @return
+     * @throws BusinessLogicException
+     */
     @POST
-    public ReferenciaDTO crearReferencia(ReferenciaDTO referencia) throws BusinessLogicException
-    {
-              LOGGER.log(Level.INFO, "ReferenciaResource crearReferencia: input: {0}", referencia.toString());
-         ReferenciaEntity referenciaEntity = referencia.toEntity();
-         ReferenciaEntity nuevaReferenciaEntity = referenciaLogic.createReferencia(referenciaEntity);
-         /*Como debe retornar un DTO (json) se invoca el constructor del DTO con argumento el entity nuevo*/
-         ReferenciaDTO nuevaReferenciaDTO = new ReferenciaDTO(nuevaReferenciaEntity);
-         LOGGER.log(Level.INFO, "ReferenciaResource crearReferencia: output: {0}", nuevaReferenciaDTO.toString());
-         return nuevaReferenciaDTO;
+    public ReferenciaDTO crearReferencia(ReferenciaDTO referencia) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "ReferenciaResource crearReferencia: input: {0}", referencia.toString());
+        ReferenciaEntity referenciaEntity = referencia.toEntity();
+        ReferenciaEntity nuevaReferenciaEntity = referenciaLogic.createReferencia(referenciaEntity);
+        /*Como debe retornar un DTO (json) se invoca el constructor del DTO con argumento el entity nuevo*/
+        ReferenciaDTO nuevaReferenciaDTO = new ReferenciaDTO(nuevaReferenciaEntity);
+        LOGGER.log(Level.INFO, "ReferenciaResource crearReferencia: output: {0}", nuevaReferenciaDTO.toString());
+        return nuevaReferenciaDTO;
     }
 
     @GET
-    public List<ReferenciaDTO> getReferencias()
-    {
+    public List<ReferenciaDTO> getReferencias() {
         LOGGER.info("ReferenciaResource getReferencias: input: void");
         List<ReferenciaDTO> listaReferencias = listEntity2DetailDTO(referenciaLogic.getReferencias());
         LOGGER.log(Level.INFO, "ReferenciaResource getReferencias: output: {0}", listaReferencias.toString());
         return listaReferencias;
     }
-    
 
+    /**
+     *
+     * @param id
+     * @return
+     * @throws WebApplicationException
+     */
     @GET
     @Path("{referencias:\\d+}")
-    public ReferenciaDTO getReferencia(@PathParam("id") Long id) throws WebApplicationException
-    {
+    public ReferenciaDTO getReferencia(@PathParam("id") Long id) throws WebApplicationException {
         LOGGER.log(Level.INFO, "ReferenciaResource getReferencia: input: {0}", id);
         ReferenciaEntity referenciaEntity = referenciaLogic.getReferencia(id);
-        if (referenciaEntity == null)
-            throw new WebApplicationException("El recurso /referencias/" + id + " no existe.", 404);
-        
+        if (referenciaEntity == null) {
+            throw new WebApplicationException(PATH_REFERENCIA + id + ERROR, 404);
+        }
+
         ReferenciaDTO detailDTO = new ReferenciaDTO(referenciaEntity);
         LOGGER.log(Level.INFO, "ReferenciaResource getReferencia: {0}", detailDTO.toString());
         return detailDTO;
     }
 
+    /**
+     *
+     * @param id
+     * @param referencia
+     * @return
+     * @throws WebApplicationException
+     */
     @PUT
     @Path("{referencias:\\d+}")
-    public ReferenciaDTO modificarReferencia(@PathParam("id") Long id, ReferenciaDTO referencia) throws WebApplicationException
-    {
-       LOGGER.log(Level.INFO, "ReferenciaResource modificarReferencia: input: id:{0} , referencia: {1}", new Object[]{id, referencia.toString()});
+    public ReferenciaDTO modificarReferencia(@PathParam("id") Long id, ReferenciaDTO referencia) throws WebApplicationException {
+        LOGGER.log(Level.INFO, "ReferenciaResource modificarReferencia: input: id:{0} , referencia: {1}", new Object[]{id, referencia.toString()});
         referencia.setIdRemitente(id);
-        if (referenciaLogic.getReferencia(id) == null)
-            throw new WebApplicationException("El recurso /referencias/" + id + " no existe.", 404);
-        
+        if (referenciaLogic.getReferencia(id) == null) {
+            throw new WebApplicationException(PATH_REFERENCIA + id + ERROR, 404);
+        }
+
         ReferenciaDTO detailDTO = new ReferenciaDTO(referenciaLogic.updateReferencia(id, referencia.toEntity()));
         LOGGER.log(Level.INFO, "ReferenciaResource modificarReferencia: output: {0}", detailDTO.toString());
         return detailDTO;
     }
-    
 
+    /**
+     *
+     * @param id
+     * @throws BusinessLogicException
+     */
     @DELETE
     @Path("{referencias:\\d+}")
-    public void deleteReferencia(@PathParam("id") Long id) throws BusinessLogicException
-    {
+    public void deleteReferencia(@PathParam("id") Long id) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "ReferenciaResource deleteReferencia: input: {0}", id);
-        if (referenciaLogic.getReferencia(id) == null) 
-            throw new WebApplicationException("El recurso /referencias/" + id + " no existe.", 404);
-        
+        if (referenciaLogic.getReferencia(id) == null) {
+            throw new WebApplicationException(PATH_REFERENCIA + id + ERROR, 404);
+        }
+
         referenciaLogic.deleteReferencia(id);
         LOGGER.info("ReferenciaResource deleteReferencia: output: void");
     }
-    
-  
+
     private List<ReferenciaDTO> listEntity2DetailDTO(List<ReferenciaEntity> entityList) {
         List<ReferenciaDTO> list = new ArrayList<>();
-        for (ReferenciaEntity entity : entityList) 
-        {
+        for (ReferenciaEntity entity : entityList) {
             list.add(new ReferenciaDTO(entity));
         }
         return list;
