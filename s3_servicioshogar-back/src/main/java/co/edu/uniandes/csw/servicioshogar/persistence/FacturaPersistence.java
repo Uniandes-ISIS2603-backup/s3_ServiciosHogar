@@ -62,7 +62,7 @@ public class FacturaPersistence {
      */
     public FacturaEntity find(Long facturaId)
     {
-        LOGGER.log(Level.INFO, "", facturaId);
+        LOGGER.log(Level.INFO, "Encontro factura con id {0}", facturaId);
         return em.find(FacturaEntity.class, facturaId);
     }
     
@@ -73,14 +73,14 @@ public class FacturaPersistence {
      */
     public FacturaEntity update(FacturaEntity facturaEntity)
     {
-        LOGGER.log(Level.INFO, "Actualizando factura identificada por un numero de factura", facturaEntity.getNoFactura());
-        LOGGER.log(Level.INFO, "Saliendo de actualizar la factura", facturaEntity.getNoFactura());
+        LOGGER.log(Level.INFO, "Actualizando factura identificada por un numero de factura con id {0}", facturaEntity.getNoFactura());
+        LOGGER.log(Level.INFO, "Saliendo de actualizar la factura con id {0}", facturaEntity.getNoFactura());
         return em.merge(facturaEntity);
     }
     
     /**
      * Borra un cliente identificado con el 'id' ingresado por parametro de la BD.
-     * @param tarjetaId. Titular de tarjeta de credito a borrar.
+     * @param tarjetaId Titular de tarjeta de credito a borrar.
      */
     public void delete(Long tarjetaId)
     {

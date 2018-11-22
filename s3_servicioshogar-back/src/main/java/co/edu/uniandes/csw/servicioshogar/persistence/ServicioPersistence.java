@@ -89,19 +89,14 @@ public class ServicioPersistence {
      * devuelve siempre la primera que encuentra
      */
     public ServicioEntity findBySolicitud(Long solicitudesId, Long serviciosId) {
-        LOGGER.log(Level.INFO, "Consultando el servicio con id = {0} del solicitud con id = " + solicitudesId, serviciosId);
+        LOGGER.log(Level.INFO, "Consultando el servicio con id = {1} del solicitud con id ={0} ", new Long[]{solicitudesId, serviciosId});
         TypedQuery<ServicioEntity> q = em.createQuery("select p from ServicioEntity p where (p.solicitud.id = :solicitudid) and (p.id = :serviciosId)", ServicioEntity.class);
         q.setParameter("solicitudid", solicitudesId);
         q.setParameter("serviciosId", serviciosId);
         List<ServicioEntity> results = q.getResultList();
         ServicioEntity servicio = null;
-        if (results == null) {
-            servicio = null;
-        } else if (results.isEmpty()) {
-            servicio = null;
-        } else if (results.size() >= 1) {
-            servicio = results.get(0);
-        }
+        if (!(results == null&&results.isEmpty()))
+            servicio=results.get(0);
         LOGGER.log(Level.INFO, "Saliendo de consultar el servicio con id = {0} del solicitud con id =" + solicitudesId, serviciosId);
         return servicio;
     }
@@ -111,26 +106,20 @@ public class ServicioPersistence {
      *
      * Busca si hay alguna reseña asociada a un solicitud y con un ID específico
      *
-     * @param solicitudesId El ID del solicitud con respecto al cual se busca
      * @param serviciosId El ID de la reseña buscada
      * @return La reseña encontrada o null. Nota: Si existe una o más reseñas
      * devuelve siempre la primera que encuentra
      */
     public ServicioEntity findByPrestador(Long prestadorId, Long serviciosId) {
-        LOGGER.log(Level.INFO, "Consultando el servicio con id = {0} del prestador con id = " + prestadorId, serviciosId);
+        LOGGER.log(Level.INFO, "Consultando el servicio con id = {1} del prestador con id ={0} ",new Long[] {prestadorId, serviciosId});
         TypedQuery<ServicioEntity> q = em.createQuery("select p from ServicioEntity p where (p.prestador.id = :prestadorId) and (p.id = :serviciosId)", ServicioEntity.class);
         q.setParameter("prestadorId", prestadorId);
         q.setParameter("serviciosId", serviciosId);
         List<ServicioEntity> results = q.getResultList();
         ServicioEntity servicio = null;
-        if (results == null) {
-            servicio = null;
-        } else if (results.isEmpty()) {
-            servicio = null;
-        } else if (results.size() >= 1) {
-            servicio = results.get(0);
-        }
-        LOGGER.log(Level.INFO, "Saliendo de consultar el servicio con id = {0} del prestador con id =" + prestadorId, serviciosId);
+        if (!(results == null&&results.isEmpty()))
+            servicio= results.get(0);
+        LOGGER.log(Level.INFO, "Saliendo de consultar el servicio con id = {1} del prestador con id ={0}" ,new Long[] {prestadorId, serviciosId});
         return servicio;
     }
 }

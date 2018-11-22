@@ -22,7 +22,8 @@ import uk.co.jemos.podam.common.PodamExclude;
 @Entity
 public class ServicioEntity extends BaseEntity implements Serializable{
     
-    private String descripcion, requerimientos;
+    private String descripcion;
+    private String requerimientos;
     
     @PodamExclude
     @ManyToOne(cascade = CascadeType.PERSIST)
@@ -50,7 +51,7 @@ public class ServicioEntity extends BaseEntity implements Serializable{
 
     /**
      * Modifica la descripcion del servicio.
-     * @param descripcion. Nueva descripcion.
+     * @param descripcion Nueva descripcion.
      */
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
@@ -66,7 +67,7 @@ public class ServicioEntity extends BaseEntity implements Serializable{
 
     /**
      * Modifica los requerimientos del servicio.
-     * @param requerimientos. Nuevos requerimientos.
+     * @param requerimientos Nuevos requerimientos.
      */
     public void setRequerimientos(String requerimientos) {
         this.requerimientos = requerimientos;
@@ -101,7 +102,4 @@ public class ServicioEntity extends BaseEntity implements Serializable{
     public CalificacionEntity getCalificacion() {return calificacion;}
     
     public void setCalificacion(CalificacionEntity calificacion) {this.calificacion = calificacion;}
-    
-    
-    
 }

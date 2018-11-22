@@ -33,7 +33,7 @@ private SolicitudPersistence solicitudPeristence;
 @Inject
 private ClientePersistence clientePersistence;
 
-public FacturaEntity createFactura(FacturaEntity facturaEntity, Long clienteId) throws BusinessLogicException {
+public FacturaEntity createFactura(FacturaEntity facturaEntity, Long clienteId) {
        LOGGER.log(Level.INFO, "Inicia proceso de creación de factura");
        SolicitudEntity solicitud = solicitudPeristence.find(clienteId, facturaEntity.getSolicitud().getId());
         /*Invoca la persistencia para crear el factura*/

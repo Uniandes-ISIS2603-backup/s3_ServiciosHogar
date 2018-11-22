@@ -32,7 +32,9 @@ import javax.ws.rs.WebApplicationException;
 @Consumes("application/json")
 public class ServicioResource {
     private static final Logger LOGGER = Logger.getLogger(ServicioResource.class.getName());
-
+    private static final String noExiste = " no existe.";
+    private static final String serv="/servicios/";
+    private static final String soli="El recurso /solicitudes/";
     @Inject
     private ServicioLogic servicioLogic;
 
@@ -51,9 +53,9 @@ public class ServicioResource {
      */
     @POST
     public ServicioDTO createServicio(@PathParam("clientesId") Long clientesId, @PathParam("solicitudesId") Long solicitudesId, ServicioDTO servicio) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "ServicioResource createServicio: input: {0}", servicio.toString());
+        LOGGER.log(Level.INFO, "ServicioResource createServicio: input: {0}", servicio);
         ServicioDTO nuevoServicioDTO = new ServicioDTO(servicioLogic.createServicio(clientesId, solicitudesId, servicio.toEntity()));
-        LOGGER.log(Level.INFO, "ServicioResource createServicio: output: {0}", nuevoServicioDTO.toString());
+        LOGGER.log(Level.INFO, "ServicioResource createServicio: output: {0}", nuevoServicioDTO);
         return nuevoServicioDTO;
     }
 
@@ -69,7 +71,7 @@ public class ServicioResource {
     public List<ServicioDTO> getServicios(@PathParam("clientesId") Long clientesId, @PathParam("solicitudesId") Long solicitudesId) {
         LOGGER.log(Level.INFO, "ServicioResource getServicios: input: {0}", solicitudesId);
         List<ServicioDTO> listaDTOs = listEntity2DTO(servicioLogic.getServicios(clientesId, solicitudesId));
-        LOGGER.log(Level.INFO, "EditorialSolicitudesResource getSolicitudes: output: {0}", listaDTOs.toString());
+        LOGGER.log(Level.INFO, "EditorialSolicitudesResource getSolicitudes: output: {0}", listaDTOs);
         return listaDTOs;
     }
 
@@ -91,10 +93,10 @@ public class ServicioResource {
         LOGGER.log(Level.INFO, "ServicioResource getServicio: input: {0}", serviciosId);
         ServicioEntity entity = servicioLogic.getServicio(solicitudesId, serviciosId);
         if (entity == null) {
-            throw new WebApplicationException("El recurso /solicitudes/" + solicitudesId + "/servicios/" + serviciosId + " no existe.", 404);
+            throw new WebApplicationException(soli + solicitudesId + serv + serviciosId + noExiste, 404);
         }
         ServicioDTO servicioDTO = new ServicioDTO(entity);
-        LOGGER.log(Level.INFO, "ServicioResource getServicio: output: {0}", servicioDTO.toString());
+        LOGGER.log(Level.INFO, "ServicioResource getServicio: output: {0}", servicioDTO);
         return servicioDTO;
     }
 
@@ -115,13 +117,13 @@ public class ServicioResource {
     @PUT
     @Path("{serviciosId: \\d+}")
     public ServicioDTO updateServicio(@PathParam("clientesId") Long clientesId, @PathParam("solicitudesId") Long solicitudesId, @PathParam("serviciosId") Long serviciosId, ServicioDTO servicio) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "ServicioResource updateServicio: input: solicitudesId: {0} , serviciosId: {1} , servicio:{2}", new Object[]{solicitudesId, serviciosId, servicio.toString()});
+        LOGGER.log(Level.INFO, "ServicioResource updateServicio: input: solicitudesId: {0} , serviciosId: {1} , servicio:{2}", new Object[]{solicitudesId, serviciosId, servicio});
         if (serviciosId.equals(servicio.getId())) {
             throw new BusinessLogicException("Los ids del Servicio no coinciden.");
         }
         ServicioEntity entity = servicioLogic.getServicio(solicitudesId, serviciosId);
         if (entity == null) {
-            throw new WebApplicationException("El recurso /solicitudes/" + solicitudesId + "/servicios/" + serviciosId + " no existe.", 404);
+            throw new WebApplicationException(soli + solicitudesId + serv + serviciosId + noExiste, 404);
 
         }
         ServicioDTO servicioDTO = new ServicioDTO(servicioLogic.updateServicio(clientesId, solicitudesId, servicio.toEntity()));
@@ -145,7 +147,7 @@ public class ServicioResource {
     public void deleteServicio(@PathParam("solicitudesId") Long solicitudesId, @PathParam("serviciosId") Long serviciosId) throws BusinessLogicException {
         ServicioEntity entity = servicioLogic.getServicio(solicitudesId, serviciosId);
         if (entity == null) {
-            throw new WebApplicationException("El recurso /solicitudes/" + solicitudesId + "/servicios/" + serviciosId + " no existe.", 404);
+            throw new WebApplicationException(soli + solicitudesId + serv + serviciosId + noExiste, 404);
         }
         servicioLogic.deleteServicio(solicitudesId, serviciosId);
     }
@@ -176,7 +178,7 @@ public class ServicioResource {
     {        
         if (servicioLogic.getServicio(solicitudesId, serviciosId) == null)
         {
-            throw new WebApplicationException("/solicitud/"+ solicitudesId +"/servicios/"+ serviciosId +"/calificacion no existe.", 404);
+            throw new WebApplicationException("/solicitudes/"+ solicitudesId +serv+ serviciosId +"/calificacion no existe.", 404);
         }
         return CalificacionResource.class;
     }

@@ -35,7 +35,8 @@ import javax.ws.rs.WebApplicationException;
 @RequestScoped
 public class SolicitudResource {
     private static final Logger LOGGER = Logger.getLogger(SolicitudResource.class.getName());
-
+    private static final String noExiste= " no existe.";
+    private static final String solici= "/solicitudes/";
     @Inject
     private SolicitudLogic solicitudLogic; // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
 
@@ -54,9 +55,9 @@ public class SolicitudResource {
      */
     @POST
     public SolicitudDTO createSolicitud(@PathParam("clientesId") Long clientesId, SolicitudDTO solicitud) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "SolicitudResource createSolicitud: input: {0}", solicitud.toString());
+        LOGGER.log(Level.INFO, "SolicitudResource createSolicitud: input: {0}", solicitud);
         SolicitudDTO nuevoSolicitudDTO = new SolicitudDTO(solicitudLogic.createSolicitud(clientesId, solicitud.toEntity()));
-        LOGGER.log(Level.INFO, "SolicitudResource createSolicitud: output: {0}", nuevoSolicitudDTO.toString());
+        LOGGER.log(Level.INFO, "SolicitudResource createSolicitud: output: {0}", nuevoSolicitudDTO);
         return nuevoSolicitudDTO;
     }
 
@@ -71,7 +72,7 @@ public class SolicitudResource {
     public List<SolicitudDetailDTO> getSolicitudes(@PathParam("clientesId") Long clientesId) {
         LOGGER.info("SolicitudResource getSolicitudes: input: void");
         List<SolicitudDetailDTO> listaSolicitudes = listEntity2DetailDTO(solicitudLogic.getSolicitudes(clientesId));
-        LOGGER.log(Level.INFO, "SolicitudResource getSolicitudes: output: {0}", listaSolicitudes.toString());
+        LOGGER.log(Level.INFO, "SolicitudResource getSolicitudes: output: {0}", listaSolicitudes);
         return listaSolicitudes;
     }
 
@@ -91,10 +92,10 @@ public class SolicitudResource {
         LOGGER.log(Level.INFO, "SolicitudResource getSolicitud: input: {0}", solicitudesId);
         SolicitudEntity solicitudEntity = solicitudLogic.getSolicitud(clientesId, solicitudesId);
         if (solicitudEntity == null) {
-            throw new WebApplicationException("El recurso /solicitudes/" + solicitudesId + " no existe.", 404);
+            throw new WebApplicationException("El recurso /solicitudes/" + solicitudesId + noExiste, 404);
         }
         SolicitudDetailDTO solicitudDetailDTO = new SolicitudDetailDTO(solicitudEntity);
-        LOGGER.log(Level.INFO, "SolicitudResource getSolicitud: output: {0}", solicitudDetailDTO.toString());
+        LOGGER.log(Level.INFO, "SolicitudResource getSolicitud: output: {0}", solicitudDetailDTO);
         return solicitudDetailDTO;
     }
 
@@ -116,17 +117,17 @@ public class SolicitudResource {
     @PUT
     @Path("{solicitudesId: \\d+}")
     public SolicitudDetailDTO updateSolicitud(@PathParam("clientesId") Long clientesId, @PathParam("solicitudesId") Long solicitudesId, SolicitudDTO solicitud) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "SolicitudResource updateSolicitud: input: clientesId: {0} , solicitudesId: {1} , solicitud:{2}", new Object[]{clientesId, solicitudesId, solicitud.toString()});
+        LOGGER.log(Level.INFO, "SolicitudResource updateSolicitud: input: clientesId: {0} , solicitudesId: {1} , solicitud:{2}", new Object[]{clientesId, solicitudesId, solicitud});
         if (solicitudesId.equals(solicitud.getId())) {
             throw new BusinessLogicException("Los ids del Solicitud no coinciden.");
         }
         SolicitudEntity entity = solicitudLogic.getSolicitud(clientesId, solicitudesId);
         if (entity == null) {
-            throw new WebApplicationException("El recurso /clientes/" + clientesId + "/solicitudes/" + solicitudesId + " no existe.", 404);
+            throw new WebApplicationException("El recurso /clientes/" + clientesId + solici+ solicitudesId + noExiste, 404);
 
         }
         SolicitudDetailDTO solicitudDTO = new SolicitudDetailDTO(solicitudLogic.updateSolicitud(clientesId, solicitud.toEntity()));
-        LOGGER.log(Level.INFO, "SolicitudResource updateSolicitud: output:{0}", solicitudDTO.toString());
+        LOGGER.log(Level.INFO, "SolicitudResource updateSolicitud: output:{0}", solicitudDTO);
         return solicitudDTO;
     }
 
@@ -147,7 +148,7 @@ public class SolicitudResource {
         LOGGER.log(Level.INFO, "SolicitudResource deleteSolicitud: input: {0}", solicitudesId);
         SolicitudEntity entity = solicitudLogic.getSolicitud(clientesId, solicitudesId);
         if (entity == null) {
-            throw new WebApplicationException("El recurso clientes/"+clientesId+"/solicitudes/" + solicitudesId + " no existe.", 404);
+            throw new WebApplicationException("El recurso clientes/"+clientesId+solici+ solicitudesId + noExiste, 404);
         }
         solicitudLogic.deleteSolicitud(clientesId, solicitudesId);
         LOGGER.info("SolicitudResource deleteSolicitud: output: void");
@@ -169,7 +170,7 @@ public class SolicitudResource {
     @Path("{solicitudesId: \\d+}/servicios")
     public Class<ServicioResource> getServicioResource(@PathParam("clientesId") Long clientesId, @PathParam("solicitudesId") Long solicitudesId) {
         if (solicitudLogic.getSolicitud(clientesId, solicitudesId) == null) {
-            throw new WebApplicationException("El recurso clientes/"+clientesId+"/solicitudes/" + solicitudesId + "/servicios no existe.", 404);
+            throw new WebApplicationException("El recurso clientes/"+clientesId+solici + solicitudesId + "/servicios no existe.", 404);
         }
         return ServicioResource.class;
     }

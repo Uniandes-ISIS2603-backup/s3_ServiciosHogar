@@ -16,13 +16,11 @@ import uk.co.jemos.podam.common.PodamExclude;
  */
 @Entity
 public class FacturaEntity extends BaseEntity implements Serializable{
-   private Integer
-           noFactura,
-           valor;
+   private Integer noFactura;
+   private Integer valor;
    
-   private String
-           fecha,
-           metodoPago;
+   private String fecha;
+   private String metodoPago;
    
    @PodamExclude
    @OneToOne

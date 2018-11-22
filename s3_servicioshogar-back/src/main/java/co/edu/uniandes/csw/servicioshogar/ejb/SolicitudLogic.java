@@ -78,16 +78,15 @@ public class SolicitudLogic {
      * Actualizar un solicitud por ID
      *
      * @param clientesId
-     * @param solicitudesId El ID del solicitud a actualizar
      * @param solicitudEntity La entidad del solicitud con los cambios deseados
      * @return La entidad del solicitud luego de actualizarla
      */
     public SolicitudEntity updateSolicitud(Long clientesId, SolicitudEntity solicitudEntity){
-        LOGGER.log(Level.INFO, "Inicia proceso de actualizar el solicitud con id = {0} del libro con id = " + clientesId, solicitudEntity.getId());
+        LOGGER.log(Level.INFO, "Inicia proceso de actualizar la solicitud con id = {1} del cliente con id ={0} ",new Long[]{clientesId, solicitudEntity.getId()});
         ClienteEntity clienteEntity = clientePersistence.find(clientesId);
         solicitudEntity.setCliente(clienteEntity);
         persistence.update(solicitudEntity);
-        LOGGER.log(Level.INFO, "Termina proceso de actualizar el solicitud con id = {0} del libro con id = " + clientesId, solicitudEntity.getId());
+        LOGGER.log(Level.INFO, "Termina proceso de actualizar la solicitud con id = {1} del cliente con id ={0}",new Long[]{clientesId, solicitudEntity.getId()});
         return solicitudEntity;
     }
     
@@ -97,12 +96,12 @@ public class SolicitudLogic {
      * @param solicitudesId El ID del solicitud a eliminar
      */
     public void deleteSolicitud(Long clientesId, Long solicitudesId) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "Inicia proceso de borrar el solicitud con id = {0} del libro con id = " + clientesId, solicitudesId);
+        LOGGER.log(Level.INFO, "Inicia proceso de borrar la solicitud con id = {1} del cliente con id ={0} ",new Long[]{clientesId, solicitudesId});
         SolicitudEntity old = getSolicitud(clientesId, solicitudesId);
         if (old == null) {
             throw new BusinessLogicException("El solicitud con id = " + solicitudesId + " no esta asociado a el libro con id = " + clientesId);
         }
         persistence.delete(old.getId());
-        LOGGER.log(Level.INFO, "Termina proceso de borrar el solicitud con id = {0} del libro con id = " + clientesId, solicitudesId);
+        LOGGER.log(Level.INFO, "Termina proceso de borrar la solicitud con id = {1} del cliente con id {0}= " , new Long[]{ clientesId, solicitudesId});
     }
 }
