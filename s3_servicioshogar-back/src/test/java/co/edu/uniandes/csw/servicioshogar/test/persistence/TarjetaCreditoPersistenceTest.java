@@ -6,7 +6,6 @@
 package co.edu.uniandes.csw.servicioshogar.test.persistence;
 
 import co.edu.uniandes.csw.servicioshogar.entities.ClienteEntity;
-import co.edu.uniandes.csw.servicioshogar.entities.SolicitudEntity;
 import co.edu.uniandes.csw.servicioshogar.entities.TarjetaCreditoEntity;
 import co.edu.uniandes.csw.servicioshogar.persistence.TarjetaCreditoPersistence;
 import java.util.ArrayList;
@@ -41,12 +40,16 @@ public class TarjetaCreditoPersistenceTest
 
     @PersistenceContext
     private EntityManager em;
-
+    
+    /*Manejador de transacciones*/
     @Inject
     UserTransaction utx;
     
+    //------------------------------------------
+    //------------------Listas------------------
+    //------------------------------------------
     private List<ClienteEntity> listaCliente = new ArrayList<ClienteEntity>();
-    private List<TarjetaCreditoEntity> listaTarjetaCredito = new ArrayList<>(); 
+    private List<TarjetaCreditoEntity> listaTarjetaCredito = new ArrayList<TarjetaCreditoEntity>(); 
 	
 
     //------------------------------------------
@@ -75,19 +78,19 @@ public class TarjetaCreditoPersistenceTest
     @Before
     public void configTest() 
     {
-        try {
+       try 
+        {
             utx.begin();
             em.joinTransaction();
             clearData();
             insertData();
             utx.commit();
-        } catch (Exception e) {
+        } 
+        catch (Exception e) 
+        {
             e.printStackTrace();
-            try {
-                utx.rollback();
-            } catch (Exception e1) {
-                e1.printStackTrace();
-            }
+            try {utx.rollback();} 
+            catch (Exception e1) {e1.printStackTrace();}
         }
     }
 
@@ -107,11 +110,12 @@ public class TarjetaCreditoPersistenceTest
     {
         PodamFactory factory = new PodamFactoryImpl(); 
         
-        //Se crea el cliente y se persiste
+        //Se crea un cliente
         ClienteEntity cliente = factory.manufacturePojo(ClienteEntity.class);
         em.persist(cliente);
         listaCliente.add(cliente);
         
+        //Se le asignan 3 tarjetas de credito al cliente
         for (int i = 0; i < 3; i++) 
         {        
             TarjetaCreditoEntity tarjeta = factory.manufacturePojo(TarjetaCreditoEntity.class);
@@ -166,10 +170,17 @@ public class TarjetaCreditoPersistenceTest
      * Prueba para consultar un TarjetaCredito.
      */
     @Test
-    public void getTarjetaCreditoTest() {
-
+    public void getTarjetaCreditoTest() 
+    {
+        TarjetaCreditoEntity entity = listaTarjetaCredito.get(0); 
+        TarjetaCreditoEntity newEntity = tarjetaCreditoPersistence.find(entity.getId(),listaCliente.get(0).getId() );
+        
+        Assert.assertNotNull(newEntity); 
+        Assert.assertEquals(entity.getCodeSeguridad(), newEntity.getCodeSeguridad());
+        Assert.assertEquals(entity.getFechaVencimiento(), newEntity.getFechaVencimiento());
+        Assert.assertEquals(entity.getNumero(), newEntity.getNumero());
+        Assert.assertEquals(entity.getTitular(), newEntity.getTitular());
     }
-
     /**
      * Prueba para eliminar una tarjetaCredito.
      */
@@ -189,7 +200,20 @@ public class TarjetaCreditoPersistenceTest
     @Test
     public void updateTarjetaCreditoTest() 
     {
+        TarjetaCreditoEntity entity = listaTarjetaCredito.get(0);   
         
+        PodamFactory factory = new PodamFactoryImpl();
+        TarjetaCreditoEntity newEntity = factory.manufacturePojo(TarjetaCreditoEntity.class);
 
+        newEntity.setId(entity.getId());
+
+        tarjetaCreditoPersistence.update(newEntity);
+
+        TarjetaCreditoEntity resp = em.find(TarjetaCreditoEntity.class, entity.getId());
+
+       Assert.assertEquals(newEntity.getCodeSeguridad(), resp.getCodeSeguridad());
+       Assert.assertEquals(newEntity.getFechaVencimiento(), resp.getFechaVencimiento());
+       Assert.assertEquals(newEntity.getNumero(), resp.getNumero());
+       Assert.assertEquals(newEntity.getTitular(), resp.getTitular());
     }
 }

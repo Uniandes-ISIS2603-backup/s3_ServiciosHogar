@@ -8,6 +8,7 @@ package co.edu.uniandes.csw.servicioshogar.entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -23,18 +24,17 @@ public class ClienteEntity extends BaseEntity implements Serializable
     //------------------------------------------
     //-----------------Atributos----------------
     //------------------------------------------
-    private String 
-            nombre /*Nombre del cliente*/, 
-            direccion /*Direccion del Cliente*/, 
-            correo /*Correo del Cliente*/ ;
+    private String nombre /*Nombre del cliente*/;
+    private String direccion /*Direccion del Cliente*/; 
+    private String correo /*Correo del Cliente*/ ;
     
     @PodamExclude
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.PERSIST, orphanRemoval = true)
-    private List<SolicitudEntity> solicitudes = new ArrayList<SolicitudEntity>();
+    private List<SolicitudEntity> solicitudes = new ArrayList<>();
     
     @PodamExclude
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.PERSIST, orphanRemoval = true)
-    private List<TarjetaCreditoEntity> tarjetas = new ArrayList<TarjetaCreditoEntity>();
+    private List<TarjetaCreditoEntity> tarjetas = new ArrayList<>();
     
     //------------------------------------------
     //------------------Metodos-----------------
@@ -75,13 +75,44 @@ public class ClienteEntity extends BaseEntity implements Serializable
      */
     public void setCorreo(String correo) {this.correo = correo;} 
 
-    public List<SolicitudEntity> getSolicitudes() {return solicitudes;
-    }
+    public List<SolicitudEntity> getSolicitudes() {return solicitudes;}
 
     public void setSolicitudes(List<SolicitudEntity> solicitudes) {this.solicitudes = solicitudes;}
     
     public List<TarjetaCreditoEntity> getTarjetas() {return tarjetas;}
     
     public void setTarjetas(List<TarjetaCreditoEntity> tarjetas) {this.tarjetas = tarjetas;}
+
+    @Override
+    public boolean equals(Object obj) 
+    {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final ClienteEntity other = (ClienteEntity) obj;
+        if (!Objects.equals(this.nombre, other.nombre)) {
+            return false;
+        }
+        if (!Objects.equals(this.direccion, other.direccion)) {
+            return false;
+        }
+        if (!Objects.equals(this.correo, other.correo)) {
+            return false;
+        }
+        if (!Objects.equals(this.solicitudes, other.solicitudes)) {
+            return false;
+        }
+        if (!Objects.equals(this.tarjetas, other.tarjetas)) {
+            return false;
+        }
+        return true;
+    }
+    
     
 }

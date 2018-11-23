@@ -40,6 +40,9 @@ public class ClienteResource
     //-----------------Atributos----------------
     //------------------------------------------
     private static final Logger LOGGER = Logger.getLogger(ClienteResource.class.getName());
+    
+    private static final String RECURSO_CLIENTES = "El recurso /clientes/";
+    private static final String NO_EXISTE = " no existe";
   
     /**
      * Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
@@ -61,14 +64,14 @@ public class ClienteResource
     @POST
     public ClienteDTO crearCliente(ClienteDTO cliente) throws BusinessLogicException
     {
-         LOGGER.log(Level.INFO, "ClienteResource crearCliente: input: {0}", cliente.toString());
+         LOGGER.log(Level.INFO, "ClienteResource crearCliente: input: {0}", cliente);
          /*Convierte el DTO (json) en un objeto Entity para ser manejado por la lógica.*/
          ClienteEntity clienteEntity = cliente.toEntity();
          /*Invoca la logica para crear un cliente nuevo*/
          ClienteEntity nuevoClienteEntity = clienteLogic.crearCliente(clienteEntity);
          /*Como debe retornar un DTO (json) se invoca el constructor del DTO con argumento el entity nuevo*/
          ClienteDTO nuevoClienteDTO = new ClienteDTO(nuevoClienteEntity);
-         LOGGER.log(Level.INFO, "ClienteResource crearCliente: output: {0}", nuevoClienteDTO.toString());
+         LOGGER.log(Level.INFO, "ClienteResource crearCliente: output: {0}", nuevoClienteDTO);
          return nuevoClienteDTO;
     }
 
@@ -82,7 +85,7 @@ public class ClienteResource
     {
         LOGGER.info("ClienteResource getClientes: input: void");
         List<ClienteDetailDTO> listaClientes = listEntity2DetailDTO(clienteLogic.getClientes());
-        LOGGER.log(Level.INFO, "ClienteResource getClientes: output: {0}", listaClientes.toString());
+        LOGGER.log(Level.INFO, "ClienteResource getClientes: output: {0}", listaClientes);
         return listaClientes;
     }
     
@@ -95,15 +98,15 @@ public class ClienteResource
      */
     @GET
     @Path("{clientesId:\\d+}")
-    public ClienteDetailDTO getCliente(@PathParam("clientesId") Long clientesId) throws WebApplicationException
+    public ClienteDetailDTO getCliente(@PathParam("clientesId") Long clientesId) 
     {
         LOGGER.log(Level.INFO, "ClienteResource getCliente: input: {0}", clientesId);
         ClienteEntity clienteEntity = clienteLogic.getCliente(clientesId);
         if (clienteEntity == null)
-            throw new WebApplicationException("El recurso /clientes/" + clientesId + " no existe.", 404);
+            throw new WebApplicationException(RECURSO_CLIENTES + clientesId + NO_EXISTE, 404);
         
         ClienteDetailDTO detailDTO = new ClienteDetailDTO(clienteEntity);
-        LOGGER.log(Level.INFO, "ClienteResource getCliente: output: {0}", detailDTO.toString());
+        LOGGER.log(Level.INFO, "ClienteResource getCliente: output: {0}", detailDTO);
         return detailDTO;
     }
     
@@ -119,13 +122,13 @@ public class ClienteResource
     @Path("{clientesId:\\d+}")
     public ClienteDTO modificarCliente(@PathParam("clientesId") Long clientesId, ClienteDTO cliente) throws WebApplicationException
     {
-        LOGGER.log(Level.INFO, "ClienteResource modificarCliente: input: id:{0} , cliente: {1}", new Object[]{clientesId, cliente.toString()});
+        LOGGER.log(Level.INFO, "ClienteResource modificarCliente: input: id:{0} , cliente: {1}", new Object[]{clientesId, cliente});
         cliente.setId(clientesId);
         if (clienteLogic.getCliente(clientesId) == null)
-            throw new WebApplicationException("El recurso /clientes/" + clientesId + " no existe.", 404);
+            throw new WebApplicationException(RECURSO_CLIENTES + clientesId + NO_EXISTE, 404);
         
         ClienteDTO detailDTO = new ClienteDTO(clienteLogic.modificarCliente(clientesId, cliente.toEntity()));
-        LOGGER.log(Level.INFO, "ClienteResource modificarCliente: output: {0}", detailDTO.toString());
+        LOGGER.log(Level.INFO, "ClienteResource modificarCliente: output: {0}", detailDTO);
         return detailDTO;
     }
     
@@ -141,7 +144,7 @@ public class ClienteResource
     {
         LOGGER.log(Level.INFO, "ClienteResource deleteCliente: input: {0}", clientesId);
         if (clienteLogic.getCliente(clientesId) == null) 
-            throw new WebApplicationException("El recurso /clientes/" + clientesId + " no existe.", 404);
+            throw new WebApplicationException(RECURSO_CLIENTES + clientesId + NO_EXISTE, 404);
         
         clienteLogic.deleteCliente(clientesId);
         LOGGER.info("ClienteResource deleteCliente: output: void");
@@ -163,7 +166,7 @@ public class ClienteResource
     @Path("{clientesId: \\d+}/solicitudes")
     public Class<SolicitudResource> getSolicitudResource(@PathParam("clientesId") Long clientesId) {
         if (clienteLogic.getCliente(clientesId) == null) 
-            throw new WebApplicationException("El recurso /clientes/" + clientesId + "/solicitudes no existe.", 404);
+            throw new WebApplicationException(RECURSO_CLIENTES + clientesId + "/solicitudes no existe.", 404);
         
         return SolicitudResource.class;
     }

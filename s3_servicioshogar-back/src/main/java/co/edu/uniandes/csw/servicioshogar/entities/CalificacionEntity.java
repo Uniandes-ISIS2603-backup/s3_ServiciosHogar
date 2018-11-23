@@ -6,9 +6,8 @@
 package co.edu.uniandes.csw.servicioshogar.entities;
 
 import java.io.Serializable;
-import javax.persistence.CascadeType;
+import java.util.Objects;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import uk.co.jemos.podam.common.PodamExclude;
 
@@ -70,5 +69,32 @@ public class CalificacionEntity  extends BaseEntity implements Serializable
      * @param servicio - Servicio al que la calificacion pertenece.
      */
     public void setServicio(ServicioEntity servicio) {this.servicio = servicio;}
+
+    @Override
+    public boolean equals(Object obj) 
+    {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final CalificacionEntity other = (CalificacionEntity) obj;
+        if (!Objects.equals(this.comentario, other.comentario)) {
+            return false;
+        }
+        if (!Objects.equals(this.calificacion, other.calificacion)) {
+            return false;
+        }
+        if (!Objects.equals(this.servicio, other.servicio)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
     
 }

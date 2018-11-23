@@ -41,10 +41,15 @@ public class ClientePersistenceTest
     @PersistenceContext
     private EntityManager em;
 
+    /*Manejador de transacciones*/
     @Inject
-    UserTransaction utx;
-    
-    private List<ClienteEntity> data = new ArrayList<>();
+    UserTransaction utx;     
+
+    //------------------------------------------
+    //------------------Listas------------------
+    //------------------------------------------
+    /*Lista de clientes - Almacena los clientes para las pruebas*/
+    private List<ClienteEntity> listaCliente = new ArrayList<>();
     
     //------------------------------------------
     //------------------Metodos-----------------
@@ -98,11 +103,12 @@ public class ClientePersistenceTest
     private void insertData() 
     {
         PodamFactory factory = new PodamFactoryImpl();
+        //Se agregan 3 clientes a la bd
         for (int i = 0; i < 3; i++) 
         {
             ClienteEntity entity = factory.manufacturePojo(ClienteEntity.class);
             em.persist(entity);
-            data.add(entity);
+            listaCliente.add(entity);
         }
     }
     
@@ -113,12 +119,15 @@ public class ClientePersistenceTest
     public void createClienteTest() 
     {
         PodamFactory factory = new PodamFactoryImpl();
-        ClienteEntity newEntity = factory.manufacturePojo(ClienteEntity.class);
-        ClienteEntity result = clientePersistence.create(newEntity);
-
-        Assert.assertNotNull(result);
-        ClienteEntity entity = em.find(ClienteEntity.class, result.getId());
-        Assert.assertEquals(newEntity.getNombre(), entity.getNombre());
+        
+        //Se crea un cliente
+        ClienteEntity cliente = factory.manufacturePojo(ClienteEntity.class);
+        ClienteEntity result = clientePersistence.create(cliente);
+        
+        Assert.assertNotNull(result);       
+        Assert.assertEquals(cliente.getNombre(), result.getNombre());
+        Assert.assertEquals(cliente.getCorreo(), result.getCorreo());
+        Assert.assertEquals(cliente.getDireccion(), result.getDireccion());
     }
     
     /**
@@ -128,12 +137,12 @@ public class ClientePersistenceTest
     public void getClientesTest() 
     {
         List<ClienteEntity> list = clientePersistence.findAll();
-        Assert.assertEquals(data.size(), list.size());
+        Assert.assertEquals(listaCliente.size(), list.size());
         for (ClienteEntity ent : list) 
         {
             boolean found = false;
             
-            for (ClienteEntity entity : data)             
+            for (ClienteEntity entity : listaCliente)             
                 if (ent.getId().equals(entity.getId()))
                     found = true;            
             
@@ -147,12 +156,13 @@ public class ClientePersistenceTest
     @Test
     public void getClienteTest() 
     {
-        ClienteEntity entity = data.get(0);
-        ClienteEntity newEntity = clientePersistence.find(entity.getId());
-        Assert.assertNotNull(newEntity);
-        Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
-        Assert.assertEquals(entity.getCorreo(), newEntity.getCorreo());
-        Assert.assertEquals(entity.getDireccion(), newEntity.getDireccion());
+        ClienteEntity entity = listaCliente.get(0);
+        ClienteEntity cliente = clientePersistence.find(entity.getId());
+        
+        Assert.assertNotNull(cliente);
+        Assert.assertEquals(entity.getNombre(), cliente.getNombre());
+        Assert.assertEquals(entity.getCorreo(), cliente.getCorreo());
+        Assert.assertEquals(entity.getDireccion(), cliente.getDireccion());
     }
     
     /**
@@ -161,13 +171,19 @@ public class ClientePersistenceTest
     @Test
     public void updateClienteTest() 
     {
-        ClienteEntity entity = data.get(0);
+        ClienteEntity entity = listaCliente.get(0);
+        
         PodamFactory factory = new PodamFactoryImpl();
-        ClienteEntity newEntity = factory.manufacturePojo(ClienteEntity.class);
-        newEntity.setId(entity.getId());
-        clientePersistence.update(newEntity);
+        
+        ClienteEntity cliente = factory.manufacturePojo(ClienteEntity.class);
+        cliente.setId(entity.getId());
+        clientePersistence.update(cliente);
+        
         ClienteEntity resp = em.find(ClienteEntity.class, entity.getId());
-        Assert.assertEquals(newEntity.getNombre(), resp.getNombre());
+        
+        Assert.assertEquals(cliente.getNombre(), resp.getNombre());
+        Assert.assertEquals(cliente.getCorreo(), resp.getCorreo());
+        Assert.assertEquals(cliente.getDireccion(), resp.getDireccion());
     }
     
     /**
@@ -176,9 +192,10 @@ public class ClientePersistenceTest
     @Test
     public void deleteClienteTest() 
     {
-        ClienteEntity entity = data.get(0);
+        ClienteEntity entity = listaCliente.get(0);
         clientePersistence.delete(entity.getId());
         ClienteEntity deleted = em.find(ClienteEntity.class, entity.getId());
+        
         Assert.assertNull(deleted);
-    }  
+    }    
 }

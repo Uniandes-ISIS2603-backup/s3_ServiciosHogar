@@ -34,29 +34,46 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 @RunWith(Arquillian.class)
 public class CalificacionPersistenceTest 
 {
-    private PodamFactory factory = new PodamFactoryImpl();
-
+    //------------------------------------------
+    //-----------------Atributos----------------
+    //------------------------------------------
+    /*Inyectas las dependencias.*/
     @Inject
     private CalificacionPersistence calificacionPersistence;
 
     @PersistenceContext
     private EntityManager em;
-
+    
+    /*Manejador de transacciones*/
     @Inject
     UserTransaction utx;
 
-    private List<ClienteEntity> listaCliente = new ArrayList<ClienteEntity>();
+    //------------------------------------------
+    //------------------Listas------------------
+    //------------------------------------------
+    /*Lista de clientes - Almacena los clientes para las pruebas*/
+    private List<ClienteEntity> listaCliente = new ArrayList<ClienteEntity>() ;
+    
+    /*Lista de solicitudes - Almacena las solicitudes de un cliente para las pruebas*/
     private List<SolicitudEntity> listaSolicitud = new ArrayList<SolicitudEntity>();
+    
+    /*Lista de servicios - Almacena los servicios de la solicitud del cliente para las pruebas*/
     private List<ServicioEntity> listaServicio = new ArrayList<ServicioEntity>();
+    
+    /*Lista de calificaciones - Almacena las calificaciones de un servicio para las pruebas*/
     private List<CalificacionEntity> listaCalificacion = new ArrayList<CalificacionEntity>();
 
+    //------------------------------------------
+    //------------------Metodos-----------------
+    //------------------------------------------    
     /**
      * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
      * El jar contiene las clases, el descriptor de la base de datos y el
      * archivo beans.xml para resolver la inyección de dependencias.
      */
     @Deployment
-    public static JavaArchive createDeployment() {
+    public static JavaArchive createDeployment() 
+    {
         return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(CalificacionEntity.class.getPackage())
                 .addPackage(CalificacionPersistence.class.getPackage())
@@ -69,19 +86,19 @@ public class CalificacionPersistenceTest
      */
     @Before
     public void configTest() {
-        try {
+        try 
+        {
             utx.begin();
             em.joinTransaction();
             clearData();
             insertData();
             utx.commit();
-        } catch (Exception e) {
+        } 
+        catch (Exception e) 
+        {
             e.printStackTrace();
-            try {
-                utx.rollback();
-            } catch (Exception e1) {
-                e1.printStackTrace();
-            }
+            try {utx.rollback();} 
+            catch (Exception e1) {e1.printStackTrace();}
         }
     }
 
@@ -102,7 +119,7 @@ public class CalificacionPersistenceTest
     private void insertData() 
     {              
         PodamFactory factory = new PodamFactoryImpl();
-        //Se agrega un cliente a la bd. 
+        //Se agrega un cliente a la bd 
         ClienteEntity cliente = factory.manufacturePojo(ClienteEntity.class);
         
         listaCliente.add(cliente);
@@ -126,6 +143,7 @@ public class CalificacionPersistenceTest
         }
         solicitud.setServicios(listaServicio);
         
+        //Se agrega una calificacion a cada servicio
         for(int i = 0; i < 3; i++)
         {
             CalificacionEntity calificacion = factory.manufacturePojo(CalificacionEntity.class);
@@ -140,7 +158,8 @@ public class CalificacionPersistenceTest
      * Prueba para crear un Calificacion.
      */
     @Test
-    public void createCalificacionTest() {
+    public void createCalificacionTest() 
+    {
         PodamFactory factory = new PodamFactoryImpl();
         CalificacionEntity newEntity = factory.manufacturePojo(CalificacionEntity.class);
 
@@ -159,16 +178,24 @@ public class CalificacionPersistenceTest
      */
     @Test
     public void getCalificacionTest() 
-    {  
-        System.out.println("tam cli: " + listaCliente.size());
-        System.out.println("tam sol: " + listaSolicitud.size());
-        System.out.println("tam servicios: " + listaServicio.size());
-        System.out.println("tam calif: "+ listaCalificacion.size());
-        System.out.println(  "Aqui llegue");
-        CalificacionEntity entity = listaCalificacion.get(0);
-                
-
+    {
+        CalificacionEntity entity = listaCalificacion.get(0); 
         CalificacionEntity newEntity = calificacionPersistence.find(entity.getServicio().getId(), entity.getId());
+        
+        Assert.assertNotNull(newEntity);
+        Assert.assertEquals(entity.getCalificacion(), newEntity.getCalificacion());
+        Assert.assertEquals(entity.getComentario(), newEntity.getComentario());
+        
+        entity = listaCalificacion.get(1); 
+        newEntity = calificacionPersistence.find(entity.getServicio().getId(), entity.getId());
+        
+        Assert.assertNotNull(newEntity);
+        Assert.assertEquals(entity.getCalificacion(), newEntity.getCalificacion());
+        Assert.assertEquals(entity.getComentario(), newEntity.getComentario());
+        
+        entity = listaCalificacion.get(2); 
+        newEntity = calificacionPersistence.find(entity.getServicio().getId(), entity.getId());
+        
         Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getCalificacion(), newEntity.getCalificacion());
         Assert.assertEquals(entity.getComentario(), newEntity.getComentario());
@@ -204,6 +231,7 @@ public class CalificacionPersistenceTest
         CalificacionEntity entity = listaCalificacion.get(2);
         calificacionPersistence.delete(entity.getId());
         CalificacionEntity deleted = em.find(CalificacionEntity.class, entity.getId());
+        
         Assert.assertNull(deleted);
     }
 }

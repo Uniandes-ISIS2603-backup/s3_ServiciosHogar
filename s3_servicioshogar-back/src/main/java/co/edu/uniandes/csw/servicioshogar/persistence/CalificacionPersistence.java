@@ -6,7 +6,6 @@
 package co.edu.uniandes.csw.servicioshogar.persistence;
 
 import co.edu.uniandes.csw.servicioshogar.entities.CalificacionEntity;
-import co.edu.uniandes.csw.servicioshogar.entities.HabilidadEntity;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -83,13 +82,9 @@ public class CalificacionPersistence
         q.setParameter("calificacionId", calificacionId);
         List<CalificacionEntity> results = q.getResultList();
         CalificacionEntity calificacion = null;
-        if (results == null) {
-            calificacion = null;
-        } else if (results.isEmpty()) {
-            calificacion = null;
-        } else if (results.size() >= 1) {
-            calificacion = results.get(0);
-        }
+        if(!results.isEmpty())
+             calificacion = results.get(0);
+        
         LOGGER.log(Level.INFO, "Saliendo de consultar la calificacion con id = {0} del libro con id =" + serviciosId, calificacionId);
         return calificacion;
     }
