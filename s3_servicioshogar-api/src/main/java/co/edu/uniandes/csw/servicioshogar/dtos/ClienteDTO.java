@@ -18,15 +18,18 @@ import java.io.Serializable;
  * {
  *	"nombre":"string",
  *	"direccion":"string",
- *	"correo":"string"
+ *	"correo":"string",
+ *      "contrasena":"string
  * }
  * </pre>
  * Por ejemplo un cliente se representa asi:<br>
  * <pre>
  * {
+ *      "id":1,
  *      "nombre": "Carlos Eduardo Robles",
  *      "direccion": "AK72 #23 24",
- *      "correo": "ce.robles@uniandes.edu.co 
+ *      "correo": "ce.robles@uniandes.edu.co ,
+ *      "contrasena":"string"
  * }
  * </pre>
  * @author Carlos Eduardo Robles
@@ -36,11 +39,11 @@ public class ClienteDTO implements Serializable
     //------------------------------------------
     //-----------------Atributos----------------
     //------------------------------------------ 
-    private Long 
-            id /*Id del Cliente*/;
+    private Long id /*Id del Cliente*/;
     private String nombre /*Nombre del cliente*/;
     private String direccion /*Direccion del Cliente*/;
     private String correo /*Correo del Cliente*/ ;
+    private String contrasena /*Contrasena del Cliente*/;
     
     //------------------------------------------
     //---------------Constructor----------------
@@ -54,7 +57,8 @@ public class ClienteDTO implements Serializable
             this.id = clienteEntity.getId();
             this.nombre = clienteEntity.getNombre();
             this.direccion = clienteEntity.getDireccion();
-            this.correo = clienteEntity.getCorreo();          
+            this.correo = clienteEntity.getCorreo();   
+            this.contrasena = clienteEntity.getContrasena();
         }         
     }
     
@@ -107,7 +111,19 @@ public class ClienteDTO implements Serializable
      * Asigna el correo del cliente segun el 'corre' ingresado por parametro.
      * @param correo Correo electronico del cliente.
      */
-    public void setCorreo(String correo) {this.correo = correo;}  
+    public void setCorreo(String correo) {this.correo = correo;}     
+
+    /**
+     * Devuelve la contrasena del prestador.
+     * @return la contrasena del cliente.
+     */
+    public String getContrasena() {return contrasena;}
+
+    /**
+     * Asigna la contrasena al prestador segun la 'contrasena' ingresada por parametro.
+     * @param contrasena 
+     */
+    public void setContrasena(String contrasena) {this.contrasena = contrasena;}  
 
     /**
      * Convierte DTO a Entity
@@ -120,6 +136,7 @@ public class ClienteDTO implements Serializable
         clienteEntity.setNombre(this.nombre);
         clienteEntity.setCorreo(this.correo);
         clienteEntity.setDireccion(this.direccion);
+        clienteEntity.setContrasena(this.contrasena);
         return clienteEntity;
     }    
     

@@ -36,31 +36,35 @@ import java.io.Serializable;
  * </pre>
  *
  * @author Maria Ocampo
+ * @author Carlos Robles / 3er Ciclo.
  */
 public class PrestadorDTO implements Serializable {
     
-    private Long id;
-    private String nombre;
-    private Integer cedula;
-    private HojaDeVidaDTO hojaDeVida;
+    private Long id /*Id del prestador*/;
+    private String nombre /*Nombre del prestador*/;
+    private String correo /*Correo del prestador*/ ;
+    private String contrasena /*Contrasena del prestador*/;
+    private Integer cedula /*Cedula del prestador*/;
+    private HojaDeVidaDTO hojaDeVida /*Hoja de vide del prestador*/;
     
     /**
      * Constructor por defecto
      */
-    public PrestadorDTO()    {
-        
-    }
+    public PrestadorDTO(){}
     
     /**
      * Constructor a partir de una entidad
      * @param prestadorEntity La entidad del prestador
      */
-    public PrestadorDTO(PrestadorEntity prestadorEntity)    {
+    public PrestadorDTO(PrestadorEntity prestadorEntity)
+    {
         if(prestadorEntity != null)
         {
             this.id = prestadorEntity.getId();
             this.nombre = prestadorEntity.getNombre();
             this.cedula = prestadorEntity.getCedula();
+            this.contrasena = prestadorEntity.getContrasena();
+            this.correo = prestadorEntity.getCorreo();
             this.hojaDeVida=new HojaDeVidaDTO(prestadorEntity.getHojaDeVida());
         }
     }
@@ -69,57 +73,67 @@ public class PrestadorDTO implements Serializable {
      * Modifica la cedula del prestador
      * @param cedula the cedula to set
      */
-    public void setCedula(Integer cedula) {
-        this.cedula = cedula;
-    }
+    public void setCedula(Integer cedula) {this.cedula = cedula;}
 
     /**
      * Devuelve la cedula del prestador
      * @return the cedula
      */
-    public Integer getCedula() {
-        return cedula;
-    }
+    public Integer getCedula() {return cedula;}
 
     /**
      * Modifica el nombre del prestador
      * @param nombre the nombre to set
      */
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+    public void setNombre(String nombre) {this.nombre = nombre;}
 
     /**
      * Devuelve el nombre del prestador
      * @return the nombre
      */
-    public String getNombre() {
-        return nombre;
-    }
+    public String getNombre() {return nombre;}
 
     /**
      * Devuelve el id del prestador
      * @return the id
      */
-    public Long getId() {
-        return id;
-    }
+    public Long getId() {return id;}
 
     /**
      * Modifica el id del prestador
      * @param id the id to set
      */
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public void setId(Long id) {this.id = id;}
+    
+    /**
+     * Devuelve el correo del cliente.
+     * @return correo del cliente.
+     */
+    public String getCorreo() {return correo;}
+
+    /**
+     * Asigna el correo del cliente segun el 'corre' ingresado por parametro.
+     * @param correo Correo electronico del cliente.
+     */
+    public void setCorreo(String correo) {this.correo = correo;}     
+
+    /**
+     * Devuelve la contrasena del prestador.
+     * @return la contrasena del cliente.
+     */
+    public String getContrasena() {return contrasena;}
+
+    /**
+     * Asigna la contrasena al prestador segun la 'contrasena' ingresada por parametro.
+     * @param contrasena 
+     */
+    public void setContrasena(String contrasena) {this.contrasena = contrasena;}  
 
     /**
      * Retorna la hoja de vida del prestador
      * @return the hoja de vida
      */
-    public HojaDeVidaDTO getHojaDeVida() {
-        return hojaDeVida;
-    }
+    public HojaDeVidaDTO getHojaDeVida() {return hojaDeVida;}
 
     /**
      * Modifica la hoja de vida del prestador

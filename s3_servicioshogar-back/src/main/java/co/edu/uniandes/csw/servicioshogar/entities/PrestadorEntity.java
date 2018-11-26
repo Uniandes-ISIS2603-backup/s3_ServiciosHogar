@@ -39,6 +39,10 @@ public class PrestadorEntity extends BaseEntity implements Serializable {
      * El nombre del prestador
      */
     private String nombre;
+    
+    private String correo /*Correo del prestador*/ ;
+    
+    private String contrasena /*Contrasena del prestador*/;
  
     /**
      * La relación uno a muchos con habilidad
@@ -76,6 +80,30 @@ public class PrestadorEntity extends BaseEntity implements Serializable {
     public List<ServicioEntity> getServicios() {
         return servicios;
     }
+    
+    /**
+     * Devuelve el prestador del cliente.
+     * @return correo del cliente.
+     */
+    public String getCorreo() {return correo;}
+
+    /**
+     * Asigna el correo del prestador segun el 'correo' ingresado por parametro.
+     * @param correo. Correo electronico del cliente.
+     */
+    public void setCorreo(String correo) {this.correo = correo;} 
+
+    /**
+     * Devuelve la contrasena del prestador.
+     * @return la contrasena del cliente.
+     */
+    public String getContrasena() {return contrasena;}
+
+    /**
+     * Asigna la contrasena al prestador segun la 'contrasena' ingresada por parametro.
+     * @param contrasena 
+     */
+    public void setContrasena(String contrasena) {this.contrasena = contrasena;}     
 
     /**
      * Modifica la hoja de vida asociada al prestador

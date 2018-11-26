@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.servicioshogar.dtos;
 
 import co.edu.uniandes.csw.servicioshogar.entities.ClienteEntity;
 import co.edu.uniandes.csw.servicioshogar.entities.SolicitudEntity;
+import co.edu.uniandes.csw.servicioshogar.entities.TarjetaCreditoEntity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -17,14 +18,17 @@ import java.util.List;
  * @author Carlos Eduardo Robles Quevedo
  */
 public class ClienteDetailDTO extends ClienteDTO implements Serializable
-{
-    private List<SolicitudDTO> solicitudes;
+{    
+    private List<SolicitudDTO> solicitudes /*Lista de solicitudes del cliente*/;
+    private List<TarjetaCreditoDTO> tarjetas /*Lista de tarjetas de credito*/;
     
+    /**
+     * Constructor por defecto.
+     */
     private ClienteDetailDTO(){super();}
     
     /**
      * Constructor para transformar un Entity a un DTO
-     *
      * @param clienteEntity La entidad de la cual se construye el DTO
      */
     public ClienteDetailDTO(ClienteEntity clienteEntity) 
@@ -35,6 +39,9 @@ public class ClienteDetailDTO extends ClienteDTO implements Serializable
             solicitudes = new ArrayList<>();
             for (SolicitudEntity entitySolicitud : clienteEntity.getSolicitudes()) 
                 solicitudes.add(new SolicitudDTO(entitySolicitud));
+            
+            for(TarjetaCreditoEntity tarjeta : clienteEntity.getTarjetas())
+                tarjetas.add(new TarjetaCreditoDTO(tarjeta));
             
         }
     }
@@ -53,7 +60,16 @@ public class ClienteDetailDTO extends ClienteDTO implements Serializable
                 solicitudesEntity.add(dtoReview.toEntity());
             
             clienteEntity.setSolicitudes(solicitudesEntity);
-        }        
+        } 
+        
+        if (tarjetas != null) 
+        {
+            List<TarjetaCreditoEntity> tarjetasList = new ArrayList<>();
+            for (TarjetaCreditoDTO tarjetasDto : getTarjetas()) 
+                tarjetasList.add(tarjetasDto.toEntity());
+            
+            clienteEntity.setTarjetas(tarjetasList);
+        }          
         return clienteEntity;
     }
 
@@ -71,4 +87,17 @@ public class ClienteDetailDTO extends ClienteDTO implements Serializable
      */
     public void setSolicitudes(List<SolicitudDTO> solicitudes) {this.solicitudes = solicitudes;}
 
+    /**
+     * 
+     * @return 
+     */
+    public List<TarjetaCreditoDTO> getTarjetas() {return tarjetas;}
+
+    /**
+     * 
+     * @param tarjetas 
+     */
+    public void setTarjetas(List<TarjetaCreditoDTO> tarjetas) {this.tarjetas = tarjetas;}
+
+    
 }
