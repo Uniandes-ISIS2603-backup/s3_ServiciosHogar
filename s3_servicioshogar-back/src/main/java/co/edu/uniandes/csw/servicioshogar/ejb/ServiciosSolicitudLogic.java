@@ -5,10 +5,10 @@
  */
 package co.edu.uniandes.csw.servicioshogar.ejb;
 
-import co.edu.uniandes.csw.servicioshogar.entities.PrestadorEntity;
 import co.edu.uniandes.csw.servicioshogar.entities.ServicioEntity;
-import co.edu.uniandes.csw.servicioshogar.persistence.PrestadorPersistence;
+import co.edu.uniandes.csw.servicioshogar.entities.SolicitudEntity;
 import co.edu.uniandes.csw.servicioshogar.persistence.ServicioPersistence;
+import co.edu.uniandes.csw.servicioshogar.persistence.SolicitudPersistence;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,25 +17,25 @@ import javax.inject.Inject;
 
 /**
  *
- * @author María Ocampo
+ * @author estudiante
  */
 @Stateless
-public class ServiciosPrestadorLogic {
- 
-    private static final Logger LOGGER = Logger.getLogger(ServiciosPrestadorLogic.class.getName());
+public class ServiciosSolicitudLogic {
+    
+        private static final Logger LOGGER = Logger.getLogger(ServiciosPrestadorLogic.class.getName());
     
     @Inject
-    private PrestadorPersistence prestadorPersistence;
+    private SolicitudPersistence prestadorPersistence;
     
     @Inject
     private ServicioPersistence servicioPersistence;
     
-    public ServicioEntity replacePrestador(Long prestadorId, Long servicioId)
+    public ServicioEntity replacePrestador(Long clienteId, Long prestadorId, Long servicioId)
     {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar un servicio con id = {0}",servicioId);
-        PrestadorEntity prestadorEntity = prestadorPersistence.find(prestadorId);
+        SolicitudEntity prestadorEntity = prestadorPersistence.find(clienteId, prestadorId);
         ServicioEntity servicioEntity = servicioPersistence.find(servicioId);
-        servicioEntity.setPrestador(prestadorEntity);
+        servicioEntity.setSolicitud(prestadorEntity);
         //Agregar servicio al prestador
         List<ServicioEntity> servicios = prestadorEntity.getServicios();
         servicios.add(servicioEntity);
@@ -45,5 +45,4 @@ public class ServiciosPrestadorLogic {
        LOGGER.log(Level.INFO, "Termina el proceso de actualizar el servicio con id= {0}",servicioId);
        return servicioEntity;
     }
-    
 }

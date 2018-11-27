@@ -243,7 +243,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"nombre\":\"Adrian Ocampo\",\n\t\"cedula\":1007784099\n}"
+					"raw": ""
 				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores",
@@ -282,7 +282,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"nombre\":\"Adrian Ocampo\",\n\t\"cedula\":1007784099\n}"
+					"raw": ""
 				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p}}",
@@ -321,7 +321,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"nombre\":\"Adrian Ocampo\",\n\t\"cedula\":1007784099\n}"
+					"raw": ""
 				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/0",

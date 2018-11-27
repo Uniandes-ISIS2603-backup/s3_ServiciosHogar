@@ -30,6 +30,7 @@ import javax.ws.rs.WebApplicationException;
  */
 @Produces("application/json")
 @Consumes("application/json")
+@Path("servicios")
 public class ServicioResource {
     private static final Logger LOGGER = Logger.getLogger(ServicioResource.class.getName());
     private static final String noExiste = " no existe.";
@@ -42,9 +43,6 @@ public class ServicioResource {
      * Crea una nueva reseña con la informacion que se recibe en el cuerpo de la
      * petición y se regresa un objeto identico con un id auto-generado por la
      * base de datos.
-     *
-     * @param clientesId
-     * @param solicitudesId El ID del solicitud del cual se le agrega la reseña
      * @param servicio {@link ServicioDTO} - La reseña que se desea guardar.
      * @return JSON {@link ServicioDTO} - La reseña guardada con el atributo id
      * autogenerado.
@@ -52,25 +50,22 @@ public class ServicioResource {
      * Error de lógica que se genera cuando ya existe la reseña.
      */
     @POST
-    public ServicioDTO createServicio(@PathParam("clientesId") Long clientesId, @PathParam("solicitudesId") Long solicitudesId, ServicioDTO servicio) throws BusinessLogicException {
+    public ServicioDTO createServicio(ServicioDTO servicio) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "ServicioResource createServicio: input: {0}", servicio);
-        ServicioDTO nuevoServicioDTO = new ServicioDTO(servicioLogic.createServicio(clientesId, solicitudesId, servicio.toEntity()));
+        ServicioDTO nuevoServicioDTO = new ServicioDTO(servicioLogic.createServicio(servicio.toEntity()));
         LOGGER.log(Level.INFO, "ServicioResource createServicio: output: {0}", nuevoServicioDTO);
         return nuevoServicioDTO;
     }
 
     /**
      * Busca y devuelve todas las reseñas que existen en un solicitud.
-     *
-     * @param clientesId
-     * @param solicitudesId El ID del solicitud del cual se buscan las reseñas
      * @return JSONArray {@link ServicioDTO} - Las reseñas encontradas en el
      * solicitud. Si no hay ninguna retorna una lista vacía.
      */
     @GET
-    public List<ServicioDTO> getServicios(@PathParam("clientesId") Long clientesId, @PathParam("solicitudesId") Long solicitudesId) {
-        LOGGER.log(Level.INFO, "ServicioResource getServicios: input: {0}", solicitudesId);
-        List<ServicioDTO> listaDTOs = listEntity2DTO(servicioLogic.getServicios(clientesId, solicitudesId));
+    public List<ServicioDTO> getServicios() {
+        LOGGER.log(Level.INFO, "ServicioResource getServicios");
+        List<ServicioDTO> listaDTOs = listEntity2DTO(servicioLogic.getServicios());
         LOGGER.log(Level.INFO, "EditorialSolicitudesResource getSolicitudes: output: {0}", listaDTOs);
         return listaDTOs;
     }
@@ -78,8 +73,6 @@ public class ServicioResource {
     /**
      * Busca y devuelve la reseña con el ID recibido en la URL, relativa a un
      * solicitud.
-     *
-     * @param solicitudesId El ID del solicitud del cual se buscan las reseñas
      * @param serviciosId El ID de la reseña que se busca
      * @return {@link ServicioDTO} - La reseña encontradas en el solicitud.
      * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} -
@@ -89,11 +82,11 @@ public class ServicioResource {
      */
     @GET
     @Path("{serviciosId: \\d+}")
-    public ServicioDTO getServicio(@PathParam("solicitudesId") Long solicitudesId, @PathParam("serviciosId") Long serviciosId) throws BusinessLogicException {
+    public ServicioDTO getServicio(@PathParam("serviciosId") Long serviciosId) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "ServicioResource getServicio: input: {0}", serviciosId);
-        ServicioEntity entity = servicioLogic.getServicio(solicitudesId, serviciosId);
+        ServicioEntity entity = servicioLogic.getServicio(serviciosId);
         if (entity == null) {
-            throw new WebApplicationException(soli + solicitudesId + serv + serviciosId + noExiste, 404);
+            throw new WebApplicationException(serv + serviciosId + noExiste, 404);
         }
         ServicioDTO servicioDTO = new ServicioDTO(entity);
         LOGGER.log(Level.INFO, "ServicioResource getServicio: output: {0}", servicioDTO);
@@ -103,9 +96,6 @@ public class ServicioResource {
     /**
      * Actualiza una reseña con la informacion que se recibe en el cuerpo de la
      * petición y se regresa el objeto actualizado.
-     *
-     * @param clientesId
-     * @param solicitudesId El ID del solicitud del cual se guarda la reseña
      * @param serviciosId El ID de la reseña que se va a actualizar
      * @param servicio {@link ServicioDTO} - La reseña que se desea guardar.
      * @return JSON {@link ServicioDTO} - La reseña actualizada.
@@ -116,17 +106,17 @@ public class ServicioResource {
      */
     @PUT
     @Path("{serviciosId: \\d+}")
-    public ServicioDTO updateServicio(@PathParam("clientesId") Long clientesId, @PathParam("solicitudesId") Long solicitudesId, @PathParam("serviciosId") Long serviciosId, ServicioDTO servicio) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "ServicioResource updateServicio: input: solicitudesId: {0} , serviciosId: {1} , servicio:{2}", new Object[]{solicitudesId, serviciosId, servicio});
+    public ServicioDTO updateServicio(@PathParam("serviciosId") Long serviciosId, ServicioDTO servicio) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "ServicioResource updateServicio: input: serviciosId: {0} , servicio:{1}", new Object[]{ serviciosId, servicio});
         if (serviciosId.equals(servicio.getId())) {
             throw new BusinessLogicException("Los ids del Servicio no coinciden.");
         }
-        ServicioEntity entity = servicioLogic.getServicio(solicitudesId, serviciosId);
+        ServicioEntity entity = servicioLogic.getServicio(serviciosId);
         if (entity == null) {
-            throw new WebApplicationException(soli + solicitudesId + serv + serviciosId + noExiste, 404);
+            throw new WebApplicationException(serv + serviciosId + noExiste, 404);
 
         }
-        ServicioDTO servicioDTO = new ServicioDTO(servicioLogic.updateServicio(clientesId, solicitudesId, servicio.toEntity()));
+        ServicioDTO servicioDTO = new ServicioDTO(servicioLogic.updateServicio(serviciosId, servicio.toEntity()));
         LOGGER.log(Level.INFO, "ServicioResource updateServicio: output:{0}", servicioDTO.toString());
         return servicioDTO;
 
@@ -144,12 +134,12 @@ public class ServicioResource {
      */
     @DELETE
     @Path("{serviciosId: \\d+}")
-    public void deleteServicio(@PathParam("solicitudesId") Long solicitudesId, @PathParam("serviciosId") Long serviciosId) throws BusinessLogicException {
-        ServicioEntity entity = servicioLogic.getServicio(solicitudesId, serviciosId);
+    public void deleteServicio(@PathParam("serviciosId") Long serviciosId) throws BusinessLogicException {
+        ServicioEntity entity = servicioLogic.getServicio(serviciosId);
         if (entity == null) {
-            throw new WebApplicationException(soli + solicitudesId + serv + serviciosId + noExiste, 404);
+            throw new WebApplicationException(serv + serviciosId + noExiste, 404);
         }
-        servicioLogic.deleteServicio(solicitudesId, serviciosId);
+        servicioLogic.deleteServicio(serviciosId);
     }
 
     /**
@@ -176,7 +166,7 @@ public class ServicioResource {
     @Path("{serviciosId: \\d+}/calificacion")
     public Class<CalificacionResource> getCalificacionResource(@PathParam("solicitudesId") Long solicitudesId, @PathParam("serviciosId") Long serviciosId) 
     {        
-        if (servicioLogic.getServicio(solicitudesId, serviciosId) == null)
+        if (servicioLogic.getServicio(serviciosId) == null)
         {
             throw new WebApplicationException("/solicitudes/"+ solicitudesId +serv+ serviciosId +"/calificacion no existe.", 404);
         }

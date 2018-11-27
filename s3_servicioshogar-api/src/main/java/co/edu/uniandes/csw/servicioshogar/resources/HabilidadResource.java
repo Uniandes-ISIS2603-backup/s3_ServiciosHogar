@@ -79,7 +79,7 @@ public class HabilidadResource {
     {
         LOGGER.log(Level.INFO, "HabilidadResource getHabilidades: input: {0}", prestadorId);
         List<HabilidadDTO> listaDTOs = listEntity2DTO(habilidadLogic.getHabilidades(prestadorId));
-        LOGGER.log(Level.INFO, "HabilidadResource getHabilidades: output: {0}", listaDTOs.toString());
+        LOGGER.log(Level.INFO, "HabilidadResource getHabilidades: output: {0}", listaDTOs);
         return listaDTOs;
     }
     
@@ -101,7 +101,7 @@ public class HabilidadResource {
             throw new WebApplicationException("El recurso "+PATH_PRESTADOR+prestadorId+PATH_HABILIDAD+habilidadId+"no existe", 404);
         
         HabilidadDTO habilidadDTO = new HabilidadDTO(hEntity);
-        LOGGER.log(Level.INFO, "HabilidadResource getHabilidad: output: {0}", habilidadDTO.toString());
+        LOGGER.log(Level.INFO, "HabilidadResource getHabilidad: output: {0}", habilidadDTO);
         return habilidadDTO;
     }
     
@@ -117,7 +117,7 @@ public class HabilidadResource {
     @Path("{habilidadesId: \\d+}")
     public HabilidadDTO updatHabilidad(@PathParam("prestadorId") Long prestadorId, @PathParam("habilidadesId") Long habilidadId, HabilidadDTO habilidad) throws BusinessLogicException{
         
-        LOGGER.log(Level.INFO, "HabilidadResource updateHabilidad: input: prestadorId: {0} , habilidadId: {1} , habilidad:{2}", new Object[]{prestadorId, habilidadId, habilidad.toString()});
+        LOGGER.log(Level.INFO, "HabilidadResource updateHabilidad: input: prestadorId: {0} , habilidadId: {1} , habilidad:{2}", new Object[]{prestadorId, habilidadId, habilidad});
         if (habilidad.getId().equals(habilidadId)) {
             throw new BusinessLogicException("Los ids de la Habilidad no coinciden.");
         }
@@ -127,7 +127,7 @@ public class HabilidadResource {
 
         }
         HabilidadDTO habilidadDTO = new HabilidadDTO(habilidadLogic.updateHabilidad(prestadorId, habilidad.toEntity()));
-        LOGGER.log(Level.INFO, "HabilidadResource updateHabilidad: output:{0}", habilidadDTO.toString());
+        LOGGER.log(Level.INFO, "HabilidadResource updateHabilidad: output:{0}", habilidadDTO);
         return habilidadDTO;
 
     }
