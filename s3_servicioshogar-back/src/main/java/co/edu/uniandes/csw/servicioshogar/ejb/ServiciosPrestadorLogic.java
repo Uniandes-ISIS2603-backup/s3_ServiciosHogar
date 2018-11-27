@@ -30,11 +30,11 @@ public class ServiciosPrestadorLogic {
     @Inject
     private ServicioPersistence servicioPersistence;
     
-    public ServicioEntity replacePrestador(Long prestadorId, Long servicioId)
+    public ServicioEntity replacePrestador(Long prestadorId, Long solicitudId,Long servicioId)
     {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar un servicio con id = {0}",servicioId);
         PrestadorEntity prestadorEntity = prestadorPersistence.find(prestadorId);
-        ServicioEntity servicioEntity = servicioPersistence.find(servicioId);
+        ServicioEntity servicioEntity = servicioPersistence.findBySolicitud(solicitudId, servicioId);
         servicioEntity.setPrestador(prestadorEntity);
         //Agregar servicio al prestador
         List<ServicioEntity> servicios = prestadorEntity.getServicios();

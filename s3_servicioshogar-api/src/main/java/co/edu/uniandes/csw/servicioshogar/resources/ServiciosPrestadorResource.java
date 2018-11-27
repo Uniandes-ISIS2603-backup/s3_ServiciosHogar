@@ -30,7 +30,7 @@ import javax.ws.rs.core.MediaType;
  *
  * @author María Ocampo
  */
-@Path("servicios/{servicioId: \\d+}/prestador")
+@Path("clientes/{clientId: \\d+}/solicitudes/{solicitudId: \\d+}/servicios/{servicioId: \\d+}/prestador")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class ServiciosPrestadorResource {
@@ -49,14 +49,14 @@ public class ServiciosPrestadorResource {
     private PrestadorLogic prestadorLogic;
     
     @PUT
-    public ServicioDTO replacePrestador(@PathParam("servicioId") Long servicioId, PrestadorDTO prestador)
+    public ServicioDTO replacePrestador(@PathParam("servicioId") Long servicioId, @PathParam("solicitudId") Long solicitudId, PrestadorDTO prestador)
     {
-        LOGGER.log(Level.INFO, "ServiciosPrestadorResource replacePRestador: input: servicioId{0}, Prestador{1}", new Object[]{servicioId,prestador});
-        if(servicioLogic.getServicio(servicioId) == null)
+        LOGGER.log(Level.INFO, "ServiciosPrestadorResource replacePRestador: input: solicitudId{0}, servicioId{1}, Prestador{2}", new Object[]{solicitudId,servicioId,prestador});
+        if(servicioLogic.getServicio(solicitudId, servicioId) == null)
             throw new WebApplicationException("El recurso /servicios/"+servicioId+" no existe",404);
         if(prestadorLogic.getPrestador(prestador.getId()) == null)
             throw new WebApplicationException(rec+prestador.getId()+noExiste, 404);
-        ServicioDTO servicioDTO = new ServicioDTO(serviciosPrestadorLogic.replacePrestador(prestador.getId(), servicioId));
+        ServicioDTO servicioDTO = new ServicioDTO(serviciosPrestadorLogic.replacePrestador(prestador.getId(), solicitudId, servicioId));
         LOGGER.log(Level.INFO, "ServiciosPrestadorResource replacePRestador: output: {0}", servicioDTO);
         return servicioDTO;
     }
