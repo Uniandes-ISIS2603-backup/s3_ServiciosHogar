@@ -122,4 +122,16 @@ public class ServicioPersistence {
         LOGGER.log(Level.INFO, "Saliendo de consultar el servicio con id = {1} del prestador con id ={0}" ,new Long[] {prestadorId, serviciosId});
         return servicio;
     }
+    
+        /**
+     * Retorna una lista con todos los prestador en la BD.
+     * @return Una lista con todos los prestador que se encuentren en la BD.
+     */
+    public List<ServicioEntity> findAll() {
+        LOGGER.log(Level.INFO, "Consultando todos los servicios");
+        // Se crea un query para buscar todas las editoriales en la base de datos.
+        TypedQuery query = em.createQuery("select u from ServicioEntity u", ServicioEntity.class);
+        // Note que en el query se hace uso del método getResultList() que obtiene una lista de editoriales.
+        return query.getResultList();
+    }
 }

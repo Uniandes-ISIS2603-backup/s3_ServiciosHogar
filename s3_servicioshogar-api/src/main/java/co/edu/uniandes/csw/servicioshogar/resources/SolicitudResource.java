@@ -155,27 +155,6 @@ public class SolicitudResource {
     }
 
     /**
-     * Conexión con el servicio de reseñas para un solicitud. {@link ServicioResource}
-     *
-     * Este método conecta la ruta de /solicitudes con las rutas de /servicios que
-     * dependen del solicitud, es una redirección al servicio que maneja el segmento
-     * de la URL que se encarga de las reseñas.
-     *
-     * @param solicitudesId El ID del solicitud con respecto al cual se accede al
-     * servicio.
-     * @return El servicio de Reseñas para ese solicitud en paricular.\
-     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
-     * Error de lógica que se genera cuando no se encuentra el solicitud.
-     */
-    @Path("{solicitudesId: \\d+}/servicios")
-    public Class<ServicioResource> getServicioResource(@PathParam("clientesId") Long clientesId, @PathParam("solicitudesId") Long solicitudesId) {
-        if (solicitudLogic.getSolicitud(clientesId, solicitudesId) == null) {
-            throw new WebApplicationException("El recurso clientes/"+clientesId+solici + solicitudesId + "/servicios no existe.", 404);
-        }
-        return ServicioResource.class;
-    }
-
-    /**
      * Convierte una lista de entidades a DTO.
      *
      * Este método convierte una lista de objetos SolicitudEntity a una lista de

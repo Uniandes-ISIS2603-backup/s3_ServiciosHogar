@@ -64,9 +64,9 @@ public class PrestadorResource {
     @POST
     public PrestadorDTO createPrestador(PrestadorDTO  prestador) throws BusinessLogicException
     {
-        LOGGER.log(Level.INFO, "PrestadorResource createPrestador : input {0}", prestador.toString());
+        LOGGER.log(Level.INFO, "PrestadorResource createPrestador : input {0}", prestador);
         PrestadorDetailDTO nuevoPrestadorDTO = new PrestadorDetailDTO(prestadorLogic.createPrestador(prestador.toEntity()));
-        LOGGER.log(Level.INFO, "PrestadorResource createPrestador : outpu {0}", nuevoPrestadorDTO.toString());
+        LOGGER.log(Level.INFO, "PrestadorResource createPrestador : outpu {0}", nuevoPrestadorDTO);
         return nuevoPrestadorDTO;
     }
     
@@ -80,7 +80,7 @@ public class PrestadorResource {
     {
         LOGGER.log(Level.INFO, "PrestadorResource getPrestadores : input: void");
         List<PrestadorDetailDTO> listaPrestadores = listEntity2DetailDTO(prestadorLogic.getPrestadores());
-        LOGGER.log(Level.INFO, "PrestadorResource getPrestadores : outpu {0}", listaPrestadores.toString());
+        LOGGER.log(Level.INFO, "PrestadorResource getPrestadores : outpu {0}", listaPrestadores);
         return listaPrestadores;
     }
     
@@ -99,7 +99,7 @@ public class PrestadorResource {
         if(pEntity == null)
             throw new WebApplicationException(PATH_PRESTADOR + prestadorId + ERROR, 404);
         PrestadorDetailDTO prestadorDetailDTO = new PrestadorDetailDTO(pEntity);
-        LOGGER.log(Level.INFO, "PrestadorResource getPrestador : outpu {0}", prestadorDetailDTO.toString());
+        LOGGER.log(Level.INFO, "PrestadorResource getPrestador : outpu {0}", prestadorDetailDTO);
         return prestadorDetailDTO;
     }
     
@@ -114,13 +114,13 @@ public class PrestadorResource {
     @Path("{prestadoresId: \\d+}")
     public PrestadorDetailDTO updatePrestador(@PathParam("prestadoresId") Long prestadorId, PrestadorDTO prestador) throws BusinessLogicException{
         
-        LOGGER.log(Level.INFO, "PrestadorResource updatePrestador : input id: {0} , book: {1}", new Object[]{prestadorId, prestador.toString()});
+        LOGGER.log(Level.INFO, "PrestadorResource updatePrestador : input id: {0} , book: {1}", new Object[]{prestadorId, prestador});
         prestador.setId(prestadorId);
         if(prestadorLogic.getPrestador(prestadorId) == null) 
             throw new WebApplicationException(PATH_PRESTADOR + prestadorId + ERROR, 404);
         
         PrestadorDetailDTO detailDTO = new PrestadorDetailDTO(prestadorLogic.updatePrestador(prestadorId, prestador.toEntity()));
-        LOGGER.log(Level.INFO, "PrestadorResource updatePrestador : outpu {0}", detailDTO.toString());
+        LOGGER.log(Level.INFO, "PrestadorResource updatePrestador : outpu {0}", detailDTO);
         return detailDTO;
     }
     

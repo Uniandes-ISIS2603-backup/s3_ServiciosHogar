@@ -1,0 +1,452 @@
+{
+	"info": {
+		"_postman_id": "4538de9f-c18c-487e-9335-49743b1b6df6",
+		"name": "HojaDeVida Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Crear un prestador",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0373ce37-dcb3-45e0-b36f-1a95d9f054cb",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_p\",data.id);",
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\":\"Maria Ocampo\",\n\t\"cedula\":1007784098\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"prestadores"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear una hoja de vida a un prestador",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "afa7a627-60fd-4817-8502-b4865fe535e6",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_h2\",data.id);",
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"trayectoria\": \"7 meses\",\r\n\t\"fechaNacimiento\": \"1998/02/03\",\r\n\t\"email\": \"caro@gmail.com\",\r\n\t\"telefono\": 3102569876,\r\n\t\"direccion\": \"Cll. 30 #25-02\",\r\n\t\"formacion\": \"bachiller\"\r\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p}}/hojaDeVida",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"prestadores",
+						"{{new_id_p}}",
+						"hojaDeVida"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear una hoja de vida a un prestador que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8281d144-525e-4d31-ad65-302d98f00a45",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"No se puede asociar una habilidad a un prestador que no existe.\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /prestadores/0/habilidades no existe\");"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"tipo\":\"PLOMERIA\",\n\t\"descripcion\":\"Cambio de tuberías\",\n\t\"prestador\": \n\t{\n\t\t\"nombre\":\"Maria Ocampo\",\n\t\t\"cedula\":1007784095\n\t}\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/0/habilidades",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"prestadores",
+						"0",
+						"habilidades"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener la hoja de vida de un prestador",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1a157514-95de-41ec-9638-a439a91babd3",
+						"exec": [
+							"var data= JSON.parse(responseBody);",
+							"tests[\"No genera error en el Get all\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p}}/hojaDeVida",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"prestadores",
+						"{{new_id_p}}",
+						"hojaDeVida"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar una hoja de vida a un prestador que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6bed30d0-db24-452c-8ac5-bb7ae902edea",
+						"exec": [
+							"tests[\"No actualiza con id que no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /prestadores/0 no existe\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"trayectoria\": \"7 meses\",\n\t\"fechaNacimiento\": \"1998/02/03\",\n\t\"email\": \"caro@gmail.com\",\n\t\"telefono\": 3102569878,\n\t\"direccion\": \"Cll. 30 #25-02\",\n\t\"formacion\": \"bachiller\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/0/hojaDeVida",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"prestadores",
+						"0",
+						"hojaDeVida"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar una hoja de vida de un prestador",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2bc50d26-03c9-4219-8c24-f59719f19e4e",
+						"exec": [
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"no genera error en el Put\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"trayectoria\": \"8 meses\",\n\t\"fechaNacimiento\": \"1998/02/03\",\n\t\"email\": \"caro@gmail.com\",\n\t\"telefono\": 3102569876,\n\t\"direccion\": \"Cll. 30 #25-02\",\n\t\"formacion\": \"bachiller\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p}}/hojaDeVida",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"prestadores",
+						"{{new_id_p}}",
+						"hojaDeVida"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrarle una hoja de vida a un prestador que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8596df84-2de8-4004-a2fd-3d200d04c868",
+						"exec": [
+							"tests[\"No se puede eliminar una habilidad que no existe.\"] = responseCode.code === 404;",
+							"let id = pm.variables.get(\"new_id_h\");",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /prestadores/0 no existe\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/0/hojaDeVida",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"prestadores",
+						"0",
+						"hojaDeVida"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrarle una hoja de vida a un prestador",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c2a4f4b0-71ea-44a1-bec0-60069f54c6b0",
+						"exec": [
+							"tests[\"no genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p}}/hojaDeVida",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"prestadores",
+						"{{new_id_p}}",
+						"hojaDeVida"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrarle una hoja de vida a un prestador Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c2a4f4b0-71ea-44a1-bec0-60069f54c6b0",
+						"exec": [
+							"tests[\"no genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p}}/hojaDeVida",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"prestadores",
+						"{{new_id_p}}",
+						"hojaDeVida"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar un prestador",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c2a4f4b0-71ea-44a1-bec0-60069f54c6b0",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"no genera error en el Delete\"] = responseCode.code === 204;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"prestadores",
+						"{{new_id_p}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
