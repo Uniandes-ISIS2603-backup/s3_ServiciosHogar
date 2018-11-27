@@ -26,7 +26,7 @@ public class TarjetaCreditoDTO implements Serializable{
     private String fechaVencimiento;
     private Integer codeSeguridad;
     private Integer numero;    
-    private ClienteDTO cliente;
+    private ClienteDTO cliente;   
    
     //------------------------------------------
     //---------------Constructor----------------
@@ -49,39 +49,30 @@ public class TarjetaCreditoDTO implements Serializable{
     //------------------------------------------
     //------------------Metodos-----------------
     //------------------------------------------   
-    public Long getId()
-    {return id;}
-    
-    public void setId( Long pId)
-    { this.id = pId;}
-    
-    public String getTitular()
-    {return titular;}
-    
-    public void setTitular(String pTitular)
-    { this.titular = pTitular;}
-    
-    public String getFechaVencimiento()
-    {return fechaVencimiento;}
-    
-    public void setFechaVencimiento(String pFecha)
-    {this.fechaVencimiento = pFecha;}
-    
-    public Integer getCodeSeguridad()
-    {return codeSeguridad;}
-    
-    public void setCodeSeguridad(Integer pCode)
-    {this.codeSeguridad = pCode;}
-    
-    public Integer getNumero()
-    {return numero;}
-    
-    public void setNumero(Integer pNumero)
-    { this.numero = pNumero;}
+
+    public Long getId() {return id;}
+
+    public void setId(Long id) {this.id = id;}
+
+    public String getTitular() {return titular;}
+
+    public void setTitular(String titular) {this.titular = titular;}
+
+    public String getFechaVencimiento() {return fechaVencimiento;}
+
+    public void setFechaVencimiento(String fechaVencimiento) {this.fechaVencimiento = fechaVencimiento;}
+
+    public Integer getCodeSeguridad() {return codeSeguridad;}
+
+    public void setCodeSeguridad(Integer codeSeguridad) {this.codeSeguridad = codeSeguridad;}
+
+    public Integer getNumero() {return numero;}
+
+    public void setNumero(Integer numero) {this.numero = numero;}
 
     public ClienteDTO getCliente() {return cliente;}
 
-    public void setCliente(ClienteDTO cliente) {this.cliente = cliente;}   
+    public void setCliente(ClienteDTO cliente) {this.cliente = cliente;}  
     
     public TarjetaCreditoEntity toEntity()
     {

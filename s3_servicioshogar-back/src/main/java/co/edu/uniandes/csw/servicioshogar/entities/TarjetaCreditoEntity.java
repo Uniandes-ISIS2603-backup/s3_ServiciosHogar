@@ -29,36 +29,24 @@ public class TarjetaCreditoEntity extends BaseEntity implements Serializable {
      @PodamExclude
     @ManyToOne(cascade = CascadeType.PERSIST)
     private ClienteEntity cliente;
-    //-------------------Metodos---------------------//
-    
-    public String getTitular()
-    { return titular;}
-    
-    public void setTitular(String pTitular)
-    { this.titular = pTitular;}
-    
-    public String getFechaVencimiento()
-    { return fechaVencimiento;}
-    
-    public  void setFechaVencimiento( String pFecha)
-    { this.fechaVencimiento = pFecha;}
-    
-    public Integer getCodeSeguridad()
-    { return codeSeguridad;}
-    
-    public void setCodeSeguridad(Integer pCode)
-    { this.codeSeguridad = pCode;}
-    
-    public Integer getNumero()
-    { return numero;}
-    
-    public void setNumero( Integer pNumero)
-    { this.numero = pNumero;}
-    
-    public ClienteEntity getCliente()
-    {return cliente;}
-    
-    public void setCliente(ClienteEntity cliente)
-    {this.cliente = cliente;}
-    
+    //-------------------Metodos---------------------//    
+    public String getTitular() {return titular;}
+
+    public void setTitular(String titular) {this.titular = titular;}
+
+    public String getFechaVencimiento() {return fechaVencimiento;}
+
+    public void setFechaVencimiento(String fechaVencimiento) {this.fechaVencimiento = fechaVencimiento;}
+
+    public Integer getCodeSeguridad() {return codeSeguridad;}
+
+    public void setCodeSeguridad(Integer codeSeguridad) {this.codeSeguridad = codeSeguridad;}
+
+    public Integer getNumero() {return numero;}
+
+    public void setNumero(Integer numero) {this.numero = numero;}
+
+    public ClienteEntity getCliente() {return cliente;}
+
+    public void setCliente(ClienteEntity cliente) {this.cliente = cliente;}     
 }

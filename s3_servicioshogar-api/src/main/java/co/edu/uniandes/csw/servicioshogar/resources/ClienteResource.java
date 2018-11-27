@@ -171,6 +171,14 @@ public class ClienteResource
         return SolicitudResource.class;
     }
     
+    @Path("{clientesId: \\d+}/tarjetasCredito")
+    public Class<TarjetaCreditoResource> getTarjetasResource(@PathParam("clientesId") Long clientesId) {
+        if (clienteLogic.getCliente(clientesId) == null) 
+            throw new WebApplicationException(RECURSO_CLIENTES + clientesId + "/tarjetasCredito no existe.", 404);
+        
+        return TarjetaCreditoResource.class;
+    }
+    
     /**
      * Convierte una lista de entidades a DTO
      * @param entityList. Corresponde a la lista de clientes de tipo Entity que se convertira en DTO.
