@@ -5,14 +5,19 @@
  */
 package co.edu.uniandes.csw.servicioshogar.entities;
 
+import co.edu.uniandes.csw.bookstore.podam.DateStrategy;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import uk.co.jemos.podam.common.PodamExclude;
+import uk.co.jemos.podam.common.PodamStrategyValue;
 
 /**
  *
@@ -36,7 +41,9 @@ public class HojaDeVidaEntity extends BaseEntity implements Serializable {
     /**
      * Atributo que representa la fecha de nacimiento del prestador.
      */
-    private String fechaNacimiento;
+    @Temporal(TemporalType.DATE)
+    @PodamStrategyValue(DateStrategy.class)
+    private Date fechaNacimiento;
     /**
      * Atributo que representa el email del prestador.
      */
@@ -70,11 +77,11 @@ public class HojaDeVidaEntity extends BaseEntity implements Serializable {
         this.trayectoria = trayectoria;
     }
 
-    public String getFechaNacimiento() {
+    public Date getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(String fechaNacimiento) {
+    public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 

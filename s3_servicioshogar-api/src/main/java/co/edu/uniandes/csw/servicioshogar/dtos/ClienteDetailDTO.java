@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * @author Carlos Eduardo Robles Quevedo
  */
 public class ClienteDetailDTO extends ClienteDTO implements Serializable
@@ -40,6 +39,7 @@ public class ClienteDetailDTO extends ClienteDTO implements Serializable
             for (SolicitudEntity entitySolicitud : clienteEntity.getSolicitudes()) 
                 solicitudes.add(new SolicitudDTO(entitySolicitud));
             
+            tarjetas = new ArrayList<>();
             for(TarjetaCreditoEntity tarjeta : clienteEntity.getTarjetas())
                 tarjetas.add(new TarjetaCreditoDTO(tarjeta));
             
@@ -88,16 +88,14 @@ public class ClienteDetailDTO extends ClienteDTO implements Serializable
     public void setSolicitudes(List<SolicitudDTO> solicitudes) {this.solicitudes = solicitudes;}
 
     /**
-     * 
-     * @return 
+     * Devuelve la lista de tarjetas asociadas al cliente.
+     * @return la lista de tarjetas.
      */
     public List<TarjetaCreditoDTO> getTarjetas() {return tarjetas;}
 
     /**
-     * 
-     * @param tarjetas 
+     * Modifica las tarjetas de credito del cliente.
+     * @param tarjetas - Las nuevas tarjetas.
      */
-    public void setTarjetas(List<TarjetaCreditoDTO> tarjetas) {this.tarjetas = tarjetas;}
-
-    
+    public void setTarjetas(List<TarjetaCreditoDTO> tarjetas) {this.tarjetas = tarjetas;}   
 }

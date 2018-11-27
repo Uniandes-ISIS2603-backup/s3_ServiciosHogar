@@ -56,6 +56,8 @@ public class CalificacionLogic
         ServicioEntity servicio = servicioPersistence.findBySolicitud(solicitudesId ,serviciosId );
         if(servicio.getCalificacion() != null)
             throw new BusinessLogicException("El servicio con id = " + serviciosId + " ya tiene calificacion");
+        else if(calificacionEntity.getCalificacion() > 5 || calificacionEntity.getCalificacion() < 1 )        
+            throw new BusinessLogicException("La calificacion debe estar entre 1.0 y 5.0");        
         else
         {        
             calificacionEntity.setServicio(servicio);            

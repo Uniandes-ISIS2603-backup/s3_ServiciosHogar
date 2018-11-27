@@ -25,7 +25,7 @@ public class HojaDeVidaPersistence {
     protected EntityManager em;
     
     
-       public HojaDeVidaEntity create(HojaDeVidaEntity hojaDeVidaEntity)
+    public HojaDeVidaEntity create(HojaDeVidaEntity hojaDeVidaEntity)
     {
         LOGGER.log(Level.INFO, "Creando una hoja de vida nueva");
         em.persist(hojaDeVidaEntity);

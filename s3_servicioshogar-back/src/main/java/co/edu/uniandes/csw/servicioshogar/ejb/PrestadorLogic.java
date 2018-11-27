@@ -37,20 +37,19 @@ public class PrestadorLogic {
      */
     public PrestadorEntity createPrestador(PrestadorEntity prestadorEntity) throws BusinessLogicException{
         LOGGER.log(Level.INFO, "Inicia el proceso de creación de un prestador");
-        if(prestadorEntity.getCedula() == null)
-        {
-            throw new BusinessLogicException("La cédula es inválida");
-        }
-        if(prestadorEntity.getNombre() == null)
-        {
-            throw new BusinessLogicException("El nombre es inválido");
-        }
-
-        if(persistence.findByCedula(prestadorEntity.getCedula()) != null)
-        {
-            throw new BusinessLogicException("La cédula ya existe");
-        }
         
+        if(prestadorEntity.getCedula() == null)        
+            throw new BusinessLogicException("La cédula es inválida");
+        
+        if(prestadorEntity.getNombre() == null)        
+            throw new BusinessLogicException("El nombre es inválido");
+        
+        if(persistence.findByCedula(prestadorEntity.getCedula()) != null)
+            throw new BusinessLogicException("La cédula ya existe");     
+        
+        if(persistence.findByCedula(prestadorEntity.getCedula()) != null)
+            throw new BusinessLogicException("Ya existe un Prestador con cedula \"" + prestadorEntity.getCedula() + "\"");
+
         persistence.create(prestadorEntity);
         LOGGER.log(Level.INFO, "Termina el proceso de creación de un prestador");
         return prestadorEntity;

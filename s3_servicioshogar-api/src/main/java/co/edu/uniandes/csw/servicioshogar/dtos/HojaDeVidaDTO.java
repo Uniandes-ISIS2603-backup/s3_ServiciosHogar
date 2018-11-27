@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.servicioshogar.dtos;
 
 import co.edu.uniandes.csw.servicioshogar.entities.HojaDeVidaEntity;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  *<pre>
@@ -35,7 +36,7 @@ public class HojaDeVidaDTO implements Serializable{
      * Atributo que representa la fecha de nacimiento del prestador.
      * FORMATO: DD/MM/YYYY
      */
-    private String fechaNacimiento;
+    private Date fechaNacimiento;
     /**
      * Atributo que representa el email del prestador.
      */
@@ -106,11 +107,11 @@ public class HojaDeVidaDTO implements Serializable{
         this.trayectoria = trayectoria;
     }
 
-    public String getFechaNacimiento() {
+    public Date getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(String fechaNacimiento) {
+    public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 

@@ -14,17 +14,23 @@ import java.io.Serializable;
 /**
  *
  * @author Adriana Trujillo
+ * @author Carlos Robles / 3er Ciclo
  */
 public class TarjetaCreditoDTO implements Serializable{
-    //-------------------Atributos------------------------//
-    private Long id;
-    
+   
+    //------------------------------------------
+    //-----------------Atributos----------------
+    //------------------------------------------ 
+    private Long id;    
     private String titular;
     private String fechaVencimiento;
     private Integer codeSeguridad;
-    private Integer numero;
+    private Integer numero;    
+    private ClienteDTO cliente;
    
-    //------------------Constructor------------------//
+    //------------------------------------------
+    //---------------Constructor----------------
+    //------------------------------------------
     public TarjetaCreditoDTO()
     {}
     
@@ -40,7 +46,9 @@ public class TarjetaCreditoDTO implements Serializable{
         }
     }
     
-    //------------------Metodos----------------------//
+    //------------------------------------------
+    //------------------Metodos-----------------
+    //------------------------------------------   
     public Long getId()
     {return id;}
     
@@ -70,6 +78,10 @@ public class TarjetaCreditoDTO implements Serializable{
     
     public void setNumero(Integer pNumero)
     { this.numero = pNumero;}
+
+    public ClienteDTO getCliente() {return cliente;}
+
+    public void setCliente(ClienteDTO cliente) {this.cliente = cliente;}   
     
     public TarjetaCreditoEntity toEntity()
     {
