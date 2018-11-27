@@ -150,6 +150,8 @@ public class CalificacionLogicTest
         for(int i = 0; i < 3; i++)
         {
             CalificacionEntity calificacion = factory.manufacturePojo(CalificacionEntity.class);
+            calificacion.setCalificacion(Math.random()*4 + 1);
+            System.out.println(calificacion.getCalificacion());
             if(i != 0)
                 calificacion.setServicio(listaServicio.get(i));
             listaCalificacion.add(calificacion);
@@ -158,7 +160,6 @@ public class CalificacionLogicTest
                 listaServicio.get(i).setCalificacion(calificacion);            
         }
     }
-    
     /**
      * Prueba para crear un Calificacion.     *
      * @throws co.edu.uniandes.csw.bookstore.exceptions.BusinessLogicException
@@ -169,6 +170,7 @@ public class CalificacionLogicTest
         
         ClienteEntity cliente = listaCliente.get(0);
         CalificacionEntity newEntity = factory.manufacturePojo(CalificacionEntity.class);
+        newEntity.setCalificacion(Math.random()*4 + 1);
         SolicitudEntity solicitudEntity = listaSolicitud.get(0);
         ServicioEntity servicioEntity = listaServicio.get(0);
         newEntity.setServicio(servicioEntity);
