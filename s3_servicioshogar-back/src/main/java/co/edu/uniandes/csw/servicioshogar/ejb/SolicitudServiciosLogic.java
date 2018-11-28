@@ -26,10 +26,10 @@ public class SolicitudServiciosLogic {
     private SolicitudPersistence solicitudPersistence;
 
     
-    public List<ServicioEntity> findAllServices(Long solicitudId, Long clienteId) throws BusinessLogicException
+    public List<ServicioEntity> findAllServices(Long solicitudId) throws BusinessLogicException
     {
         LOGGER.log(Level.INFO, "Inicia el proceso de consultar los servicio  de un prestador con id = {0}",solicitudId);
-        SolicitudEntity solicitudEntity = solicitudPersistence.find(clienteId, solicitudId);
+        SolicitudEntity solicitudEntity = solicitudPersistence.findById(solicitudId);
         //Agregar servicio al prestador
         if(solicitudEntity ==null)
             throw new BusinessLogicException("La solicitud no existe");
@@ -38,10 +38,10 @@ public class SolicitudServiciosLogic {
        return solicitudEntity.getServicios();
     }
     
-     public ServicioEntity finServices(Long clienteId, Long solicitudId, Long servicioId) throws BusinessLogicException
+     public ServicioEntity findServices(Long solicitudId, Long servicioId) throws BusinessLogicException
     {
         LOGGER.log(Level.INFO, "Inicia el proceso de consultar los servicio  de un prestador con id = {0}",solicitudId);
-        SolicitudEntity solicitudEntity = solicitudPersistence.find(clienteId, solicitudId);
+        SolicitudEntity solicitudEntity = solicitudPersistence.findById(solicitudId);
         //Agregar servicio al prestador
         if(solicitudEntity ==null)
             throw new BusinessLogicException("El prestador no existe");

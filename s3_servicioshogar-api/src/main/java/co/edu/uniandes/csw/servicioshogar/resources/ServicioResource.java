@@ -31,10 +31,11 @@ import javax.ws.rs.WebApplicationException;
 @Produces("application/json")
 @Consumes("application/json")
 public class ServicioResource {
+
     private static final Logger LOGGER = Logger.getLogger(ServicioResource.class.getName());
     private static final String NO_EXISTE = " no existe.";
-    private static final String SERVICIO="/servicios/";
-    private static final String SOLICITUD="El recurso /solicitudes/";
+    private static final String SERVICIO = "/servicios/";
+    private static final String SOLICITUD = "El recurso /solicitudes/";
     @Inject
     private ServicioLogic servicioLogic;
 
@@ -135,7 +136,8 @@ public class ServicioResource {
     /**
      * Borra la reseña con el id asociado recibido en la URL.
      *
-     * @param solicitudesId El ID del solicitud del cual se va a eliminar la reseña.
+     * @param solicitudesId El ID del solicitud del cual se va a eliminar la
+     * reseña.
      * @param serviciosId El ID de la reseña que se va a eliminar.
      * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} -
      * Error de lógica que se genera cuando no se puede eliminar la reseña.
@@ -150,6 +152,15 @@ public class ServicioResource {
             throw new WebApplicationException(SOLICITUD + solicitudesId + SERVICIO + serviciosId + NO_EXISTE, 404);
         }
         servicioLogic.deleteServicio(solicitudesId, serviciosId);
+    }
+
+    @Path("{servicioId: \\d+}/solicitud")
+    public Class<ServiciosSolicitudResource> getSolicitudServiciosResource(@PathParam("servicioId") Long solicitudId) {
+
+        if (servicioLogic.getServicioById(solicitudId) == null) {
+            throw new WebApplicationException("El resurso " + SERVICIO + solicitudId + NO_EXISTE, 404);
+        }
+        return ServiciosSolicitudResource.class;
     }
 
     /**
@@ -169,18 +180,16 @@ public class ServicioResource {
         }
         return list;
     }
-    
+
     //---------------------------------------
     //-------------Carlos Robles-------------
     //---------------------------------------    
     @Path("{serviciosId: \\d+}/calificacion")
-    public Class<CalificacionResource> getCalificacionResource(@PathParam("solicitudesId") Long solicitudesId, @PathParam("serviciosId") Long serviciosId) 
-    {        
-        if (servicioLogic.getServicio(solicitudesId, serviciosId) == null)
-        {
-            throw new WebApplicationException("/solicitudes/"+ solicitudesId +SERVICIO+ serviciosId +"/calificacion no existe.", 404);
+    public Class<CalificacionResource> getCalificacionResource(@PathParam("solicitudesId") Long solicitudesId, @PathParam("serviciosId") Long serviciosId) {
+        if (servicioLogic.getServicio(solicitudesId, serviciosId) == null) {
+            throw new WebApplicationException("/solicitudes/" + solicitudesId + SERVICIO + serviciosId + "/calificacion no existe.", 404);
         }
         return CalificacionResource.class;
     }
-    
+
 }

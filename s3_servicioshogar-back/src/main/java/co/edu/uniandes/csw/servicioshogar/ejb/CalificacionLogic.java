@@ -74,7 +74,8 @@ public class CalificacionLogic
      */
     public CalificacionEntity getCalificacion(Long serviciosId, Long calificacionId) 
     {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar el calificacion con id = {0} del servicio con id = " + serviciosId, calificacionId);
+        Long[] ids ={calificacionId, serviciosId};
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar el calificacion con id = {0} del servicio con id = {0}",ids);
         return persistence.find(serviciosId, calificacionId);
     }
 
@@ -86,11 +87,12 @@ public class CalificacionLogic
      * @return calificacion con los cambios actualizados en la BD.
      */
     public CalificacionEntity updateCalificacion(Long solicitudesId, Long serviciosId, CalificacionEntity calificacionEntity) {
-        LOGGER.log(Level.INFO, "Inicia proceso de actualizar el calificacion con id = {0} del servicio con id = " + serviciosId, calificacionEntity.getId());
+         Long[] ids = {calificacionEntity.getId(), serviciosId};
+        LOGGER.log(Level.INFO, "Inicia proceso de actualizar el calificacion con id = {0} del servicio con id = {1}", ids);
         ServicioEntity servicioEntity = servicioPersistence.findBySolicitud(solicitudesId ,serviciosId );
         calificacionEntity.setServicio(servicioEntity);
         persistence.update(calificacionEntity);
-        LOGGER.log(Level.INFO, "Termina proceso de actualizar el calificacion con id = {0} del servicio con id = " + serviciosId, calificacionEntity.getId());
+        LOGGER.log(Level.INFO, "Termina proceso de actualizar el calificacion con id = {0} del servicio con id = {1}" , ids);
         return calificacionEntity;
     }
     
@@ -101,12 +103,13 @@ public class CalificacionLogic
      * @throws BusinessLogicException - Si no existe el servicio o la calificacion.
      */
     public void deleteCalificacion(Long serviciosId, Long calificacionId) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "Inicia proceso de borrar el calificacion con id = {0} del servicio con id = " + serviciosId, calificacionId);
+        Long[] ids = {calificacionId, serviciosId};
+        LOGGER.log(Level.INFO, "Inicia proceso de borrar el calificacion con id = {0} del servicio con id = {1}", ids);
         CalificacionEntity old = getCalificacion(serviciosId, calificacionId);
         if (old == null) {
             throw new BusinessLogicException("El calificacion con id = " + calificacionId + " no esta asociado a el servicio con id = " + serviciosId);
         }
         persistence.delete(old.getId());
-        LOGGER.log(Level.INFO, "Termina proceso de borrar el calificacion con id = {0} del servicio con id = " + serviciosId, calificacionId);
+        LOGGER.log(Level.INFO, "Termina proceso de borrar el calificacion con id = {0} del servicio con id = {1}", ids);
     }    
 }

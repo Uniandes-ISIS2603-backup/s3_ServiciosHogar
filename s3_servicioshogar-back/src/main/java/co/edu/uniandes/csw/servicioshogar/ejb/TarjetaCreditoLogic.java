@@ -87,11 +87,12 @@ public class TarjetaCreditoLogic {
      * @return La entidad del factura luego de actualizarla
      */
     public TarjetaCreditoEntity updateTarjeta(Long clienteId, TarjetaCreditoEntity tarjetaEntity) {
-        LOGGER.log(Level.INFO, "Inicia proceso de actualizar factura con id = {0}" + clienteId, tarjetaEntity.getId());
+        Long[] ids = {tarjetaEntity.getId(), clienteId};
+        LOGGER.log(Level.INFO, "Inicia proceso de actualizar factura con id = {0} del cliente = {1}", ids);
         ClienteEntity clienetEntity = clientePersistence.find(clienteId);
         tarjetaEntity.setCliente(clienetEntity);
         persistence.update(tarjetaEntity);
-        LOGGER.log(Level.INFO, "Termina proceso de actualizar factura con id = {0}" + clienteId, tarjetaEntity.getId());
+        LOGGER.log(Level.INFO, "Termina proceso de actualizar factura con id = {0} del cliente = {1}", ids);
         return tarjetaEntity;
     }
 
@@ -103,12 +104,13 @@ public class TarjetaCreditoLogic {
      * @throws BusinessLogicException si el factura tiene un autor asociado.
      */
     public void deleteTarjeta(Long clienteId, Long tarjetaId) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "Inicia proceso de borrar factura con id = {0}" + clienteId, tarjetaId);
+        Long[] ids = {tarjetaId, clienteId};
+        LOGGER.log(Level.INFO, "Inicia proceso de borrar factura con id = {0} del cliente = {1}", ids);
         TarjetaCreditoEntity old = getTarjeta(clienteId, tarjetaId);
         if (old == null) {
             throw new BusinessLogicException("La tarjeta con id" + tarjetaId + "no esta asociada al cliente con id" + clienteId);
         }
         persistence.delete(old.getId());
-        LOGGER.log(Level.INFO, "Termina proceso de borrar factura con id = {0}", tarjetaId);
+        LOGGER.log(Level.INFO, "Termina proceso de borrar factura con id = {0} del cliente = {1}", ids);
     }
 }

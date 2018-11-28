@@ -22,6 +22,7 @@ import javax.inject.Inject;
  */
 @Stateless
 public class ServicioLogic {
+
     private static final Logger LOGGER = Logger.getLogger(ServicioLogic.class.getName());
 
     @Inject
@@ -35,10 +36,11 @@ public class ServicioLogic {
      *
      * @param clientesId
      * @param servicioEntity Objeto de ServicioEntity con los datos nuevos
-     * @param solicitudesId id del Solicitud el cual sera padre del nuevo Servicio.
+     * @param solicitudesId id del Solicitud el cual sera padre del nuevo
+     * Servicio.
      * @return Objeto de ServicioEntity con los datos nuevos y su ID.
-     * @throws BusinessLogicException si solicitudesId no es el mismo que tiene el
-     * entity.
+     * @throws BusinessLogicException si solicitudesId no es el mismo que tiene
+     * el entity.
      *
      */
     public ServicioEntity createServicio(Long clientesId, Long solicitudesId, ServicioEntity servicioEntity) throws BusinessLogicException {
@@ -50,7 +52,8 @@ public class ServicioLogic {
     }
 
     /**
-     * Obtiene la lista de los registros de Servicio que pertenecen a un Solicitud.
+     * Obtiene la lista de los registros de Servicio que pertenecen a un
+     * Solicitud.
      *
      * @param clientesId
      * @param solicitudesId id del Solicitud el cual es padre de los Servicios.
@@ -69,28 +72,35 @@ public class ServicioLogic {
      *
      * @param solicitudesId El id del Solicitud buscado
      * @param serviciosId Identificador de la Reseña a consultar
-     * @return Instancia de ServicioEntity con los datos del Servicio consultado.
+     * @return Instancia de ServicioEntity con los datos del Servicio
+     * consultado.
      *
      */
     public ServicioEntity getServicio(Long solicitudesId, Long serviciosId) {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar el servicio con id = {1} del solicitud con id ={0} " , new Long[] {solicitudesId, serviciosId});
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar el servicio con id = {1} del solicitud con id ={0} ", new Long[]{solicitudesId, serviciosId});
         return persistence.findBySolicitud(solicitudesId, serviciosId);
+    }
+
+    public ServicioEntity getServicioById(Long serviciosId) {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar el servicio con id = {0} ", serviciosId);
+        return persistence.find(serviciosId);
     }
 
     /**
      * Actualiza la información de una instancia de Servicio.
      *
      * @param servicioEntity Instancia de ServicioEntity con los nuevos datos.
-     * @param solicitudesId id del Solicitud el cual sera padre del Servicio actualizado.
+     * @param solicitudesId id del Solicitud el cual sera padre del Servicio
+     * actualizado.
      * @return Instancia de ServicioEntity con los datos actualizados.
      *
      */
     public ServicioEntity updateServicio(long clientesId, Long solicitudesId, ServicioEntity servicioEntity) {
-        LOGGER.log(Level.INFO, "Inicia proceso de actualizar el servicio con id = {1} del solicitud con id ={0} " , new Long[] {solicitudesId, servicioEntity.getId()});
+        LOGGER.log(Level.INFO, "Inicia proceso de actualizar el servicio con id = {1} del solicitud con id ={0} ", new Long[]{solicitudesId, servicioEntity.getId()});
         SolicitudEntity solicitudEntity = solicitudPersistence.find(clientesId, solicitudesId);
         servicioEntity.setSolicitud(solicitudEntity);
         persistence.update(servicioEntity);
-        LOGGER.log(Level.INFO, "Termina proceso de actualizar el servicio con id = {1} del solicitud con id ={0} " , new Long[] {solicitudesId, servicioEntity.getId()});
+        LOGGER.log(Level.INFO, "Termina proceso de actualizar el servicio con id = {1} del solicitud con id ={0} ", new Long[]{solicitudesId, servicioEntity.getId()});
         return servicioEntity;
     }
 
@@ -99,16 +109,17 @@ public class ServicioLogic {
      *
      * @param serviciosId Identificador de la instancia a eliminar.
      * @param solicitudesId id del Solicitud el cual es padre del Servicio.
-     * @throws BusinessLogicException Si la reseña no esta asociada al solicitud.
+     * @throws BusinessLogicException Si la reseña no esta asociada al
+     * solicitud.
      *
      */
     public void deleteServicio(Long solicitudesId, Long serviciosId) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "Inicia proceso de borrar el servicio con id = {1} del solicitud con id ={0} ",new Long[]{ solicitudesId, serviciosId});
+        LOGGER.log(Level.INFO, "Inicia proceso de borrar el servicio con id = {1} del solicitud con id ={0} ", new Long[]{solicitudesId, serviciosId});
         ServicioEntity old = getServicio(solicitudesId, serviciosId);
         if (old == null) {
             throw new BusinessLogicException("El servicio con id = " + serviciosId + " no esta asociado a el solicitud con id = " + solicitudesId);
         }
         persistence.delete(old.getId());
-        LOGGER.log(Level.INFO, "Termina proceso de borrar el servicio con id = {1} del solicitud con id ={0} " ,new Long[]{ solicitudesId, serviciosId});
+        LOGGER.log(Level.INFO, "Termina proceso de borrar el servicio con id = {1} del solicitud con id ={0} ", new Long[]{solicitudesId, serviciosId});
     }
 }

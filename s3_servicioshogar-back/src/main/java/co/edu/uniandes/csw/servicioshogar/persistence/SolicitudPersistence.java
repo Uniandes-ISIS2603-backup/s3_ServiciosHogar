@@ -73,6 +73,12 @@ public class SolicitudPersistence {
         LOGGER.log(Level.INFO, "Saliendo de consultar el solicitud con id = {1} del libro con id ={0}",new Long[]{ clientesId, solicitudesId});
         return solicitud;
     }
+    
+    public SolicitudEntity findById(Long solicitudId)
+    {
+        LOGGER.log(Level.INFO, "Consultando solicitud con id={0}", solicitudId);    
+        return em.find(SolicitudEntity.class, solicitudId);
+    }
 
     /**
      * Actualiza un solicitud.

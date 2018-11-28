@@ -153,6 +153,14 @@ public class SolicitudResource {
         solicitudLogic.deleteSolicitud(clientesId, solicitudesId);
         LOGGER.info("SolicitudResource deleteSolicitud: output: void");
     }
+    
+    @Path("{solicitudId: \\d+}/servicios")
+    public Class<SolicitudServiciosResource> getSolicitudServiciosResource(@PathParam("solicitudId") Long solicitudId){
+        
+        if(solicitudLogic.getSolicitudById(solicitudId) == null)
+            throw new WebApplicationException("el resurso "+SOLICITUD+solicitudId+NO_EXISTE,404);
+        return SolicitudServiciosResource.class;
+    }
 
     /**
      * Convierte una lista de entidades a DTO.

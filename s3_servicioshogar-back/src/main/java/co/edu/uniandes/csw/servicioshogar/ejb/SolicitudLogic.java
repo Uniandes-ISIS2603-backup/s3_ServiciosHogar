@@ -22,22 +22,23 @@ import javax.inject.Inject;
  */
 @Stateless
 public class SolicitudLogic {
+
     private static final Logger LOGGER = Logger.getLogger(SolicitudLogic.class.getName());
 
     @Inject
     private SolicitudPersistence persistence;
-    
+
     @Inject
     private ClientePersistence clientePersistence;
 
     /**
      * Guardar un nuevo solicitud
      *
-     * @param solicitudEntity La entidad de tipo solicitud del nuevo solicitud a persistir.
-     * @return La entidad luego de persistirla
-     * persistencia.
+     * @param solicitudEntity La entidad de tipo solicitud del nuevo solicitud a
+     * persistir.
+     * @return La entidad luego de persistirla persistencia.
      */
-    public SolicitudEntity createSolicitud(Long clientesId, SolicitudEntity solicitudEntity){
+    public SolicitudEntity createSolicitud(Long clientesId, SolicitudEntity solicitudEntity) {
         LOGGER.log(Level.INFO, "Inicia proceso de crear solicitud");
         ClienteEntity cliente = clientePersistence.find(clientesId);
         solicitudEntity.setCliente(cliente);
@@ -50,7 +51,7 @@ public class SolicitudLogic {
      *
      * @return Lista de entidades de tipo solicitud.
      */
-    public List<SolicitudEntity> getSolicitudes(Long clientesId) { 
+    public List<SolicitudEntity> getSolicitudes(Long clientesId) {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar los solicitudes asociados al cliente con id = {0}", clientesId);
         ClienteEntity clienteEntity = clientePersistence.find(clientesId);
         LOGGER.log(Level.INFO, "Termina proceso de consultar los solicitudes asociados al cliente con id = {0}", clientesId);
@@ -81,27 +82,37 @@ public class SolicitudLogic {
      * @param solicitudEntity La entidad del solicitud con los cambios deseados
      * @return La entidad del solicitud luego de actualizarla
      */
-    public SolicitudEntity updateSolicitud(Long clientesId, SolicitudEntity solicitudEntity){
-        LOGGER.log(Level.INFO, "Inicia proceso de actualizar la solicitud con id = {1} del cliente con id ={0} ",new Long[]{clientesId, solicitudEntity.getId()});
+    public SolicitudEntity updateSolicitud(Long clientesId, SolicitudEntity solicitudEntity) {
+        LOGGER.log(Level.INFO, "Inicia proceso de actualizar la solicitud con id = {1} del cliente con id ={0} ", new Long[]{clientesId, solicitudEntity.getId()});
         ClienteEntity clienteEntity = clientePersistence.find(clientesId);
         solicitudEntity.setCliente(clienteEntity);
         persistence.update(solicitudEntity);
-        LOGGER.log(Level.INFO, "Termina proceso de actualizar la solicitud con id = {1} del cliente con id ={0}",new Long[]{clientesId, solicitudEntity.getId()});
+        LOGGER.log(Level.INFO, "Termina proceso de actualizar la solicitud con id = {1} del cliente con id ={0}", new Long[]{clientesId, solicitudEntity.getId()});
         return solicitudEntity;
     }
-    
+
     /**
      * Eliminar un solicitud por ID
      *
      * @param solicitudesId El ID del solicitud a eliminar
      */
     public void deleteSolicitud(Long clientesId, Long solicitudesId) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "Inicia proceso de borrar la solicitud con id = {1} del cliente con id ={0} ",new Long[]{clientesId, solicitudesId});
+        LOGGER.log(Level.INFO, "Inicia proceso de borrar la solicitud con id = {1} del cliente con id ={0} ", new Long[]{clientesId, solicitudesId});
         SolicitudEntity old = getSolicitud(clientesId, solicitudesId);
         if (old == null) {
             throw new BusinessLogicException("El solicitud con id = " + solicitudesId + " no esta asociado a el libro con id = " + clientesId);
         }
         persistence.delete(old.getId());
-        LOGGER.log(Level.INFO, "Termina proceso de borrar la solicitud con id = {1} del cliente con id {0}= " , new Long[]{ clientesId, solicitudesId});
+        LOGGER.log(Level.INFO, "Termina proceso de borrar la solicitud con id = {1} del cliente con id {0}= ", new Long[]{clientesId, solicitudesId});
+    }
+
+    public SolicitudEntity getSolicitudById(Long solicitudesId) {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar el solicitud con id = {0}", solicitudesId);
+        SolicitudEntity solicitudEntity = persistence.findById(solicitudesId);
+        if (solicitudEntity == null) {
+            LOGGER.log(Level.SEVERE, "El solicitud con el id = {0} no existe", solicitudesId);
+        }
+        LOGGER.log(Level.INFO, "Termina proceso de consultar el solicitud con id = {0}", solicitudesId);
+        return solicitudEntity;
     }
 }
