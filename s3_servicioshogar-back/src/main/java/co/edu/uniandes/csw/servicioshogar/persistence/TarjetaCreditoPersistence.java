@@ -64,22 +64,18 @@ public class TarjetaCreditoPersistence {
      * @param clienteId 
      * @return TarjetaCreditoEntity.
      */
-    public TarjetaCreditoEntity find(Long tarjetaId, Long clienteId)
-    {
-        LOGGER.log(Level.INFO, "" + clienteId, tarjetaId);
-        TypedQuery<TarjetaCreditoEntity> q = em.createQuery("select p from TarjetaCreditoEntity p where (p.cliente.id = :clienteId) and (p.id = :tarjetaId)", TarjetaCreditoEntity.class);
-        q.setParameter("clienteId", clienteId);
+    public TarjetaCreditoEntity find(Long tarjetaId, Long clientesId)
+    {        
+        LOGGER.log(Level.INFO, "Consultando la tarjetaCredito con id = {1} del libro con id ={0} ",new Long[]{ clientesId, tarjetaId});
+        TypedQuery<TarjetaCreditoEntity> q = em.createQuery("select p from TarjetaCreditoEntity p where (p.cliente.id = :clienteid) and (p.id = :tarjetaId)", TarjetaCreditoEntity.class);
+        q.setParameter("clienteid", clientesId);
         q.setParameter("tarjetaId", tarjetaId);
         List<TarjetaCreditoEntity> results = q.getResultList();
-        TarjetaCreditoEntity tarjeta = null;
-        if(results == null)
-        { tarjeta = null;}
-        else if(results.isEmpty())
-        {tarjeta = null;}
-        else if(results.size() >= 1)
-        {tarjeta = results.get(0);}
-        LOGGER.log(Level.INFO, "Saliendo de consultar la tarjeta con id = {0} del cliente con id =" + clienteId, tarjetaId);
-        return em.find(TarjetaCreditoEntity.class, tarjetaId);
+        TarjetaCreditoEntity solicitud = null;
+        if (results != null&& !results.isEmpty())
+            solicitud= results.get(0);
+        LOGGER.log(Level.INFO, "Saliendo de consultar la tarjetaCredito con id = {1} del cliente con id ={0}",new Long[]{ clientesId, tarjetaId});
+        return solicitud;
     }
     
     /**
@@ -89,7 +85,7 @@ public class TarjetaCreditoPersistence {
      */
     public TarjetaCreditoEntity update(TarjetaCreditoEntity tarjetaEntity)
     {
-        LOGGER.log(Level.INFO, "Actualizando tarjeta de credito identificada por un titular", tarjetaEntity.getTitular());
+        LOGGER.log(Level.INFO, "Actualizando tarjeta de credito con id={0}", tarjetaEntity.getId());
         return em.merge(tarjetaEntity);
     }
     

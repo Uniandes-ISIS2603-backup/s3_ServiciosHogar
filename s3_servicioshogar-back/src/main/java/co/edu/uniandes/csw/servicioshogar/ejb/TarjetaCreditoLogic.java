@@ -33,7 +33,7 @@ public class TarjetaCreditoLogic {
         ClienteEntity cliente = clientePersistence.find(clienteId);
         if(clientePersistence.find(clienteId) == null)
             throw new BusinessLogicException("No existe un cliente con id: " + clienteId );
-        else if(validacionNumero(tarjetaEntity.getNumero()))
+        else if(!validacionNumero(tarjetaEntity.getNumero()))
             throw new BusinessLogicException("El numero de la tarjeta debe ser de 16 digitos");
         
         tarjetaEntity.setCliente(cliente);
@@ -41,18 +41,12 @@ public class TarjetaCreditoLogic {
         return persistence.create(tarjetaEntity);
     }
 
-    private boolean validacionNumero(Integer numero) 
+    private boolean validacionNumero(String numero) 
     {
-        boolean validar = false;
-        
-        if (numero == null) 
-            return validar;         
-        else 
-        {
-            String numStr = numero.toString();
-            validar = (numStr.length() == 16);
-        }
-        return validar;
+        if(numero.length() == 16)          
+            return true;        
+        else
+            return false;
     }
     
     /**
@@ -86,14 +80,14 @@ public class TarjetaCreditoLogic {
      * @param tarjetaEntity La entidad del factura con los cambios deseados
      * @return La entidad del factura luego de actualizarla
      */
-    public TarjetaCreditoEntity updateTarjeta(Long clienteId, TarjetaCreditoEntity tarjetaEntity) {
-        Long[] ids = {tarjetaEntity.getId(), clienteId};
-        LOGGER.log(Level.INFO, "Inicia proceso de actualizar factura con id = {0} del cliente = {1}", ids);
+    public TarjetaCreditoEntity updateTarjeta(Long clienteId, TarjetaCreditoEntity tarjetaEntity) 
+    {
+        LOGGER.log(Level.INFO, "Inicia proceso de actualizar la tarjeta con id = {0} del cliente = {1}", new Long[]{clienteId, tarjetaEntity.getId()});
         ClienteEntity clienetEntity = clientePersistence.find(clienteId);
         tarjetaEntity.setCliente(clienetEntity);
         persistence.update(tarjetaEntity);
-        LOGGER.log(Level.INFO, "Termina proceso de actualizar factura con id = {0} del cliente = {1}", ids);
-        return tarjetaEntity;
+        LOGGER.log(Level.INFO, "Termina proceso de actualizar la tarjeta con id = {0} del cliente = {1}", new Long[]{clienteId, tarjetaEntity.getId()});
+        return tarjetaEntity;      
     }
 
     /**

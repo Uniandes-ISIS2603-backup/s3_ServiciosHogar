@@ -16,17 +16,16 @@ import uk.co.jemos.podam.common.PodamExclude;
  * @author Adriana Trujillo
  */
 @Entity
-public class TarjetaCreditoEntity extends BaseEntity implements Serializable {
+public class TarjetaCreditoEntity extends BaseEntity implements Serializable 
+{
     
     //--------------------Atributos-------------------//
-    private String 
-            titular,
-            fechaVencimiento;
-    private Integer
-            codeSeguridad,
-            numero;
+    private String titular;
+    private String fechaVencimiento;
+    private String numero;
+    private Integer codeSeguridad;    
     
-     @PodamExclude
+    @PodamExclude
     @ManyToOne(cascade = CascadeType.PERSIST)
     private ClienteEntity cliente;
     //-------------------Metodos---------------------//    
@@ -42,9 +41,9 @@ public class TarjetaCreditoEntity extends BaseEntity implements Serializable {
 
     public void setCodeSeguridad(Integer codeSeguridad) {this.codeSeguridad = codeSeguridad;}
 
-    public Integer getNumero() {return numero;}
+    public String getNumero() {return numero;}
 
-    public void setNumero(Integer numero) {this.numero = numero;}
+    public void setNumero(String numero) {this.numero = numero;}
 
     public ClienteEntity getCliente() {return cliente;}
 

@@ -25,7 +25,7 @@ public class TarjetaCreditoDTO implements Serializable{
     private String titular;
     private String fechaVencimiento;
     private Integer codeSeguridad;
-    private Integer numero;    
+    private String numero;    
     private ClienteDTO cliente;   
    
     //------------------------------------------
@@ -66,9 +66,9 @@ public class TarjetaCreditoDTO implements Serializable{
 
     public void setCodeSeguridad(Integer codeSeguridad) {this.codeSeguridad = codeSeguridad;}
 
-    public Integer getNumero() {return numero;}
+    public String getNumero() {return numero;}
 
-    public void setNumero(Integer numero) {this.numero = numero;}
+    public void setNumero(String numero) {this.numero = numero;}
 
     public ClienteDTO getCliente() {return cliente;}
 
