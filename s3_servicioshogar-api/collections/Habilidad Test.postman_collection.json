@@ -14,7 +14,7 @@
 						"id": "0373ce37-dcb3-45e0-b36f-1a95d9f054cb",
 						"exec": [
 							"var data = JSON.parse(responseBody);",
-							"postman.setGlobalVariable(\"new_id_p\",data.id);",
+							"postman.setGlobalVariable(\"new_id_p_habilidad\",data.id);",
 							"tests[\"no genera error en el Post\"] = responseCode.code === 200;",
 							"console.log(data.id);"
 						],
@@ -59,7 +59,7 @@
 						"id": "afa7a627-60fd-4817-8502-b4865fe535e6",
 						"exec": [
 							"var data = JSON.parse(responseBody);",
-							"postman.setGlobalVariable(\"new_id_h\",data.id);",
+							"postman.setGlobalVariable(\"new_id_h_habilidad\",data.id);",
 							"tests[\"no genera error en el Post\"] = responseCode.code === 200;",
 							"console.log(data.id);"
 						],
@@ -80,7 +80,7 @@
 					"raw": "{\n\t\"tipo\":\"CERRAJERIA\",\n\t\"descripcion\":\"Duplicado de llaves\",\n\t\"prestador\": \n\t{\n\t\t\"nombre\":\"Maria Ocampo\",\n\t\t\"cedula\":1007784095\n\t}\n}"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p}}/habilidades",
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p_habilidad}}/habilidades",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -90,7 +90,7 @@
 						"s3_servicioshogar-api",
 						"api",
 						"prestadores",
-						"{{new_id_p}}",
+						"{{new_id_p_habilidad}}",
 						"habilidades"
 					]
 				}
@@ -106,7 +106,7 @@
 						"id": "b1bf58a3-38bf-4a93-8c16-2e221ea9a84b",
 						"exec": [
 							"var data = JSON.parse(responseBody);",
-							"postman.setGlobalVariable(\"new_id_h2\",data.id);",
+							"postman.setGlobalVariable(\"new_id_h2_habilidad\",data.id);",
 							"tests[\"no genera error en el Post\"] = responseCode.code === 200;",
 							"console.log(data.id);"
 						],
@@ -127,7 +127,7 @@
 					"raw": "{\n\t\"tipo\":\"PLOMERIA\",\n\t\"descripcion\":\"Cambio de tuberías\",\n\t\"prestador\": \n\t{\n\t\t\"nombre\":\"Maria Ocampo\",\n\t\t\"cedula\":1007784095\n\t}\n}"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p}}/habilidades",
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p_habilidad}}/habilidades",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -137,7 +137,7 @@
 						"s3_servicioshogar-api",
 						"api",
 						"prestadores",
-						"{{new_id_p}}",
+						"{{new_id_p_habilidad}}",
 						"habilidades"
 					]
 				}
@@ -196,12 +196,12 @@
 					"listen": "test",
 					"script": {
 						"id": "1a157514-95de-41ec-9638-a439a91babd3",
-						"type": "text/javascript",
 						"exec": [
 							"var data= JSON.parse(responseBody);",
 							"tests[\"No genera error en el Get all\"] = responseCode.code === 200;",
 							"tests[\"prestadores count\"] = data.length >= 0;"
-						]
+						],
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -213,7 +213,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p}}/habilidades",
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p_habilidad}}/habilidades",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -223,7 +223,7 @@
 						"s3_servicioshogar-api",
 						"api",
 						"prestadores",
-						"{{new_id_p}}",
+						"{{new_id_p_habilidad}}",
 						"habilidades"
 					]
 				}
@@ -237,12 +237,12 @@
 					"listen": "test",
 					"script": {
 						"id": "a0eea643-287e-4629-ba0f-614c7c8ca059",
-						"type": "text/javascript",
 						"exec": [
 							"console.log(responseBody);",
 							"var data = JSON.parse(responseBody);",
 							"tests[\"No genera error en el Get\"] = responseCode.code === 200;"
-						]
+						],
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -254,7 +254,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p}}/habilidades/{{new_id_h}}",
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p_habilidad}}/habilidades/{{new_id_h_habilidad}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -264,9 +264,9 @@
 						"s3_servicioshogar-api",
 						"api",
 						"prestadores",
-						"{{new_id_p}}",
+						"{{new_id_p_habilidad}}",
 						"habilidades",
-						"{{new_id_h}}"
+						"{{new_id_h_habilidad}}"
 					]
 				}
 			},
@@ -324,12 +324,12 @@
 					"listen": "test",
 					"script": {
 						"id": "2bc50d26-03c9-4219-8c24-f59719f19e4e",
-						"type": "text/javascript",
 						"exec": [
 							"console.log(responseBody);",
 							"var data = JSON.parse(responseBody);",
 							"tests[\"no genera error en el Put\"] = responseCode.code === 200;"
-						]
+						],
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -346,7 +346,7 @@
 					"raw": "{\n\t\"id\":\"355\",\n\t\"tipo\":\"PLOMERIA\",\n\t\"descripcion\":\"Cambio de tuberias y mas\",\n\t\"prestador\": \n\t{\n\t\t\"id\":\"202\",\n\t\t\"nombre\":\"Maria Ocampo\",\n\t\t\"cedula\":1007784095\n\t}\n}"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p}}/habilidades/{{new_id_h}}",
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p_habilidad}}/habilidades/{{new_id_h_habilidad}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -356,9 +356,9 @@
 						"s3_servicioshogar-api",
 						"api",
 						"prestadores",
-						"{{new_id_p}}",
+						"{{new_id_p_habilidad}}",
 						"habilidades",
-						"{{new_id_h}}"
+						"{{new_id_h_habilidad}}"
 					]
 				}
 			},
@@ -371,12 +371,12 @@
 					"listen": "test",
 					"script": {
 						"id": "edbd94ac-ebe7-4cd2-a087-7a2f5ff9e177",
-						"type": "text/javascript",
 						"exec": [
 							"tests[\"No se puede editar ua habilidad que no existe.\"] = responseCode.code === 404;",
-							"let id = pm.variables.get(\"new_id_p\");",
+							"let id = pm.variables.get(\"new_id_p_habilidad\");",
 							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /prestadores/\"+id+\"/habilidades/0 no existe.\");"
-						]
+						],
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -393,7 +393,7 @@
 					"raw": "{\n\t\"id\":\"355\",\n\t\"tipo\":\"PLOMERIA\",\n\t\"descripcion\":\"Cambio de tuberias y mas\",\n\t\"prestador\": \n\t{\n\t\t\"id\":\"202\",\n\t\t\"nombre\":\"Maria Ocampo\",\n\t\t\"cedula\":1007784095\n\t}\n}"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p}}/habilidades/0",
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p_habilidad}}/habilidades/0",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -403,7 +403,7 @@
 						"s3_servicioshogar-api",
 						"api",
 						"prestadores",
-						"{{new_id_p}}",
+						"{{new_id_p_habilidad}}",
 						"habilidades",
 						"0"
 					]
@@ -418,12 +418,12 @@
 					"listen": "test",
 					"script": {
 						"id": "4516cdc7-3cf3-4677-a251-aeee3103a75f",
-						"type": "text/javascript",
 						"exec": [
 							"tests[\"No se puede eliminar una habilidad que no existe.\"] = responseCode.code === 404;",
-							"let id = pm.variables.get(\"new_id_p\");",
+							"let id = pm.variables.get(\"new_id_p_habilidad\");",
 							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /prestadores/\"+id+\"/habilidades/0 no existe.\");"
-						]
+						],
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -440,7 +440,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p}}/habilidades/0",
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p_habilidad}}/habilidades/0",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -450,7 +450,7 @@
 						"s3_servicioshogar-api",
 						"api",
 						"prestadores",
-						"{{new_id_p}}",
+						"{{new_id_p_habilidad}}",
 						"habilidades",
 						"0"
 					]
@@ -465,12 +465,12 @@
 					"listen": "test",
 					"script": {
 						"id": "8596df84-2de8-4004-a2fd-3d200d04c868",
-						"type": "text/javascript",
 						"exec": [
 							"tests[\"No se puede eliminar una habilidad que no existe.\"] = responseCode.code === 404;",
 							"let id = pm.variables.get(\"new_id_h\");",
 							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /prestadores/0/habilidades no existe.\");"
-						]
+						],
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -487,7 +487,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/0/habilidades/{{new_id_h}}",
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/0/habilidades/{{new_id_h_habilidad}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -499,7 +499,7 @@
 						"prestadores",
 						"0",
 						"habilidades",
-						"{{new_id_h}}"
+						"{{new_id_h_habilidad}}"
 					]
 				}
 			},
@@ -512,10 +512,10 @@
 					"listen": "test",
 					"script": {
 						"id": "c2a4f4b0-71ea-44a1-bec0-60069f54c6b0",
-						"type": "text/javascript",
 						"exec": [
 							"tests[\"no genera error en el Delete\"] = responseCode.code === 204;"
-						]
+						],
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -532,7 +532,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p}}/habilidades/{{new_id_h}}",
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p_habilidad}}/habilidades/{{new_id_h_habilidad}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -542,9 +542,9 @@
 						"s3_servicioshogar-api",
 						"api",
 						"prestadores",
-						"{{new_id_p}}",
+						"{{new_id_p_habilidad}}",
 						"habilidades",
-						"{{new_id_h}}"
+						"{{new_id_h_habilidad}}"
 					]
 				}
 			},
@@ -557,10 +557,10 @@
 					"listen": "test",
 					"script": {
 						"id": "c2a4f4b0-71ea-44a1-bec0-60069f54c6b0",
-						"type": "text/javascript",
 						"exec": [
 							"tests[\"no genera error en el Delete\"] = responseCode.code === 204;"
-						]
+						],
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -577,7 +577,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p}}/habilidades/{{new_id_h2}}",
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p_habilidad}}/habilidades/{{new_id_h2_habilidad}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -587,9 +587,9 @@
 						"s3_servicioshogar-api",
 						"api",
 						"prestadores",
-						"{{new_id_p}}",
+						"{{new_id_p_habilidad}}",
 						"habilidades",
-						"{{new_id_h2}}"
+						"{{new_id_h2_habilidad}}"
 					]
 				}
 			},
@@ -602,10 +602,10 @@
 					"listen": "test",
 					"script": {
 						"id": "c2a4f4b0-71ea-44a1-bec0-60069f54c6b0",
-						"type": "text/javascript",
 						"exec": [
 							"tests[\"no genera error en el Delete\"] = responseCode.code === 204;"
-						]
+						],
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -622,7 +622,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p}}",
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p_habilidad}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -632,7 +632,7 @@
 						"s3_servicioshogar-api",
 						"api",
 						"prestadores",
-						"{{new_id_p}}"
+						"{{new_id_p_habilidad}}"
 					]
 				}
 			},

@@ -14,7 +14,7 @@
 						"id": "0373ce37-dcb3-45e0-b36f-1a95d9f054cb",
 						"exec": [
 							"var data = JSON.parse(responseBody);",
-							"postman.setGlobalVariable(\"new_id_p\",data.id);",
+							"postman.setGlobalVariable(\"new_id_p_prestador\",data.id);",
 							"tests[\"no genera error en el Post\"] = responseCode.code === 200;",
 							"console.log(data.id);"
 						],
@@ -80,7 +80,7 @@
 					"raw": "{\r\n\t\"trayectoria\": \"7 meses\",\r\n\t\"fechaNacimiento\": \"1998/02/03\",\r\n\t\"email\": \"caro@gmail.com\",\r\n\t\"telefono\": 3102569876,\r\n\t\"direccion\": \"Cll. 30 #25-02\",\r\n\t\"formacion\": \"bachiller\"\r\n}"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p}}/hojaDeVida",
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p_prestador}}/hojaDeVida",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -90,7 +90,7 @@
 						"s3_servicioshogar-api",
 						"api",
 						"prestadores",
-						"{{new_id_p}}",
+						"{{new_id_p_prestador}}",
 						"hojaDeVida"
 					]
 				}
@@ -165,7 +165,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p}}/hojaDeVida",
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p_prestador}}/hojaDeVida",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -175,7 +175,7 @@
 						"s3_servicioshogar-api",
 						"api",
 						"prestadores",
-						"{{new_id_p}}",
+						"{{new_id_p_prestador}}",
 						"hojaDeVida"
 					]
 				}
@@ -256,7 +256,7 @@
 					"raw": "{\n\t\"trayectoria\": \"8 meses\",\n\t\"fechaNacimiento\": \"1998/02/03\",\n\t\"email\": \"caro@gmail.com\",\n\t\"telefono\": 3102569876,\n\t\"direccion\": \"Cll. 30 #25-02\",\n\t\"formacion\": \"bachiller\"\n}"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p}}/hojaDeVida",
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p_prestador}}/hojaDeVida",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -266,7 +266,7 @@
 						"s3_servicioshogar-api",
 						"api",
 						"prestadores",
-						"{{new_id_p}}",
+						"{{new_id_p_prestador}}",
 						"hojaDeVida"
 					]
 				}
@@ -346,7 +346,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p}}/hojaDeVida",
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p_prestador}}/hojaDeVida",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -356,7 +356,7 @@
 						"s3_servicioshogar-api",
 						"api",
 						"prestadores",
-						"{{new_id_p}}",
+						"{{new_id_p_prestador}}",
 						"hojaDeVida"
 					]
 				}
@@ -390,7 +390,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p}}/hojaDeVida",
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p_prestador}}/hojaDeVida",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -400,7 +400,7 @@
 						"s3_servicioshogar-api",
 						"api",
 						"prestadores",
-						"{{new_id_p}}",
+						"{{new_id_p_prestador}}",
 						"hojaDeVida"
 					]
 				}
@@ -414,10 +414,10 @@
 					"listen": "test",
 					"script": {
 						"id": "c2a4f4b0-71ea-44a1-bec0-60069f54c6b0",
-						"type": "text/javascript",
 						"exec": [
 							"tests[\"no genera error en el Delete\"] = responseCode.code === 204;"
-						]
+						],
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -434,7 +434,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p}}",
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p_prestador}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -444,7 +444,7 @@
 						"s3_servicioshogar-api",
 						"api",
 						"prestadores",
-						"{{new_id_p}}"
+						"{{new_id_p_prestador}}"
 					]
 				}
 			},
