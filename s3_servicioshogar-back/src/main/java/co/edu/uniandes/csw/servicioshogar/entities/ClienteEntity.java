@@ -137,10 +137,17 @@ public class ClienteEntity extends BaseEntity implements Serializable
         if (!Objects.equals(this.solicitudes, other.solicitudes)) {
             return false;
         }
-        if (!Objects.equals(this.tarjetas, other.tarjetas)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.tarjetas, other.tarjetas);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 79 * hash + Objects.hashCode(this.nombre);
+        hash = 79 * hash + Objects.hashCode(this.direccion);
+        hash = 79 * hash + Objects.hashCode(this.correo);
+        hash = 79 * hash + Objects.hashCode(this.contrasena);
+        return hash;
     }
     
     

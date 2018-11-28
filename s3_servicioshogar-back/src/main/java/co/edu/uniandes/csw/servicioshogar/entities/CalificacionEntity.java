@@ -89,10 +89,15 @@ public class CalificacionEntity  extends BaseEntity implements Serializable
         if (!Objects.equals(this.calificacion, other.calificacion)) {
             return false;
         }
-        if (!Objects.equals(this.servicio, other.servicio)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.servicio, other.servicio);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 53 * hash + Objects.hashCode(this.calificacion);
+        hash = 53 * hash + Objects.hashCode(this.comentario);
+        return hash;
     }
     
     

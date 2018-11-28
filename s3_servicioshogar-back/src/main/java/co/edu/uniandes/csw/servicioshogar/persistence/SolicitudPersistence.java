@@ -68,7 +68,7 @@ public class SolicitudPersistence {
         q.setParameter("solicitudesId", solicitudesId);
         List<SolicitudEntity> results = q.getResultList();
         SolicitudEntity solicitud = null;
-        if (!(results ==null && results.isEmpty()))
+        if (results != null&& !results.isEmpty())
             solicitud= results.get(0);
         LOGGER.log(Level.INFO, "Saliendo de consultar el solicitud con id = {1} del libro con id ={0}",new Long[]{ clientesId, solicitudesId});
         return solicitud;
