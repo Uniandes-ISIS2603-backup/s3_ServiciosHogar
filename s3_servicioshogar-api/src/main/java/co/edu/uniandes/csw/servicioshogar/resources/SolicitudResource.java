@@ -35,8 +35,8 @@ import javax.ws.rs.WebApplicationException;
 @RequestScoped
 public class SolicitudResource {
     private static final Logger LOGGER = Logger.getLogger(SolicitudResource.class.getName());
-    private static final String noExiste= " no existe.";
-    private static final String solici= "/solicitudes/";
+    private static final String NO_EXISTE= " no existe.";
+    private static final String SOLICITUD= "/solicitudes/";
     @Inject
     private SolicitudLogic solicitudLogic; // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
 
@@ -92,7 +92,7 @@ public class SolicitudResource {
         LOGGER.log(Level.INFO, "SolicitudResource getSolicitud: input: {0}", solicitudesId);
         SolicitudEntity solicitudEntity = solicitudLogic.getSolicitud(clientesId, solicitudesId);
         if (solicitudEntity == null) {
-            throw new WebApplicationException("El recurso /solicitudes/" + solicitudesId + noExiste, 404);
+            throw new WebApplicationException("El recurso /solicitudes/" + solicitudesId + NO_EXISTE, 404);
         }
         SolicitudDetailDTO solicitudDetailDTO = new SolicitudDetailDTO(solicitudEntity);
         LOGGER.log(Level.INFO, "SolicitudResource getSolicitud: output: {0}", solicitudDetailDTO);
@@ -123,7 +123,7 @@ public class SolicitudResource {
         }
         SolicitudEntity entity = solicitudLogic.getSolicitud(clientesId, solicitudesId);
         if (entity == null) {
-            throw new WebApplicationException("El recurso /clientes/" + clientesId + solici+ solicitudesId + noExiste, 404);
+            throw new WebApplicationException("El recurso /clientes/" + clientesId + SOLICITUD+ solicitudesId + NO_EXISTE, 404);
 
         }
         SolicitudDetailDTO solicitudDTO = new SolicitudDetailDTO(solicitudLogic.updateSolicitud(clientesId, solicitud.toEntity()));
@@ -148,7 +148,7 @@ public class SolicitudResource {
         LOGGER.log(Level.INFO, "SolicitudResource deleteSolicitud: input: {0}", solicitudesId);
         SolicitudEntity entity = solicitudLogic.getSolicitud(clientesId, solicitudesId);
         if (entity == null) {
-            throw new WebApplicationException("El recurso clientes/"+clientesId+solici+ solicitudesId + noExiste, 404);
+            throw new WebApplicationException("El recurso clientes/"+clientesId+SOLICITUD+ solicitudesId + NO_EXISTE, 404);
         }
         solicitudLogic.deleteSolicitud(clientesId, solicitudesId);
         LOGGER.info("SolicitudResource deleteSolicitud: output: void");

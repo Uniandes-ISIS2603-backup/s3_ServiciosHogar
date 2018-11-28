@@ -70,7 +70,7 @@ public class HojaDeVidaResource {
      * @return
      */
     @GET
-    public HojaDeVidaDetailDTO getHojaDeVida(@PathParam("prestadorId") Long prestadorId) throws WebApplicationException { 
+    public HojaDeVidaDetailDTO getHojaDeVida(@PathParam("prestadorId") Long prestadorId) { 
         LOGGER.log(Level.INFO, "HojaDeVidaResource getHojaDeVida: input: {0}", prestadorId);
         HojaDeVidaEntity hojaDeVidaEntity = hojaDeVidaLogic.getHojaDeVida(prestadorId);
         if (hojaDeVidaEntity == null) {
@@ -89,7 +89,7 @@ public class HojaDeVidaResource {
      * @throws WebApplicationException
      */
     @PUT
-    public HojaDeVidaDTO modificarHojaDeVida(@PathParam("prestadorId") Long prestadorId, HojaDeVidaDTO hojaDeVida) throws WebApplicationException {
+    public HojaDeVidaDTO modificarHojaDeVida(@PathParam("prestadorId") Long prestadorId, HojaDeVidaDTO hojaDeVida) {
         LOGGER.log(Level.INFO, "HojaDeVidaResource modificarHojaDeVida: input: prestadorId:{0} , hojaDeVida: {1}", new Object[]{prestadorId, hojaDeVida});
 
         if (hojaDeVidaLogic.getHojaDeVida(prestadorId) == null) {

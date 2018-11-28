@@ -39,7 +39,7 @@ public class HabilidadResource {
     /**
      * Constante que representa el path a prestador
      */
-    private static final String PATH_PRESTADOR = "/prestadores/";
+    private static final String PATH_PRESTADOR = "El recurso /prestadores/";
     
     /**
      * Constante que representa el path a habilidad
@@ -98,7 +98,7 @@ public class HabilidadResource {
         LOGGER.log(Level.INFO, "HabilidadResource getHabilidad: input: {0}", habilidadId);
         HabilidadEntity hEntity = habilidadLogic.getHabilidad(prestadorId, habilidadId);
         if(hEntity == null)
-            throw new WebApplicationException("El recurso "+PATH_PRESTADOR+prestadorId+PATH_HABILIDAD+habilidadId+"no existe", 404);
+            throw new WebApplicationException(PATH_PRESTADOR+prestadorId+PATH_HABILIDAD+habilidadId+"no existe", 404);
         
         HabilidadDTO habilidadDTO = new HabilidadDTO(hEntity);
         LOGGER.log(Level.INFO, "HabilidadResource getHabilidad: output: {0}", habilidadDTO);
@@ -123,7 +123,7 @@ public class HabilidadResource {
         }
         HabilidadEntity entity = habilidadLogic.getHabilidad(prestadorId, habilidadId);
         if (entity == null) {
-            throw new WebApplicationException("El recurso "+PATH_PRESTADOR + prestadorId + PATH_HABILIDAD + habilidadId + " no existe.", 404);
+            throw new WebApplicationException(PATH_PRESTADOR + prestadorId + PATH_HABILIDAD + habilidadId + " no existe.", 404);
 
         }
         HabilidadDTO habilidadDTO = new HabilidadDTO(habilidadLogic.updateHabilidad(prestadorId, habilidad.toEntity()));
@@ -145,7 +145,7 @@ public class HabilidadResource {
     {
         HabilidadEntity entity = habilidadLogic.getHabilidad(prestadorId, habilidadId);
         if (entity == null) {
-            throw new WebApplicationException("El recurso "+ PATH_PRESTADOR + prestadorId + PATH_HABILIDAD + habilidadId + " no existe.", 404);
+            throw new WebApplicationException(PATH_PRESTADOR + prestadorId + PATH_HABILIDAD + habilidadId + " no existe.", 404);
         }
         habilidadLogic.deleteHabilidad(prestadorId, habilidadId);
     }

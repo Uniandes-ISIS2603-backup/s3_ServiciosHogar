@@ -36,9 +36,9 @@ import javax.ws.rs.core.MediaType;
 public class ServiciosPrestadorResource {
     
     private static final Logger LOGGER = Logger.getLogger(ServiciosPrestadorResource.class.getName());
-    private static final String noExiste = " no existe.";
-    private static final String rec = "El recurso /solicitudes/";
-    private static final String serv = "/servicios/";
+    private static final String NO_EXISTE = " no existe.";
+    private static final String RECURSO = "El recurso /solicitudes/";
+    private static final String SERVICIO = "/servicios/";
     @Inject
     private ServicioLogic servicioLogic;
     
@@ -53,9 +53,9 @@ public class ServiciosPrestadorResource {
     {
         LOGGER.log(Level.INFO, "ServiciosPrestadorResource replacePRestador: input: solicitudId{0}, servicioId{1}, Prestador{2}", new Object[]{solicitudId,servicioId,prestador});
         if(servicioLogic.getServicio(solicitudId, servicioId) == null)
-            throw new WebApplicationException("El recurso /servicios/"+servicioId+" no existe",404);
+            throw new WebApplicationException("El recurso "+SERVICIO+servicioId+NO_EXISTE,404);
         if(prestadorLogic.getPrestador(prestador.getId()) == null)
-            throw new WebApplicationException(rec+prestador.getId()+noExiste, 404);
+            throw new WebApplicationException(RECURSO+prestador.getId()+NO_EXISTE, 404);
         ServicioDTO servicioDTO = new ServicioDTO(serviciosPrestadorLogic.replacePrestador(prestador.getId(), solicitudId, servicioId));
         LOGGER.log(Level.INFO, "ServiciosPrestadorResource replacePRestador: output: {0}", servicioDTO);
         return servicioDTO;
@@ -90,7 +90,7 @@ public class ServiciosPrestadorResource {
         LOGGER.log(Level.INFO, "PrestadorResource getPrestador: input: {0}", prestadoresId);
         PrestadorEntity prestadorEntity = prestadorLogic.getPrestador(prestadoresId);
         if (prestadorEntity == null) {
-            throw new WebApplicationException(rec + prestadoresId + noExiste, 404);
+            throw new WebApplicationException(RECURSO + prestadoresId + NO_EXISTE, 404);
         }
         PrestadorDetailDTO detailDTO = new PrestadorDetailDTO(prestadorEntity);
         LOGGER.log(Level.INFO, "PrestadorResource getPrestador: output: {0}", detailDTO);
