@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.servicioshogar.dtos;
 
 import co.edu.uniandes.csw.servicioshogar.entities.HabilidadEntity;
 import co.edu.uniandes.csw.servicioshogar.entities.PrestadorEntity;
+import co.edu.uniandes.csw.servicioshogar.entities.ServicioEntity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -69,7 +70,11 @@ public class PrestadorDetailDTO extends PrestadorDTO implements Serializable {
      * Lista de habilidades asociadas a un prestador.
      */
     private List<HabilidadDTO> habilities;
-
+    
+    /**
+     * 
+     */
+    private List<ServicioDTO> servicios;
     /**
      * Constructor por defecto.
      */
@@ -91,6 +96,13 @@ public class PrestadorDetailDTO extends PrestadorDTO implements Serializable {
             }
 
         }
+        if (prestadorEntity != null && prestadorEntity.getServicios() != null) {
+            servicios = new ArrayList<>();
+            for (ServicioEntity entityHability : prestadorEntity.getServicios()) {
+                servicios.add(new ServicioDTO(entityHability));
+            }
+
+        }
     }
 
     /**
@@ -109,7 +121,14 @@ public class PrestadorDetailDTO extends PrestadorDTO implements Serializable {
 
             prestadorEntity.setHabilidades(habilitiesEntity);
         }
+        if (servicios != null) {
+            List<ServicioEntity> habilitiesEntity = new ArrayList<>();
+            for (ServicioDTO hability : servicios) {
+                habilitiesEntity.add(hability.toEntity());
+            }
 
+            prestadorEntity.setServicios(habilitiesEntity);
+        }
         return prestadorEntity;
     }
 
@@ -130,4 +149,14 @@ public class PrestadorDetailDTO extends PrestadorDTO implements Serializable {
     public void setHabilities(List<HabilidadDTO> habilities) {
         this.habilities = habilities;
     }
+
+    public List<ServicioDTO> getServicios() {
+        return servicios;
+    }
+
+    public void setServicios(List<ServicioDTO> servicios) {
+        this.servicios = servicios;
+    }
+    
+    
 }
