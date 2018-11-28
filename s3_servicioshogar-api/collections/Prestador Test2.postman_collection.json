@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "46258fc8-6fcf-4ff5-8557-01db276164f2",
+		"_postman_id": "e12d0440-36ef-4db4-8751-e1e20f6b9b88",
 		"name": "Prestador Test",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -15,8 +15,7 @@
 						"exec": [
 							"var data = JSON.parse(responseBody);",
 							"postman.setGlobalVariable(\"new_id_p\",data.id);",
-							"tests[\"no genera error en el Post\"] = responseCode.code === 200;",
-							"console.log(data.id);"
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
 						],
 						"type": "text/javascript"
 					}
