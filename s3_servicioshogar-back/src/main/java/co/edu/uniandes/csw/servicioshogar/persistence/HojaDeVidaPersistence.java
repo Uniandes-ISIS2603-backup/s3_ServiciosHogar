@@ -97,7 +97,7 @@ public class HojaDeVidaPersistence {
         return result;
     }
     
-    public HojaDeVidaEntity findById(String id) 
+    public HojaDeVidaEntity findById(Long id) 
     {
         LOGGER.log(Level.INFO, "Consultando hoja de vida por id = {0}", id);
         /*Se crea un query para buscar editoriales con el nombre que recibe el método como argumento.

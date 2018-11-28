@@ -9,7 +9,7 @@ package co.edu.uniandes.csw.servicioshogar.test.persistence;
  *
  * @author Daniela Rocha Torres
  */
-
+import co.edu.uniandes.csw.servicioshogar.entities.HojaDeVidaEntity;
 import co.edu.uniandes.csw.servicioshogar.entities.ReferenciaEntity;
 import co.edu.uniandes.csw.servicioshogar.persistence.ReferenciaPersistence;
 import java.util.ArrayList;
@@ -31,85 +31,96 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 /**
  * Pruebas de persistencia Referencia
+ *
  * @author Daniela Rocha Torres
  */
 @RunWith(Arquillian.class)
 public class ReferenciaPersistenceTest {
+
     //------------------------------------------
     //-----------------Atributos----------------
     //------------------------------------------
     /*Inyectas las dependencias.*/
     @Inject
     private ReferenciaPersistence referenciaPersistence;
-    
+
     @PersistenceContext
     private EntityManager em;
 
     @Inject
     UserTransaction utx;
-    
+
     private List<ReferenciaEntity> data = new ArrayList<>();
-    
+
+    private HojaDeVidaEntity hojaDeVida = new HojaDeVidaEntity();
+
     //------------------------------------------
     //------------------Metodos-----------------
     //------------------------------------------    
     /**
      * ???.
+     *
      * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
      * El jar contiene las clases, el descriptor de la base de datos y el
      * archivo beans.xml para resolver la inyección de dependencias.
      */
     @Deployment
-    public static JavaArchive createDeployment() 
-    {
+    public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(ReferenciaEntity.class.getPackage())
                 .addPackage(ReferenciaPersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
-    
+
     /**
      * Configuracion inicial de la prueba.
      */
     @Before
-    public void configTest()
-    {
-        try 
-        {
+    public void configTest() {
+        try {
             utx.begin();
             em.joinTransaction();
             clearData();
             insertData();
             utx.commit();
-        } 
-        catch (Exception e) 
-        {
+        } catch (Exception e) {
             e.printStackTrace();
-            try {utx.rollback();}             
-            catch (Exception e1) {e1.printStackTrace();}
+            try {
+                utx.rollback();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
         }
     }
-    
+
     /**
      * Limpia las tablas implicadas en la prueba.
      */
-    private void clearData() {em.createQuery("delete from ReferenciaEntity").executeUpdate();}
-    
+    private void clearData() {
+        em.createQuery("delete from ReferenciaEntity").executeUpdate();
+        em.createQuery("delete from HojaDeVidaEntity").executeUpdate();
+    }
+
     /**
      * Inserta los datos iniciales para que las pruebas funcionen correctamente.
      */
-    private void insertData() 
-    {
+    private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
-        for (int i = 0; i < 3; i++) 
-        {
+        
+        hojaDeVida = factory.manufacturePojo(HojaDeVidaEntity.class);
+        
+        for (int i = 0; i < 3; i++) {
             ReferenciaEntity entity = factory.manufacturePojo(ReferenciaEntity.class);
+            entity.setHojaDeVida(hojaDeVida);
             em.persist(entity);
             data.add(entity);
         }
+        
+        hojaDeVida.setReferencias(data);
+        em.persist(hojaDeVida);
     }
-    
+
     @Test
     public void createReferenciaTest() {
         PodamFactory factory = new PodamFactoryImpl();
@@ -129,10 +140,10 @@ public class ReferenciaPersistenceTest {
      */
     @Test
     public void getReferenciasTest() {
-        List<ReferenciaEntity> list = referenciaPersistence.findAll();
-      
+        List<ReferenciaEntity> list = referenciaPersistence.findAll(hojaDeVida.getId());
+
         Assert.assertEquals(data.size(), list.size());
-      
+
         for (ReferenciaEntity ent : list) {
             boolean found = false;
             for (ReferenciaEntity entity : data) {
@@ -150,7 +161,7 @@ public class ReferenciaPersistenceTest {
     @Test
     public void getReferenciaTest() {
         ReferenciaEntity entity = data.get(0);
-        ReferenciaEntity newEntity = referenciaPersistence.find(entity.getId());
+        ReferenciaEntity newEntity = referenciaPersistence.find(hojaDeVida.getId(), entity.getId());
         Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getIdRemitente(), newEntity.getIdRemitente());
     }
@@ -179,16 +190,14 @@ public class ReferenciaPersistenceTest {
         referenciaPersistence.update(newEntity);
 
         ReferenciaEntity resp = em.find(ReferenciaEntity.class, entity.getId());
-  
-    Assert.assertEquals(resp.getEmpresa(), newEntity.getEmpresa());  
-    Assert.assertEquals(resp.getNombreRemitente(), newEntity.getNombreRemitente());
-    Assert.assertEquals(resp.getIdRemitente(), newEntity.getIdRemitente());  
-    Assert.assertEquals(resp.getTelRemitente(), newEntity.getTelRemitente());  
-    Assert.assertEquals(resp.getCargo(), newEntity.getCargo());  
-    Assert.assertEquals(resp.getEmpresa(), newEntity.getEmpresa());  
-    Assert.assertEquals(resp.getEmail(), newEntity.getEmail());  
 
-    
+        Assert.assertEquals(resp.getEmpresa(), newEntity.getEmpresa());
+        Assert.assertEquals(resp.getNombreRemitente(), newEntity.getNombreRemitente());
+        Assert.assertEquals(resp.getIdRemitente(), newEntity.getIdRemitente());
+        Assert.assertEquals(resp.getTelRemitente(), newEntity.getTelRemitente());
+        Assert.assertEquals(resp.getCargo(), newEntity.getCargo());
+        Assert.assertEquals(resp.getEmpresa(), newEntity.getEmpresa());
+        Assert.assertEquals(resp.getEmail(), newEntity.getEmail());
 
-    }  
+    }
 }

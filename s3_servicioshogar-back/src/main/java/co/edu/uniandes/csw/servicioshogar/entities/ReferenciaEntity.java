@@ -30,6 +30,14 @@ public class ReferenciaEntity extends BaseEntity implements Serializable{
     @ManyToOne()
     private HojaDeVidaEntity hojaDeVida;
 
+    public void setHojaDeVida(HojaDeVidaEntity hojaDeVida) {
+        this.hojaDeVida = hojaDeVida;
+    }
+
+    public HojaDeVidaEntity getHojaDeVida() {
+        return hojaDeVida;
+    }
+
     
     public String getEmpresa() {
         return empresa;

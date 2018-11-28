@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.servicioshogar.test.logic;
 
 import co.edu.uniandes.csw.servicioshogar.ejb.ReferenciaLogic;
+import co.edu.uniandes.csw.servicioshogar.entities.HojaDeVidaEntity;
 import co.edu.uniandes.csw.servicioshogar.entities.ReferenciaEntity;
 import co.edu.uniandes.csw.servicioshogar.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.servicioshogar.persistence.ReferenciaPersistence;
@@ -44,8 +45,8 @@ public class ReferenciaLogicTest {
     private UserTransaction utx;
 
     private List<ReferenciaEntity> data = new ArrayList<ReferenciaEntity>();
-
-
+   
+    private HojaDeVidaEntity hojaDeVida = new HojaDeVidaEntity();
     /**
      * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
      * El jar contiene las clases, el descriptor de la base de datos y el
@@ -86,6 +87,7 @@ public class ReferenciaLogicTest {
      */
     private void clearData() {
         em.createQuery("delete from ReferenciaEntity").executeUpdate();
+        em.createQuery("delete from HojaDeVidaEntity").executeUpdate();
     }
 
     /**
@@ -93,13 +95,18 @@ public class ReferenciaLogicTest {
      * pruebas.
      */
     private void insertData() {
-
+        
+        hojaDeVida = factory.manufacturePojo(HojaDeVidaEntity.class);
+        
         for (int i = 0; i < 3; i++) {
             ReferenciaEntity entity = factory.manufacturePojo(ReferenciaEntity.class);
+            entity.setHojaDeVida(hojaDeVida);
             em.persist(entity);
-            data.add(entity);
-          
+            data.add(entity);          
         }
+        
+        hojaDeVida.setReferencias(data);
+        em.persist(hojaDeVida);
     }
 
     /**
@@ -110,7 +117,7 @@ public class ReferenciaLogicTest {
     @Test
     public void createReferenciaTest() throws BusinessLogicException {
         ReferenciaEntity newEntity = factory.manufacturePojo(ReferenciaEntity.class);
-        ReferenciaEntity result = referenciaLogic.createReferencia(newEntity);
+        ReferenciaEntity result = referenciaLogic.createReferencia(hojaDeVida.getId(), newEntity);
         Assert.assertNotNull(result);
         ReferenciaEntity entity = em.find(ReferenciaEntity.class, result.getId());
         Assert.assertEquals(newEntity.getId(), entity.getId());
@@ -121,7 +128,7 @@ public class ReferenciaLogicTest {
      */
     @Test
     public void getReferenciasTest() {
-        List<ReferenciaEntity> list = referenciaLogic.getReferencias();
+        List<ReferenciaEntity> list = referenciaLogic.getReferencias(hojaDeVida.getId());
         Assert.assertEquals(data.size(), list.size());
         for (ReferenciaEntity entity : list) {
             boolean found = false;
@@ -140,7 +147,7 @@ public class ReferenciaLogicTest {
     @Test
     public void getReferenciaTest() {
         ReferenciaEntity entity = data.get(0);
-        ReferenciaEntity resultEntity = referenciaLogic.getReferencia(entity.getId());
+        ReferenciaEntity resultEntity = referenciaLogic.getReferencia(hojaDeVida.getId(), entity.getId());
         Assert.assertNotNull(resultEntity);
         Assert.assertEquals(entity.getId(), resultEntity.getId());
         Assert.assertEquals(entity.getIdRemitente(), resultEntity.getIdRemitente());

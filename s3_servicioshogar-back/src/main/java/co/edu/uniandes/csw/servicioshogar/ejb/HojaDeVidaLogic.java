@@ -60,6 +60,15 @@ public class HojaDeVidaLogic {
         
         return hojaDeVidaEntity;
     }
+    
+        public HojaDeVidaEntity getHojaDeVidaById(Long hojaDeVidaId) {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar hoja de vida asociada con telefono= {0}", hojaDeVidaId);
+        HojaDeVidaEntity hojaDeVidaEntity = persistence.findById(hojaDeVidaId);
+        if (hojaDeVidaEntity == null)
+            LOGGER.log(Level.SEVERE, "La hoja de vida asociada con telefono= {0}", hojaDeVidaId);
+        LOGGER.log(Level.INFO, "Termina proceso de consultar hoja de vida asociada con telefono= {0}", hojaDeVidaId);
+        return hojaDeVidaEntity;
+    }
 
  
 
@@ -86,7 +95,5 @@ public class HojaDeVidaLogic {
         
         LOGGER.log(Level.INFO, "Termina proceso de borrar hoja de vida asociada con id= {0}", prestadorId);
     }
-
-  
-    
+      
 }

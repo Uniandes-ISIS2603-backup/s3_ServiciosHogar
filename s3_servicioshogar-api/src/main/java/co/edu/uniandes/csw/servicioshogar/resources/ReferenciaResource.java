@@ -29,7 +29,6 @@ import javax.ws.rs.WebApplicationException;
  *
  * @author Daniela Rocha Torres
  */
-@Path("referencias")
 @Produces("application/json")
 @Consumes("application/json")
 @RequestScoped
@@ -56,39 +55,46 @@ public class ReferenciaResource {
 
     /**
      *
+     * @param hojaDeVidaId
      * @param referencia
      * @return
      * @throws BusinessLogicException
      */
     @POST
-    public ReferenciaDTO crearReferencia(ReferenciaDTO referencia) throws BusinessLogicException {
+    public ReferenciaDTO crearReferencia(@PathParam("hojaDeVidaId") Long hojaDeVidaId, ReferenciaDTO referencia) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "ReferenciaResource crearReferencia: input: {0}", referencia);
         ReferenciaEntity referenciaEntity = referencia.toEntity();
-        ReferenciaEntity nuevaReferenciaEntity = referenciaLogic.createReferencia(referenciaEntity);
+        ReferenciaEntity nuevaReferenciaEntity = referenciaLogic.createReferencia(hojaDeVidaId, referenciaEntity);
         /*Como debe retornar un DTO (json) se invoca el constructor del DTO con argumento el entity nuevo*/
         ReferenciaDTO nuevaReferenciaDTO = new ReferenciaDTO(nuevaReferenciaEntity);
         LOGGER.log(Level.INFO, "ReferenciaResource crearReferencia: output: {0}", nuevaReferenciaDTO);
         return nuevaReferenciaDTO;
     }
 
+    /**
+     *
+     * @param hojaDeVidaId
+     * @return
+     */
     @GET
-    public List<ReferenciaDTO> getReferencias() {
+    public List<ReferenciaDTO> getReferencias(@PathParam("hojaDeVidaId") Long hojaDeVidaId) {
         LOGGER.info("ReferenciaResource getReferencias: input: void");
-        List<ReferenciaDTO> listaReferencias = listEntity2DetailDTO(referenciaLogic.getReferencias());
+        List<ReferenciaDTO> listaReferencias = listEntity2DetailDTO(referenciaLogic.getReferencias(hojaDeVidaId));
         LOGGER.log(Level.INFO, "ReferenciaResource getReferencias: output: {0}", listaReferencias);
         return listaReferencias;
     }
 
     /**
      *
+     * @param hojaDeVidaId
      * @param id
      * @return
      */
     @GET
-    @Path("{referencias:\\d+}")
-    public ReferenciaDTO getReferencia(@PathParam("id") Long id) {
+    @Path("{referenciasId:\\d+}")
+    public ReferenciaDTO getReferencia(@PathParam("hojaDeVidaId") Long hojaDeVidaId, @PathParam("referenciasId") Long id) {
         LOGGER.log(Level.INFO, "ReferenciaResource getReferencia: input: {0}", id);
-        ReferenciaEntity referenciaEntity = referenciaLogic.getReferencia(id);
+        ReferenciaEntity referenciaEntity = referenciaLogic.getReferencia(hojaDeVidaId, id);
         if (referenciaEntity == null) {
             throw new WebApplicationException(PATH_REFERENCIA + id + ERROR, 404);
         }
@@ -100,19 +106,18 @@ public class ReferenciaResource {
 
     /**
      *
+     * @param hojaDeVidaId
      * @param id
      * @param referencia
      * @return
      */
     @PUT
-    @Path("{referencias:\\d+}")
-    public ReferenciaDTO modificarReferencia(@PathParam("id") Long id, ReferenciaDTO referencia) {
+    @Path("{referenciasId:\\d+}")
+    public ReferenciaDTO modificarReferencia(@PathParam("hojaDeVidaId") Long hojaDeVidaId, @PathParam("referenciasId") Long id, ReferenciaDTO referencia) {
         LOGGER.log(Level.INFO, "ReferenciaResource modificarReferencia: input: id:{0} , referencia: {1}", new Object[]{id, referencia});
-        referencia.setIdRemitente(id);
-        if (referenciaLogic.getReferencia(id) == null) {
+        if (referenciaLogic.getReferencia(hojaDeVidaId, id) == null) {
             throw new WebApplicationException(PATH_REFERENCIA + id + ERROR, 404);
         }
-
         ReferenciaDTO detailDTO = new ReferenciaDTO(referenciaLogic.updateReferencia(id, referencia.toEntity()));
         LOGGER.log(Level.INFO, "ReferenciaResource modificarReferencia: output: {0}", detailDTO);
         return detailDTO;
@@ -120,14 +125,15 @@ public class ReferenciaResource {
 
     /**
      *
+     * @param hojaDeVidaId
      * @param id
      * @throws BusinessLogicException
      */
     @DELETE
-    @Path("{referencias:\\d+}")
-    public void deleteReferencia(@PathParam("id") Long id) throws BusinessLogicException {
+    @Path("{referenciasId:\\d+}")
+    public void deleteReferencia(@PathParam("hojaDeVidaId") Long hojaDeVidaId, @PathParam("referenciasId") Long id) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "ReferenciaResource deleteReferencia: input: {0}", id);
-        if (referenciaLogic.getReferencia(id) == null) {
+        if (referenciaLogic.getReferencia(hojaDeVidaId, id) == null) {
             throw new WebApplicationException(PATH_REFERENCIA + id + ERROR, 404);
         }
 

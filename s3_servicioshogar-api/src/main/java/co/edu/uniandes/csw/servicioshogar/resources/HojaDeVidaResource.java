@@ -130,11 +130,11 @@ public class HojaDeVidaResource {
      * lógico que se genera cuando no se encuentra el prestador
      */
     @Path("{hojaDeVidaId: \\d+}/referencias")
-    public Class<HabilidadResource> getHabilidadResource(@PathParam("hojaDeVidaId") Long hojaDeVidaId) {
-        if (hojaDeVidaLogic.getHojaDeVida(hojaDeVidaId) == null) {
+    public Class<ReferenciaResource> getReferenciasResource(@PathParam("hojaDeVidaId") Long hojaDeVidaId) {
+        if (hojaDeVidaLogic.getHojaDeVidaById(hojaDeVidaId) == null) {
             throw new WebApplicationException(RECURSO + "/hojaDeVida/"+ hojaDeVidaId + ERROR, 404);
         }
-        return HabilidadResource.class;
+        return ReferenciaResource.class;
     }
 
 }

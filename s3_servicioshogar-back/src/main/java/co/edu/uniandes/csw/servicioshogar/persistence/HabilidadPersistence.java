@@ -66,7 +66,6 @@ public class HabilidadPersistence {
      */
     public List<HabilidadEntity> findAll(Long prestadorId) {
         LOGGER.log(Level.INFO, "Consultando todas las habilidades");
-
         TypedQuery query = em.createQuery("select u from HabilidadEntity u where (u.prestador.id = :prestadorid)", HabilidadEntity.class);
         query.setParameter("prestadorid", prestadorId);
         return query.getResultList();
