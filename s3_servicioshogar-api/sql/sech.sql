@@ -9,7 +9,8 @@ delete from SolicitudEntity;
 delete from TarjetaCreditoEntity;
 delete from ClienteEntity;
 
-insert into ClienteEntity ( nombre, direccion, correo, contrasena) values ('Carlos Eduardo Robles', '82899 Beilfuss Avenue', 'acornilleau0@economist.com', 'iHLabox65');
+
+insert into ClienteEntity ( nombre, direccion, correo, contrasen) values ('Carlos Eduardo Robles', '82899 Beilfuss Avenue', 'acornilleau0@economist.com', 'iHLabox65');
 insert into ClienteEntity ( nombre, direccion, correo, contrasena) values ('Daniela Rocha', '76 Melrose Lane', 'acornilleau0@economist.com', 'bcVEODPs');
 insert into ClienteEntity ( nombre, direccion, correo, contrasena) values ('Steven Tarazona', '8 Marquette Plaza', 'acornilleau0@economist.com', 'YoP5sKpjKPc2');
 
@@ -23,7 +24,7 @@ insert into TarjetaCreditoEntity (codeseguridad, fechavencimiento, numero, titul
 insert into TarjetaCreditoEntity (codeseguridad, fechavencimiento, numero, titular, cliente_id) values (721, '11/29', 987654321, 'Steven Tarazona', 3);
 insert into TarjetaCreditoEntity (codeseguridad, fechavencimiento, numero, titular, cliente_id) values (852, '12/25', 654321987, 'Steven Tarazona', 3);
 
-insert into SolicitudEntity (direccion, fecha, cliente_id) values ('82899 Beilfuss Avenue', '10/10/2018', 1);
+insert into SolicitudEntity (direccion, cliente_id) values ('82899 Beilfuss Avenue', 64);
 insert into SolicitudEntity (direccion, fecha, cliente_id) values ('82899 Beilfuss Avenue', '10/10/2018', 1);
 insert into SolicitudEntity (direccion, fecha, cliente_id) values ('82899 Beilfuss Avenue', '10/10/2018', 1);
 insert into SolicitudEntity (direccion, fecha, cliente_id) values ('76 Melrose Lane', '10/10/2018', 2);
@@ -36,9 +37,9 @@ insert into PrestadorEntity (id, cedula, contrasena, correo, nombre) values (1, 
 insert into PrestadorEntity (id, cedula, contrasena, correo, nombre) values (2, 2018654321, 'XXlRz17MiEtF', 'vscrancher1@statcounter.com', 'Adriana Trujillo'); 
 insert into PrestadorEntity (id, cedula, contrasena, correo, nombre) values (3, 2017123456, 'PTPQilwIJSn', 'scraze2@dagondesign.com', 'Sebastian Gomez'); 
 
-insert into ServicioEntity (descripcion, requerimientos, prestador_id, solicitud_id) values ('Un servicio', 'Un requerimiento', 1, 1);
-insert into ServicioEntity (descripcion, requerimientos, prestador_id, solicitud_id) values ('Un servicio', 'Un requerimiento', 1, 2);
-insert into ServicioEntity (descripcion, requerimientos, prestador_id, solicitud_id) values ('Un servicio', 'Un requerimiento', 1, 3);
+insert into ServicioEntity (descripcion, requerimientos, prestador_id, solicitud_id) values ('Un servicio', 'Un requerimiento', 1, 618);
+insert into ServicioEntity (descripcion, requerimientos, prestador_id, solicitud_id) values ('Un servicio', 'Un requerimiento', 1, 618);
+insert into ServicioEntity (descripcion, requerimientos, prestador_id, solicitud_id) values ('Un servicio', 'Un requerimiento', 1, 618);
 insert into ServicioEntity (descripcion, requerimientos, prestador_id, solicitud_id) values ('Un servicio', 'Un requerimiento', 2, 4);
 insert into ServicioEntity (descripcion, requerimientos, prestador_id, solicitud_id) values ('Un servicio', 'Un requerimiento', 2, 5);
 insert into ServicioEntity (descripcion, requerimientos, prestador_id, solicitud_id) values ('Un servicio', 'Un requerimiento', 2, 6);
