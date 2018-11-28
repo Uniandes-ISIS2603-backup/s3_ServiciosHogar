@@ -12,12 +12,13 @@
 					"listen": "test",
 					"script": {
 						"id": "0373ce37-dcb3-45e0-b36f-1a95d9f054cb",
-						"type": "text/javascript",
 						"exec": [
 							"var data = JSON.parse(responseBody);",
 							"postman.setGlobalVariable(\"new_id_p\",data.id);",
-							"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
-						]
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;",
+							"console.log(data.id);"
+						],
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -56,12 +57,13 @@
 					"listen": "test",
 					"script": {
 						"id": "3535c112-b45c-4f25-a122-c29c1e4aa1c6",
-						"type": "text/javascript",
 						"exec": [
 							"var data = JSON.parse(responseBody);",
 							"postman.setGlobalVariable(\"new_id_p2\",data.id);",
-							"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
-						]
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;",
+							"console.log(data.id);"
+						],
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -186,11 +188,11 @@
 					"listen": "test",
 					"script": {
 						"id": "36dea60f-010a-4bbf-a8a8-0ab89ccb4c2a",
-						"type": "text/javascript",
 						"exec": [
 							"tests[\"No crea con la misma cedula\"] = responseCode.code === 412;",
 							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"La cédula ya existe\");"
-						]
+						],
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -204,7 +206,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"nombre\":\"Adrian Ocampo\",\n\t\"cedula\":1007784099\n}"
+					"raw": "{\n\t\"nombre\":\"Adrian Ocampo\",\n\t\"cedula\":1007784095\n}"
 				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores",

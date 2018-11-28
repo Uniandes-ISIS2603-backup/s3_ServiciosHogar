@@ -12,12 +12,13 @@
 					"listen": "test",
 					"script": {
 						"id": "0373ce37-dcb3-45e0-b36f-1a95d9f054cb",
-						"type": "text/javascript",
 						"exec": [
 							"var data = JSON.parse(responseBody);",
 							"postman.setGlobalVariable(\"new_id_p\",data.id);",
-							"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
-						]
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;",
+							"console.log(data.id);"
+						],
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -56,12 +57,13 @@
 					"listen": "test",
 					"script": {
 						"id": "afa7a627-60fd-4817-8502-b4865fe535e6",
-						"type": "text/javascript",
 						"exec": [
 							"var data = JSON.parse(responseBody);",
-							"postman.setGlobalVariable(\"new_id_h2\",data.id);",
-							"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
-						]
+							"postman.setGlobalVariable(\"new_id_h\",data.id);",
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;",
+							"console.log(data.id);"
+						],
+						"type": "text/javascript"
 					}
 				}
 			],
@@ -102,12 +104,13 @@
 					"listen": "test",
 					"script": {
 						"id": "b1bf58a3-38bf-4a93-8c16-2e221ea9a84b",
-						"type": "text/javascript",
 						"exec": [
 							"var data = JSON.parse(responseBody);",
-							"postman.setGlobalVariable(\"new_id_h\",data.id);",
-							"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
-						]
+							"postman.setGlobalVariable(\"new_id_h2\",data.id);",
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;",
+							"console.log(data.id);"
+						],
+						"type": "text/javascript"
 					}
 				}
 			],
