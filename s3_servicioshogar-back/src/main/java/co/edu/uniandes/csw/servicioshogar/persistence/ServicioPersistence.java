@@ -95,7 +95,7 @@ public class ServicioPersistence {
         q.setParameter("serviciosId", serviciosId);
         List<ServicioEntity> results = q.getResultList();
         ServicioEntity servicio = null;
-        if (!(results == null&&results.isEmpty()))
+        if (results != null&& !results.isEmpty())
             servicio=results.get(0);
         LOGGER.log(Level.INFO, "Saliendo de consultar el servicio con id = {0} del solicitud con id =" + solicitudesId, serviciosId);
         return servicio;
@@ -106,6 +106,7 @@ public class ServicioPersistence {
      *
      * Busca si hay alguna reseña asociada a un solicitud y con un ID específico
      *
+     * @param prestadorId
      * @param serviciosId El ID de la reseña buscada
      * @return La reseña encontrada o null. Nota: Si existe una o más reseñas
      * devuelve siempre la primera que encuentra
@@ -117,7 +118,7 @@ public class ServicioPersistence {
         q.setParameter("serviciosId", serviciosId);
         List<ServicioEntity> results = q.getResultList();
         ServicioEntity servicio = null;
-        if (!(results == null&&results.isEmpty()))
+        if (results != null&& !results.isEmpty())
             servicio= results.get(0);
         LOGGER.log(Level.INFO, "Saliendo de consultar el servicio con id = {1} del prestador con id ={0}" ,new Long[] {prestadorId, serviciosId});
         return servicio;
