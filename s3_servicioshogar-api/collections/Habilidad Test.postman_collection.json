@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "f9a971c6-edf8-4f44-b336-3435aa335267",
 		"name": "Habilidad Test",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
 		{
@@ -34,19 +34,7 @@
 					"mode": "raw",
 					"raw": "{\n\t\"nombre\":\"Maria Ocampo\",\n\t\"cedula\":1007784095\n}"
 				},
-				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores",
-					"protocol": "http",
-					"host": [
-						"{{ip}}"
-					],
-					"port": "{{puerto}}",
-					"path": [
-						"s3_servicioshogar-api",
-						"api",
-						"prestadores"
-					]
-				}
+				"url": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores"
 			},
 			"response": []
 		},
@@ -79,21 +67,7 @@
 					"mode": "raw",
 					"raw": "{\n\t\"tipo\":\"CERRAJERIA\",\n\t\"descripcion\":\"Duplicado de llaves\",\n\t\"prestador\": \n\t{\n\t\t\"nombre\":\"Maria Ocampo\",\n\t\t\"cedula\":1007784095\n\t}\n}"
 				},
-				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p_habilidad}}/habilidades",
-					"protocol": "http",
-					"host": [
-						"{{ip}}"
-					],
-					"port": "{{puerto}}",
-					"path": [
-						"s3_servicioshogar-api",
-						"api",
-						"prestadores",
-						"{{new_id_p_habilidad}}",
-						"habilidades"
-					]
-				}
+				"url": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p_habilidad}}/habilidades"
 			},
 			"response": []
 		},
@@ -126,21 +100,7 @@
 					"mode": "raw",
 					"raw": "{\n\t\"tipo\":\"PLOMERIA\",\n\t\"descripcion\":\"Cambio de tuberías\",\n\t\"prestador\": \n\t{\n\t\t\"nombre\":\"Maria Ocampo\",\n\t\t\"cedula\":1007784095\n\t}\n}"
 				},
-				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p_habilidad}}/habilidades",
-					"protocol": "http",
-					"host": [
-						"{{ip}}"
-					],
-					"port": "{{puerto}}",
-					"path": [
-						"s3_servicioshogar-api",
-						"api",
-						"prestadores",
-						"{{new_id_p_habilidad}}",
-						"habilidades"
-					]
-				}
+				"url": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p_habilidad}}/habilidades"
 			},
 			"response": []
 		},
@@ -171,21 +131,7 @@
 					"mode": "raw",
 					"raw": "{\n\t\"tipo\":\"PLOMERIA\",\n\t\"descripcion\":\"Cambio de tuberías\",\n\t\"prestador\": \n\t{\n\t\t\"nombre\":\"Maria Ocampo\",\n\t\t\"cedula\":1007784095\n\t}\n}"
 				},
-				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/0/habilidades",
-					"protocol": "http",
-					"host": [
-						"{{ip}}"
-					],
-					"port": "{{puerto}}",
-					"path": [
-						"s3_servicioshogar-api",
-						"api",
-						"prestadores",
-						"0",
-						"habilidades"
-					]
-				}
+				"url": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/0/habilidades"
 			},
 			"response": []
 		},
@@ -212,21 +158,7 @@
 					"mode": "raw",
 					"raw": ""
 				},
-				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p_habilidad}}/habilidades",
-					"protocol": "http",
-					"host": [
-						"{{ip}}"
-					],
-					"port": "{{puerto}}",
-					"path": [
-						"s3_servicioshogar-api",
-						"api",
-						"prestadores",
-						"{{new_id_p_habilidad}}",
-						"habilidades"
-					]
-				}
+				"url": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p_habilidad}}/habilidades"
 			},
 			"response": []
 		},
@@ -253,22 +185,7 @@
 					"mode": "raw",
 					"raw": ""
 				},
-				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p_habilidad}}/habilidades/{{new_id_h_habilidad}}",
-					"protocol": "http",
-					"host": [
-						"{{ip}}"
-					],
-					"port": "{{puerto}}",
-					"path": [
-						"s3_servicioshogar-api",
-						"api",
-						"prestadores",
-						"{{new_id_p_habilidad}}",
-						"habilidades",
-						"{{new_id_h_habilidad}}"
-					]
-				}
+				"url": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p_habilidad}}/habilidades/{{new_id_h_habilidad}}"
 			},
 			"response": []
 		},
@@ -299,21 +216,7 @@
 					"mode": "raw",
 					"raw": "{\n\t\"tipo\":\"PLOMERIA\",\n\t\"descripcion\":\"Cambio de tuberías\",\n\t\"prestador\": \n\t{\n\t\t\"nombre\":\"Maria Ocampo\",\n\t\t\"cedula\":1007784095\n\t}\n}"
 				},
-				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/0/habilidades",
-					"protocol": "http",
-					"host": [
-						"{{ip}}"
-					],
-					"port": "{{puerto}}",
-					"path": [
-						"s3_servicioshogar-api",
-						"api",
-						"prestadores",
-						"0",
-						"habilidades"
-					]
-				}
+				"url": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/0/habilidades"
 			},
 			"response": []
 		},
@@ -345,22 +248,7 @@
 					"mode": "raw",
 					"raw": "{\n\t\"id\":\"355\",\n\t\"tipo\":\"PLOMERIA\",\n\t\"descripcion\":\"Cambio de tuberias y mas\",\n\t\"prestador\": \n\t{\n\t\t\"id\":\"202\",\n\t\t\"nombre\":\"Maria Ocampo\",\n\t\t\"cedula\":1007784095\n\t}\n}"
 				},
-				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p_habilidad}}/habilidades/{{new_id_h_habilidad}}",
-					"protocol": "http",
-					"host": [
-						"{{ip}}"
-					],
-					"port": "{{puerto}}",
-					"path": [
-						"s3_servicioshogar-api",
-						"api",
-						"prestadores",
-						"{{new_id_p_habilidad}}",
-						"habilidades",
-						"{{new_id_h_habilidad}}"
-					]
-				}
+				"url": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p_habilidad}}/habilidades/{{new_id_h_habilidad}}"
 			},
 			"response": []
 		},
@@ -392,22 +280,7 @@
 					"mode": "raw",
 					"raw": "{\n\t\"id\":\"355\",\n\t\"tipo\":\"PLOMERIA\",\n\t\"descripcion\":\"Cambio de tuberias y mas\",\n\t\"prestador\": \n\t{\n\t\t\"id\":\"202\",\n\t\t\"nombre\":\"Maria Ocampo\",\n\t\t\"cedula\":1007784095\n\t}\n}"
 				},
-				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p_habilidad}}/habilidades/0",
-					"protocol": "http",
-					"host": [
-						"{{ip}}"
-					],
-					"port": "{{puerto}}",
-					"path": [
-						"s3_servicioshogar-api",
-						"api",
-						"prestadores",
-						"{{new_id_p_habilidad}}",
-						"habilidades",
-						"0"
-					]
-				}
+				"url": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p_habilidad}}/habilidades/0"
 			},
 			"response": []
 		},
@@ -439,22 +312,7 @@
 					"mode": "raw",
 					"raw": ""
 				},
-				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p_habilidad}}/habilidades/0",
-					"protocol": "http",
-					"host": [
-						"{{ip}}"
-					],
-					"port": "{{puerto}}",
-					"path": [
-						"s3_servicioshogar-api",
-						"api",
-						"prestadores",
-						"{{new_id_p_habilidad}}",
-						"habilidades",
-						"0"
-					]
-				}
+				"url": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p_habilidad}}/habilidades/0"
 			},
 			"response": []
 		},
@@ -486,22 +344,7 @@
 					"mode": "raw",
 					"raw": ""
 				},
-				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/0/habilidades/{{new_id_h_habilidad}}",
-					"protocol": "http",
-					"host": [
-						"{{ip}}"
-					],
-					"port": "{{puerto}}",
-					"path": [
-						"s3_servicioshogar-api",
-						"api",
-						"prestadores",
-						"0",
-						"habilidades",
-						"{{new_id_h_habilidad}}"
-					]
-				}
+				"url": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/0/habilidades/{{new_id_h_habilidad}}"
 			},
 			"response": []
 		},
@@ -531,22 +374,7 @@
 					"mode": "raw",
 					"raw": ""
 				},
-				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p_habilidad}}/habilidades/{{new_id_h_habilidad}}",
-					"protocol": "http",
-					"host": [
-						"{{ip}}"
-					],
-					"port": "{{puerto}}",
-					"path": [
-						"s3_servicioshogar-api",
-						"api",
-						"prestadores",
-						"{{new_id_p_habilidad}}",
-						"habilidades",
-						"{{new_id_h_habilidad}}"
-					]
-				}
+				"url": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p_habilidad}}/habilidades/{{new_id_h_habilidad}}"
 			},
 			"response": []
 		},
@@ -576,22 +404,7 @@
 					"mode": "raw",
 					"raw": ""
 				},
-				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p_habilidad}}/habilidades/{{new_id_h2_habilidad}}",
-					"protocol": "http",
-					"host": [
-						"{{ip}}"
-					],
-					"port": "{{puerto}}",
-					"path": [
-						"s3_servicioshogar-api",
-						"api",
-						"prestadores",
-						"{{new_id_p_habilidad}}",
-						"habilidades",
-						"{{new_id_h2_habilidad}}"
-					]
-				}
+				"url": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p_habilidad}}/habilidades/{{new_id_h2_habilidad}}"
 			},
 			"response": []
 		},
@@ -621,44 +434,9 @@
 					"mode": "raw",
 					"raw": ""
 				},
-				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p_habilidad}}",
-					"protocol": "http",
-					"host": [
-						"{{ip}}"
-					],
-					"port": "{{puerto}}",
-					"path": [
-						"s3_servicioshogar-api",
-						"api",
-						"prestadores",
-						"{{new_id_p_habilidad}}"
-					]
-				}
+				"url": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p_habilidad}}"
 			},
 			"response": []
-		}
-	],
-	"event": [
-		{
-			"listen": "prerequest",
-			"script": {
-				"id": "9f629ffc-3644-4dca-a8af-f28ae4a4e739",
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		},
-		{
-			"listen": "test",
-			"script": {
-				"id": "b1e97bf7-3232-412f-96bc-7ac233e25ab5",
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
 		}
 	]
 }
