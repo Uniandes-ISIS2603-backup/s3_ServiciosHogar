@@ -34,7 +34,7 @@ import javax.ws.rs.WebApplicationException;
 @RequestScoped
 public class SolicitudServiciosResource {
     
-    private static final Logger LOGGER = Logger.getLogger(PrestadorServiciosResource.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(SolicitudServiciosResource.class.getName());
     private static final String NO_EXISTE= " no existe";
     private static final String PRESTA= " El recurso /solicitudes/";
     @Inject
@@ -45,7 +45,7 @@ public class SolicitudServiciosResource {
     
    @GET
    @Path("{servicioId: \\d+}")
-   public ServicioDTO getServicio(@PathParam("solucitudId") Long solicitudId, @PathParam("servicioId") Long servicioId) throws BusinessLogicException
+   public ServicioDTO getServicio(@PathParam("solicitudId") Long solicitudId, @PathParam("servicioId") Long servicioId) throws BusinessLogicException
    {
        LOGGER.log(Level.INFO, " SolicitudServiciosResource getServicio: input: solicitudId {0}, servicio {1}",new Object[]{solicitudId,servicioId});
        if(prestadorLogic.getSolicitudById(solicitudId)==null)
@@ -59,9 +59,9 @@ public class SolicitudServiciosResource {
    }
    
    @GET
-   public List<ServicioDTO> getServicios(@PathParam("solucitudId") Long solicitudId) throws BusinessLogicException
+   public List<ServicioDTO> getServicios(@PathParam("solicitudId") Long solicitudId) throws BusinessLogicException
    {
-       LOGGER.log(Level.INFO, " PrestadorServiciosResource getServicio: input: presatdorId {0}",solicitudId);
+       LOGGER.log(Level.INFO, " SolicitudServiciosResource getServicio: input: SolicitudId {0}",solicitudId);
        if(prestadorLogic.getSolicitudById(solicitudId)==null)
            throw new WebApplicationException(PRESTA+solicitudId+NO_EXISTE, 404);
        List<ServicioEntity> servicio = prestadorServiciosLogic.findAllServices(solicitudId);
