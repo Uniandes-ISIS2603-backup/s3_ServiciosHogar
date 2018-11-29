@@ -1,0 +1,602 @@
+{
+	"info": {
+		"_postman_id": "61ada8f4-c682-4f9d-8a1b-7d6c9d5a4b8f",
+		"name": "SolicitudPruebas v1",
+		"description": "Pruebas de solicitudes v1. No se probara ningun tipo de relacion ya que no se han realizado. Se realizaran pruebas basica como obtener todos los objetos, obtener un objeto especifico, modifica un objeto especifico y eliminar un objeto especifico para finalmente verificar que todo haya sido realizado correctamente.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Obtener las solicitudes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ccdb2973-0fd0-4a7b-b59d-ae012cf38e78",
+						"type": "text/javascript",
+						"exec": [
+							"var data= JSON.parse(responseBody);",
+							"tests[\"No genera error en el Get all\"] = responseCode.code === 200;",
+							"tests[\"solicitudes count\"] = data.length >= 0;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"descripcion\": \"descripcionEjemplo #1\",\n\t\"requerimientos\": \"requeriemientoEjemplo #1\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/clientes/7/solicitudes",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"clientes",
+						"7",
+						"solicitudes"
+					]
+				},
+				"description": "Se realiza un request en el cual si no existen objetos devolvera un array vacio. En caso contrario mandara un json con los objetos presentes en el BD."
+			},
+			"response": []
+		},
+		{
+			"name": "Crear una solicitud #1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fd9ccd77-3c15-4e2a-ae4b-c0b10fb933c1",
+						"type": "text/javascript",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_p\",data.id);",
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;",
+							"",
+							"pm.test(\"Prueba valores\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.fecha).to.eql(\"2020-05-16T00:00:00-05:00\");",
+							"    pm.expect(jsonData.direccion).to.eql(\"Cale 11 No. 11-11\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"fecha\": \"2020-05-16T00:00:00-05:00\",\n\t\"direccion\": \"Cale 11 No. 11-11\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/clientes/7/solicitudes",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"clientes",
+						"7",
+						"solicitudes"
+					]
+				},
+				"description": "Se crea una solicitud enviando un json con la informacion de la solicitud. "
+			},
+			"response": []
+		},
+		{
+			"name": "Crear una solicitud #2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c87b3bac-392a-43e8-a372-74478fabf1b2",
+						"type": "text/javascript",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_p2\",data.id);",
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;",
+							"",
+							"pm.test(\"Prueba valores\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.fecha).to.eql(\"2017-11-06T00:00:00-05:00\");",
+							"    pm.expect(jsonData.direccion).to.eql(\"Cale 22 No. 22-22\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"fecha\": \"2017-11-06T00:00:00-05:00\",\n\t\"direccion\": \"Cale 22 No. 22-22\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/clientes/7/solicitudes",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"clientes",
+						"7",
+						"solicitudes"
+					]
+				},
+				"description": "Se crea una solicitud enviando un json con la informacion de la solicitud."
+			},
+			"response": []
+		},
+		{
+			"name": "Crear una solicitud #3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "01280c4b-8f24-42ef-a64b-1cc058a1c0e1",
+						"type": "text/javascript",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_p3\",data.id);",
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;",
+							"",
+							"pm.test(\"Prueba valores\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.fecha).to.eql(\"2004-10-19T00:00:00-05:00\");",
+							"    pm.expect(jsonData.direccion).to.eql(\"Cale 33 No. 33-33\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"fecha\": \"2004-10-19T00:00:00-05:00\",\n\t\"direccion\": \"Cale 33 No. 33-33\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/clientes/7/solicitudes",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"clientes",
+						"7",
+						"solicitudes"
+					]
+				},
+				"description": "Se crea una solicitud enviando un json con la informacion de la solicitud."
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener solicitud #1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fde8586c-3f52-41ce-8552-bd55c4169126",
+						"type": "text/javascript",
+						"exec": [
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"No genera error en el Get\"] = responseCode.code === 200;",
+							"",
+							"pm.test(\"Prueba valores\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.fecha).to.eql(\"2020-05-16T00:00:00-05:00\");",
+							"    pm.expect(jsonData.direccion).to.eql(\"Cale 11 No. 11-11\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\":\"Ejemplo #2\",\n\t\"direccion\":\"Direccion Ej #2\",\n\t\"correo\":\"ejemplo2@hotmail.com\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/clientes/7/solicitudes/31",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"clientes",
+						"7",
+						"solicitudes",
+						"31"
+					]
+				},
+				"description": "Verificacion de que la solicitud haya sido guardado exitosamente y su id haya sido asignado automaticamente por la BD."
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener solicitud #2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "12361ee7-020b-4680-a940-a8501d30fcc8",
+						"type": "text/javascript",
+						"exec": [
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"No genera error en el Get\"] = responseCode.code === 200;",
+							"",
+							"pm.test(\"Prueba valores\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.fecha).to.eql(\"2017-11-06T00:00:00-05:00\");",
+							"    pm.expect(jsonData.direccion).to.eql(\"Cale 22 No. 22-22\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\":\"Ejemplo #2\",\n\t\"direccion\":\"Direccion Ej #2\",\n\t\"correo\":\"ejemplo2@hotmail.com\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/clientes/7/solicitudes/32",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"clientes",
+						"7",
+						"solicitudes",
+						"32"
+					]
+				},
+				"description": "Verificacion de que la solicitud haya sido guardado exitosamente y su id haya sido asignado automaticamente por la BD."
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener solicitud #3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f7e4cba2-5b41-40c0-a343-beeeb85c4c7e",
+						"type": "text/javascript",
+						"exec": [
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"No genera error en el Get\"] = responseCode.code === 200;",
+							"",
+							"pm.test(\"Prueba valores\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.fecha).to.eql(\"2004-10-19T00:00:00-05:00\");",
+							"    pm.expect(jsonData.direccion).to.eql(\"Cale 33 No. 33-33\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\":\"Ejemplo #2\",\n\t\"direccion\":\"Direccion Ej #2\",\n\t\"correo\":\"ejemplo2@hotmail.com\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/clientes/7/solicitudes/33",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"clientes",
+						"7",
+						"solicitudes",
+						"33"
+					]
+				},
+				"description": "Verificacion de que la solicitud haya sido guardado exitosamente y su id haya sido asignado automaticamente por la BD."
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener solicitud #4",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ccadca53-c84b-4723-bbd2-0ff6d294e290",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"No consulta con id que no existe\"] = responseCode.code === 404; ",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /solicitudes/0 no existe.\");"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\":\"Ejemplo #2\",\n\t\"direccion\":\"Direccion Ej #2\",\n\t\"correo\":\"ejemplo2@hotmail.com\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/clientes/7/solicitudes/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"clientes",
+						"7",
+						"solicitudes",
+						"0"
+					]
+				},
+				"description": "Debido a que no se creo solicitud #4, la app deberia devolver un mensaje informando que esa soliciyud no se creo."
+			},
+			"response": []
+		},
+		{
+			"name": "Verificacion todas las solicitud fueron creadas",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0590b81f-982d-4e2a-9034-6c18bfdcead4",
+						"type": "text/javascript",
+						"exec": [
+							"var data= JSON.parse(responseBody);",
+							"tests[\"No genera error en el Get all\"] = responseCode.code === 200;",
+							"tests[\"servicios count\"] = data.length >= 0;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\":\"Ejemplo #2\",\n\t\"direccion\":\"Direccion Ej #2\",\n\t\"correo\":\"ejemplo2@hotmail.com\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/clientes/7/solicitudes",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"clientes",
+						"7",
+						"solicitudes"
+					]
+				},
+				"description": "Se obtiene un json con todas las solicitudes creadas anteriormente para verificar que todo se haya realizado correctamente."
+			},
+			"response": []
+		},
+		{
+			"name": "Modificar solicitud #3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d4a78fd2-341d-4d32-85b9-937fb917060d",
+						"type": "text/javascript",
+						"exec": [
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"No genera error en el Put\"] = responseCode.code === 200;",
+							"",
+							"pm.test(\"Prueba valores\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.fecha).to.eql(\"2044-04-14T00:00:00-05:00\");",
+							"    pm.expect(jsonData.direccion).to.eql(\"Cale 44 No. 44-44\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"fecha\": \"2044-04-14T00:00:00-05:00\",\n\t\"direccion\": \"Cale 44 No. 44-44\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/clientes/7/solicitudes/33",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"clientes",
+						"7",
+						"solicitudes",
+						"33"
+					]
+				},
+				"description": "Se modifica la solicitud #3 de tal forma que podamos confirmar que el cambio se puede realizar"
+			},
+			"response": []
+		},
+		{
+			"name": "Verificacion solicitud #3 fue modificado",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b422f725-b55b-43a3-a533-400bb97882ba",
+						"type": "text/javascript",
+						"exec": [
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"No genera error en el Get\"] = responseCode.code === 200;",
+							"",
+							"pm.test(\"Prueba valores\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.fecha).to.eql(\"2044-04-14T00:00:00-05:00\");",
+							"    pm.expect(jsonData.direccion).to.eql(\"Cale 44 No. 44-44\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\":\"Ejemplo #2\",\n\t\"direccion\":\"Direccion Ej #2\",\n\t\"correo\":\"ejemplo2@hotmail.com\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/clientes/7/solicitudes/33",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"clientes",
+						"7",
+						"solicitudes",
+						"33"
+					]
+				},
+				"description": "Llamamos al objeto en la BD para verificar doblemente que la solicitud haya sido modificado"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "aa22370a-d444-45cd-97f1-3973a4129996",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "210e8fc9-7e28-4fc5-947d-0a30efbb91dd",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

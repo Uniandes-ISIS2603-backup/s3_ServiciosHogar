@@ -1,0 +1,515 @@
+{
+	"id": "f9a971c6-edf8-4f44-b336-3435aa335267",
+	"name": "Habilidad Test",
+	"description": "",
+	"auth": null,
+	"events": null,
+	"variables": [],
+	"order": [
+		"f7761ea5-6b05-4b1f-8644-2c7e9394c8a7",
+		"f8834656-c95d-4d61-81ed-925a07ba0699",
+		"1f311fba-1676-474d-b1a9-fbf47d2adce0",
+		"92569125-341b-49de-a5ca-4d3b3c92c173",
+		"2bf391b4-703a-41ba-abf3-241a7c016358",
+		"fb3e9f54-974f-45af-a920-1b481073b3cb",
+		"64bf005e-721e-4341-bbc9-caf1c14529cc",
+		"e18303ae-359f-434c-adac-9e241a6f609b",
+		"e2031080-2b83-4353-bf98-61dc06039c44",
+		"232f1da5-1ab5-496c-9792-e60d18b4d5c1",
+		"34ad08a8-617f-4f9a-8c40-01fa92af1a17",
+		"1275e639-1e44-4ee0-bccb-6b48b7b3ce06",
+		"b381d26c-b769-4475-bf08-438b9ca4bc6b",
+		"f3d187d8-0f4c-407c-b165-d65d54b9e8c7"
+	],
+	"folders_order": [],
+	"folders": [],
+	"requests": [
+		{
+			"id": "1275e639-1e44-4ee0-bccb-6b48b7b3ce06",
+			"name": "Borrarle una habilidad 1 a un prestador",
+			"url": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p_habilidad}}/habilidades/{{new_id_h_habilidad}}",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"method": "DELETE",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c2a4f4b0-71ea-44a1-bec0-60069f54c6b0",
+						"exec": [
+							"tests[\"no genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"folder": null,
+			"rawModeData": "",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "1f311fba-1676-474d-b1a9-fbf47d2adce0",
+			"name": "Crear un habilidad 2 a un prestador",
+			"url": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p_habilidad}}/habilidades",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b1bf58a3-38bf-4a93-8c16-2e221ea9a84b",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_h2_habilidad\",data.id);",
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;",
+							"console.log(data.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"folder": null,
+			"rawModeData": "{\n\t\"tipo\":\"PLOMERIA\",\n\t\"descripcion\":\"Cambio de tuberías\",\n\t\"prestador\": \n\t{\n\t\t\"nombre\":\"Maria Ocampo\",\n\t\t\"cedula\":1007784095\n\t}\n}",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "232f1da5-1ab5-496c-9792-e60d18b4d5c1",
+			"name": "Borrarle una habilidad que no existe de un prestador ",
+			"url": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p_habilidad}}/habilidades/0",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"method": "DELETE",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4516cdc7-3cf3-4677-a251-aeee3103a75f",
+						"exec": [
+							"tests[\"No se puede eliminar una habilidad que no existe.\"] = responseCode.code === 404;",
+							"let id = pm.variables.get(\"new_id_p_habilidad\");",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /prestadores/\"+id+\"/habilidades/0 no existe.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"folder": null,
+			"rawModeData": "",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "2bf391b4-703a-41ba-abf3-241a7c016358",
+			"name": "Obtener todos las habilidades de un prestador",
+			"url": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p_habilidad}}/habilidades",
+			"description": "",
+			"data": null,
+			"dataMode": null,
+			"headerData": [],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1a157514-95de-41ec-9638-a439a91babd3",
+						"exec": [
+							"var data= JSON.parse(responseBody);",
+							"tests[\"No genera error en el Get all\"] = responseCode.code === 200;",
+							"tests[\"prestadores count\"] = data.length >= 0;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"folder": null,
+			"headers": "",
+			"pathVariables": {}
+		},
+		{
+			"id": "34ad08a8-617f-4f9a-8c40-01fa92af1a17",
+			"name": "Borrarle una habilidad a un prestador que no existe",
+			"url": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/0/habilidades/{{new_id_h_habilidad}}",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"method": "DELETE",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8596df84-2de8-4004-a2fd-3d200d04c868",
+						"exec": [
+							"tests[\"No se puede eliminar una habilidad que no existe.\"] = responseCode.code === 404;",
+							"let id = pm.variables.get(\"new_id_h\");",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /prestadores/0/habilidades no existe.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"folder": null,
+			"rawModeData": "",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "64bf005e-721e-4341-bbc9-caf1c14529cc",
+			"name": "Editar una habilidad a un prestador que no existe",
+			"url": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/0/habilidades",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"method": "PUT",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6bed30d0-db24-452c-8ac5-bb7ae902edea",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"No actualiza con id que no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /prestadores/0/habilidades no existe\");"
+						]
+					}
+				}
+			],
+			"folder": null,
+			"rawModeData": "{\n\t\"tipo\":\"PLOMERIA\",\n\t\"descripcion\":\"Cambio de tuberías\",\n\t\"prestador\": \n\t{\n\t\t\"nombre\":\"Maria Ocampo\",\n\t\t\"cedula\":1007784095\n\t}\n}",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "92569125-341b-49de-a5ca-4d3b3c92c173",
+			"name": "Crear un habilidad a un prestador que no existe",
+			"url": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/0/habilidades",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8281d144-525e-4d31-ad65-302d98f00a45",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"No se puede asociar una habilidad a un prestador que no existe.\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /prestadores/0/habilidades no existe\");"
+						]
+					}
+				}
+			],
+			"folder": null,
+			"rawModeData": "{\n\t\"tipo\":\"PLOMERIA\",\n\t\"descripcion\":\"Cambio de tuberías\",\n\t\"prestador\": \n\t{\n\t\t\"nombre\":\"Maria Ocampo\",\n\t\t\"cedula\":1007784095\n\t}\n}",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "b381d26c-b769-4475-bf08-438b9ca4bc6b",
+			"name": "Borrarle una habilidad 2 a un prestador",
+			"url": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p_habilidad}}/habilidades/{{new_id_h2_habilidad}}",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"method": "DELETE",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c2a4f4b0-71ea-44a1-bec0-60069f54c6b0",
+						"exec": [
+							"tests[\"no genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"folder": null,
+			"rawModeData": "",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "e18303ae-359f-434c-adac-9e241a6f609b",
+			"name": "Editar una habilidad de un prestador ",
+			"url": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p_habilidad}}/habilidades/{{new_id_h_habilidad}}",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"method": "PUT",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2bc50d26-03c9-4219-8c24-f59719f19e4e",
+						"exec": [
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"no genera error en el Put\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"folder": null,
+			"rawModeData": "{\n\t\"id\":\"355\",\n\t\"tipo\":\"PLOMERIA\",\n\t\"descripcion\":\"Cambio de tuberias y mas\",\n\t\"prestador\": \n\t{\n\t\t\"id\":\"202\",\n\t\t\"nombre\":\"Maria Ocampo\",\n\t\t\"cedula\":1007784095\n\t}\n}",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "e2031080-2b83-4353-bf98-61dc06039c44",
+			"name": "Editar una habilidad que no existe de un prestador ",
+			"url": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p_habilidad}}/habilidades/0",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"method": "PUT",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "edbd94ac-ebe7-4cd2-a087-7a2f5ff9e177",
+						"exec": [
+							"tests[\"No se puede editar ua habilidad que no existe.\"] = responseCode.code === 404;",
+							"let id = pm.variables.get(\"new_id_p_habilidad\");",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /prestadores/\"+id+\"/habilidades/0 no existe.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"folder": null,
+			"rawModeData": "{\n\t\"id\":\"355\",\n\t\"tipo\":\"PLOMERIA\",\n\t\"descripcion\":\"Cambio de tuberias y mas\",\n\t\"prestador\": \n\t{\n\t\t\"id\":\"202\",\n\t\t\"nombre\":\"Maria Ocampo\",\n\t\t\"cedula\":1007784095\n\t}\n}",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "f3d187d8-0f4c-407c-b165-d65d54b9e8c7",
+			"name": "Borrar un prestador",
+			"url": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p_habilidad}}",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"method": "DELETE",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c2a4f4b0-71ea-44a1-bec0-60069f54c6b0",
+						"exec": [
+							"tests[\"no genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"folder": null,
+			"rawModeData": "",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "f7761ea5-6b05-4b1f-8644-2c7e9394c8a7",
+			"name": "Crear un prestador",
+			"url": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0373ce37-dcb3-45e0-b36f-1a95d9f054cb",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_p_habilidad\",data.id);",
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;",
+							"console.log(data.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"folder": null,
+			"rawModeData": "{\n\t\"nombre\":\"Maria Ocampo\",\n\t\"cedula\":1007784095\n}",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "f8834656-c95d-4d61-81ed-925a07ba0699",
+			"name": "Crear un habilidad a un prestador",
+			"url": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p_habilidad}}/habilidades",
+			"description": "",
+			"data": [],
+			"dataMode": "raw",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"method": "POST",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "afa7a627-60fd-4817-8502-b4865fe535e6",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_h_habilidad\",data.id);",
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;",
+							"console.log(data.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"folder": null,
+			"rawModeData": "{\n\t\"tipo\":\"CERRAJERIA\",\n\t\"descripcion\":\"Duplicado de llaves\",\n\t\"prestador\": \n\t{\n\t\t\"nombre\":\"Maria Ocampo\",\n\t\t\"cedula\":1007784095\n\t}\n}",
+			"headers": "Content-Type: application/json\n",
+			"pathVariables": {}
+		},
+		{
+			"id": "fb3e9f54-974f-45af-a920-1b481073b3cb",
+			"name": "Obtener un habilidad de un prestador",
+			"url": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/prestadores/{{new_id_p_habilidad}}/habilidades/{{new_id_h_habilidad}}",
+			"description": "",
+			"data": null,
+			"dataMode": null,
+			"headerData": [],
+			"method": "GET",
+			"pathVariableData": [],
+			"queryParams": [],
+			"auth": null,
+			"events": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a0eea643-287e-4629-ba0f-614c7c8ca059",
+						"exec": [
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"No genera error en el Get\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"folder": null,
+			"headers": "",
+			"pathVariables": {}
+		}
+	]
+}
