@@ -118,9 +118,7 @@ public class HabilidadResource {
     public HabilidadDTO updatHabilidad(@PathParam("prestadorId") Long prestadorId, @PathParam("habilidadesId") Long habilidadId, HabilidadDTO habilidad) throws BusinessLogicException{
         
         LOGGER.log(Level.INFO, "HabilidadResource updateHabilidad: input: prestadorId: {0} , habilidadId: {1} , habilidad:{2}", new Object[]{prestadorId, habilidadId, habilidad});
-        if (habilidad.getId().equals(habilidadId)) {
-            throw new BusinessLogicException("Los ids de la Habilidad no coinciden.");
-        }
+
         HabilidadEntity entity = habilidadLogic.getHabilidad(prestadorId, habilidadId);
         if (entity == null) {
             throw new WebApplicationException(PATH_PRESTADOR + prestadorId + PATH_HABILIDAD + habilidadId + " no existe.", 404);
