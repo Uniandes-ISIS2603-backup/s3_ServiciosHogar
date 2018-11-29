@@ -1,0 +1,368 @@
+{
+	"info": {
+		"_postman_id": "c7d2f849-7011-4053-b33d-089e54283fcd",
+		"name": "TarjetaCreditoTest v3",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Asignar una tarjeta al cliente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e6d24287-e4e4-4dc7-8957-3bec78fa76a8",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"tarjeta1\",data.id);",
+							"tests[\"No genera error en el Post\"] = responseCode.code === 200;",
+							"console.log(data.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"codeSeguridad\":123, \n\t\"titular\":\"Carlos Eduardo Robles\",\n\t\"fechaVencimiento\":\"10/24\",\n\t\"numero\":\"5322054936662839\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/clientes/{{idCliente1}}/tarjetasCredito",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"clientes",
+						"{{idCliente1}}",
+						"tarjetasCredito"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Asignar otra tarjeta a un cliente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e6d24287-e4e4-4dc7-8957-3bec78fa76a8",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"tarjeta2\",data.id);",
+							"tests[\"No genera error en el Post\"] = responseCode.code === 200;",
+							"console.log(data.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"codeSeguridad\":546, \n\t\"titular\":\"Carlos Eduardo Robles\",\n\t\"fechaVencimiento\":\"11/24\",\n\t\"numero\":\"6541054938522839\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/clientes/1/tarjetasCredito",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"clientes",
+						"1",
+						"tarjetasCredito"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener todas las tarjetas del cliente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a90c4953-59af-4220-9d74-6ebf4037fdcd",
+						"exec": [
+							"var data= JSON.parse(responseBody);",
+							"tests[\"No genera error en el Get all\"] = responseCode.code === 200;",
+							"tests[\"clientes count\"] = data.length >= 1;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/clientes/{{idCliente1}}/tarjetasCredito",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"clientes",
+						"{{idCliente1}}",
+						"tarjetasCredito"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener una tarjeta del cliente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a90c4953-59af-4220-9d74-6ebf4037fdcd",
+						"exec": [
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"No genera error en el Get\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/clientes/{{idCliente1}}/tarjetasCredito/{{tarjeta1}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"clientes",
+						"{{idCliente1}}",
+						"tarjetasCredito",
+						"{{tarjeta1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar una tarjeta",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c2816f1e-7e8f-4082-b80a-3ff08c628c8e",
+						"exec": [
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"No genera error en el Put\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"codeSeguridad\": 546,\n    \"fechaVencimiento\": \"11/24\",\n    \"numero\": \"6541054938522839\",\n    \"titular\": \"Carlos Robles\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/clientes/{{idCliente1}}/tarjetasCredito/{{tarjeta1}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"clientes",
+						"{{idCliente1}}",
+						"tarjetasCredito",
+						"{{tarjeta1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar una tarjeta que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c2816f1e-7e8f-4082-b80a-3ff08c628c8e",
+						"exec": [
+							"tests[\"No se deberia actualizar un autor con id que no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /cliente/1/tarjetasCredito/0 no existe\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"codeSeguridad\": 546,\n    \"fechaVencimiento\": \"11/24\",\n    \"numero\": \"6541054938522839\",\n    \"titular\": \"Carlos Robles\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/clientes/{{idCliente1}}/tarjetasCredito/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"clientes",
+						"{{idCliente1}}",
+						"tarjetasCredito",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar una tarjeta al cliente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "815ea6fb-8fff-4f49-9ed0-473f9c43aec6",
+						"exec": [
+							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/clientes/{{idCliente1}}/tarjetasCredito/{{tarjeta1}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"clientes",
+						"{{idCliente1}}",
+						"tarjetasCredito",
+						"{{tarjeta1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar una tarjeta que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "815ea6fb-8fff-4f49-9ed0-473f9c43aec6",
+						"exec": [
+							"tests[\"No se deberia borrar un autor con un id que no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /cliente/1/tarjetasCredito/0 no existe\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s3_servicioshogar-api/api/clientes/{{idCliente1}}/tarjetasCredito/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s3_servicioshogar-api",
+						"api",
+						"clientes",
+						"{{idCliente1}}",
+						"tarjetasCredito",
+						"0"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
